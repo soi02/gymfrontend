@@ -1,3 +1,69 @@
-.test{
-  /* 깃허브에 올리는 용도로 그냥 채워둠 */
+/* BottomNavigation.css */
+
+.bottom-navigation-container {
+    /* 기존 부트스트랩 클래스에 추가 */
+    position: fixed; /* 화면 하단에 고정 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* 상단 그림자 */
+    z-index: 1000; /* 다른 콘텐츠 위에 표시 */
+    display: flex; /* 자식 요소 (col)를 flex 컨테이너로 만듬 */
+    justify-content: space-around; /* 아이템들을 균등하게 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 60px; /* 적절한 높이 설정 */
+}
+
+.bottom-nav-item-col {
+    flex: 1; /* 모든 col이 동일한 너비를 가짐 */
+    text-align: center;
+}
+
+.bottom-nav-link {
+    display: flex;
+    flex-direction: column; /* 아이콘과 텍스트를 세로로 정렬 */
+    align-items: center;
+    text-decoration: none; /* 밑줄 제거 */
+    color: #999999; /* 기본 텍스트 및 아이콘 색상 (비활성) */
+    font-size: 11px; /* 텍스트 크기 */
+    font-weight: 500;
+    padding: 5px 0; /* 링크 내부 패딩 */
+    transition: color 0.2s ease-in-out; /* 색상 변경 시 부드러운 전환 */
+}
+
+.bottom-nav-link.active {
+    color: #007bff; /* 활성화된 링크 색상 (토스 메인 컬러와 유사) */
+    font-weight: 600; /* 활성화된 텍스트 좀 더 굵게 */
+}
+
+.bottom-nav-link:hover {
+    color: #0056b3; /* 호버 시 색상 변경 */
+}
+
+.bottom-nav-icon {
+    font-size: 22px; /* 아이콘 크기 */
+    margin-bottom: 3px; /* 아이콘과 텍스트 사이 간격 */
+    transition: color 0.2s ease-in-out;
+}
+
+/* 활성화된 링크의 아이콘 색상 변경 */
+.bottom-nav-link.active .bottom-nav-icon {
+    /* 활성화 시 채워진 아이콘으로 변경하고 싶다면 CSS에서 직접 제어는 어려움.
+       컴포넌트에서 아이콘 클래스를 active 상태에 따라 다르게 주어야 함.
+       지금은 색상만 변경. */
+    color: #007bff;
+}
+
+/* 모바일 뷰 최적화 (필요시 추가) */
+@media (max-width: 576px) {
+    .bottom-navigation-container {
+        height: 56px;
+        padding: 6px 0;
+    }
+    .bottom-nav-link {
+        font-size: 10px;
+    }
+    .bottom-nav-icon {
+        font-size: 20px;
+    }
 }
