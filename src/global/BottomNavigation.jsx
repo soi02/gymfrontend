@@ -1,7 +1,5 @@
 // import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Link와 useLocation 임포트
-// import 'bootstrap-icons/font/bootstrap-icons.css'; // Bootstrap Icons CSS 임포트
-// import './BottomNavigation.css'; // 커스텀 스타일 시트
+import { Link, useLocation } from 'react-router-dom'; 
 
 // BottomNavigationItem 컴포넌트: 각 내비게이션 항목을 렌더링
 // useLocation을 사용하여 현재 경로를 확인하고, Link를 사용합니다.
