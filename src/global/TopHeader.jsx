@@ -190,6 +190,7 @@ export default function TopHeader() {
             >
             나의 처소에 들르겠소
             </Link>
+            <Link to="/">
             <button
             onClick={() => {
                 handleLogout();
@@ -207,6 +208,7 @@ export default function TopHeader() {
             >
             로그아웃
             </button>
+            </Link>
         </div>
         )}
 
