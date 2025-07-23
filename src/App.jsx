@@ -1,6 +1,9 @@
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Router, Routes } from 'react-router-dom'
 import './App.css'
 import BottomNavigation from './global/BottomNavigation'
+import WelcomePage from './global/WelcomePage'
+import LoginPage from './global/LoginPage'
+import RegisterPage from './global/RegisterPage'
 
 function App() {
 
@@ -10,7 +13,11 @@ function App() {
       <BrowserRouter>
        <div style={{ paddingBottom: '60px', maxWidth: '375px', margin: '0 auto' }}>
             <Routes>
-
+              <Route>
+                <Route path='/welcome' element={<WelcomePage />} />
+                <Route path='/register' element={<RegisterPage/>}/>
+                <Route path='/login' element={<LoginPage/>}/>
+              </Route>
             </Routes>
           </div>
 
