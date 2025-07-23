@@ -30,7 +30,7 @@ export default function WelcomePage() {
             </h1>
 
             <p className="subtitle">
-                버디와 함께하는 오늘의 수련<br />
+                벗과 함께하는 오늘의 수련<br />
                 짐마당에서 시작하시오
             </p>
 
