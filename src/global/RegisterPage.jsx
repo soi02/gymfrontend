@@ -49,13 +49,13 @@ export default function RegisterPage() {
                     <div className="col">
                         회원 가입<br/>
                         아이디: <input onChange={handleChange} name="accountName" value={formData.accountName} type="text" placeholder="아이디" /><br/>
-                        비번: <input onChange={handleChange} name="password" value={formData.password} type="password" placeholder="비번" /><br/>
-                        닉넴: <input onChange={handleChange} name="nickname" value={formData.nickname} type="text" placeholder="닉네임" /><br/>
+                        암호: <input onChange={handleChange} name="password" value={formData.password} type="password" placeholder="비번" /><br/>
+                        별칭: <input onChange={handleChange} name="nickname" value={formData.nickname} type="text" placeholder="닉네임" /><br/>
                         <input onChange={handleChange} name="gender" checked={formData.gender == 'M'} value='M' type="radio" />남
                         <input onChange={handleChange} name="gender" checked={formData.gender == 'F'} value='F' type="radio" />여<br/>
                         생일: <input onChange={handleChange} name="birth" value={formData.birth} type="date" placeholder="생년월일" /><br/>
                         이메일: <input onChange={handleChange} name="email" value={formData.email} type="text" placeholder="이메일" /><br/>
-                        폰넘버: <input onChange={handleChange} name="phone" value={formData.phone} type="text" placeholder="폰넘버" /><br/>
+                        전화번호: <input onChange={handleChange} name="phone" value={formData.phone} type="text" placeholder="폰넘버" /><br/>
                         <button onClick={handleSubmit} className="btn btn-primary">회원 가입</button>
                     </div>
                 </div>
