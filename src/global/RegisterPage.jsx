@@ -68,7 +68,7 @@ export default function RegisterPage() {
                         프로필 사진: <input onChange={handleChange} name="profileImage" value={formData.profileImage} type="text" placeholder="이미지 URL" /><br/>
                         키(cm): <input onChange={handleChange} name="height" value={formData.height} type="number" placeholder="키" /><br/>
                         몸무게(kg): <input onChange={handleChange} name="weight" value={formData.weight} type="number" placeholder="몸무게" /><br/>
-                        근육량(kg): <input onChange={handleChange} name="muscleMass" value={formData.muscleMass} type="number" placeholder="근육량" /><br/>
+                        골격근량(kg): <input onChange={handleChange} name="muscleMass" value={formData.muscleMass} type="number" placeholder="골격근량" /><br/>
                         벗 참여 여부: 
                         <input onChange={handleChange} name="isBuddy" checked={formData.isBuddy} type="checkbox" /> 참여함<br/><br/>
                         <button onClick={handleSubmit} className="btn btn-primary">회원 가입</button>
