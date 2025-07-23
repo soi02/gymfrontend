@@ -15,12 +15,10 @@ function AppContent() {
 
   const shouldHide = hideHeaderFooterRoutes.includes(location.pathname);
 
-  // 여기다가 경로 선언해주기 먼저 그래야지 top & header 가 걸려짐
-  //아래는 예시코드
-  const isChallengeSection =
-    path.startsWith("/challengeHome") ||
-    path.startsWith("/challengeList") ||
-    path.startsWith("/myChallenge");
+  // const isChallengeSection =
+  //   location.path.startsWith("/challengeHome") ||
+  //   location.path.startsWith("/challengeList") ||
+  //   location.path.startsWith("/myChallenge");
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
@@ -33,9 +31,9 @@ function AppContent() {
         <Route path="/notifications" element={<NotificationPage />} />
 
         {/* 수련장 관련 */}
-        <Route path="/challengeHome" element={<ChallengeHome />} />
+        {/* <Route path="/challengeHome" element={<ChallengeHome />} />
         <Route path="/challengeList" element={<ChallengeList />} />
-        <Route path="/myChallenge" element={<MyChallenge />} />
+        <Route path="/myChallenge" element={<MyChallenge />} /> */}
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
