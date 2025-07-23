@@ -13,16 +13,16 @@ function App() {
     <>
       <BrowserRouter>
 
-       <div style={{  display: 'flex', flexDirection: 'column' , paddingBottom: '10px', maxWidth: '375px', margin: '0 auto' }}>
-              <TopHeader />
-            <Routes>
-              <Route>
-                <Route path='/' element={<WelcomePage />} />
-                <Route path='/register' element={<RegisterPage/>}/>
-                <Route path='/login' element={<LoginPage/>}/>
-                <Route path="*" element={<ErrorPage />} />
-              </Route>
-            </Routes>
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px', maxWidth: '375px', margin: '0 auto' }}>
+          <TopHeader />
+          <Routes>
+            <Route>
+              <Route path='/' element={<WelcomePage />} />
+              <Route path='/register' element={<RegisterPage />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
+          </Routes>
 
           <BottomNavigation />
         </div>
