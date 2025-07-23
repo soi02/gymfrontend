@@ -50,6 +50,7 @@ export default function TopHeader() {
                 <>
 
             {/* 알림새 아이콘 + 알림 점 */}
+            <Link to="/notifications">
             <div style={{ position: "relative", width: "44px", height: "44px" }}>
             <img
                 src={birdImg}
@@ -76,6 +77,8 @@ export default function TopHeader() {
                 }}
             ></div>
             </div>
+            </Link>
+
 
                     
 
@@ -110,7 +113,24 @@ export default function TopHeader() {
         </div>
 
 
-
+        {/* 오버레이 (회색 배경) */}
+        {(showPrompt || showMenu) && (
+        <div
+            onClick={() => {
+            setShowPrompt(false);
+            setShowMenu(false);
+            }}
+            style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            zIndex: 998, // 모달보다 아래에 위치
+            }}
+        />
+        )}
 
 
 
@@ -211,6 +231,10 @@ export default function TopHeader() {
             </Link>
         </div>
         )}
+
+
+
+
 
 
         
