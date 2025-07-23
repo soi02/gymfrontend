@@ -15,7 +15,7 @@ function AppContent() {
   const shouldHide = hideHeaderFooterRoutes.includes(location.pathname);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '10px', maxWidth: '375px', margin: '0 auto' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
       {!shouldHide && <TopHeader />}
 
       <Routes>
