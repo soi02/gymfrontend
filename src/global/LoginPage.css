@@ -1,3 +1,13 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Gowun Dodum', sans-serif;
+  overflow-x: hidden; /* ← 가로 스크롤 방지용 */
+}
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   /* font-family: 'Segoe UI', sans-serif; */
@@ -6,10 +16,12 @@ body {
 }
 
 .login-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 60px; /* 👈 하단 네비 높이만큼 확보! */
+
 }
 
 .login-box {
