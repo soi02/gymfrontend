@@ -12,18 +12,19 @@ function App() {
   return (
     <>
       <BrowserRouter>
-       <div style={{  display: 'flex', flexDirection: 'column' , paddingBottom: '60px', maxWidth: '375px', margin: '0 auto' }}>
-            <Routes>
-              <TopHeader />
-              <Route>
-                <Route path='/welcome' element={<WelcomePage />} />
-                <Route path='/register' element={<RegisterPage/>}/>
-                <Route path='/login' element={<LoginPage/>}/>
-              </Route>
-            </Routes>
+        <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '60px', maxWidth: '375px', margin: '0 auto' }}>
+          <TopHeader />
+          <Routes>
+
+            <Route>
+              <Route path='/welcome' element={<WelcomePage />} />
+              <Route path='/register' element={<RegisterPage />} />
+              <Route path='/login' element={<LoginPage />} />
+            </Route>
+          </Routes>
 
           <BottomNavigation />
-      </div>
+        </div>
 
       </BrowserRouter>
     </>
