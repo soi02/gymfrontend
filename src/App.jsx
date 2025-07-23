@@ -12,6 +12,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+
        <div style={{  display: 'flex', flexDirection: 'column' , paddingBottom: '10px', maxWidth: '375px', margin: '0 auto' }}>
               <TopHeader />
             <Routes>
@@ -23,7 +24,7 @@ function App() {
             </Routes>
 
           <BottomNavigation />
-      </div>
+        </div>
 
       </BrowserRouter>
     </>
