@@ -32,11 +32,13 @@ export default function LoginPage() {
 
             localStorage.setItem("token",json.token);
 
-            const decoded = jwtDecode(json.token);
+            // const decoded = jwtDecode(json.token);
+            // const id = decoded.sub;
             const name = json.name;
-            const id = decoded.sub;
+            const id = json.id;
 
-            dispatch(loginAction({ name: json.name, id: decoded.sub }));
+            dispatch(loginAction({ name: json.name, id: json.id }));
+            console.log("얍얍: " , json );
         }catch(error){
             alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
             console.log(error)
