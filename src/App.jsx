@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-       <div style={{ paddingBottom: '60px', maxWidth: '375px', margin: '0 auto' }}>
+       <div style={{  display: 'flex', flexDirection: 'column' , paddingBottom: '60px', maxWidth: '375px', margin: '0 auto' }}>
             <Routes>
               <Route>
                 <Route path='/welcome' element={<WelcomePage />} />
