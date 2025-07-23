@@ -15,6 +15,8 @@ function AppContent() {
 
   const shouldHide = hideHeaderFooterRoutes.includes(location.pathname);
 
+  // 여기다가 경로 선언해주기 먼저 그래야지 top & header 가 걸려짐
+  //아래는 예시코드
   const isChallengeSection =
     path.startsWith("/challengeHome") ||
     path.startsWith("/challengeList") ||
