@@ -17,7 +17,7 @@ function App() {
               <TopHeader />
             <Routes>
               <Route>
-                <Route path='/welcome' element={<WelcomePage />} />
+                <Route path='/' element={<WelcomePage />} />
                 <Route path='/register' element={<RegisterPage/>}/>
                 <Route path='/login' element={<LoginPage/>}/>
                 <Route path="*" element={<ErrorPage />} />
