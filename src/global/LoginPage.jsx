@@ -17,7 +17,7 @@ export default function LoginPage() {
                 <button className="btn sign-in-btn">입장하기</button>
                 <button className="btn google-btn">
                     <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google" />
-                    구글을 이용해 입장하기
+                    구글로 입장하기
                 </button>
                 <button className="btn kakao-btn">
                     <img
