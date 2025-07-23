@@ -1,30 +1,36 @@
+import React from 'react';
+import './LoginPage.css';
 
 export default function LoginPage() {
     return (
-        <>
-            <div className='container-fluid'>
-                <div className="row">
-                    <div className="col text-center">로그인 페이지</div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        {/* <input name="accountName" onChange={handleChange} value={formData.accountName} type="text" className='form-control' placeholder='아이디' /> */}
-                        <input name="accountName" type="text" className='form-control' placeholder='아이디' />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        {/* <input name="password" onChange={handleChange} value={formData.password} type="password" className='form-control' placeholder='비밀번호' /> */}
-                        <input name="password" type="password" className='form-control' placeholder='비밀번호' />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col d-grid">
-                        {/* <button onClick={handleLogin} className='btn btn-primary'>로그인</button> */}
-                        <button  className='btn btn-primary'>로그인</button>
-                    </div>
+        <div className="login-container">
+            <div className="login-box">
+                <h2 className="login-title">환영하오</h2>
+                <p className="login-subtitle">이것이 바로 그대의 수련터요</p>
+
+                <input type="text" className="login-input" placeholder="아이디" />
+                <input type="password" className="login-input" placeholder="비밀번호" />
+
+                <div className="forgot-password">암호를 잊으셨소?</div>
+
+                <button className="btn sign-in-btn">입장하기</button>
+                <button className="btn google-btn">
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google" />
+                    구글을 이용해 입장하기
+                </button>
+                <button className="btn kakao-btn">
+                    <img
+    src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+    alt="Kakao"
+    style={{ height: '16px' }}
+  />
+  카카오톡으로 입장하기
+                </button>
+
+                <div className="signup-text">
+                    처음이오? <span className="signup-link">계정 생성</span>
                 </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }
