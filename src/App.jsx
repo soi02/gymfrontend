@@ -5,6 +5,7 @@ import TopHeader from './global/TopHeader'
 import WelcomePage from './global/WelcomePage'
 import LoginPage from './global/LoginPage'
 import RegisterPage from './global/RegisterPage'
+import ErrorPage from './global/ErrorPage'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                 <Route path='/welcome' element={<WelcomePage />} />
                 <Route path='/register' element={<RegisterPage/>}/>
                 <Route path='/login' element={<LoginPage/>}/>
+                <Route path="*" element={<ErrorPage />} />
               </Route>
             </Routes>
 

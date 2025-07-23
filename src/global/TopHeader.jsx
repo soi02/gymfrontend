@@ -7,19 +7,18 @@ import birdImg from "../assets/img/bird.png";
 import { useState } from "react";
 
 export default function TopHeader() {
-//   const authInfo = useSelector((state) => state.auth);
+  const authInfo = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-//   임시로 가짜 로그인 상태 삽입
-const fakeAuthInfo = {
-  isAuthenticated: true,
-  nickname: "훈민정음",
-  profileImage: null, // 필요시 커스텀 이미지도 지정 가능
-};
+// //   임시로 가짜 로그인 상태 삽입
+// const fakeAuthInfo = {
+//   isAuthenticated: true,
+//   nickname: "훈민정음",
+//   profileImage: null, // 필요시 커스텀 이미지도 지정 가능
+// };
 
-// 실제 authInfo 대신 사용
-// const authInfo = useSelector((state) => state.auth);
-const authInfo = fakeAuthInfo;
+// // 실제 authInfo 대신 사용
+// const authInfo = fakeAuthInfo;
 
   
     const [showPrompt, setShowPrompt] = useState(false);
@@ -138,7 +137,8 @@ const authInfo = fakeAuthInfo;
                 마음에 드는 수련을 시작해보시지요.
             </div>
             <Link
-                to="/user/board/login"
+                to="/login"
+                onClick={() => setShowPrompt(false)}
                 style={{
                 display: "inline-block",
                 padding: "10px 24px",
