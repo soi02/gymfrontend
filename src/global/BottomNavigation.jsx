@@ -47,11 +47,11 @@ export default function BottomNavigation() {
                 zIndex: 1000,
             }}
         >
-            <BottomNavigationItem link="/" iconClass="ri-home-5-fill" label="홈" />
+            <BottomNavigationItem link="/" iconClass="ri-home-5-fill" label="집" />
             <BottomNavigationItem link="/community" iconClass="ri-wechat-fill" label="벗" />
             <BottomNavigationItem link="/routine" iconClass="ri-store-3-fill" label="장터" />
             <BottomNavigationItem link="/challenge" iconClass="ri-award-fill" label="수련장" />
-            <BottomNavigationItem link="/mypage" iconClass="ri-user-3-fill" label="마이" />
+            <BottomNavigationItem link="/mypage" iconClass="ri-user-3-fill" label="나의 처소" />
         </div>
     );
 }
