@@ -36,15 +36,14 @@ export default function BottomNavigation() {
                 position: 'fixed',
                 bottom: 0,
                 left: '50%',
-                // right: '49%',
-                transform: 'translateX(-46.9%)',      // ✅ 중앙 정렬
-                width: '100%',                      // ✅ 화면보다 넓게 (라운드 보이도록)
-                maxWidth: '500px',                  // ✅ 너무 커지는 것 방지
+                transform: 'translateX(-46.9%)',
+                width: '100%',                      
+                maxWidth: '500px',                
                 borderTopLeftRadius: '1.1rem',
                 borderTopRightRadius: '1.1rem',
                 overflow: 'hidden',
                 backgroundColor: '#ffffff',
-                border: '1px solid #e2e2e2ff',     // ✅ 위쪽 선만
+                border: '1px solid #e2e2e2ff', 
                 zIndex: 1000,
             }}
         >
