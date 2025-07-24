@@ -46,7 +46,10 @@ function AppContent() {
 
 
       {/* 수련장 관련 */}
-      {!shouldHideChallengeBottom && (
+      {/* {!shouldHideChallengeBottom && (
+        isChallengeSection ? <ChallengeBottomNavigation /> : <BottomNavigation />
+      )} */}
+      {!shouldHide && (
         isChallengeSection ? <ChallengeBottomNavigation /> : <BottomNavigation />
       )}
 
