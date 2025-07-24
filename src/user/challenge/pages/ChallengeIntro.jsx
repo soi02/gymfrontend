@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 // import introLogo from '../../assets/img/challenge_intro_logo.svg'; // 이미지 경로는 실제에 맞게 수정
-import './css/ChallengeIntro.css';
+// import './css/ChallengeIntro.css';
 
 export default function ChallengeIntro() {
   const navigate = useNavigate();
