@@ -1,27 +1,24 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Pretendard&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pretendard&display=swap');
 
 body {
   margin: 0;
-  font-family: 'Pretendard', sans-serif;
   background-color: #fefefe;
 }
 
 .challenge-welcome-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
+  justify-content: space-between; /* ✅ 위아래 정렬 */
+  min-height: 92vh;
+  padding: 20px 20px;
   box-sizing: border-box;
   text-align: left;
   margin: 0 auto;
+  max-width: 375px;
 }
 
-.logo {
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: #3f3f3f;
-  margin-bottom: 32px;
-  letter-spacing: -0.5px;
+.intro-content {
+  flex-grow: 1;
 }
 
 .title {
@@ -31,48 +28,24 @@ body {
   margin-bottom: 12px;
 }
 
-.wave {
-  display: inline-block;
-  animation: waveAnim 1.4s infinite;
-  transform-origin: 70% 70%;
-}
-
-@keyframes waveAnim {
-  0% { transform: rotate(0deg); }
-  15% { transform: rotate(14deg); }
-  30% { transform: rotate(-8deg); }
-  45% { transform: rotate(14deg); }
-  60% { transform: rotate(-4deg); }
-  75% { transform: rotate(10deg); }
-  100% { transform: rotate(0deg); }
-}
-
 .subtitle {
   font-size: 1rem;
   color: #555;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
-.highlight-box {
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  padding: 16px;
-  font-size: 0.95rem;
-  color: #333;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-}
-
-.highlight-box p {
-  margin: 8px 0;
+.subtitle:last-of-type {
+  margin-bottom: 8px;
 }
 
 .button-group {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-bottom: 24px;
+  margin-top: 10px;
+  margin-bottom: 9px;
 }
+
 
 .btn {
   display: block;
@@ -86,6 +59,7 @@ body {
   color: #111;
   background-color: #f9f9f9;
   transition: all 0.2s ease;
+  margin-bottom: 0%;
 }
 
 .btn:active {
@@ -110,4 +84,4 @@ body {
   font-size: 0.8rem;
   color: #999;
   text-align: center;
-} */
+}
