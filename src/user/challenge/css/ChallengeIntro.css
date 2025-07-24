@@ -1,0 +1,113 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Pretendard&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #fefefe;
+}
+
+.challenge-welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #3f3f3f;
+  margin-bottom: 32px;
+  letter-spacing: -0.5px;
+}
+
+.title {
+  font-size: 1.9rem;
+  line-height: 1.5;
+  color: #111;
+  margin-bottom: 12px;
+}
+
+.wave {
+  display: inline-block;
+  animation: waveAnim 1.4s infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes waveAnim {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  45% { transform: rotate(14deg); }
+  60% { transform: rotate(-4deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.highlight-box {
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.highlight-box p {
+  margin: 8px 0;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  text-decoration: none;
+  color: #111;
+  background-color: #f9f9f9;
+  transition: all 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:hover {
+  background-color: #eee;
+}
+
+.btn.primary {
+  background-color: #111827;
+  color: white;
+  border: none;
+}
+
+.btn.primary:hover {
+  background-color: #1f2937;
+}
+
+.small-tip {
+  font-size: 0.8rem;
+  color: #999;
+  text-align: center;
+} */
