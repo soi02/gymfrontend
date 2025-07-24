@@ -7,6 +7,10 @@ import LoginPage from './global/LoginPage'
 import RegisterPage from './global/RegisterPage'
 import ErrorPage from './global/ErrorPage'
 import NotificationPage from './global/NotificationsPage'
+import ChallengeHome from './user/challenge/pages/ChallengeHome'
+import ChallengeList from './user/challenge/pages/ChallengeList'
+import MyChallenge from './user/challenge/pages/MyChallenge'
+import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomNavigation'
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
@@ -17,9 +21,7 @@ function AppContent() {
 
   // 수련장 관련
   const isChallengeSection =
-    location.pathname.startsWith("/challengeHome") ||
-    location.pathname.startsWith("/challengeList") ||
-    location.pathname.startsWith("/myChallenge");
+    location.pathname.startsWith("/challenge");
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
@@ -32,9 +34,9 @@ function AppContent() {
         <Route path="/notifications" element={<NotificationPage />} />
 
         {/* 수련장 관련 */}
-        {/* <Route path="/challengeHome" element={<ChallengeHome />} />
+        <Route path="/challenge" element={<ChallengeHome />} />
         <Route path="/challengeList" element={<ChallengeList />} />
-        <Route path="/myChallenge" element={<MyChallenge />} /> */}
+        <Route path="/myChallenge" element={<MyChallenge />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
