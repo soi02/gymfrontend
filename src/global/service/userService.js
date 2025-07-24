@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default function useUserService(credentials){
+export default function useUserService(){
 
     const registerUser = async (userInfo) => {
         const response = await axios.post('http://localhost:8080/api/user/register', userInfo);
