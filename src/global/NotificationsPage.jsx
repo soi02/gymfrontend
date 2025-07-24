@@ -47,17 +47,17 @@ export default function NotificationPage() {
 
 
 // 추후 백엔드 구현 시 수정 필요
-  useEffect(() => {
-  if (!authInfo?.isAuthenticated) {
-    navigate("/login");
-    return;
-  }
+//   useEffect(() => {
+//   if (!authInfo?.isAuthenticated) {
+//     navigate("/login");
+//     return;
+//   }
 
-  fetch(`/api/notifications?userId=${userId}`)
-    .then(res => res.json())
-    .then(data => setNotifications(data))
-    .catch(err => console.error(err));
-}, [authInfo, navigate, userId]);
+//   fetch(`/api/notifications?userId=${userId}`)
+//     .then(res => res.json())
+//     .then(data => setNotifications(data))
+//     .catch(err => console.error(err));
+// }, [authInfo, navigate, userId]);
 
 
   return (

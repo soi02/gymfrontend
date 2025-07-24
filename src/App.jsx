@@ -15,10 +15,11 @@ function AppContent() {
 
   const shouldHide = hideHeaderFooterRoutes.includes(location.pathname);
 
+  // 수련장 관련
   const isChallengeSection =
-    path.startsWith("/challengeHome") ||
-    path.startsWith("/challengeList") ||
-    path.startsWith("/myChallenge");
+    location.pathname.startsWith("/challengeHome") ||
+    location.pathname.startsWith("/challengeList") ||
+    location.pathname.startsWith("/myChallenge");
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
@@ -31,9 +32,9 @@ function AppContent() {
         <Route path="/notifications" element={<NotificationPage />} />
 
         {/* 수련장 관련 */}
-        <Route path="/challengeHome" element={<ChallengeHome />} />
+        {/* <Route path="/challengeHome" element={<ChallengeHome />} />
         <Route path="/challengeList" element={<ChallengeList />} />
-        <Route path="/myChallenge" element={<MyChallenge />} />
+        <Route path="/myChallenge" element={<MyChallenge />} /> */}
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

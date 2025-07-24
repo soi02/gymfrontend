@@ -195,7 +195,7 @@ export default function TopHeader() {
             무슨 일로 들르셨사옵니까?
             </div>
             <Link
-            to="/user/mypage"
+            to="/mypage"
             style={{
                 display: "block",
                 padding: "10px",
