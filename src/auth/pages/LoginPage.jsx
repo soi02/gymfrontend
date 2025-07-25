@@ -17,7 +17,7 @@ export default function LoginPage() {
         password:''
     });
 
-    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
 
     const handleChange = (e) => {
@@ -47,7 +47,7 @@ export default function LoginPage() {
             dispatch(loginAction({ name: json.name, id: json.id }));
             console.log("얍얍: " , json );
         }catch(error){
-            alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+            setModalMessage(<><span>입력하신 성함과 암호가</span><br/> <span>짐의 장부와 맞지 않소이다.</span><br/><span> 재차 확인하여 주시기 바라오.</span></>);
             console.log(error)
             return;
         }
@@ -83,13 +83,13 @@ export default function LoginPage() {
                 </div>
 
                 <div className="social-buttons">
-                    <button className="social-btn" onClick={() => setShowModal(true)}>
+                    <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png" alt="Google" />
                     </button>
-                    <button className="social-btn" onClick={() => setShowModal(true)}>
+                    <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png" alt="Apple" />
                     </button>
-                    <button className="social-btn" onClick={() => setShowModal(true)}>
+                    <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
                         <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" alt="Kakao" />
                     </button>
                 </div>
@@ -101,11 +101,11 @@ export default function LoginPage() {
                 </div>
             </div>
 
-            {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <p>지금은 이용이 어려우나,<br></br> 머지않아 열릴 것이오.</p>
-                        <button onClick={() => setShowModal(false)} className='modal-close-btn'>닫기</button>
+            {modalMessage && (
+                <div className="loginpage-modal-overlay">
+                    <div className="loginpage-modal-content">
+                        <p>{modalMessage}</p>
+                        <button onClick={() => setModalMessage('')} className='loginpage-modal-close-btn'>닫기</button>
                     </div>
                 </div>
             )}
