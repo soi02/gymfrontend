@@ -1,89 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Pretendard&display=swap');
 
-body {
+html, body {
   margin: 0;
-  background-color: #fefefe;
+  padding: 0;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.challenge-welcome-container {
+.challenge-intro-body {
+  background-color: #ffffff;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* ✅ 위아래 정렬 */
-  min-height: 92vh;
-  padding: 20px 20px;
-  box-sizing: border-box;
-  text-align: left;
-  margin: 0 auto;
-  max-width: 375px;
-}
-
-.intro-content {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.title {
-  font-size: 1.9rem;
-  line-height: 1.5;
-  color: #111;
-  margin-bottom: 12px;
-}
-
-.subtitle {
-  font-size: 0.93rem;
-  color: #555;
-  margin-bottom: 16px;
-}
-
-.subtitle:last-of-type {
-  margin-bottom: 8px;
-}
-
-.challengebutton-group {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 10px;
-  margin-bottom: 9px;
   align-items: center;
 }
 
-
-.challenge-btn {
-  display: block;
+.challenge-intro-welcome-container {
   width: 100%;
-  padding: 16px;
+  max-width: 375px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px; /* ← 여백 통일 */
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.challenge-intro-content {
+  width: 100%;
+  text-align: center;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  box-sizing: border-box;
+}
+
+.challenge-intro-title {
+  font-size: 1.9rem;
+  line-height: 1.5;
+  color: #111;
+  margin-bottom: 14px;
+}
+
+.challenge-intro-subtitle {
+  font-size: 0.93rem;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+.challenge-intro-button-group {
+  display: flex;
+  flex-direction: column;
+  /* gap: 14px; 버튼 간 간격 */
+  width: 100%;
+}
+
+.challenge-intro-btn {
+  width: 100%;
+  padding: 14px;
   font-size: 1rem;
   border-radius: 12px;
   border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: #111;
+  transition: all 0.2s ease;
   text-align: center;
   text-decoration: none;
-  color: #111;
-  background-color: #f9f9f9;
-  transition: all 0.2s ease;
-  margin-bottom: 0%;
+  box-sizing: border-box;
 }
 
-.challenge-btn:active {
+.challenge-intro-btn:active {
   transform: scale(0.97);
 }
 
-.challenge-btn:hover {
+.challenge-intro-btn:hover {
   background-color: #eee;
 }
 
-.challenge-btn.primary {
+.challenge-intro-btn.primary {
   background-color: #111827;
   color: white;
   border: none;
 }
 
-.challenge-btn.primary:hover {
+.challenge-intro-btn.primary:hover {
   background-color: #1f2937;
-}
-
-.small-tip {
-  font-size: 0.8rem;
-  color: #999;
-  text-align: center;
 }

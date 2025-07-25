@@ -5,23 +5,26 @@ export default function ChallengeIntro() {
   const navigate = useNavigate();
 
   return (
-    <div className="challenge-welcome-container">
-      <div className="intro-content">
-        <h2 className="title">수련장</h2>
-        <p className="subtitle">챌린지 수련장에 오신걸 환영해요!</p>
-        <p className="subtitle">
-          목표를 향한 여정이 지금 시작됩니다.<br />
-          당신만의 챌린지를 만들고, 함께 도전해보세요!
-        </p>
-      </div>
+    <div className="challenge-intro-body">
+      <div className="challenge-intro-welcome-container">
+        <div className="challenge-intro-content">
+          <h2 className="challenge-intro-title">수련장</h2>
+          <p className="challenge-intro-subtitle">수련장에 발을 들이신 것을 환영하오.</p>
+          <p className="challenge-intro-subtitle">
+            그대의 수련 여정이 이제 막 시작되었소.<br />
+            스스로의 수련을 정하고, 도전에 임해보시오!
+          </p>
 
-      <div className="challenge-button-group">
-        <button className="btn challenge-btn" onClick={() => navigate('/personality-test')}>
-          성향 테스트 후 챌린지 추천 받기
-        </button>
-        <button className="btn challenge-btn" onClick={() => navigate('/challengeHome')}>
-          바로 수련장 둘러보기
-        </button>
+          <div className="challenge-intro-button-group">
+            <button className="btn challenge-intro-btn primary" onClick={() => navigate('/personality-test')}>
+              성향을 알아보고 수련을 추천받겠소
+            </button>
+            <button className="btn challenge-intro-btn" onClick={() => navigate('/challengeHome')}
+            >
+              곧장 수련장을 둘러보겠소
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
