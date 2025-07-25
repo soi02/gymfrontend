@@ -12,13 +12,13 @@ function ChallengeBottomNavigationItem({ link, iconClass, label }) {
                     className={iconClass}
                     style={{
                         fontSize: '24px',
-                        color: isActive ? "#d8ff4bff" : "#C4C4C4"
+                        color: isActive ? "#f4be01" : "#C4C4C4"
                     }}
                 ></i>
                 <div
                     style={{
                         fontSize: '0.75rem',
-                        color: isActive ? "#d8ff4bff" : "#C4C4C4"
+                        color: isActive ? "#f4be01" : "#C4C4C4"
                     }}
                 >
                     {label}
@@ -42,7 +42,7 @@ export default function ChallengeBottomNavigation() {
                 borderTopLeftRadius: '1.1rem',
                 borderTopRightRadius: '1.1rem',
                 overflow: 'hidden',
-                backgroundColor: '#1f1f1fff',
+                backgroundColor: '#001439',
                 border: '1px solid #e2e2e2ff', 
                 zIndex: 1000,
             }}
