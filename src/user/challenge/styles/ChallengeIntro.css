@@ -39,7 +39,7 @@ body {
   margin-bottom: 8px;
 }
 
-.button-group {
+.challengebutton-group {
   display: flex;
   flex-direction: column;
   gap: 14px;

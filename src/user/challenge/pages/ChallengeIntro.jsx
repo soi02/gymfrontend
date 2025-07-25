@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import '../styles/ChallengeIntro.module.css';
+import '../styles/ChallengeIntro.css';
 
 export default function ChallengeIntro() {
   const navigate = useNavigate();
@@ -15,11 +15,11 @@ export default function ChallengeIntro() {
         </p>
       </div>
 
-      <div className="button-group">
-        <button className="btn primary" onClick={() => navigate('/personality-test')}>
+      <div className="challenge-button-group">
+        <button className="btn challenge-btn" onClick={() => navigate('/personality-test')}>
           성향 테스트 후 챌린지 추천 받기
         </button>
-        <button className="btn" onClick={() => navigate('/challengeHome')}>
+        <button className="btn challenge-btn" onClick={() => navigate('/challengeHome')}>
           바로 수련장 둘러보기
         </button>
       </div>
