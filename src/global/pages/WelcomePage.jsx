@@ -26,11 +26,11 @@ export default function WelcomePage() {
             <div className="logo">짐마당</div>
 
             <h1 className="title">
-                수련하러 오셨소? <span className="wave">👋</span>
+                득근하러 오셨소? <span className="wave">👋</span>
             </h1>
 
             <p className="subtitle">
-                벗과 함께하는 오늘의 수련<br />
+                벗과 함께하는 오늘의 운동<br />
                 짐마당에서 시작하시오
             </p>
 
@@ -40,18 +40,18 @@ export default function WelcomePage() {
         <p><strong>🧘 짐마당:</strong> 마음과 몸을 다듬는 수련터</p>
       </div> */}
             <div className="highlight-box">
-                <p><strong>🏋️ 짐 버디 매칭:</strong> 혼자 하지 말고 함께 수련!</p>
-                <p><strong>🔥 챌린지:</strong> 나태한 자신과의 승부!</p>
-                <p><strong>📒 루틴 일지:</strong> 나만의 운동 루틴을 기록</p>
+                <p><strong>🏋️ 짐 버디 매칭:</strong> 혼자 하지 말고 함께 운동!</p>
+                <p><strong>🔥 챌린지:</strong> 같은 목표, 각자의 길!</p>
+                <p><strong>📒 루틴 일지:</strong> 나의 걸음, 나의 흔적</p>
                 <p><strong>🛒 장터:</strong> 운동기구를 나누거나 거래하는 장</p>
             </div>
 
             <div className="button-group">
-                <Link to="/register" className="btn primary">수련 시작하기</Link>
-                <Link to="/login" className="btn">이미 수련 중이오</Link>
+                <Link to="/register" className="btn primary">새롭게 가입하기</Link>
+                <Link to="/login" className="btn">이전에 들른적 있소</Link>
             </div>
 
-            <p className="small-tip">첫 수련은 무료로 도와드리오</p>
+            <p className="small-tip">진실로 귀한 것은, 꺾이지 않는 그대의 마음이오</p>
         </div>
     );
 }
