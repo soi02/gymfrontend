@@ -14,7 +14,7 @@ import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomN
 import ChallengeIntro from './user/challenge/pages/ChallengeIntro'
 import WelcomePage from './global/pages/WelcomePage'
 import RegisterPage from './auth/pages/RegisterPage'
-import RoutineHomePage from './routine/pages/RoutineHomePage'
+import RoutineHomePage from './user/routine/pages/RoutineHomePage'
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {

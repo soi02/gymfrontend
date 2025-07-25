@@ -1,0 +1,107 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.routine-homepage-body {
+  background-color: #ffffff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+.routine-homepage-container {
+  width: 100%;
+  max-width: 375px;
+  height: 100vh;
+  padding: 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 120px; /* 버튼 고정 영역 고려해서 공간 확보 */
+}
+
+.routine-homepage-content {
+  width: 100%;
+  text-align: center;
+  padding-top: 14px;
+  box-sizing: border-box;
+}
+
+.routine-homepage-title {
+  font-size: 1.9rem;
+  font-weight: bold;
+  line-height: 1.5;
+  color: #111;
+  margin-bottom: 14px;
+}
+
+.routine-speech-bubble {
+  position: relative;
+  background: #f1f1f1;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 220px;
+  margin: 20px auto 10px auto;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.routine-speech-bubble p {
+  margin: 0;
+}
+
+/* 꼬리 */
+.routine-speech-arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #f1f1f1;
+}
+
+.routine-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.routine-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.routine-card:hover {
+  transform: scale(1.03);
+  background-color: #fff9e3;
+
+}
+
+.add-card {
+  background-color: #f7f7f7;
+  color: #888;
+  cursor: pointer;
+}
+
+.add-card:hover {
+  background-color: #ebeaea;
+  color: #888;
+  cursor: pointer;
+}
