@@ -49,7 +49,7 @@ export default function BottomNavigation() {
         >
             <BottomNavigationItem link="/routine" iconClass="ri-file-paper-2-fill" label="득근첩" />
             <BottomNavigationItem link="/challenge" iconClass="ri-award-fill" label="수련장" />
-            <BottomNavigationItem link="/community" iconClass="ri-wechat-fill" label="벗" />
+            <BottomNavigationItem link="/buddy" iconClass="ri-wechat-fill" label="벗" />
             <BottomNavigationItem link="/market" iconClass="ri-store-3-fill" label="장터" />
             <BottomNavigationItem link="/mypage" iconClass="ri-user-3-fill" label="나의 처소" />
         </div>

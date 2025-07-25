@@ -15,6 +15,8 @@ import ChallengeIntro from './user/challenge/pages/ChallengeIntro'
 import WelcomePage from './global/pages/WelcomePage'
 import RegisterPage from './auth/pages/RegisterPage'
 import RoutineHomePage from './routine/pages/RoutineHomePage'
+import BuddyRegister from './buddy/pages/BuddyRegister'
+import BuddyBottomNavigation from './buddy/commons/BuddyBottomNavigation'
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
@@ -25,6 +27,7 @@ function AppContent() {
   // 수련장 관련
   const shouldHideChallengeBottom = location.pathname === '/challenge';
   const isChallengeSection = location.pathname.startsWith('/challenge');
+  const isBuddySection = location.pathname.startsWith('/buddy');
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
@@ -39,6 +42,8 @@ function AppContent() {
         {/* 루틴 */}
         <Route path='/routine' element={<RoutineHomePage />} />
 
+        {/* 벗 */}
+        <Route path='/buddy' element={<BuddyRegister />} />
 
         {/* 수련장 관련 */}
         <Route path="/challenge" element={<ChallengeIntro />} />
@@ -50,11 +55,22 @@ function AppContent() {
       </Routes>
 
       {/* 수련장 관련 */}
-      {!shouldHide && (
+      {/* {!shouldHide && (
         location.pathname === '/challenge'
           ? null
           : isChallengeSection
             ? <ChallengeBottomNavigation />
+            : <BottomNavigation />
+      )} */}
+
+       {/* 바텀 네비게이션 조건 */}
+      {!shouldHide && (
+        isChallengeSection
+          ? (location.pathname === '/challenge' 
+            ? null 
+            : <ChallengeBottomNavigation />)
+          : isBuddySection
+            ? <BuddyBottomNavigation />
             : <BottomNavigation />
       )}
 
