@@ -38,7 +38,7 @@ export default function ErrorPage() {
           fontSize: "14px",
         }}
       >
-        집으로 이동
+       마당으로 가기
       </Link>
     </div>
   );
