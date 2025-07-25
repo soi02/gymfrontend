@@ -44,14 +44,18 @@ function AppContent() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 
-
       {/* 수련장 관련 */}
-      {/* {!shouldHideChallengeBottom && (
-        isChallengeSection ? <ChallengeBottomNavigation /> : <BottomNavigation />
-      )} */}
       {!shouldHide && (
-        isChallengeSection ? <ChallengeBottomNavigation /> : <BottomNavigation />
+        location.pathname === '/challenge'
+          ? null
+          : isChallengeSection
+            ? <ChallengeBottomNavigation />
+            : <BottomNavigation />
       )}
+
+
+
+
 
     </div>
   );
