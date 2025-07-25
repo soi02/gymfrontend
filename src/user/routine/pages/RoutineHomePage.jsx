@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import routineCharacter from '../../../assets/img/routine_character.png';
+import routineCharacter from '../../../assets/img//routine/routine_character.png';
 import '../styles/RoutineHomePage.css'
 
 export default function RoutineHomePage() {
