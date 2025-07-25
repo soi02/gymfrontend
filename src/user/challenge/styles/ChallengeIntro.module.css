@@ -49,7 +49,7 @@ body {
 }
 
 
-.btn {
+.challenge-btn {
   display: block;
   width: 100%;
   padding: 16px;
@@ -64,21 +64,21 @@ body {
   margin-bottom: 0%;
 }
 
-.btn:active {
+.challenge-btn:active {
   transform: scale(0.97);
 }
 
-.btn:hover {
+.challenge-btn:hover {
   background-color: #eee;
 }
 
-.btn.primary {
+.challenge-btn.primary {
   background-color: #111827;
   color: white;
   border: none;
 }
 
-.btn.primary:hover {
+.challenge-btn.primary:hover {
   background-color: #1f2937;
 }
 

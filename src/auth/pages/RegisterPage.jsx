@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // LoginPage.jsx 안에서
-import useUserService from "./service/userService"; // ⬅️ 이게 정답!
+import useUserService from "../service/userService"; // ⬅️ 이게 정답!
 
 export default function RegisterPage() {
 

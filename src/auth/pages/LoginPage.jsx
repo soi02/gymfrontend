@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useUserService from "./service/userService"; 
+import useUserService from "../service/userService"; 
 import { useDispatch } from 'react-redux';
-import { loginAction } from '../redux/authSlice';
+import { loginAction } from '../../redux/authSlice';
 // import {jwtDecode} from "jwt-decode";
 
-import './css/LoginPage.css';
+import '../styles/LoginPage.css';
 
 
 export default function LoginPage() {

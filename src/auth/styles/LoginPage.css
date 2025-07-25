@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Gowun Dodum', sans-serif;
+  font-family: 'Gowun Dodum', sans-serif !important;
   overflow-x: hidden; /* ← 가로 스크롤 방지용 */
 }
 * {
@@ -11,7 +11,7 @@ html, body {
 body {
   margin: 0;
   /* font-family: 'Segoe UI', sans-serif; */
-  font-family: 'Gowun Dodum', sans-serif;
+  font-family: 'Gowun Dodum', sans-serif !important;
   /* background-color: #f2f2f2; */
 }
 
@@ -80,20 +80,20 @@ body {
 }
 
 .sign-in-btn {
-  background-color: #4e8cff !important;
+  background-color: #4e8cff;
   color: white;
 }
 
 .google-btn {
-  background-color: white !important;
-  color: #444 !important;
-  border: 1px solid #ccc !important;
+  background-color: white;
+  color: #444;
+  border: 1px solid #ccc;
 }
 
 .kakao-btn {
-  background-color: rgb(246, 22tldzm 6, 75) !important;
-  color: #3C1E1E !important;
-  font-weight: bold !important;
+  background-color: rgb(246, 226, 75);
+  color: #3C1E1E;
+  font-weight: bold;
 }
 
 .signup-text {

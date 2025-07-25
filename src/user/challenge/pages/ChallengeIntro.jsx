@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import '../css/ChallengeIntro.css';
+import '../styles/ChallengeIntro.module.css';
 
 export default function ChallengeIntro() {
   const navigate = useNavigate();

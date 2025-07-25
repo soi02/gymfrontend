@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import errorImg from "../assets/img/error_img.png";
+import errorImg from "../../assets/img/error_img.png";
 
 export default function ErrorPage() {
   return (

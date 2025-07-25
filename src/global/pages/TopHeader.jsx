@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutAction } from "../redux/authSlice";
-import logoImg from "../assets/img/gymmadang_logo_kr.svg";
-import profileImg from "../assets/img/default_profile_img.svg";
-import birdImg from "../assets/img/bird.png";
+import { logoutAction } from "../../redux/authSlice";
+import logoImg from "../../assets/img/gymmadang_logo_kr.svg";
+import profileImg from "../../assets/img/default_profile_img.svg";
+import birdImg from "../../assets/img/bird.png";
 import { useState } from "react";
 
 export default function TopHeader() {

@@ -18,7 +18,7 @@
 // }
 
 import { Link } from "react-router-dom";
-import "./css/WelcomePage.css";
+import "../styles/WelcomePage.module.css";
 
 export default function WelcomePage() {
     return (

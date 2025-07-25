@@ -1,12 +1,10 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
-import BottomNavigation from './global/BottomNavigation'
-import TopHeader from './global/TopHeader'
-import WelcomePage from './global/WelcomePage'
-import LoginPage from './global/LoginPage'
-import RegisterPage from './global/RegisterPage'
-import ErrorPage from './global/ErrorPage'
-import NotificationPage from './global/NotificationsPage'
+import BottomNavigation from './global/pages/BottomNavigation'
+import TopHeader from './global/pages/TopHeader'
+import LoginPage from './auth/pages/LoginPage'
+import ErrorPage from './global/pages/ErrorPage'
+import NotificationPage from './global/pages/NotificationsPage'
 
 import ChallengeHome from './user/challenge/pages/ChallengeHome'
 import ChallengeList from './user/challenge/pages/ChallengeList'
@@ -14,6 +12,8 @@ import ChallengeMy from './user/challenge/pages/ChallengeMy'
 
 import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomNavigation'
 import ChallengeIntro from './user/challenge/pages/ChallengeIntro'
+import WelcomePage from './global/pages/WelcomePage'
+import RegisterPage from './auth/pages/RegisterPage'
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
