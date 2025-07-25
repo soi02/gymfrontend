@@ -1,7 +1,10 @@
+import routineCharacter from '../../assets/img/routine_character.png';
+
+
 export default function RoutineHomePage() {
     return(
         <>
-        득근첩 메인이외다
+        <img src={routineCharacter} alt="루틴 캐릭터"></img>
         </>
     )
 }

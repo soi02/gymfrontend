@@ -47,7 +47,7 @@ export default function BottomNavigation() {
                 zIndex: 1000,
             }}
         >
-            <BottomNavigationItem link="/routine" iconClass="ri-file-paper-2-fill" label="득근첩" />
+            <BottomNavigationItem link="/routine" iconClass="ri-file-paper-2-fill" label="득근록" />
             <BottomNavigationItem link="/challenge" iconClass="ri-award-fill" label="수련장" />
             <BottomNavigationItem link="/community" iconClass="ri-wechat-fill" label="벗" />
             <BottomNavigationItem link="/market" iconClass="ri-store-3-fill" label="장터" />
