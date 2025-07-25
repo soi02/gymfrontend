@@ -80,20 +80,20 @@ body {
 }
 
 .sign-in-btn {
-  background-color: #4e8cff;
+  background-color: #4e8cff !important;
   color: white;
 }
 
 .google-btn {
-  background-color: white;
-  color: #444;
-  border: 1px solid #ccc;
+  background-color: white !important;
+  color: #444 !important;
+  border: 1px solid #ccc !important;
 }
 
 .kakao-btn {
-  background-color: rgb(246, 226, 75);
-  color: #3C1E1E;
-  font-weight: bold;
+  background-color: rgb(246, 22tldzm 6, 75) !important;
+  color: #3C1E1E !important;
+  font-weight: bold !important;
 }
 
 .signup-text {

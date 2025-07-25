@@ -19,6 +19,7 @@ body {
 
 .intro-content {
   flex-grow: 1;
+  text-align: center;
 }
 
 .title {
@@ -29,7 +30,7 @@ body {
 }
 
 .subtitle {
-  font-size: 1rem;
+  font-size: 0.93rem;
   color: #555;
   margin-bottom: 16px;
 }
@@ -44,6 +45,7 @@ body {
   gap: 14px;
   margin-top: 10px;
   margin-bottom: 9px;
+  align-items: center;
 }
 
 
