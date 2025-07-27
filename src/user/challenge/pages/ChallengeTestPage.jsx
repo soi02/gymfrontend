@@ -1,11 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTestState } from '../hooks/useTestState';
+import { useDispatch } from 'react-redux';
+import {
+    addScore,
+    setKeywordResult,
+    setRoutineResult
+} from '../../../redux/challengeTestSlice'; // 경로 확인 필요
+
 import '../styles/TestPage.css'; // CSS 별도 작성
 import { useState } from 'react';
 
+
+
 export default function ChallengeTestPage() {
     const navigate = useNavigate();
-    const { addScore, setKeywordResult, setRoutineResult } = useTestState();
+    const dispatch = useDispatch();
 
     
     const { stepId } = useParams();
@@ -163,7 +171,7 @@ export default function ChallengeTestPage() {
             setTimeout(() => setToastVisible(false), 2000);
         return;
         }
-    setKeywordResult(selectedKeywords); // 저장!
+    dispatch(setKeywordResult(selectedKeywords));
     }
 
     if (step === 8) {
@@ -179,7 +187,7 @@ export default function ChallengeTestPage() {
             setTimeout(() => setToastVisible(false), 2000);
         return;
         }
-        setRoutineResult({ days: selectedDays, region }); // 저장!
+        dispatch(setRoutineResult({ days: selectedDays, region }));
         navigate('/challengeTest/result');
         return;
     }
@@ -202,7 +210,6 @@ export default function ChallengeTestPage() {
     const data = questions[step];
 
     if (step <= 6 && !data) return <div>잘못된 접근입니다.</div>;
-
 
 
     return (
@@ -229,7 +236,9 @@ export default function ChallengeTestPage() {
                 <div className="choice-buttons">
                     {data.options.map((opt, idx) => (
                     <button key={idx} className="choice-btn" onClick={() => {
-                        addScore(opt.type);
+                        // addScore(opt.type);
+                        dispatch(addScore({ type: opt.type }));
+                        console.log("📌 dispatched:", opt.type);
                         navigate(`/challengeTest/step/${step + 1}`);
                     }}>
                         {opt.text}

@@ -22,6 +22,7 @@ import BuddyBottomNavigation from './buddy/commons/BuddyBottomNavigation'
 import ChallengeTestIntro from './user/challenge/pages/ChallengeTestIntro'
 import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage'
 import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
+import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -66,6 +67,8 @@ function AppContent() {
         <Route path="/challengeTestIntro" element={<ChallengeTestIntro />} />
         <Route path="/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
         <Route path="/challengeTest/result" element={<ChallengeTestResult />} />
+        <Route path="/challengeRecommend" element={<ChallengeRecommendation />} />
+
 
 
 
