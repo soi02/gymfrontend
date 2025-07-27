@@ -1,6 +1,3 @@
-// 선택값과 점수 관리 훅
-
-
 import { useState } from 'react';
 
 export function useTestState() {
@@ -12,14 +9,30 @@ export function useTestState() {
     balanced: 0,
   });
 
+  const [keywords, setKeywords] = useState([]); // 관심 키워드
+  const [routine, setRoutine] = useState({ days: [], region: '' }); // 루틴 정보
+
   const addScore = (type, amount = 1) => {
-    // 그 선택지에 해당하는 성향 타입(type)의 점수를 amount만큼 증가시키는 함수, 점수는 누적됨
     setScores((prev) => ({
       ...prev,
       [type]: prev[type] + amount
-      // goal: prev.goal + amount 이런 식으로 계산될 것임
     }));
   };
 
-  return { scores, addScore };
+  const setKeywordResult = (selected) => {
+    setKeywords(selected);
+  };
+
+  const setRoutineResult = ({ days, region }) => {
+    setRoutine({ days, region });
+  };
+
+  return {
+    scores,
+    addScore,
+    keywords,
+    setKeywordResult,
+    routine,
+    setRoutineResult,
+  };
 }

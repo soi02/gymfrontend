@@ -3,9 +3,10 @@ import { useTestState } from '../hooks/useTestState';
 import '../styles/TestPage.css'; // CSS 별도 작성
 import { useState } from 'react';
 
-export default function TestPage() {
+export default function ChallengeTestPage() {
     const navigate = useNavigate();
-    const { addScore } = useTestState();
+    const { addScore, setKeywordResult, setRoutineResult } = useTestState();
+
     
     const { stepId } = useParams();
     const step = parseInt(stepId || '1', 10);
@@ -154,36 +155,37 @@ export default function TestPage() {
 
 
     // 선택
-const handleNext = () => {
-  if (step === 7) {
-    if (selectedKeywords.length === 0) {
-      setToastMessage("관심사를 하나 이상 선택해주세요!");
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 2000);
-      return;
-    }
-  }
-
-  if (step === 8) {
-    if (selectedDays.length === 0) {
-      setToastMessage("운동하는 요일을 선택해주세요!");
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 2000);
-      return;
-    }
-    if (!region) {
-      setToastMessage("운동 지역을 선택해주세요!");
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 2000);
-      return;
+    const handleNext = () => {
+    if (step === 7) {
+        if (selectedKeywords.length === 0) {
+            setToastMessage("관심사를 하나 이상 선택해주세요!");
+            setToastVisible(true);
+            setTimeout(() => setToastVisible(false), 2000);
+        return;
+        }
+    setKeywordResult(selectedKeywords); // 저장!
     }
 
-    navigate('/challengeTestResult');
-    return;
-  }
+    if (step === 8) {
+        if (selectedDays.length === 0) {
+            setToastMessage("운동하는 요일을 선택해주세요!");
+            setToastVisible(true);
+            setTimeout(() => setToastVisible(false), 2000);
+        return;
+        }
+        if (!region) {
+            setToastMessage("운동 지역을 선택해주세요!");
+            setToastVisible(true);
+            setTimeout(() => setToastVisible(false), 2000);
+        return;
+        }
+        setRoutineResult({ days: selectedDays, region }); // 저장!
+        navigate('/challengeTest/result');
+        return;
+    }
 
-  navigate(`/challengeTest/step/${step + 1}`);
-};
+    navigate(`/challengeTest/step/${step + 1}`);
+    };
 
 
 
@@ -276,49 +278,49 @@ const handleNext = () => {
         )}
 
 
+        {/* STEP 8: 운동 요일, 지역 */}
+        {step === 8 && (
+            <>
+                <h2 className="test-question-title">언제, 어디서 주로 헬스를 하나요?</h2>
 
-{step === 8 && (
-  <>
-    <h2 className="test-question-title">언제, 어디서 주로 헬스를 하나요?</h2>
+                <div className="routine-section">
 
-    <div className="routine-section">
+                {/* 운동 요일 선택 제목 */}
+                <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', marginTop: '10px' }}>
+                    운동 요일 선택
+                </div>
+                <div className="routine-days">
+                    {['일', '월', '화', '수', '목', '금', '토'].map((d) => (
+                    <button
+                        key={d}
+                        className={`day-btn ${selectedDays.includes(d) ? 'selected' : ''}`}
+                        onClick={() => toggleDay(d)}
+                    >
+                        {d}
+                    </button>
+                    ))}
+                </div>
 
-      {/* 운동 요일 선택 제목 */}
-      <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', marginTop: '10px' }}>
-        운동 요일 선택
-      </div>
-      <div className="routine-days">
-        {['일', '월', '화', '수', '목', '금', '토'].map((d) => (
-          <button
-            key={d}
-            className={`day-btn ${selectedDays.includes(d) ? 'selected' : ''}`}
-            onClick={() => toggleDay(d)}
-          >
-            {d}
-          </button>
-        ))}
-      </div>
+                {/* 운동 지역 선택 제목 */}
+                <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', marginTop: '20px' }}>
+                    운동 지역 선택
+                </div>
+                <select
+                    value={region}
+                    onChange={(e) => setRegion(e.target.value)}
+                    className="region-select"
+                >
+                    <option value="">지역 선택</option>
+                    <option value="서울">서울</option>
+                    <option value="부산">부산</option>
+                    <option value="인천">인천</option>
+                    <option value="기타">기타</option>
+                </select>
+                </div>
 
-      {/* 운동 지역 선택 제목 */}
-      <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', marginTop: '20px' }}>
-        운동 지역 선택
-      </div>
-      <select
-        value={region}
-        onChange={(e) => setRegion(e.target.value)}
-        className="region-select"
-      >
-        <option value="">지역 선택</option>
-        <option value="서울">서울</option>
-        <option value="부산">부산</option>
-        <option value="인천">인천</option>
-        <option value="기타">기타</option>
-      </select>
-    </div>
-
-    <button className="next-button" onClick={handleNext}>결과 보기</button>
-  </>
-)}
+                <button className="next-button" onClick={handleNext}>결과 보기</button>
+            </>
+        )}
 
 
     {toastVisible && (

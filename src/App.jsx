@@ -19,8 +19,10 @@ import RegisterPage from './auth/pages/RegisterPage'
 import RoutineHomePage from './user/routine/pages/RoutineHomePage'
 import BuddyRegister from './buddy/pages/BuddyRegister'
 import BuddyBottomNavigation from './buddy/commons/BuddyBottomNavigation'
-import TestIntro from './user/challenge/pages/TestIntro'
-import TestPage from './user/challenge/pages/TestPage'
+import ChallengeTestIntro from './user/challenge/pages/ChallengeTestIntro'
+import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage'
+import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
+
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
@@ -61,9 +63,9 @@ function AppContent() {
         <Route path="/challengeMy" element={<ChallengeMy />} />
 
 
-        <Route path="/challengeTestIntro" element={<TestIntro />} />
-        <Route path="/challengeTest/step/:stepId" element={<TestPage />} />
-        {/* <Route path="/challengeTest/result" element={<TestResult />} /> */}
+        <Route path="/challengeTestIntro" element={<ChallengeTestIntro />} />
+        <Route path="/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
+        <Route path="/challengeTest/result" element={<ChallengeTestResult />} />
 
 
 

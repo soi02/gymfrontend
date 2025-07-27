@@ -3,7 +3,7 @@ import targetIntroImg from '../../../assets/img/challenge/target_img.png'; // �
 import '../styles/TestIntro.css';
 import { useState } from 'react';
 
-export default function TestIntro({ userName = '윤수' }) {
+export default function ChallengeTestIntro({ userName = '윤수' }) {
   const navigate = useNavigate();
   const [selectedChoice, setSelectedChoice]= useState(null);
 
