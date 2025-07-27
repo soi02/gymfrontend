@@ -19,21 +19,28 @@ import RegisterPage from './auth/pages/RegisterPage'
 import RoutineHomePage from './user/routine/pages/RoutineHomePage'
 import BuddyRegister from './buddy/pages/BuddyRegister'
 import BuddyBottomNavigation from './buddy/commons/BuddyBottomNavigation'
+import TestIntro from './user/challenge/pages/TestIntro'
+import TestPage from './user/challenge/pages/TestPage'
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
   const location = useLocation();
-  const hideHeaderFooterRoutes = ['/', '/login', '/register']; // 숨길 경로들
-  const shouldHide = hideHeaderFooterRoutes.includes(location.pathname);
 
-  // 수련장 관련
-  const shouldHideChallengeBottom = location.pathname === '/challenge';
+  // TopHeader를 숨길 경로들
+  const hideHeaderFooterRoutes = ['/', '/login', '/register']; // 숨길 경로들
+  
   const isChallengeSection = location.pathname.startsWith('/challenge');
+  const isTestSection = location.pathname.startsWith('/challengeTest');
   const isBuddySection = location.pathname.startsWith('/buddy');
+  
+  // TopHeader 숨길 조건들
+  const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || isTestSection;
+
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
-      {!shouldHide && <TopHeader />}
+      {/* 탑헤더 조건 */}
+      {!shouldHideTop && <TopHeader />}
 
       <Routes>
         <Route path='/' element={<WelcomePage />} />
@@ -47,26 +54,25 @@ function AppContent() {
         {/* 벗 */}
         <Route path='/buddy' element={<BuddyRegister />} />
 
-        {/* 수련장 관련 */}
+        {/* 수련장 */}
         <Route path="/challenge" element={<ChallengeIntro />} />
         <Route path="/challengeHome" element={<ChallengeHome />} />
         <Route path="/challengeList" element={<ChallengeList />} />
         <Route path="/challengeMy" element={<ChallengeMy />} />
 
+
+        <Route path="/challengeTestIntro" element={<TestIntro />} />
+        <Route path="/challengeTest/step/:stepId" element={<TestPage />} />
+        {/* <Route path="/challengeTest/result" element={<TestResult />} /> */}
+
+
+
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 
-      {/* 수련장 관련 */}
-      {/* {!shouldHide && (
-        location.pathname === '/challenge'
-          ? null
-          : isChallengeSection
-            ? <ChallengeBottomNavigation />
-            : <BottomNavigation />
-      )} */}
 
        {/* 바텀 네비게이션 조건 */}
-      {!shouldHide && (
+      {!shouldHideTop && (
         isChallengeSection
           ? (location.pathname === '/challenge' 
             ? null 

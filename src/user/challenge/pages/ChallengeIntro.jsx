@@ -38,7 +38,7 @@ export default function ChallengeIntro() {
   const handleChoiceClick = (choice) => {
     setSelectedChoice(choice);
     if(choice === 'test') {
-      navigate('personality-test');
+      navigate('/challengeTestIntro');
     } else if(choice === 'lookAround') {
       navigate('/challengeHome');
     }
