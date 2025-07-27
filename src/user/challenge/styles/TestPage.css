@@ -91,7 +91,7 @@
 
 
 
-/* 관심사 키워드 관련 */
+/* step 7 : 관심사 키워드 관련 */
 .keyword-category-section {
   max-height: 60vh;
   overflow-y: auto;
@@ -178,4 +178,44 @@
     opacity: 0;
     transform: translate(-50%, 30px);
   }
+}
+
+
+/* step 8 운동 요일, 지역 관련 */
+.routine-days {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.day-btn {
+  flex: 1;
+  min-width: 40px;
+  padding: 10px 0;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1.5px solid #aaa;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.day-btn.selected {
+  background-color: #2f80ed;
+  color: white;
+  border-color: #2f80ed;
+}
+
+
+.region-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+  background-color: white;
+  margin-top: 10px;
 }
