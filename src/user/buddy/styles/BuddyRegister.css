@@ -2,7 +2,7 @@
   font-family: 'Pretendard', sans-serif;
 } */
 .buddy-register-container {
-  font-family: 'Arial', sans-serif;
+  /* font-family: 'Arial', sans-serif; */
   text-align: center;
   padding: 20px;
 }
@@ -16,7 +16,6 @@
 .image-runner {
   width: 100px;
   height: 100px;
-  /* background: url('/path-to-your-runner-image.png') no-repeat center / contain; */
   margin: 20px auto;
 }
 
@@ -81,32 +80,4 @@
   margin-top: 10px;
 }
 
-/* .navigation {
-  margin-top: 20px;
-} */
-
-/* ✅ 모달 배경 */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* 어두운 반투명 배경 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999; /* 다른 요소 위에 떠야 함 */
-}
-
-/* ✅ 모달 창 본체 */
-.modal {
-  background-color: #fff;
-  padding: 30px 20px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 320px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
 
