@@ -90,7 +90,34 @@ console.log("📊 radarData", radarData);
 
 
   return (
+
+
+    
 <div className="test-page-body">
+
+  {/* 상단 닫기 버튼 (X) */}
+<div style={{
+  position: 'absolute',
+  top: '18px',
+  right: '18px',
+  zIndex: 10,
+}}>
+  <button
+    onClick={() => navigate('/gymmadang/challenge/challengeHome')}
+    style={{
+      background: 'transparent',
+      border: 'none',
+      fontSize: '22px',
+      fontWeight: '500',
+      color: '#555',
+      cursor: 'pointer',
+    }}
+    aria-label="닫기"
+  >
+    ✕
+  </button>
+</div>
+
 
 {/* 대표 성향 섹션 */}
 <div style={{ textAlign: 'center', marginBottom: '27px' }}>
@@ -204,7 +231,7 @@ console.log("📊 radarData", radarData);
       boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
     }}
   >
-    📋 추천 챌린지 전체 보기
+    추천 챌린지 전체 보기
   </button>
 </div>
 
