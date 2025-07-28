@@ -17,8 +17,8 @@ import RegisterPage from './auth/pages/RegisterPage'
 
 
 import RoutineHomePage from './user/routine/pages/RoutineHomePage'
-import BuddyRegister from './buddy/pages/BuddyRegister'
-import BuddyBottomNavigation from './buddy/commons/BuddyBottomNavigation'
+import BuddyRegister from './user/buddy/pages/BuddyRegister'
+import BuddyBottomNavigation from './user/buddy/commons/BuddyBottomNavigation'
 import ChallengeTestIntro from './user/challenge/pages/ChallengeTestIntro'
 import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage'
 import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
