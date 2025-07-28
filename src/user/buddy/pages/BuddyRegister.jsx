@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import '../styles/BuddyRegister.css';
 import buddyImage from "../../../assets/img/buddy/buddy3.png";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function BuddyRegister() {
     const [step, setStep] = useState(1);
     const [gender, setGender] = useState('');
-    const [ages, setAges] = useState([]); // 여기에 id값들 저장
+    const [ages, setAges] = useState([]);
     const [intro, setIntro] = useState('');
     const [showModal, setShowModal] = useState(false);
 
-    // buddy_age 테이블 id, label, age 매핑
+    const navigate = useNavigate();
+
     const ageOptions = [
         { label: '10대', id: 1, age: 10 },
         { label: '20대', id: 2, age: 20 },
@@ -22,7 +24,6 @@ export default function BuddyRegister() {
         { label: '80대', id: 8, age: 80 },
     ];
 
-    // 나이대 토글 함수 (id 기준)
     const handleAgeToggle = (id) => {
         if (ages.includes(id)) {
             setAges(ages.filter(a => a !== id));
@@ -31,17 +32,14 @@ export default function BuddyRegister() {
         }
     };
 
-    // 성별을 enum 값으로 변환하는 함수
     const convertGenderToEnum = (g) => {
         if (g === '남성') return 'MALE';
         if (g === '여성') return 'FEMALE';
         return 'ANY';
     };
 
-    // 제출 함수
     const handleSubmit = async () => {
         try {
-            // 선택한 나이대 id로 buddyAgeList 생성
             const buddyAgeList = ages.map(id => ({ id }));
 
             const data = {
@@ -52,13 +50,17 @@ export default function BuddyRegister() {
 
             const res = await axios.post('http://localhost:8080/api/buddy/register', data);
             console.log('보내는 데이터:', data);
-            // alert(res.data); // "버디 등록 완료"
             setShowModal(true);
 
         } catch (error) {
             console.error('등록 실패:', error);
             alert('등록 중 오류가 발생했습니다.');
         }
+    };
+
+    const handleGoToBuddyHome = () => {
+        setShowModal(false);
+        navigate('/gymmadang/buddyhome'); // buddyhome 경로로 이동합니다.
     };
 
     const renderPage = () => {
@@ -149,7 +151,6 @@ export default function BuddyRegister() {
         <div className="buddy-register-container">
             {renderPage()}
 
-            {/* ✅ 모달창 */}
             {showModal && (
                 <div
                     className="modal-backdrop"
@@ -183,9 +184,7 @@ export default function BuddyRegister() {
                         <p>운동 벗을 찾아보세요 💪</p>
                         <button
                             className="button"
-                            onClick={() => {
-                                setShowModal(false);
-                            }}
+                            onClick={handleGoToBuddyHome} 
                         >
                             벗 구하러 가기
                         </button>
