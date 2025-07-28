@@ -4,10 +4,17 @@ import '../styles/RoutineHomePage.css'
 
 export default function RoutineHomePage() {
   const fullText = `오늘은 어떤 부위를\n운동해보시겠소?\n매번 즐겨하는 부위말고\n다른 부위도 단련해주시오.`;
+  
   const [displayedText, setDisplayedText] = useState('');
-
-  // 더미 - 추후 수정
   const routines = ['가슴', '등', '어깨', '팔', '하체'];
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleFabClick = () => {
+    setShowOptions(!showOptions);
+  };
+
+
+
 
 
   useEffect(() => {
@@ -29,9 +36,10 @@ export default function RoutineHomePage() {
           <div className="routine-homepage-body">
             <div className="routine-homepage-container">
               <div className="routine-homepage-content">
-                <h2 className="routine-homepage-title">훈련도감</h2>
+                <h2 className="routine-homepage-title"></h2>
         
                 {/* 캐릭터, 말풍선 */}
+
                 <div className="row">
                   {/* 캐릭터 */}
                   <div className="col-5">
@@ -51,17 +59,18 @@ export default function RoutineHomePage() {
                   </div>
                 </div>
 
-                {/* 루틴 선택 박스 */}
+
+
                 <div className="routine-grid">
                   {routines.map((routine, idx) => (
                     <div key={idx} className="routine-card">{routine}</div>
                   ))}
-                  <div className="routine-card add-card">＋ 루틴 추가</div>
                 </div>
 
-
-                <div className="routine-grid">
-
+                {/* 하단 고정 버튼 영역 */}
+                <div className="routine-bottom-buttons">
+                  <button className="routine-free-btn">⚡ 자유운동</button>
+                  <button className="routine-add-btn">＋ 루틴추가</button>
                 </div>
 
 

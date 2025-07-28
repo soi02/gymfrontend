@@ -34,7 +34,7 @@ html, body {
 }
 
 .challenge-intro-title {
-  font-size: 1.9rem;
+  font-size: 1.2rem;
   font-weight: bold;
   line-height: 1.5;
   color: #111;
@@ -51,7 +51,7 @@ html, body {
 /* 이미지 */
 .challenge-intro-character-img {
   width: 65%;
-  margin-top: 7px;
+  margin-top: 3px;
 }
 
 /* 말풍선 */
@@ -91,7 +91,7 @@ html, body {
 /* 안내문구 */
 .challenge-intro-gap-helper {
   position: fixed;
-  bottom: 144px;
+  bottom: 220px;
   left: 0;
   right: 0;
   text-align: center;
@@ -111,7 +111,7 @@ html, body {
 /* 선택 버튼 2개 */
 .challenge-choice-group {
   position: fixed;
-  bottom: 20px;
+  bottom: 90px;
   left: 0;
   right: 0;
   display: flex;
@@ -153,65 +153,3 @@ html, body {
   color: #2f80ed;
   background-color: #eaf3ff;
 }
-
-
-
-/* 구분선 */
-/* .challenge-divider {
-  height: 1px;
-  background-color: #e0e0e0;
-  width: 60%;
-  margin: 0 auto;
-  border-radius: 2px;
-} */
-
-
-
-/* 예전 가로 긴 버튼 2개 버전 */
-/* .fixed-button-group {
-  position: fixed;
-  bottom: 14px;
-  left: 0;
-  right: 0;
-  padding: 0 14px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  max-width: 375px;
-  margin: 0 auto;
-}
-
-.challenge-intro-btn {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  color: #111;
-  transition: all 0.2s ease;
-  text-align: center;
-  text-decoration: none;
-  box-sizing: border-box;
-}
-
-.challenge-intro-btn:active {
-  transform: scale(0.97);
-}
-
-.challenge-intro-btn:hover {
-  background-color: #eee;
-}
-
-.challenge-intro-btn.primary {
-  background-color: #001439;
-  color: white;
-  border: none;
-  margin-bottom: 14px;
-}
-
-.challenge-intro-btn.primary:hover {
-  background-color: #1f2937;
-}
-
- */
