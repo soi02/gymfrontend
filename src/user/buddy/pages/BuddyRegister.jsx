@@ -1,24 +1,64 @@
 import React, { useState } from 'react';
 import '../styles/BuddyRegister.css';
 import buddyImage from "../../../assets/img/buddy/buddy3.png";
+import axios from 'axios';
 
 export default function BuddyRegister() {
     const [step, setStep] = useState(1);
     const [gender, setGender] = useState('');
-    const [ages, setAges] = useState([]);
+    const [ages, setAges] = useState([]); // 여기에 id값들 저장
     const [intro, setIntro] = useState('');
     const [showModal, setShowModal] = useState(false);
 
-    const handleAgeToggle = (age) => {
-        if (ages.includes(age)) {
-            setAges(ages.filter((a) => a !== age));
+    // buddy_age 테이블 id, label, age 매핑
+    const ageOptions = [
+        { label: '10대', id: 1, age: 10 },
+        { label: '20대', id: 2, age: 20 },
+        { label: '30대', id: 3, age: 30 },
+        { label: '40대', id: 4, age: 40 },
+        { label: '50대', id: 5, age: 50 },
+        { label: '60대', id: 6, age: 60 },
+        { label: '70대', id: 7, age: 70 },
+        { label: '80대', id: 8, age: 80 },
+    ];
+
+    // 나이대 토글 함수 (id 기준)
+    const handleAgeToggle = (id) => {
+        if (ages.includes(id)) {
+            setAges(ages.filter(a => a !== id));
         } else {
-            setAges([...ages, age]);
+            setAges([...ages, id]);
         }
     };
 
-    const handleSubmit = () => {
-        setShowModal(true);
+    // 성별을 enum 값으로 변환하는 함수
+    const convertGenderToEnum = (g) => {
+        if (g === '남성') return 'MALE';
+        if (g === '여성') return 'FEMALE';
+        return 'ANY';
+    };
+
+    // 제출 함수
+    const handleSubmit = async () => {
+        try {
+            // 선택한 나이대 id로 buddyAgeList 생성
+            const buddyAgeList = ages.map(id => ({ id }));
+
+            const data = {
+                preferredGender: convertGenderToEnum(gender),
+                intro: intro,
+                buddyAgeList: buddyAgeList,
+            };
+
+            const res = await axios.post('http://localhost:8080/api/buddy/register', data);
+            console.log('보내는 데이터:', data);
+            // alert(res.data); // "버디 등록 완료"
+            setShowModal(true);
+
+        } catch (error) {
+            console.error('등록 실패:', error);
+            alert('등록 중 오류가 발생했습니다.');
+        }
     };
 
     const renderPage = () => {
@@ -61,18 +101,17 @@ export default function BuddyRegister() {
                 );
 
             case 3:
-                const ageOptions = ['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대'];
                 return (
                     <div className="page page3">
                         <h2 className="title">선호 연령대</h2>
                         <div className="age-grid">
-                            {ageOptions.map((age) => (
+                            {ageOptions.map(({ label, id }) => (
                                 <button
-                                    key={age}
-                                    className={`pill-button ${ages.includes(age) ? 'selected' : ''}`}
-                                    onClick={() => handleAgeToggle(age)}
+                                    key={id}
+                                    className={`pill-button ${ages.includes(id) ? 'selected' : ''}`}
+                                    onClick={() => handleAgeToggle(id)}
                                 >
-                                    {age}
+                                    {label}
                                 </button>
                             ))}
                         </div>
@@ -112,15 +151,44 @@ export default function BuddyRegister() {
 
             {/* ✅ 모달창 */}
             {showModal && (
-                <div className="modal-backdrop">
-                    <div className="modal">
+                <div
+                    className="modal-backdrop"
+                    style={{
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 9999,
+                    }}
+                >
+                    <div
+                        style={{
+                            backgroundColor: '#fff',
+                            padding: '30px 20px',
+                            borderRadius: '16px',
+                            width: '320px',
+                            textAlign: 'center',
+                            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                            zIndex: 10000,
+                            position: 'relative',
+                            color: '#000',
+                        }}
+                    >
                         <h2>등록이 완료되었습니다!</h2>
                         <p>운동 벗을 찾아보세요 💪</p>
-                        <button className="button" onClick={() => {
-                            setShowModal(false);
-                            // 여기에 페이지 이동 로직 추가 가능
-                            // 예: navigate('/buddy/list');
-                        }}>벗 구하러 가기</button>
+                        <button
+                            className="button"
+                            onClick={() => {
+                                setShowModal(false);
+                            }}
+                        >
+                            벗 구하러 가기
+                        </button>
                     </div>
                 </div>
             )}
