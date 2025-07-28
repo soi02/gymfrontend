@@ -48,6 +48,25 @@ function AppContent() {
   // const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
 
 
+  const getActiveTab = (pathname) => {
+  if (pathname.startsWith("/gymmadang/challenge") && !pathname.includes("challengeTest")) {
+    return "challenge"; // 수련장
+  }
+  // if (pathname.startsWith("/gymmadang/routine")) {
+  //   return "routine"; // 득근실록
+  // }
+  // if (pathname.startsWith("/gymmadang/buddy")) {
+  //   return "buddy"; // 벗 찾기
+  // }
+  // if (pathname.startsWith("/gymmadang/market")) {
+  //   return "market"; // 장터 (예정)
+  // }
+  return null;
+};
+
+const activeTab = getActiveTab(location.pathname);
+
+
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
@@ -107,11 +126,11 @@ function AppContent() {
       )}
 
       {/* 바텀 네비게이션은 항상 표시 (단, 테스트 중은 제외) */}
-      {!shouldHideBottom && (
-        isBuddySection
-          ? <BuddyBottomNavigation />
-          : <BottomNavigation />
-      )}
+{!shouldHideBottom && (
+  isBuddySection
+    ? <BuddyBottomNavigation />
+    : <BottomNavigation activeTab={activeTab} />
+)}
 
 
 
