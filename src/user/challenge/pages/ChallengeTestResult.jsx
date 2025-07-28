@@ -87,6 +87,10 @@ console.log("📊 radarData", radarData);
     '🍽️ 건강식단 공유 챌린지'
   ];
 
+
+
+
+
   return (
 <div className="test-page-body">
 
@@ -146,7 +150,20 @@ console.log("📊 radarData", radarData);
     <ResponsiveContainer>
       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
         <PolarGrid />
-        <PolarAngleAxis dataKey="subject" tick={{ fontSize: 12, fill: '#333' }} />
+        <PolarAngleAxis
+          dataKey="subject"
+          tick={{
+            fontSize: 12,
+            fill: '#333',
+            textAnchor: 'middle',
+          }}
+          tickFormatter={(value) => {
+            const match = radarData.find((d) => d.subject === value);
+            return `${value}\n${match?.A || 0}%`;
+          }}
+        />
+
+
         <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
         <Radar name="나의 성향" dataKey="A" stroke="#2f80ed" fill="#2f80ed" fillOpacity={0.4} />
       </RadarChart>
@@ -163,9 +180,108 @@ console.log("📊 radarData", radarData);
     ))}
   </div>
 
+{/* 성향별 점수 카드형 (2 + 3) */}
+{/* <div style={{ width: '100%', marginBottom: '28px' }}>
+  {/* 상단 2개 */}
+  {/* <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '14px',
+      marginBottom: '12px',
+    }}
+  >
+    {radarData.slice(0, 2).map((item, idx) => (
+      <div
+        key={idx}
+        style={{
+          flex: '0 0 140px',
+          background: '#f8f9fa',
+          borderRadius: '12px',
+          padding: '12px 16px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          fontSize: '13.5px',
+          color: '#333',
+        }}
+      >
+        <span>{item.subject}</span>
+        <span style={{ fontWeight: '600', color: '#2f80ed' }}>{item.A}%</span>
+      </div>
+    ))}
+  </div>
+
+  {/* 하단 3개 */}
+  {/* <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '12px',
+      flexWrap: 'wrap',
+    }}
+  >
+    {radarData.slice(2).map((item, idx) => (
+      <div
+        key={idx + 2}
+        style={{
+          flex: '0 0 100px',
+          background: '#f8f9fa',
+          borderRadius: '12px',
+          padding: '10px 14px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          fontSize: '13.5px',
+          color: '#333',
+        }}
+      >
+        <span>{item.subject}</span>
+        <span style={{ fontWeight: '600', color: '#2f80ed' }}>{item.A}%</span>
+      </div>
+    ))}
+  </div>
+</div> */}
+
+
+
+
+
+
+
   <button className="next-button" onClick={() => navigate('/challengeRecommend')}>
     추천 챌린지 보기
   </button>
+
+{/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', marginBottom: '40px' }}>
+  <button
+  style={{
+    position: 'fixed',
+    bottom: '80px', // next-button 위에
+    left: '50%',
+    transform: 'translateX(-50%)',
+    background: '#e9ecef',
+    color: '#333',
+    fontSize: '13px',
+    borderRadius: '20px',
+    padding: '8px 16px',
+    border: 'none',
+    cursor: 'pointer',
+    zIndex: 10
+  }}
+    onClick={() => {
+      const shareText = `[나의 건강 성향] ${labelMap[topType]} - ${descriptionMap[topType]}`;
+      navigator.clipboard.writeText(shareText);
+      alert('결과가 복사되었어요! SNS에 붙여넣어 공유해보세요.');
+    }}
+  >
+    결과 공유하기
+  </button>
+</div> */}
+
+
 </div>
 
   );
