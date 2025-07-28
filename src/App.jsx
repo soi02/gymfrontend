@@ -46,28 +46,28 @@ function AppContent() {
       {!shouldHideTop && <TopHeader />}
 
       <Routes>
-        <Route path='/' element={<WelcomePage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path="/notifications" element={<NotificationPage />} />
+        <Route path='/gymmadang' element={<WelcomePage />} />
+        <Route path='/gymmadang/register' element={<RegisterPage />} />
+        <Route path='/gymmadang/login' element={<LoginPage />} />
+        <Route path="/gymmadang/notifications" element={<NotificationPage />} />
 
         {/* 루틴 */}
-        <Route path='gymmadang/routine' element={<RoutineHomePage />} />
+        <Route path='/gymmadang/routine' element={<RoutineHomePage />} />
 
         {/* 벗 */}
-        <Route path='gymmadang/buddy' element={<BuddyRegister />} />
+        <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
 
         {/* 수련장 */}
-        <Route path="gymmadang/challenge" element={<ChallengeIntro />} />
-        <Route path="gymmadang/challengeHome" element={<ChallengeHome />} />
-        <Route path="gymmadang/challengeList" element={<ChallengeList />} />
-        <Route path="gymmadang/challengeMy" element={<ChallengeMy />} />
+        <Route path="/gymmadang/challenge" element={<ChallengeIntro />} />
+        <Route path="/gymmadang/challengeHome" element={<ChallengeHome />} />
+        <Route path="/gymmadang/challengeList" element={<ChallengeList />} />
+        <Route path="/gymmadang/challengeMy" element={<ChallengeMy />} />
 
 
-        <Route path="gymmadang/challengeTestIntro" element={<ChallengeTestIntro />} />
-        <Route path="gymmadang/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
-        <Route path="gymmadang/challengeTest/result" element={<ChallengeTestResult />} />
-        <Route path="gymmadang/challengeRecommend" element={<ChallengeRecommendation />} />
+        <Route path="/gymmadang/challengeTestIntro" element={<ChallengeTestIntro />} />
+        <Route path="/gymmadang/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
+        <Route path="/gymmadang/challengeTest/result" element={<ChallengeTestResult />} />
+        <Route path="/gymmadang/challengeRecommend" element={<ChallengeRecommendation />} />
 
 
 
