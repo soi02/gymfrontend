@@ -47,11 +47,11 @@ export default function BottomNavigation() {
                 zIndex: 1000,
             }}
         >
-            <BottomNavigationItem link="/routine" iconClass="ri-file-paper-2-fill" label="득근록" />
-            <BottomNavigationItem link="/gymmadang/challenge/challengeHome" iconClass="ri-award-fill" label="수련장" />
-            <BottomNavigationItem link="/buddy" iconClass="ri-wechat-fill" label="벗" />
-            <BottomNavigationItem link="/market" iconClass="ri-store-3-fill" label="장터" />
-            <BottomNavigationItem link="/mypage" iconClass="ri-user-3-fill" label="나의 처소" />
+            <BottomNavigationItem link="/gymmadang/routine" iconClass="ri-file-paper-2-fill" label="득근록" />
+            <BottomNavigationItem link="/gymmadang/challenge" iconClass="ri-award-fill" label="수련장" />
+            <BottomNavigationItem link="/gymmadang/buddy" iconClass="ri-wechat-fill" label="벗" />
+            <BottomNavigationItem link="/gymmadang/market" iconClass="ri-store-3-fill" label="장터" />
+            <BottomNavigationItem link="/gymmadang/mypage" iconClass="ri-user-3-fill" label="나의 처소" />
         </div>
     );
 }
