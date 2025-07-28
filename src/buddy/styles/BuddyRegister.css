@@ -1,0 +1,86 @@
+body {
+  font-family: 'Pretendard', sans-serif;
+}
+.buddy-register-container {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.image-runner {
+  width: 100px;
+  height: 100px;
+  /* background: url('/path-to-your-runner-image.png') no-repeat center / contain; */
+  margin: 20px auto;
+}
+
+.button, .button-outline {
+  padding: 12px 24px;
+  border-radius: 25px;
+  margin: 10px;
+  font-size: 16px;
+}
+
+.button {
+  background-color: #db6f6f;
+  color: white;
+  border: none;
+}
+
+.button-outline {
+  background: none;
+  border: 2px solid #db6f6f;
+  color: #db6f6f;
+}
+
+.circle-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #db6f6f;
+  margin: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  background-color: white;
+}
+
+.circle-button.selected {
+  background-color: #db6f6f;
+  color: white;
+}
+
+.age-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pill-button {
+  border: 2px solid #db6f6f;
+  background-color: white;
+  padding: 10px 20px;
+  margin: 8px;
+  border-radius: 25px;
+  font-size: 16px;
+}
+
+.pill-button.selected {
+  background-color: #db6f6f;
+  color: white;
+}
+
+.subtext {
+  font-size: 12px;
+  color: #888;
+  margin-top: 10px;
+}
+
+/* .navigation {
+  margin-top: 20px;
+} */
