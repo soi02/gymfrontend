@@ -33,6 +33,7 @@ import WorkoutPage from './user/routine/pages/WorkoutPage'
 import GuidePage from './user/routine/pages/GuidePage'
 import DiaryPage from './user/routine/pages/DiaryPage.Jsx'
 import SummaryPage from './user/routine/pages/SummaryPage'
+import ResultPage from './user/routine/pages/ResultPage'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -88,6 +89,7 @@ function AppContent() {
         <Route path='/gymmadang/routine/guide' element={<GuidePage />} />
         <Route path='/gymmadang/routine/summary' element={<SummaryPage />} />
         <Route path='/gymmadang/routine/diary' element={<DiaryPage />} />
+        <Route path='/gymmadang/routine/result' element={<ResultPage />} />
 
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
