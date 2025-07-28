@@ -24,6 +24,7 @@ import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage'
 import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
 import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation'
 import BuddyHome from './user/buddy/pages/BuddyHome'
+import ChallengeTopTabs from './user/challenge/commons/ChallengeTopTabs'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -44,7 +45,7 @@ function AppContent() {
   // Bottom 숨길 조건들
   const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || isTestSection;
 
-  const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
+  // const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
 
 
 
@@ -52,6 +53,15 @@ function AppContent() {
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
       {/* 탑헤더 조건 */}
       {!shouldHideTop && <TopHeader />}
+
+
+      {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}
+      {isChallengeSection && !shouldHideTop && (
+        <div style={{ borderBottom: '1px solid #eee' }}>
+          <ChallengeTopTabs />
+        </div>
+      )}
+
 
       <Routes>
         <Route path='/gymmadang' element={<WelcomePage />} />
@@ -96,15 +106,11 @@ function AppContent() {
             : <BottomNavigation />
       )}
 
-      {/* 바텀 네비게이션 조건 */}
+      {/* 바텀 네비게이션은 항상 표시 (단, 테스트 중은 제외) */}
       {!shouldHideBottom && (
-        isChallengeSection
-          ? (isChallengeIntro
-              ? <BottomNavigation />
-              : <ChallengeBottomNavigation />)
-          : isBuddySection
-            ? <BuddyBottomNavigation />
-            : <BottomNavigation />
+        isBuddySection
+          ? <BuddyBottomNavigation />
+          : <BottomNavigation />
       )}
 
 
