@@ -188,11 +188,11 @@ export default function ChallengeTestPage() {
         return;
         }
         dispatch(setRoutineResult({ days: selectedDays, region }));
-        navigate('/challengeTest/result');
+        navigate('/gymmadang/challengeTest/result');
         return;
     }
 
-    navigate(`/challengeTest/step/${step + 1}`);
+    navigate(`/gymmadang/challengeTest/step/${step + 1}`);
     };
 
 
@@ -200,9 +200,9 @@ export default function ChallengeTestPage() {
     // 뒤로 가기
     const handleBack = () => {
         if (step === 1) {
-            navigate('/challengeTestIntro'); // 테스트 인트로로 돌아가기
+            navigate('/gymmadang/challengeTestIntro'); // 테스트 인트로로 돌아가기
         } else {
-            navigate(`/challengeTest/step/${step - 1}`);
+            navigate(`/gymmadang/challengeTest/step/${step - 1}`);
         }
     };
 
@@ -239,7 +239,7 @@ export default function ChallengeTestPage() {
                         // addScore(opt.type);
                         dispatch(addScore({ type: opt.type }));
                         console.log("📌 dispatched:", opt.type);
-                        navigate(`/challengeTest/step/${step + 1}`);
+                        navigate(`/gymmadang/challengeTest/step/${step + 1}`);
                     }}>
                         {opt.text}
                     </button>
