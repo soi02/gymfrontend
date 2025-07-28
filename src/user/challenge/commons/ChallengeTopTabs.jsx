@@ -16,8 +16,8 @@ function TabItem({ to, label }) {
     padding: '10px 12px 8px',
     textDecoration: 'none',
     whiteSpace: 'nowrap',
-    lineHeight: '1', // ✅ 줄간 간격 제거
-    verticalAlign: 'bottom', // ✅ 하단 기준선 정렬
+    lineHeight: '1',
+    verticalAlign: 'bottom',
   }}
 >
   {label}
@@ -43,7 +43,7 @@ export default function ChallengeTopTabs() {
   outline: 'none',
   position: 'relative',
   zIndex: 1,
-  backgroundColor: '#fff', // ✅ 흰색 배경 명확히 지정
+  backgroundColor: '#fff',
 }}>
 
       <TabItem to="/gymmadang/challenge/challengeHome" label="수련장 홈" />
