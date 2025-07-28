@@ -23,6 +23,7 @@ import ChallengeTestIntro from './user/challenge/pages/ChallengeTestIntro'
 import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage'
 import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
 import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation'
+import BuddyHome from './user/buddy/pages/BuddyHome'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -63,6 +64,7 @@ function AppContent() {
 
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
+        <Route path='/gymmadang/buddyhome' element={<BuddyHome />} /> 
 
         {/* 수련장 */}
         <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />

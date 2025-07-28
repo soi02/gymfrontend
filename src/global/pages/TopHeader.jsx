@@ -36,7 +36,8 @@ export default function TopHeader() {
         style={{
             padding: "15px 22px",
             height: "40px",
-            marginTop: "8px",
+            marginTop: "8px"
+            // backgroundColor: 'rgba(245, 245, 245, 0.54)'
         }}
         >
             {/* 왼쪽 로고 */}
