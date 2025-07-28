@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import routineCharacter from '../../../assets/img//routine/routine_character.png';
 import '../styles/RoutineHomePage.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function RoutineHomePage() {
   const fullText = `오늘은 어떤 부위를\n운동해보시겠소?\n매번 즐겨하는 부위말고\n다른 부위도 단련해주시오.`;
@@ -12,6 +13,8 @@ export default function RoutineHomePage() {
   const handleFabClick = () => {
     setShowOptions(!showOptions);
   };
+
+  const navigate = useNavigate();
 
 
 
@@ -69,8 +72,8 @@ export default function RoutineHomePage() {
 
                 {/* 하단 고정 버튼 영역 */}
                 <div className="routine-bottom-buttons">
-                  <button className="routine-free-btn">⚡ 자유운동</button>
-                  <button className="routine-add-btn">＋ 루틴추가</button>
+                  <button className="routine-free-btn" onClick={() => navigate('/gymmadang/routine/free')}>⚡ 자유운동</button>
+                  <button className="routine-add-btn" onClick={() => navigate('/gymmadang/routine/add')}>＋ 루틴추가</button>
                 </div>
 
 
