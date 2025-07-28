@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logoutAction } from "../../redux/authSlice";
 import logoImg from "../../assets/img/gymmadang_logo_kr.svg";
 import profileImg from "../../assets/img/default_profile_img.svg";
@@ -24,22 +24,6 @@ export default function TopHeader() {
     const [showPrompt, setShowPrompt] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
 
-const pageTitles = {
-  "/gymmadang/challenge/challengeHome": "수련장",
-  "/gymmadang/challenge/challengeList": "전체 챌린지",
-  "/gymmadang/challenge/challengeMy": "나의 수련기록",
-  "/gymmadang/buddyhome": "벗 찾기",
-  "/gymmadang/routine": "득근실록",
-  "/gymmadang/market": "장터", // 추후 확장 가능
-};
-
-
-const location = useLocation();
-const currentPath = location.pathname;
-const title = pageTitles[currentPath];
-
-    
-
   const handleLogout = () => {
     dispatch(logoutAction());
     localStorage.removeItem("token");
@@ -50,24 +34,17 @@ const title = pageTitles[currentPath];
         <div
         className="d-flex justify-content-between align-items-center"
         style={{
-            padding: "15px 22px",
+            padding: "15px 18px",
             height: "40px",
-            marginTop: "8px",
-            marginBottom: "0px"       // ✅ 추가해서 아래 여백 제거
+            marginTop: "0.8rem",
+            marginBottom: "0.45rem"
             // backgroundColor: 'rgba(245, 245, 245, 0.54)'
         }}
         >
-
-{/* 왼쪽 로고 or 페이지 타이틀 */}
-{/* 왼쪽: 로고 or 타이틀 */}
-{title ? (
-  <div style={{ fontSize: "18px", fontWeight: "bold" }}>{title}</div>
-) : (
-  <Link to="/">
-    <img src={logoImg} alt="로고" style={{ height: "28px", cursor: "pointer" }} />
-  </Link>
-)}
-
+            {/* 왼쪽 로고 */}
+            <Link to="/">
+            <img src={logoImg} alt="로고" style={{ height: "28px", cursor: "pointer" }} />
+            </Link>
 
             {/* 오른쪽 영역 */}
             <div className="d-flex align-items-center gap-2">
