@@ -38,8 +38,28 @@ export default function BuddyRegister() {
         return 'ANY';
     };
 
+    // const handleSubmit = async () => {
+    //     try {
+    //         const buddyAgeList = ages.map(id => ({ id }));
+
+    //         const data = {
+    //             preferredGender: convertGenderToEnum(gender),
+    //             intro: intro,
+    //             buddyAgeList: buddyAgeList,
+    //         };
+
+    //         const res = await axios.post('http://localhost:8080/api/buddy/register', data);
+    //         console.log('보내는 데이터:', data);
+    //         setShowModal(true);
+
+    //     } catch (error) {
+    //         console.error('등록 실패:', error);
+    //         alert('등록 중 오류가 발생했습니다.');
+    //     }
+    // };
     const handleSubmit = async () => {
         try {
+            const token = localStorage.getItem('token');  // 로그인 때 저장된 토큰 꺼내기
             const buddyAgeList = ages.map(id => ({ id }));
 
             const data = {
@@ -48,7 +68,13 @@ export default function BuddyRegister() {
                 buddyAgeList: buddyAgeList,
             };
 
-            const res = await axios.post('http://localhost:8080/api/buddy/register', data);
+            // axios 요청 보낼 때 headers에 Authorization: Bearer 토큰 추가
+            const res = await axios.post('http://localhost:8080/api/buddy/register', data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
             console.log('보내는 데이터:', data);
             setShowModal(true);
 
@@ -184,7 +210,7 @@ export default function BuddyRegister() {
                         <p>운동 벗을 찾아보세요 💪</p>
                         <button
                             className="button"
-                            onClick={handleGoToBuddyHome} 
+                            onClick={handleGoToBuddyHome}
                         >
                             벗 구하러 가기
                         </button>
