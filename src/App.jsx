@@ -30,8 +30,8 @@ function AppContent() {
   const location = useLocation();
 
   // TopHeader를 숨길 경로들
-  const hideHeaderFooterRoutes = ['/', '/login', '/register']; // 숨길 경로들
-  
+  const hideHeaderFooterRoutes = ['/gymmadang', '/gymmadang/login', '/gymmadang/register']; // 숨길 경로들
+
   const isChallengeSection = location.pathname.startsWith('/challenge');
   const isTestSection = location.pathname.startsWith('/challengeTest');
   const isBuddySection = location.pathname.startsWith('/buddy');
