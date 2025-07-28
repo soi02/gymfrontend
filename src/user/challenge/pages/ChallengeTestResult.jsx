@@ -31,7 +31,7 @@ export default function ChallengeTestResult() {
         </p>
         <button
           className="next-button"
-          onClick={() => navigate('/challengeTest/step/1')}
+          onClick={() => navigate('/gymmadang/challenge/challengeTest/step/1')}
         >
           테스트 하러가기
         </button>
@@ -251,7 +251,7 @@ console.log("📊 radarData", radarData);
 
 
 
-  <button className="next-button" onClick={() => navigate('/challengeRecommend')}>
+  <button className="next-button" onClick={() => navigate('/gymmadang/challenge/challengeTest/Recommend')}>
     추천 챌린지 보기
   </button>
 

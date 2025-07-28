@@ -58,16 +58,16 @@ function AppContent() {
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
 
         {/* 수련장 */}
-        <Route path="/gymmadang/challenge" element={<ChallengeIntro />} />
-        <Route path="/gymmadang/challengeHome" element={<ChallengeHome />} />
-        <Route path="/gymmadang/challengeList" element={<ChallengeList />} />
-        <Route path="/gymmadang/challengeMy" element={<ChallengeMy />} />
+        <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
+        <Route path="/gymmadang/challenge/challengeHome" element={<ChallengeHome />} />
+        <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
+        <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMy />} />
 
 
-        <Route path="/gymmadang/challengeTestIntro" element={<ChallengeTestIntro />} />
-        <Route path="/gymmadang/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
-        <Route path="/gymmadang/challengeTest/result" element={<ChallengeTestResult />} />
-        <Route path="/gymmadang/challengeRecommend" element={<ChallengeRecommendation />} />
+        <Route path="/gymmadang/challenge/challengeTest/Intro" element={<ChallengeTestIntro />} />
+        <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
+        <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
+        <Route path="/gymmadang/challenge/challengeTest/Recommend" element={<ChallengeRecommendation />} />
 
 
 

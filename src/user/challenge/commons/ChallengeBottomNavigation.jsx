@@ -47,9 +47,9 @@ export default function ChallengeBottomNavigation() {
                 zIndex: 1000,
             }}
         >
-            <ChallengeBottomNavigationItem link="/challengeHome" iconClass="ri-home-5-fill" label="수련장 홈" />
-            <ChallengeBottomNavigationItem link="/challengeList" iconClass="ri-wechat-fill" label="챌린지" />
-            <ChallengeBottomNavigationItem link="/challengeMy" iconClass="ri-store-3-fill" label="나의 수련기록" />
+            <ChallengeBottomNavigationItem link="/gymmadang/challenge/challengeHome" iconClass="ri-home-5-fill" label="수련장 홈" />
+            <ChallengeBottomNavigationItem link="/gymmadang/challenge/challengeList" iconClass="ri-wechat-fill" label="챌린지" />
+            <ChallengeBottomNavigationItem link="/gymmadang/challenge/challengeMy" iconClass="ri-store-3-fill" label="나의 수련기록" />
         </div>
     );
 }
