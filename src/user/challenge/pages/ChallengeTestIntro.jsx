@@ -12,9 +12,9 @@ export default function ChallengeTestIntro({ userName = '윤수' }) {
   const handleChoiceClick = (choice) => {
     setSelectedChoice(choice);
     if(choice === 'testStart') {
-      navigate('/gymmadang/challengeTest/step/1');
+      navigate('/gymmadang/challenge/challengeTest/step/1');
     } else if(choice === 'testEnd') {
-      navigate('/gymmadang/challengeHome');
+      navigate('/gymmadang/challenge/challengeHome');
     }
   }
 

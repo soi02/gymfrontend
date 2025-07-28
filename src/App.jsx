@@ -32,12 +32,19 @@ function AppContent() {
   // TopHeader를 숨길 경로들
   const hideHeaderFooterRoutes = ['/gymmadang', '/gymmadang/login', '/gymmadang/register']; // 숨길 경로들
 
-  const isChallengeSection = location.pathname.startsWith('/challenge');
-  const isTestSection = location.pathname.startsWith('/challengeTest');
-  const isBuddySection = location.pathname.startsWith('/buddy');
+  const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
+  const isTestSection = location.pathname.startsWith('/gymmadang/challenge/challengeTest');
+  const isBuddySection = location.pathname.startsWith('/gymmadang/buddy');
+
   
   // TopHeader 숨길 조건들
   const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || isTestSection;
+
+  // Bottom 숨길 조건들
+  const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || isTestSection;
+
+  const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
+
 
 
   return (
@@ -58,16 +65,16 @@ function AppContent() {
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
 
         {/* 수련장 */}
-        <Route path="/gymmadang/challenge" element={<ChallengeIntro />} />
-        <Route path="/gymmadang/challengeHome" element={<ChallengeHome />} />
-        <Route path="/gymmadang/challengeList" element={<ChallengeList />} />
-        <Route path="/gymmadang/challengeMy" element={<ChallengeMy />} />
+        <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
+        <Route path="/gymmadang/challenge/challengeHome" element={<ChallengeHome />} />
+        <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
+        <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMy />} />
 
 
-        <Route path="/gymmadang/challengeTestIntro" element={<ChallengeTestIntro />} />
-        <Route path="/gymmadang/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
-        <Route path="/gymmadang/challengeTest/result" element={<ChallengeTestResult />} />
-        <Route path="/gymmadang/challengeRecommend" element={<ChallengeRecommendation />} />
+        <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
+        <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
+        <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
+        <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
 
 
 
@@ -76,7 +83,7 @@ function AppContent() {
       </Routes>
 
 
-       {/* 바텀 네비게이션 조건 */}
+       {/* 탑 네비게이션 조건 */}
       {!shouldHideTop && (
         isChallengeSection
           ? (location.pathname === '/challenge' 
@@ -86,6 +93,19 @@ function AppContent() {
             ? <BuddyBottomNavigation />
             : <BottomNavigation />
       )}
+
+      {/* 바텀 네비게이션 조건 */}
+      {!shouldHideBottom && (
+        isChallengeSection
+          ? (isChallengeIntro
+              ? <BottomNavigation />
+              : <ChallengeBottomNavigation />)
+          : isBuddySection
+            ? <BuddyBottomNavigation />
+            : <BottomNavigation />
+      )}
+
+
 
 
 
