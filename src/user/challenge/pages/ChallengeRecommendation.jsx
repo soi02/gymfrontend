@@ -55,7 +55,7 @@ export default function ChallengeRecommendation() {
 
       <button
         className="next-button"
-        onClick={() => navigate('/challengeList')}
+        onClick={() => navigate('/gymmadang/challengeList')}
       >
         챌린지 전체 보러가기
       </button>
