@@ -15,16 +15,16 @@ export default function StepDate({ onNext, onBack }) {
     }
   ]);
 
-  const startDate = range[0].startDate;
-  const endDate = range[0].endDate;
-  const totalDays = differenceInDays(endDate, startDate) + 1; // 당일 포함 계산
+  const challengeStartDate = range[0].startDate;
+  const challengeEndDate = range[0].endDate;
+  const totalDays = differenceInDays(challengeEndDate, challengeStartDate) + 1; // 당일 포함 계산
 
-    const handleNext = () => {
-    onNext({
-        startDate: startDate.toISOString().split('T')[0],  // "2025-07-30"
-        endDate: endDate.toISOString().split('T')[0],
-    });
-    };
+const handleNext = () => {
+  onNext({
+    challengeStartDate: challengeStartDate.toISOString().split('T')[0],  // "2025-07-30"
+    challengeEndDate: challengeEndDate.toISOString().split('T')[0],
+  });
+};
 
 
 

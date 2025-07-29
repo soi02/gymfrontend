@@ -24,6 +24,11 @@ const steps = [
 
 export default function ChallengeCreateStepper() {
   const userId = useSelector((state) => state.auth.id); // 리덕스에서 userId 가져오기
+  console.log("✅ Redux에서 가져온 userId:", userId);  // ✅ 여기에 추가!
+
+
+  const authState = useSelector((state) => state.auth);
+console.log("🧠 전체 auth state:", authState);
 
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -33,26 +38,49 @@ export default function ChallengeCreateStepper() {
 
   const CurrentStep = steps[step];
 
-  const next = async (data = {}) => {
-    const updated = { ...formData, ...data }; 
-    setFormData(updated);
+const next = async (data = {}) => {
+  const updated = { ...formData, ...data };
+  setFormData(updated);
 
-    // 각 스텝에서 onNext(data) → formData에 데이터가 누적된 거 받아서 여기서 백으로 formData 전송 처리해주기
-    // 마지막 단계(제출)
-    if (step === steps.length - 2) {
-        console.log('전송할 데이터:', updated); // ✅ 여기 추가
-      try {
-        const res = await axios.post('http://localhost:8080/api/challengeList/registerChallengeProcess', {
-          ...updated,
-        });
-        console.log('챌린지 생성 완료:', res.data);
-      } catch (error) {
-        console.error('챌린지 생성 실패:', error);
+  if (step === steps.length - 2) {
+    console.log("전송할 데이터:", updated);
+
+    try {
+      const formDataToSend = new FormData();
+
+      // 텍스트 데이터
+      formDataToSend.append("challengeTitle", updated.challengeTitle);
+      formDataToSend.append("challengeDescription", updated.challengeDescription);
+      formDataToSend.append("challengeMaxMembers", updated.challengeMaxMembers);
+      formDataToSend.append("challengeStartDate", updated.challengeStartDate); // "yyyy-MM-dd"
+      formDataToSend.append("challengeEndDate", updated.challengeEndDate);     // "yyyy-MM-dd"
+      formDataToSend.append("challengeCreator", updated.challengeCreator);
+
+      // 키워드 배열
+      updated.challengeKeywordIds.forEach((id) =>
+        formDataToSend.append("challengeKeywordIds", id)
+      );
+
+      // 이미지 파일
+      if (updated.challengeThumnailPath) {
+        formDataToSend.append("challengeThumnailPath", updated.challengeThumnailPath);
       }
-    }
 
-    setStep((prev) => prev + 1); // 전송 성공 후 step ++ 해서 StepDone 렌더링
-  };
+      const res = await axios.post(
+        "http://localhost:8080/api/challengeList/registerChallengeProcess",
+        formDataToSend,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      console.log("챌린지 생성 완료:", res.data);
+    } catch (error) {
+      console.error("챌린지 생성 실패:", error);
+    }
+  }
+
+  setStep((prev) => prev + 1);
+};
+
 
   const back = () => setStep((prev) => prev - 1);
 
