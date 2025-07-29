@@ -1,0 +1,7 @@
+.routine-main-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 10rem;
+}
