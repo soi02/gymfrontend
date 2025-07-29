@@ -24,7 +24,7 @@ export default function StepKeyword({ onNext, onBack }) {
   };
 
   const handleNext = () => {
-    onNext({ challengeKeywordNames: selectedKeywords }); // 키워드 이름 그대로 넘김
+    onNext({ challengeKeywordNames: selectedKeywords });  // onNext 활용해서 키워드를 이름 그대로 폼데이터에 전달
   };
 
   return (

@@ -25,7 +25,7 @@ export default function StepAgreement({ onNext, onBack }) {
         <li><input type="checkbox" checked={agreements[2]} onChange={() => toggleCheck(2)} /> 모두가 즐길 수 있는 챌린지를 만들게요.</li>
       </ul>
 
-      <button disabled={!allChecked} onClick={() => onNext()}>생성하기</button>
+      <button disabled={!allChecked} onClick={() => onNext({})}>생성하기</button>
     </div>
   );
 }

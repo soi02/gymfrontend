@@ -1,37 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import ChallengeCard from '../components/ChallengeCard';
-import '../styles/ChallengeList.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChallengeList() {
   const navigate = useNavigate();
-  const [challengeList, setChallengeList] = useState([]);
+  const [challenges, setChallenges] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/challengeList/getChallengeList')
       .then((res) => {
-        console.log('응답 결과:', res.data);
-        setChallengeList(res.data); // 서버 응답 데이터를 상태에 저장
+        console.log('챌린지 목록', res.data);
+        setChallenges(res.data);
       })
-      .catch((err) => {
-        console.error('챌린지 목록 불러오기 실패:', err);
-      });
+      .catch((err) => console.error('챌린지 불러오기 실패', err));
   }, []);
 
   return (
-    <div className="challenge-list-page">
-      <header>
-        <h2>하자고! 챌린지를</h2>
-        <p>원하는 챌린지를 골라 도전해보세요</p>
-      </header>
+    <div style={{ maxWidth: 400, margin: '0 auto', padding: 16 }}>
+      <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', marginBottom: 10 }}>수련 목록</h2>
+      <p style={{ color: '#555', fontSize: '0.9rem', marginBottom: 20 }}>
+        원하는 챌린지를 골라 도전해보세요<br />재미와 건강, 보람까지 한 번에!
+      </p>
 
-      <div className="challenge-list">
-        {challengeList.map((ch, i) => (
-          <ChallengeCard key={i} challenge={ch} />
-        ))}
-      </div>
+      {challenges.map((challenge) => (
+        <ChallengeCard key={challenge.challenge_id} challenge={challenge} />
+      ))}
+
 
       <button
         className="challenge-list-floating-button"
@@ -39,6 +34,7 @@ export default function ChallengeList() {
       >
         ＋
       </button>
+
     </div>
   );
 }

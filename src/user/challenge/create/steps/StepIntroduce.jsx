@@ -14,7 +14,7 @@ export default function StepIntroduce({ onNext, onBack, data }) {
     onNext({
       challengeTitle: title,
       recommendation,
-      challengeDescription: description,
+      challengeDescription: description, // onNext 활용해서 챌린지 정보를 폼데이터에 전달
     });
   };
 

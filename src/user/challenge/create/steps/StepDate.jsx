@@ -19,9 +19,13 @@ export default function StepDate({ onNext, onBack }) {
   const endDate = range[0].endDate;
   const totalDays = differenceInDays(endDate, startDate) + 1; // 당일 포함 계산
 
-const handleNext = () => {
-  onNext({ startDate, endDate }); // ✅ formData에 날짜 정보 저장
-};
+    const handleNext = () => {
+    onNext({
+        startDate: startDate.toISOString().split('T')[0],  // "2025-07-30"
+        endDate: endDate.toISOString().split('T')[0],
+    });
+    };
+
 
 
   return (

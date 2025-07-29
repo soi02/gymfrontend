@@ -9,7 +9,7 @@ export default function StepCapacity({ onNext, onBack }) {
   };
 
   const handleNext = () => {
-    onNext({ challengeMaxMembers: capacity });
+    onNext({ challengeMaxMembers: capacity }); // onNext 활용해서 인원수를 폼데이터에 전달
   };
 
   return (

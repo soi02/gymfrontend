@@ -21,7 +21,7 @@ export default function StepDone() {
   };
 
   const handleGoToList = () => {
-    navigate('/gymmadang/challenge/challengeList');
+    navigate('/gymmadang/challenge/challengeList'); // 각 스텝에서 onNext(data) → formData에 데이터가 누적됨. → Stepper 에서 이어서 처리
   };
 
   return (

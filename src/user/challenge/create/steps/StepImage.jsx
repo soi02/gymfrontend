@@ -21,7 +21,7 @@ export default function StepImage({ onNext, onBack, data }) {
 
     onNext({
       challengeImage: file,
-      imagePreview: preview,
+      imagePreview: preview, // onNext 활용해서 이미지랑, 이미지 미리보기를 폼데이터에 전달
     });
   };
 
