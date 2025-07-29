@@ -1,8 +1,9 @@
 import '../styles/ChallengeCard.css';
 
 export default function ChallengeCard({ challenge }) {
+    console.log("챌린지 데이터:", challenge); // ✅ 여기에 찍기
   const {
-    id,
+    challengeId,
     challengeTitle,
     challengeStartDate,
     challengeEndDate,
@@ -16,6 +17,8 @@ export default function ChallengeCard({ challenge }) {
   const today = new Date();
   const start = new Date(challengeStartDate);
   const end = new Date(challengeEndDate);
+
+  console.log("start:", start, "end:", end); // ✅ 여기도 추가
 
   let status = '모집 중';
   if (today >= start && today <= end) {
