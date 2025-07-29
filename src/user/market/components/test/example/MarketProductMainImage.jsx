@@ -8,7 +8,7 @@ export default function MarketProductMainImage() {
                 
                 <div className = "row">
                     <div className = "col">
-                        <img src = "/sources/images/ca_2nd_project_product_example.png" 
+                        <img src = "/../../assets/img/market/test/example/ca_2nd_project_product_example.png" 
                         style = {{
                             position: "absolute",
                             top: "50%",

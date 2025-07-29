@@ -8,7 +8,7 @@ export default function MarketAnonymousUserMiniProfileImage() {
                 
                 <div className = "row">
                     <div className = "col">
-                        <img src = "/sources/images/ca_2nd_project_user_profile_division.png" 
+                        <img src = "/../../assets/img/market/test/example/ca_2nd_project_user_profile_division.png" 
                         style = {{
                             position: "absolute",
                             top: "50%",
