@@ -3,5 +3,75 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  padding-bottom: 10rem;
+  padding: 1rem 1.2rem 10rem 1.2rem;
+  background-color: #ffffff;
+}
+
+/* 상단 제목 */
+.routine-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+/* 운동 이름 경로 (ex. 가슴 > 덤벨 플라이) */
+.routine-subtitle {
+  font-size: 1rem;
+  color: #999;
+  margin-bottom: 1.2rem;
+}
+
+/* 이미지 wrapper */
+.routine-image-wrapper {
+  text-align: center;
+  margin: 1.2rem 0;
+}
+
+.routine-image {
+  max-width: 70%;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 가이드 영역 */
+.routine-guide-box {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.routine-guide-box h5 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.routine-guide-box p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* 메모 영역 */
+.routine-memo {
+  padding: 1.2rem;
+  background: #fff7ea;
+  border: 1px solid #ffe1a8;
+  border-radius: 10px;
+}
+
+.routine-memo h5 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #6d4c41;
+}
+
+.routine-memo p {
+  font-size: 0.95rem;
+  color: #5d4037;
+  white-space: pre-wrap;
 }

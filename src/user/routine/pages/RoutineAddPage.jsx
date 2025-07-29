@@ -179,7 +179,7 @@ export default function RoutineAddPage() {
                                 key={cat}
                                 className={`btn btn-sm me-1 ${
                                     selectedCategory === cat
-                                        ? "btn-dark"
+                                        ? "btn-secondary"
                                         : "btn-outline-secondary"
                                 }`}
                                 onClick={() => setSelectedCategory(cat)}
