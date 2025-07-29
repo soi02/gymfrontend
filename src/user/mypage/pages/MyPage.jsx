@@ -1,6 +1,6 @@
 
 
-export default function RoutineHomePage() {
+export default function MyPage() {
 
 
     return(

@@ -1,0 +1,68 @@
+.test-intro-body {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* ✅ 위쪽 정렬 */
+}
+
+.test-intro-container {
+  text-align: center;
+  padding: 90px 20px 140px;
+  max-width: 375px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.test-intro-title h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.test-intro-title p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.test-intro-image {
+  width: 50%;
+  max-width: 240px;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
+
+.test-intro-start-btn-group {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+  max-width: 375px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.test-intro-start-btn {
+  width: 100%;
+  background-color: #2f80ed;
+  color: white;
+  font-size: 15px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.test-intro-start-btn:hover {
+  background-color: #1c66d0;
+}

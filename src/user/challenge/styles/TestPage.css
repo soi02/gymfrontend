@@ -1,0 +1,232 @@
+.test-page-body {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 375px;
+  width: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.test-page-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.dot.active {
+  background-color: #2f80ed;
+}
+
+.test-question-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+
+  min-height: 48px;  /* 한 줄 높이 기준 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: pre-line;  /* \n 줄바꿈 지원 */
+}
+
+
+.choice-buttons {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
+
+.choice-btn {
+  background-color: white;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* ✅ 높이 강제 고정 (텍스트 길이에 상관없이 버튼 높이 동일) */
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: pre-line;
+}
+
+.choice-btn:hover {
+  border-color: #2f80ed;
+  color: #2f80ed;
+}
+
+
+
+/* step 7 : 관심사 키워드 관련 */
+.keyword-category-section {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-bottom: 80px; /* 버튼 안 가려지도록 여유 */
+}
+
+.keyword-category-block {
+  margin-bottom: 20px;
+}
+
+.keyword-category-title {
+  font-weight: bold;
+  margin: 10px 0 10px 4px;
+  font-size: 15px;
+}
+
+.keyword-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.keyword-btn {
+  border: 1.5px solid #333;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.keyword-btn.selected {
+  background-color: #333;
+  color: white;
+  border-color: #333;
+}
+
+.next-button {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+
+.toast-message {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 14px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 999;
+  animation: fadeInOut 2s ease-in-out;
+  white-space: nowrap;
+  max-width: 90vw;
+}
+
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+}
+
+
+/* step 8 운동 요일, 지역 관련 */
+.routine-days {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.day-btn {
+  flex: 1;
+  min-width: 40px;
+  padding: 10px 0;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1.5px solid #aaa;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.day-btn.selected {
+  background-color: #2f80ed;
+  color: white;
+  border-color: #2f80ed;
+}
+
+
+.region-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+  background-color: white;
+  margin-top: 10px;
+}
+
+
+
+/* 결과 */
+.test-result-title {
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #222;
+}

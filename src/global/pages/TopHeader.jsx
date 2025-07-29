@@ -34,9 +34,11 @@ export default function TopHeader() {
         <div
         className="d-flex justify-content-between align-items-center"
         style={{
-            padding: "15px 22px",
+            padding: "15px 18px",
             height: "40px",
-            marginTop: "8px",
+            marginTop: "0.8rem",
+            marginBottom: "0.45rem"
+            // backgroundColor: 'rgba(245, 245, 245, 0.54)'
         }}
         >
             {/* 왼쪽 로고 */}

@@ -38,9 +38,9 @@ export default function ChallengeIntro() {
   const handleChoiceClick = (choice) => {
     setSelectedChoice(choice);
     if(choice === 'test') {
-      navigate('personality-test');
+      navigate('/gymmadang/challenge/challengeTest/intro');
     } else if(choice === 'lookAround') {
-      navigate('/challengeHome');
+      navigate('/gymmadang/challenge/challengeHome');
     }
   }
 
@@ -49,7 +49,7 @@ export default function ChallengeIntro() {
     <div className="challenge-intro-body">
       <div className="challenge-intro-welcome-container">
         <div className="challenge-intro-content">
-          <h2 className="challenge-intro-title">수련장</h2>
+          <h6 className="challenge-intro-title">수련장</h6>
 
           <div className="challenge-intro-character-with-speech">
 

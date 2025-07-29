@@ -47,8 +47,8 @@ export default function WelcomePage() {
             </div>
 
             <div className="button-group">
-                <Link to="/register" className="btn primary">새롭게 가입하기</Link>
-                <Link to="/login" className="btn">이전에 들른적 있소</Link>
+                <Link to="/gymmadang/register" className="btn primary">새롭게 가입하기</Link>
+                <Link to="/gymmadang/login" className="btn">이전에 들른적 있소</Link>
             </div>
 
             <p className="small-tip">진실로 귀한 것은, 꺾이지 않는 그대의 마음이오</p>
