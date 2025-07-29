@@ -1,3 +1,6 @@
+import { useState } from "react";
+import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
+
 function MarketArticleElement({marketArticleElem1}) {
     
     return ( 

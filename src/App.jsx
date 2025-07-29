@@ -38,6 +38,9 @@ import SummaryPage from './user/routine/pages/SummaryPage'
 import ResultPage from './user/routine/pages/ResultPage'
 import BuddyTopTabs from './user/buddy/commons/BuddyTopTabs'
 import { useEffect } from 'react'
+import MarketArticlePage from './user/market/pages/MarketArticle'
+import MarketBoardPage from './user/market/pages/MarketBoard'
+import MarketUserPage from './user/market/pages/MarketUser'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -158,7 +161,10 @@ function AppContent() {
         <Route path="/challengeList" element={<ChallengeList />} />
         <Route path="/challengeMy" element={<ChallengeMy />} />
         
-      
+        {/* 장터 관련 */}
+        <Route path="/gymmadang/market" element={<MarketBoardPage />} />
+        <Route path="/gymmadang/market/article" element={<MarketArticlePage />} />
+        <Route path="/gymmadang/market/user" element={<MarketUserPage />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

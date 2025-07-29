@@ -1,3 +1,9 @@
+import { useState } from "react";
+import MarketBottomFixed from "../commons/test/example/MarketBottomFixed";
+import MarketTopFixed from "../commons/test/example/MarketTopFixed";
+import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
+import MarketProductImageOnArticle from "../components/test/example/MarketProductImageOnArticle";
+
 function MarketCommentElementOnArticle({marketCommentElem1}) {
     
     return(
@@ -71,8 +77,6 @@ export default function MarketArticlePage() {
         <>
         
             <div className = "container-fluid">
-                
-                <MarketTopFixed />
                 
                 <div className = "row">
                     <div className = "widthDefault">
@@ -194,8 +198,6 @@ export default function MarketArticlePage() {
                         </div>
                     </div>
                 </div>
-                
-                <MarketBottomFixed />
                 
             </div>
         
