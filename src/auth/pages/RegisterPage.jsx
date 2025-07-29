@@ -28,6 +28,8 @@ export default function RegisterPage() {
     const { registerUser } = useUserService();
     const totalSteps = 5;
 
+
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         // setFormData({
@@ -60,7 +62,7 @@ export default function RegisterPage() {
     const handleSubmit = async () => {
         await registerUser(formData);
         alert("계정 생성이 완료되었습니다.");
-        navigate("/login");
+        navigate("/gymmadang");
     };
 
     // 🔙 이전 페이지(뒤로가기)
@@ -76,9 +78,23 @@ export default function RegisterPage() {
             </div>
 
             {/* 단계 동그라미 표시 */}
-            <div className="step-indicator">
+            {/* <div className="step-indicator">
                 {[1, 2, 3, 4, 5].map((s) => (
                     <div key={s} className={`circle ${step >= s ? 'active' : ''}`}>{s}</div>
+                ))}
+            </div> */}
+            {/* 진행 상태 바 표시 */}
+            {/* <div className="progress-container">
+                <div className="progress-bar" style={{ width: `${(step - 1) / (totalSteps - 1) * 100}%` }} />
+            </div> */}
+            <div className="progress-line">
+                {[...Array(totalSteps)].map((_, index) => (
+                    <span
+                        key={index}
+                        className={`progress-step ${index < step ? 'filled' : ''}`}
+                    >
+                        ●
+                    </span>
                 ))}
             </div>
 
@@ -129,91 +145,91 @@ export default function RegisterPage() {
                     </>
                 )}
 
-               {step === 2 && (
-  <>
-    <h4>👤 기본 정보</h4>
+                {step === 2 && (
+                    <>
+                        <h4>👤 기본 정보</h4>
 
-    <div className="form-group">
-      <label>아이디</label>
-      <div className="input-with-button">
-        <input
-          name="accountName"
-          value={formData.accountName}
-          onChange={handleChange}
-          placeholder="아이디"
-        />
-        <button className="btn btn-outline-primary btn-sm" onClick={() => alert("아이디 중복 확인 로직 연결 필요")}>중복 확인</button>
-      </div>
-    </div>
+                        <div className="form-group">
+                            <label>아이디</label>
+                            <div className="input-with-button">
+                                <input
+                                    name="accountName"
+                                    value={formData.accountName}
+                                    onChange={handleChange}
+                                    placeholder="아이디"
+                                />
+                                <button className="btn btn-outline-primary btn-sm" onClick={() => alert("아이디 중복 확인 로직 연결 필요")}>중복 확인</button>
+                            </div>
+                        </div>
 
-    <div className="form-group">
-      <label>비밀번호</label>
-      <input
-        name="password"
-        type="password"
-        value={formData.password}
-        onChange={handleChange}
-        placeholder="비밀번호"
-      />
-    </div>
+                        <div className="form-group">
+                            <label>비밀번호</label>
+                            <input
+                                name="password"
+                                type="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                placeholder="비밀번호"
+                            />
+                        </div>
 
-    <div className="form-group">
-      <label>비밀번호 확인</label>
-      <input
-        type="password"
-        value={formData.confirmPassword || ''}
-        onChange={(e) =>
-          setFormData({ ...formData, confirmPassword: e.target.value })
-        }
-        placeholder="비밀번호 확인"
-      />
-      {formData.confirmPassword && formData.confirmPassword !== formData.password && (
-        <p className="error-text">❌ 비밀번호가 일치하지 않습니다.</p>
-      )}
-      {formData.confirmPassword && formData.confirmPassword === formData.password && (
-        <p className="success-text">✅ 비밀번호가 일치합니다.</p>
-      )}
-    </div>
+                        <div className="form-group">
+                            <label>비밀번호 확인</label>
+                            <input
+                                type="password"
+                                value={formData.confirmPassword || ''}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, confirmPassword: e.target.value })
+                                }
+                                placeholder="비밀번호 확인"
+                            />
+                            {formData.confirmPassword && formData.confirmPassword !== formData.password && (
+                                <p className="error-text">❌ 비밀번호가 일치하지 않습니다.</p>
+                            )}
+                            {formData.confirmPassword && formData.confirmPassword === formData.password && (
+                                <p className="success-text">✅ 비밀번호가 일치합니다.</p>
+                            )}
+                        </div>
 
-    <div className="form-group">
-      <label>이름</label>
-      <input
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="이름"
-      />
-    </div>
+                        <div className="form-group">
+                            <label>이름</label>
+                            <input
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder="이름"
+                            />
+                        </div>
 
-    <div className="form-group">
-      <label>생년월일</label>
-      <input
-        name="birth"
-        type="date"
-        value={formData.birth}
-        onChange={handleChange}
-      />
-    </div>
+                        <div className="form-group">
+                            <label>생년월일</label>
+                            <input
+                                name="birth"
+                                type="date"
+                                value={formData.birth}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-    <div className="form-group">
-      <label>성별</label>
-      <div className="gender-buttons">
-        <button
-          className={formData.gender === 'M' ? 'active' : ''}
-          onClick={() => setFormData({ ...formData, gender: 'M' })}
-        >
-          남
-        </button>
-        <button
-          className={formData.gender === 'F' ? 'active' : ''}
-          onClick={() => setFormData({ ...formData, gender: 'F' })}
-        >
-          여
-        </button>
-      </div>
-    </div>
-  </>
-)}
+                        <div className="form-group">
+                            <label>성별</label>
+                            <div className="gender-buttons">
+                                <button
+                                    className={formData.gender === 'M' ? 'active' : ''}
+                                    onClick={() => setFormData({ ...formData, gender: 'M' })}
+                                >
+                                    남
+                                </button>
+                                <button
+                                    className={formData.gender === 'F' ? 'active' : ''}
+                                    onClick={() => setFormData({ ...formData, gender: 'F' })}
+                                >
+                                    여
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
 
                 {step === 3 && (
                     <>
@@ -235,38 +251,33 @@ export default function RegisterPage() {
                 {step === 5 && (
                     <>
                         <h4>📷 프로필</h4>
-                        <label htmlFor="profileImageFileInput" className="file-input-label">
-                            {formData.profileImageFile ? formData.profileImageFile.name : "프로필 이미지 선택"}
-                        </label>
-                        <input
-                            id="profileImageFileInput"
-                            name="profileImageFile" // Spring Boot의 @RequestParam 이름과 일치
-                            type="file"
-                            onChange={handleChange}
-                            accept="image/*" // 이미지 파일만 선택 가능하도록 설정
-                            style={{ display: 'none' }} // 실제 input은 숨기고 label로 클릭 유도
-                        />
-                        {/* 이미지 미리보기 */}
-                        {formData.profileImageFile && (
-                            <div className="profile-image-preview-container">
-                                <img
-                                    src={URL.createObjectURL(formData.profileImageFile)}
-                                    alt="Profile Preview"
-                                    className="profile-image-preview"
-                                />
-                            </div>
-                        )}
-                        {/* <div className="form-group checkbox-group">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="isBuddy"
-                                    checked={formData.isBuddy}
-                                    onChange={handleChange}
-                                />
-                                버디 매칭에 동의합니다.
+                        <div className="profile-upload-area">
+                            <label htmlFor="profileImageFileInput" className="profile-upload-label">
+                                {formData.profileImageFile ? (
+                                    // 이미지가 선택된 경우 미리보기 표시
+                                    <img
+                                        src={URL.createObjectURL(formData.profileImageFile)}
+                                        alt="Profile Preview"
+                                        className="profile-image-preview"
+                                    />
+                                ) : (
+                                    // 이미지가 없는 경우 기본 텍스트와 아이콘 표시
+                                    <div className="upload-placeholder">
+                                        <p>프로필을 추가해주세요</p>
+                                        <div className="upload-plus-icon">+</div>
+                                        <p className="upload-files-text">Upload Files</p>
+                                    </div>
+                                )}
                             </label>
-                        </div> */}
+                            <input
+                                id="profileImageFileInput"
+                                name="profileImageFile"
+                                type="file"
+                                onChange={handleChange}
+                                accept="image/*"
+                                style={{ display: 'none' }} // 실제 input은 숨김
+                            />
+                        </div>
                     </>
                 )}
             </div>
