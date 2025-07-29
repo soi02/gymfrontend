@@ -36,6 +36,7 @@ import GuidePage from './user/routine/pages/GuidePage'
 import DiaryPage from './user/routine/pages/DiaryPage.Jsx'
 import SummaryPage from './user/routine/pages/SummaryPage'
 import ResultPage from './user/routine/pages/ResultPage'
+import BuddyTopTabs from './user/buddy/commons/BuddyTopTabs'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -73,7 +74,12 @@ function AppContent() {
         </div>
       )}
 
-
+       {/* 버디 탭 메뉴 (상단 카테고리처럼) */}
+      {isBuddySection && !shouldHideTop && (
+        <div style={{ borderBottom: '1px solid #eee' }}>
+          <BuddyTopTabs />
+        </div>
+      )}
 
       <Routes>
         <Route path='/gymmadang' element={<WelcomePage />} />
@@ -95,7 +101,7 @@ function AppContent() {
 
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
-        <Route path='/gymmadang/buddyhome' element={<BuddyHome />} /> 
+        <Route path='/gymmadang/buddy/buddyHome' element={<BuddyHome />} />
 
         {/* 수련장 */}
         <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
@@ -115,13 +121,20 @@ function AppContent() {
 
 
 
+        {/* 수련장 관련 */}
+        <Route path="/challenge" element={<ChallengeIntro />} />
+        <Route path="/challengeHome" element={<ChallengeHome />} />
+        <Route path="/challengeList" element={<ChallengeList />} />
+        <Route path="/challengeMy" element={<ChallengeMy />} />
+        
+      
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 
 
        {/* 탑 네비게이션 조건 */}
-      {!shouldHideTop && (
+      {/* {!shouldHideTop && (
         isChallengeSection
           ? (location.pathname === '/challenge' 
             ? null 
@@ -129,13 +142,21 @@ function AppContent() {
           : isBuddySection
             ? <BuddyBottomNavigation />
             : <BottomNavigation />
-      )}
+      )} */}
 
       {/* 바텀 네비게이션은 항상 표시 (단, 테스트 중은 제외) */}
-      {!shouldHideBottom && (
+      {/* {!shouldHideBottom && (
         isBuddySection
           ? <BuddyBottomNavigation />
           : <BottomNavigation />
+      )} */}
+       {/* 바텀 네비게이션은 항상 표시 (단, 숨겨야 할 조건 제외) */}
+      {!shouldHideBottom && (
+        isChallengeSection
+          ? (location.pathname === '/challenge' 
+            ? null 
+            : <ChallengeBottomNavigation />) // 챌린지 섹션의 경우 ChallengeBottomNavigation 사용
+          : <BottomNavigation /> // 그 외는 공통 BottomNavigation 사용
       )}
 
 
