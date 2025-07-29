@@ -4,8 +4,9 @@ import useRoutineService from "../service/routineService";
 function WorkoutElement({workoutList}) {
     return (
         <div className="row">
-            <div className="col">{workoutList.elementId}</div>
-            <div className="col">{workoutList.categoryId}</div>
+            {/* <div className="col">{workoutList.elementId}</div> */}
+            {/* <div className="col">{workoutList.categoryId}</div> */}
+            <div className="col">{workoutList.categoryName}</div>
             <div className="col">{workoutList.elementName}</div>
         </div>
     )
@@ -45,9 +46,12 @@ export default function RoutineAddPage() {
     return(
         <>
         
-        루틴 추가 페이지
-                    {routineListElement}
-
+        <div className="main-content" style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
+            <h2>루틴추가</h2>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem'}}>
+                {routineListElement}    
+            </div>
+        </div>
 
         </>
     )
