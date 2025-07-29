@@ -44,6 +44,8 @@ import MarketUserPage from './user/market/pages/MarketUser'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { loginAction } from './redux/authSlice'
+import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle'
+import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -170,6 +172,8 @@ function AppContent() {
         <Route path="/gymmadang/market" element={<MarketBoardPage />} />
         <Route path="/gymmadang/market/article" element={<MarketArticlePage />} />
         <Route path="/gymmadang/market/user" element={<MarketUserPage />} />
+        <Route path="/gymmadang/market/writeArticle" element={<MarketWriteArticlePage />} />
+        <Route path="/gymmadang/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
