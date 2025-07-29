@@ -52,6 +52,8 @@ function AppContent() {
         <Route path="/challengeHome" element={<ChallengeHome />} />
         <Route path="/challengeList" element={<ChallengeList />} />
         <Route path="/challengeMy" element={<ChallengeMy />} />
+        
+        {/* 장터 관련 */}
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
