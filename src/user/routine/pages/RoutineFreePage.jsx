@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import useRoutineService from "../service/routineService";
 
+
+
 function WorkoutElement({workoutList}) {
     return (
         <div className="row">
@@ -12,15 +14,16 @@ function WorkoutElement({workoutList}) {
     )
 }
 
-export default function RoutineAddPage() {
+
+
+export default function RoutineFreePage() {
 
     const [workoutList, setWorkoutList] = useState([]);
 
     const routineService = useRoutineService();
 
-
     useEffect(() => {
-        console.log("RoutineAddPage 컴포넌트가 마운트 되었습니다.");
+        console.log("자유기록 페이지가 마운트 되었습니다.");
 
         const getWorkouts = async () => {
             try {
@@ -28,7 +31,7 @@ export default function RoutineAddPage() {
 
                 setWorkoutList(json);
                 console.table(json);
-            } catch (error) {
+            } catch(error) {
                 console.error(error);
             }
         }
@@ -36,18 +39,19 @@ export default function RoutineAddPage() {
         getWorkouts();
     }, []);
 
-
     const routineListElement = workoutList.map(workoutList => (
         <WorkoutElement key={workoutList.elementId} workoutList={workoutList} />
     ));
-    
+
+
+
 
 
     return(
         <>
         
-        <div className="main-content" style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
-            <h2>루틴추가</h2>
+        <div className="main-content" style={{height: '100vh', display: 'flex', flexDirection: 'column', marginBottom: '70px'}}>
+            <h2>자유운동</h2>
             <div style={{ flex: 1, overflowY: 'auto', padding: '1rem'}}>
                 {routineListElement}    
             </div>

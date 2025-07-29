@@ -25,7 +25,15 @@ import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
 import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation'
 import BuddyHome from './user/buddy/pages/BuddyHome'
 import ChallengeTopTabs from './user/challenge/commons/ChallengeTopTabs'
-import ChallengeCreate from './user/challenge/create/pages/ChallengeCreate'
+import RoutineAddPage from './user/routine/pages/RoutineAddPage'
+import RoutineFreePage from './user/routine/pages/RoutineFreePage'
+import MyPage from './user/mypage/pages/MyPage'
+import MyRoutinePage from './user/routine/pages/MyRoutinePage'
+import WorkoutPage from './user/routine/pages/WorkoutPage'
+import GuidePage from './user/routine/pages/GuidePage'
+import DiaryPage from './user/routine/pages/DiaryPage.Jsx'
+import SummaryPage from './user/routine/pages/SummaryPage'
+import ResultPage from './user/routine/pages/ResultPage'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -70,9 +78,18 @@ function AppContent() {
         <Route path='/gymmadang/register' element={<RegisterPage />} />
         <Route path='/gymmadang/login' element={<LoginPage />} />
         <Route path="/gymmadang/notifications" element={<NotificationPage />} />
+        <Route path="/gymmadang/mypage" element={<MyPage />} />
 
         {/* 루틴 */}
         <Route path='/gymmadang/routine' element={<RoutineHomePage />} />
+        <Route path='/gymmadang/routine/free' element={<RoutineFreePage />} />
+        <Route path='/gymmadang/routine/add' element={<RoutineAddPage />} />
+        <Route path='/gymmadang/routine/myroutine' element={<MyRoutinePage />} />
+        <Route path='/gymmadang/routine/workout' element={<WorkoutPage />} />
+        <Route path='/gymmadang/routine/guide' element={<GuidePage />} />
+        <Route path='/gymmadang/routine/summary' element={<SummaryPage />} />
+        <Route path='/gymmadang/routine/diary' element={<DiaryPage />} />
+        <Route path='/gymmadang/routine/result' element={<ResultPage />} />
 
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
