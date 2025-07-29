@@ -1,3 +1,5 @@
+import '../../../styles/MarketCommonStyles.css';
+
 export default function MarketTopFixed() {
     
     return (
