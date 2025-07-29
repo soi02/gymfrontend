@@ -42,10 +42,14 @@ import MarketArticlePage from './user/market/pages/MarketArticle'
 import MarketBoardPage from './user/market/pages/MarketBoard'
 import MarketUserPage from './user/market/pages/MarketUser'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { loginAction } from './redux/authSlice'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
+
+  const dispatch = useDispatch();
 
   // verify token 관련 (새로고침해도 로그인 유지)
   useEffect(() => {
