@@ -12,6 +12,8 @@ import ChallengeMy from './user/challenge/pages/ChallengeMy'
 
 import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomNavigation'
 import ChallengeIntro from './user/challenge/pages/ChallengeIntro'
+import ChallengeCreate from './user/challenge/create/pages/ChallengeCreate'
+
 import WelcomePage from './global/pages/WelcomePage'
 import RegisterPage from './auth/pages/RegisterPage'
 
