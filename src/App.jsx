@@ -25,6 +25,7 @@ import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
 import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation'
 import BuddyHome from './user/buddy/pages/BuddyHome'
 import ChallengeTopTabs from './user/challenge/commons/ChallengeTopTabs'
+import ChallengeCreate from './user/challenge/create/pages/ChallengeCreate'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -32,7 +33,7 @@ function AppContent() {
   const location = useLocation();
 
   // TopHeader를 숨길 경로들
-  const hideHeaderFooterRoutes = ['/gymmadang', '/gymmadang/login', '/gymmadang/register']; // 숨길 경로들
+  const hideHeaderFooterRoutes = ['/gymmadang', '/gymmadang/login', '/gymmadang/register', '/gymmadang/challenge/challengeCreate']; // 숨길 경로들
 
   const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
   const isTestSection = location.pathname.startsWith('/gymmadang/challenge/challengeTest');
@@ -80,7 +81,10 @@ function AppContent() {
         {/* 수련장 */}
         <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
         <Route path="/gymmadang/challenge/challengeHome" element={<ChallengeHome />} />
+
         <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
+        <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
+
         <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMy />} />
 
 
@@ -88,6 +92,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
         <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
+
 
 
 

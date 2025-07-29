@@ -1,0 +1,7 @@
+back-button {
+  cursor: pointer;
+}
+
+back-button:focus {
+  outline: none;
+}
