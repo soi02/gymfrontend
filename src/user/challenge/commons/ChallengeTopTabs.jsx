@@ -47,7 +47,7 @@ export default function ChallengeTopTabs() {
 }}>
 
       <TabItem to="/gymmadang/challenge/challengeHome" label="수련장 홈" />
-      <TabItem to="/gymmadang/challenge/challengeList" label="전체 챌린지" />
+      <TabItem to="/gymmadang/challenge/challengeList" label="수련 목록" />
       <TabItem to="/gymmadang/challenge/challengeMy" label="나의 수련기록" />
     </div>
   );

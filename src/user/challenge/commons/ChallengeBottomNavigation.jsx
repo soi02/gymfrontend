@@ -1,4 +1,4 @@
-// BottomNavigation.jsx
+// BottomNavigation.jsx (아마 사용 안할 듯)
 import { Link, useLocation } from "react-router-dom";
 
 function ChallengeBottomNavigationItem({ link, iconClass, label }) {
