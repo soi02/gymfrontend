@@ -1,15 +1,47 @@
 import { use, useEffect, useState } from "react"
 import useRoutineService from "../service/routineService";
 import "../styles/RoutineFreePage.css"
+import { useNavigate } from "react-router-dom";
 
 
 
 function WorkoutElement({workoutList, onCheck, checked}) {
+    const navigate = useNavigate();
+
+    const goToDetail = () => {
+        navigate(`/gymmadang/routine/guide/${workoutList.elementId}`);
+    };
+
+
     return (
         <div className="row align-items-center my-1">
-            <div className="col">{workoutList.categoryName}</div>
+            <div className="col-2">{workoutList.categoryName}</div>
             {/* <div className="col">{workoutList.elementPicture}</div> */}
-            <div className="col">{workoutList.elementName}</div>
+            <div className="col-7">
+                {workoutList.elementName}
+
+            </div>
+            <div className="col d-flex align-items-center">
+                <span
+                    onClick={goToDetail}
+                    title="운동 정보 보기"
+                    style={{
+                        marginLeft: "8px",
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                        color: "#555"
+                    }}
+                
+                >
+                    ⓘ
+                </span>
+            </div>
+
+
+
+
+            {/* <div className="col">{workoutList.elementName}</div> */}
             <div className="col-1">
                 <input 
                     type="checkbox"
