@@ -6,5 +6,10 @@ export default function useRoutineService() {
         return response.data;
     }
 
-    return {getWorkoutList};
+    const getWorkoutGuide = async(id) => {
+        const response = await axios.get(`http://localhost:8080/api/routine/getWorkoutGuide/${id}`);
+        return response.data;
+    }
+
+    return {getWorkoutList, getWorkoutGuide};
 }
