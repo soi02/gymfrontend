@@ -42,7 +42,7 @@ export default function TopHeader() {
         }}
         >
             {/* 왼쪽 로고 */}
-            <Link to="/">
+            <Link to="/gymmadang/mainpage">
             <img src={logoImg} alt="로고" style={{ height: "28px", cursor: "pointer" }} />
             </Link>
 

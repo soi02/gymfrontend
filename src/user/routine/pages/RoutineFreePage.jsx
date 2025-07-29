@@ -15,13 +15,9 @@ function WorkoutElement({workoutList, onCheck, checked}) {
 
     return (
         <div className="row align-items-center my-1">
-            <div className="col-2">{workoutList.categoryName}</div>
+            {/* <div className="col-2">{workoutList.categoryName}</div> */}
             {/* <div className="col">{workoutList.elementPicture}</div> */}
-            <div className="col-7">
-                {workoutList.elementName}
-
-            </div>
-            <div className="col d-flex align-items-center">
+            {/* <div className="col-1 d-flex align-items-center">
                 <span
                     onClick={goToDetail}
                     title="운동 정보 보기"
@@ -36,18 +32,40 @@ function WorkoutElement({workoutList, onCheck, checked}) {
                 >
                     ⓘ
                 </span>
+            </div> */}
+            <div className="col-3" style={{paddingLeft: '1.4rem', marginRight: '1.5rem'}}>
+                <img
+                    onClick={goToDetail}
+                    src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`} // or 이미지 서버 주소
+                    alt={workoutList.elementName}
+                    style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px" }}
+                />
+            </div>
+
+            <div className="col-6">
+                <span
+                    onClick={goToDetail}
+                >
+                    {workoutList.elementName}
+                </span>
+
             </div>
 
 
+            <div className="col-2">
+            <input 
+                type="checkbox"
+                checked={checked}
+                onChange={() => onCheck(workoutList.elementId)}
+                style={{
+                    width: "17px",      
+                    height: "17px",
+                    transform: "scale(1.4)",
+                    cursor: "pointer",  
+                    accentColor: "#000000"
+            }}
+            />
 
-
-            {/* <div className="col">{workoutList.elementName}</div> */}
-            <div className="col-1">
-                <input 
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => onCheck(workoutList.elementId)}
-                />
             </div>
         </div>
     )
@@ -131,64 +149,77 @@ export default function RoutineFreePage() {
 
 
 
-
-    return(
+    return (
         <>
-        
-        <div className="main-content" style={{height: '100vh', display: 'flex', flexDirection: 'column'}}>
-            <h2>자유운동</h2>
-                
-                <div style={{ flex: 1, overflowY: 'auto', padding: '1rem'}}>
-                    <input
-                    type="text"
-                    className="form-control"
-                    placeholder="찾으시는 운동을 검색해보세요."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                <div
-                className="hide-scrollbar"
-                style={{
-                    overflowX: 'auto',
-                    whiteSpace: 'nowrap',
-                    marginTop: '0.5rem',
-                    paddingBottom: '0.5rem',
-                    marginBottom: '1rem',
-                    maxWidth: '100%'
-                }}
-                >
-                    {categories.map(cat => (
-
-                        <button
-                        key={cat}
-                        className={`btn btn-sm me-1 ${selectedCategory === cat ? "btn-dark" : "btn-outline-secondary"}`}
-                        onClick={() => setSelectedCategory(cat)}
-                        
-                        style={{
-                            display: 'inline-block',
-                            width: '60px',
-                            fontSize: '0.85rem',
-                            padding: '0.3rem 0.8rem',
-                            borderRadius: '999px',
-                        }}
-                        >
-                            
-                        {cat}
-                        
-                        </button>
-                    ))}
+            <div
+                className="main-content"
+                style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+            >
+                <div className="row">
+                    <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
+                        <h3>자유운동</h3>
+                        <p>
+                            오늘 하고싶은 운동을 자유롭게 선택해 보시게.
+                            <br />
+                            사진을 누르면 운동 방법을 확인할 수 있소.
+                        </p>
+                    </div>
                 </div>
 
-                <p>선택된 운동: {selectedItems.size}개</p>
+                <div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="찾는 운동을 적어보시게."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
 
-                {routineListElement}    
+                    <div
+                        className="hide-scrollbar"
+                        style={{
+                            overflowX: "auto",
+                            whiteSpace: "nowrap",
+                            marginTop: "0.5rem",
+                            paddingBottom: "0.5rem",
+                            marginBottom: "1rem",
+                            maxWidth: "100%",
+                        }}
+                    >
+                        
+                        {categories.map((cat) => (
+                            <button
+                                key={cat}
+                                className={`btn btn-sm me-1 ${
+                                    selectedCategory === cat
+                                        ? "btn-dark"
+                                        : "btn-outline-secondary"
+                                }`}
+                                onClick={() => setSelectedCategory(cat)}
+                                style={{
+                                    display: "inline-block",
+                                    width: "60px",
+                                    fontSize: "0.85rem",
+                                    padding: "0.3rem 0.8rem",
+                                    marginTop: "0.3rem",
+                                    borderRadius: "999px",
+                                }}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
 
-                <div className="routine-my-routine-add-container">
-                  <button className="routine-my-routine-add-btn">운동 시작하기</button>
+                    <p>선택한 운동: {selectedItems.size}개</p>
+
+                    {routineListElement}
+
+                    <div className="routine-my-routine-add-container">
+                        <button className="routine-my-routine-add-btn">운동 시작하기</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
         </>
-    )
+    );
+
 }

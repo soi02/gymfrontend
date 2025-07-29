@@ -1,0 +1,52 @@
+.main-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+    text-align: center;
+
+}
+
+.main-image {
+  width: 93%;
+  display: block;
+  margin: 0 auto;
+}
+
+.link-area {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* 각 건물에 맞게 위치 조정 (이미지 기준 px, %, vw 등 가능) */
+.routine {
+  top: 5%;
+  left: 5%;
+  width: 40%;
+  height: 40%;
+}
+
+.challenge {
+  top: 5%;
+  right: 5%;
+  width: 40%;
+  height: 40%;
+}
+
+.market {
+  bottom: 5%;
+  left: 5%;
+  width: 40%;
+  height: 40%;
+}
+
+.buddy {
+  bottom: 5%;
+  right: 5%;
+  width: 40%;
+  height: 40%;
+}
+
+/* .link-area {
+  background: rgba(255, 0, 0, 0.3);
+}; */

@@ -12,15 +12,31 @@ import "../styles/RoutineAddPage.css"
 function WorkoutElement({workoutList, onCheck, checked}) {
     return (
         <div className="row align-items-center my-1">
-            <div className="col">{workoutList.categoryName}</div>
-            {/* <div className="col">{workoutList.elementPicture}</div> */}
+
+            {/* <div className="col-2">{workoutList.categoryName}</div> */}
+            <div className="col-3">
+            <img
+                src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`} // or 이미지 서버 주소
+                alt={workoutList.elementName}
+                style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "8px" }}
+            />
+            </div>
+
+
             <div className="col">{workoutList.elementName}</div>
             <div className="col-1">
-                <input 
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => onCheck(workoutList.elementId)}
-                />
+            <input
+            type="checkbox"
+            checked={checked}
+            onChange={() => onCheck(workoutList.elementId)}
+            style={{
+                width: "20px",
+                height: "20px",
+                accentColor: "#007bff", // ✅ 요게 포인트!! 부트스트랩 파랑
+                cursor: "pointer",
+            }}
+            />
+
             </div>
         </div>
     )
@@ -111,7 +127,7 @@ export default function RoutineAddPage() {
                     <input
                     type="text"
                     className="form-control"
-                    placeholder="찾으시는 운동을 검색해보세요."
+                    placeholder="찾으려는 운동을 검색해보시오."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     />
