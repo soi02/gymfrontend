@@ -1,0 +1,29 @@
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.routine-my-routine-add-btn {
+  flex: 1;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #7c1d0d; 
+  color: white;
+}
+
+.routine-my-routine-add-container {
+  display: flex;
+  /* display: grid; */
+  justify-content: center; /* 가로 가운데 정렬 */
+  margin-top: 1rem;
+}

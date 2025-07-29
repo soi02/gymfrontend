@@ -1,0 +1,93 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.top-bar h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: lightgray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle.active {
+    background-color: #007bff;
+}
+
+.form-section input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+}
+
+.form-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.terms-box {
+    margin-bottom: 25px;
+}
+
+.terms-content {
+    height: 150px;
+    overflow-y: auto;
+    padding: 12px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+.register-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-section {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+    background: white;
+    position: sticky;
+    bottom: 0;
+}
+
+
