@@ -38,7 +38,7 @@ function WorkoutElement({workoutList, onCheck, checked}) {
                     onClick={goToDetail}
                     src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`} // or 이미지 서버 주소
                     alt={workoutList.elementName}
-                    style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px" }}
+                    style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "8px" }}
                 />
             </div>
 
@@ -159,18 +159,18 @@ export default function RoutineFreePage() {
                     <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
                         <h3>자유운동</h3>
                         <p>
-                            오늘 하고싶은 운동을 자유롭게 선택해 보시게.
+                            오늘 하고싶은 운동을 자유롭게 선택해 보시오.
                             <br />
                             사진을 누르면 운동 방법을 확인할 수 있소.
                         </p>
                     </div>
                 </div>
 
-                <div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
+                <div style={{ flex: 1, overflowY: "auto", padding: "1rem"}}>
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="찾는 운동을 적어보시게."
+                        placeholder="찾는 운동을 적어보시오"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -210,13 +210,29 @@ export default function RoutineFreePage() {
                         ))}
                     </div>
 
-                    <p>선택한 운동: {selectedItems.size}개</p>
 
                     {routineListElement}
+                    {/* <p>선택한 운동: {selectedItems.size}개</p> */}
+
+                    {/* <div className="routine-my-routine-add-container">
+                        <button className="routine-my-routine-add-btn">{selectedItems.size}개의 운동 바로 시작하겠소</button>
+                    </div> */}
 
                     <div className="routine-my-routine-add-container">
-                        <button className="routine-my-routine-add-btn">운동 시작하기</button>
+                        <button
+                            className={`routine-my-routine-add-btn ${selectedItems.size === 0 ? 'disabled' : ''}`}
+                            disabled={selectedItems.size === 0}
+                        >
+                            {selectedItems.size === 0
+                                ? '오늘의 운동을 선택해주시오'
+                                : selectedItems.size + "개의 운동 바로 시작하겠소"
+                            }
+
+                        </button>
                     </div>
+
+
+
                 </div>
             </div>
         </>
