@@ -37,10 +37,41 @@ import DiaryPage from './user/routine/pages/DiaryPage.Jsx'
 import SummaryPage from './user/routine/pages/SummaryPage'
 import ResultPage from './user/routine/pages/ResultPage'
 import BuddyTopTabs from './user/buddy/commons/BuddyTopTabs'
+import { useEffect } from 'react'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
+
+  // verify token 관련 (새로고침해도 로그인 유지)
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const res = await axios.post(
+          "http://localhost:8080/api/user/verify-token",
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        if (res.data.success) {
+          dispatch(loginAction({ name: res.data.name, id: res.data.id }));
+          console.log("로그인 유지됨:", res.data);
+        }
+      } catch (err) {
+        console.error("토큰 만료 또는 검증 실패:", err);
+        localStorage.removeItem("token");
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+
+
+
   const location = useLocation();
 
   // TopHeader를 숨길 경로들
