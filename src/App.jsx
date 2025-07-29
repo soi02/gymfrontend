@@ -41,6 +41,7 @@ import { useEffect } from 'react'
 import MarketArticlePage from './user/market/pages/MarketArticle'
 import MarketBoardPage from './user/market/pages/MarketBoard'
 import MarketUserPage from './user/market/pages/MarketUser'
+import axios from 'axios'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -58,7 +59,7 @@ function AppContent() {
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
+        console.log("토큰 검증 응답:", res.data);
         if (res.data.success) {
           dispatch(loginAction({ name: res.data.name, id: res.data.id }));
           console.log("로그인 유지됨:", res.data);

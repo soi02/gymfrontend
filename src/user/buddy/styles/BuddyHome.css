@@ -1,0 +1,104 @@
+.buddy-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh; /* 최소 높이를 뷰포트 전체 높이로 설정하여 내용이 적어도 꽉 차게 */
+  /* 스크롤 가능한 컨테이너 */
+  overflow-y: auto; /* 내용이 넘칠 때만 수직 스크롤바 표시 */
+  -webkit-overflow-scrolling: touch; /* iOS Safari에서 부드러운 스크롤 */
+
+  /* 하단 고정 바의 높이만큼 padding-bottom 추가 */
+  /* 예시: 바텀바 높이가 60px이라고 가정합니다. */
+  padding-bottom: 80px; /* 바텀바 높이 + 여유 공간 */
+}
+
+.buddy-home-title {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.buddy-home-description {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.buddy-card-wrapper {
+  perspective: 1000px;
+  width: 350px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* 카드와 다음 요소(또는 하단바) 사이의 간격 */
+}
+
+.buddy-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.5s ease-in-out;
+}
+
+.buddy-card-image {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.buddy-card-info {
+  padding: 15px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buddy-card-info h2 {
+  margin: 0 0 5px;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.buddy-card-info p {
+  margin: 0;
+  color: #777;
+  font-size: 1em;
+}
+
+.buddy-card-actions {
+  display: flex;
+  justify-content: space-around;
+  /* padding: 15px; */
+  border-top: 1px solid #eee;
+}
+
+.like-button, .dislike-button {
+  background: none;
+  border: none;
+  font-size: 3em;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.like-button:hover, .dislike-button:hover {
+  transform: scale(1.1);
+}
+
+.like-button {
+  color: #e91e63;
+}
+
+.dislike-button {
+  color: #9e9e9e;
+}
