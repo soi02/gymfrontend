@@ -6,8 +6,8 @@ function MarketWriteArticleFloatingFixedButton() {
       <Link
         to="/gymmadang/market/writeArticle"
         style={{
-          position: "fixed",
-          bottom: "92px",
+          position: "absolute",
+          bottom: "20px",
           right: "20px",
           width: "65px",
           height: "65px",

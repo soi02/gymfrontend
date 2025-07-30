@@ -83,7 +83,7 @@ export default function MarketArticlePage() {
                     <div className = "widthDefault">
                         <div className = "col">
                             <div className = "row">
-                                <div className = "col primaryDivisionDefault" style = {{height : "80vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                <div className = "col primaryDivisionDefault" style = {{height : "80vh", paddingLeft : "2vh", paddingRight : "2vh", overflowX : "hidden"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
                                             <div className = "row">
