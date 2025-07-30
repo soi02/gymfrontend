@@ -27,7 +27,7 @@ export default function ErrorPage() {
       </div>
 
       <Link
-        to="/"
+        to="/gymmadang/mainpage"
         style={{
           display: "inline-block",
           padding: "10px 24px",

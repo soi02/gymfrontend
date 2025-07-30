@@ -73,7 +73,7 @@ export default function RoutineHomePage() {
                 {/* 하단 고정 버튼 영역 */}
                 <div className="routine-bottom-buttons">
                   <button className="routine-free-btn" onClick={() => navigate('/gymmadang/routine/free')}>⚡ 자유운동</button>
-                  <button className="routine-add-btn" onClick={() => navigate('/gymmadang/routine/add')}>＋ 루틴추가</button>
+                  <button className="routine-add-btn" onClick={() => navigate('/gymmadang/routine/add')}>＋ 루틴생성</button>
                 </div>
 
 

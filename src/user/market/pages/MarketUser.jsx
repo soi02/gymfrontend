@@ -4,6 +4,7 @@ import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketUserInfosOnUserPage from "../commons/test/example/MarketUserInfosOnUserPage";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
+import '../styles/MarketCommonStyles.css';
 
 function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
     

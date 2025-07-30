@@ -21,6 +21,12 @@
   color: white;
 }
 
+.routine-my-routine-add-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
 .routine-my-routine-add-container {
   display: flex;
   /* display: grid; */

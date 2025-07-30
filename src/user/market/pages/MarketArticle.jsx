@@ -3,6 +3,7 @@ import MarketBottomFixed from "../commons/test/example/MarketBottomFixed";
 import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductImageOnArticle from "../components/test/example/MarketProductImageOnArticle";
+import '../styles/MarketCommonStyles.css';
 
 function MarketCommentElementOnArticle({marketCommentElem1}) {
     

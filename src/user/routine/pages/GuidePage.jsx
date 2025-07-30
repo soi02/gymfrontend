@@ -38,47 +38,73 @@ export default function GuidePage() {
   const { id } = useParams();
   const routineService = useRoutineService();
 
-  const [workoutGuide, setWorkoutGuide] = useState({
-    startPosture: "",
-    motion: "",
-    breathing: ""
-  });
+  const [instruction, setinstruction] = useState("");
+  const [meta, setMeta] = useState({
+    categoryName: "",
+    elementName: "",
+    elementPicture: "",
+    memoContent: ""
+  })
 
   useEffect(() => {
     const getWorkoutGuide = async () => {
       try {
-        const rawList = await routineService.getWorkoutGuide(id);
-        const instruction = rawList?.[0]?.instruction; // 여기!
-        const parsed = parseGuideText(instruction);
-        setWorkoutGuide(parsed);
-      } catch (err) {
-        console.error(err);
+        const raw = await routineService.getWorkoutGuide(id);
+        const data = raw?.[0];
+
+        setinstruction(data?.instruction || "");
+        setMeta({
+          categoryName: data?.categoryName || "",
+          elementName: data?.elementName || "",
+          elementPicture: data?.elementPicture || "",
+          memoContent: data?.memoContent || "",
+        });
+      } catch(error) {
+        console.error(error);
       }
     };
-
     getWorkoutGuide();
-  }, [id]);
+  }, []);
+
+
+  const parsed = parseGuideText(instruction);
+
 
   return (
-    <>
     <div className="main-content routine-main-content">
-    
-      <h2>가이드 페이지</h2>
-      <p>ID: {id}</p>
-        <div style={{ padding: "1rem", background: "#f9f9f9", borderRadius: "10px" }}>
-        <h3>∙ 시작 자세</h3> 
-        {formatSteps(workoutGuide.startPosture)}
+      <h4 className="routine-title">
+        <span className="routine-subtitle">
+          {meta.categoryName} &gt; {meta.elementName}
+        </span>
+      </h4>
 
-        <h3>∙ 운동 동작</h3>
-        {formatSteps(workoutGuide.motion)}
-
-        <h3>∙ 호흡법</h3>
-        {formatSteps(workoutGuide.breathing)}
+      {meta.elementPicture && (
+        <div className="routine-image-wrapper">
+          <img
+            src={`http://localhost:8080/uploadFiles/${meta.elementPicture}`}
+            alt={meta.elementName}
+            className="routine-image"
+          />
         </div>
+      )}
+        <h5>∙ 운동 방법</h5>
 
-        
+      <div className="routine-guide-box">
+        <h5>[시작 자세]</h5>
+        {formatSteps(parsed.startPosture)}
+
+        <h5 style={{ marginTop: "1rem" }}>[운동 동작]</h5>
+        {formatSteps(parsed.motion)}
+
+        <h5 style={{ marginTop: "1rem" }}>[호흡법]</h5>
+        {formatSteps(parsed.breathing)}
+      </div>
+
+        <h5>∙ 내 메모</h5>
+      <div className="routine-memo">
+        <p>{meta.memoContent}</p>
+      </div>
     </div>
 
-    </>
-  );
+    );
 }

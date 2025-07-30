@@ -1,4 +1,5 @@
 import MarketUserProfileImage from "../../../components/test/example/MarketUserProfileImage";
+import '../../../styles/MarketCommonStyles.css';
 
 export default function MarketUserInfosOnUserPage() {
     

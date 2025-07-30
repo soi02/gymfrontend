@@ -1,0 +1,78 @@
+.marketTopFixed {
+    
+  background-color: white;
+  border-bottom: 1vh solid black;
+    
+}
+
+.marketBottomFixed {
+    
+  background-color: white;
+  border-top: 1vh solid black;
+    
+}
+
+.widthDefault {
+  
+  min-width : 375px;
+  max-width : 750px;
+  margin : 0 auto;
+  
+}
+
+.linkDefault {
+  
+  color: inherit;
+  text-decoration: none;
+  
+}
+
+.buttonDefault {
+  
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  border-radius: 0vh;
+  border: 0.5vh solid black;
+  
+}
+
+.buttonDefault:hover {
+  
+  background-color: inherit;
+  color: inherit;
+  font-weight: bold;
+  border: 0.5vh solid black;
+  
+}
+
+.buttonDefault:active {
+  
+  background-color: inherit !important;
+  color: inherit !important;
+  border: 0.5vh solid black !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  
+}
+
+.searchBarDefault {
+  
+  border-radius: 0vh;
+  border: 0.5vh solid black;
+  
+}
+
+.primaryDivisionDefault {
+  
+  overflow-y : auto;
+  
+}
+
+.secondaryDivisionDefault {
+  
+  border-radius : 0vh;
+  border: 0.5vh solid black;
+  
+}
