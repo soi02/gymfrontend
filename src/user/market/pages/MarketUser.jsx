@@ -243,7 +243,7 @@ export default function MarketUserPage() {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{height : "80vh"}}>
+                    <div className = "col primaryDivisionDefault" style = {{height : "80vh", overflowX : "hidden"}}>
                         
                         <MarketUserInfosOnUserPage />
                         

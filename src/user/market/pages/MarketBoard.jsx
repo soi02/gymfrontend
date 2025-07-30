@@ -2,6 +2,7 @@ import { useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
 import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArticleFloatingFixedButton";
+import MarketSearchDivision from "../commons/test/example/MarketSearchDivision";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -92,13 +93,17 @@ export default function MarketBoardPage() {
         
             <div className = "container-fluid">
                 
-                {
-                    constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
-                }
-                
                 <div className = "row">
-                    <div className = "col">
+                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "80vh", overflowX : "hidden"}}>
+                        
+                        <MarketSearchDivision />
+                        
+                        {
+                            constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
+                        }
+                        
                         <MarketWriteArticleFloatingFixedButton />
+                        
                     </div>
                 </div>
                 
