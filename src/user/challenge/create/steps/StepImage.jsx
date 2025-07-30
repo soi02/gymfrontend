@@ -56,7 +56,7 @@ const handleChange = (e) => {
     }
 
     onNext({
-      challengeThumnailImage: file
+      challengeThumbnailImage: file
       // imagePreview: preview, // onNext 활용해서 이미지랑, 이미지 미리보기를 폼데이터에 전달
     });
   };
@@ -71,7 +71,7 @@ const handleChange = (e) => {
       </h2>
 
       <label className="step-image-upload-box">
-        <input type="file" name='challengeThumnailImage' accept="image/*" style={{ display: 'none' }} onChange={handleChange} />
+        <input type="file" name='challengeThumbnailImage' accept="image/*" style={{ display: 'none' }} onChange={handleChange} />
         <div className="step-image-upload-content">
           <span className="step-image-plus">＋</span>
           <p className="step-image-text">챌린지를 한눈에 보여줄<br />대표 이미지를 등록하세요.</p>

@@ -2,17 +2,27 @@ import '../styles/ChallengeCard.css';
 
 export default function ChallengeCard({ challenge }) {
     console.log("챌린지 데이터:", challenge); // ✅ 여기에 찍기
-  const {
-    challengeId,
-    challengeTitle,
-    challengeStartDate,
-    challengeEndDate,
-    challengeMaxMembers,
-    currentMembers = 0,
-    challengeThumbnailPath,
-    keywords = [], // 키워드 리스트도 추가되어 있다고 가정
-  } = challenge;
 
+    
+    
+    const {
+      challengeId,
+      challengeTitle,
+      challengeStartDate,
+      challengeEndDate,
+      challengeMaxMembers,
+      currentMembers = 0,
+      challengeThumbnailPath,
+      keywords = [], // 키워드 리스트도 추가되어 있다고 가정
+    } = challenge;
+    
+    console.log("챌린지 데이터:", challenge); 
+    console.log("실제 썸네일 경로:", challengeThumbnailPath);
+    console.log("썸네일 경로 길이:", challengeThumbnailPath ? challengeThumbnailPath.length : 'null/undefined');
+    console.log("트림된 썸네일 경로 길이:", challengeThumbnailPath ? challengeThumbnailPath.trim().length : 'null/undefined');
+    // 그리고 typeof도 찍어보세요
+    console.log("썸네일 경로 타입:", typeof challengeThumbnailPath);
+    
   // 진행 상태 판단 로직
   const today = new Date();
   const start = new Date(challengeStartDate);

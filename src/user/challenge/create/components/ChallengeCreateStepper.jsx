@@ -80,8 +80,8 @@ updated.challengeKeywordIds.forEach((id) =>
 );
 
       // 이미지 파일 
-      if (updated.challengeThumnailImage) {
-        formDataToSend.append("challengeThumnailImage", updated.challengeThumnailImage);
+      if (updated.challengeThumbnailImage) {
+        formDataToSend.append("challengeThumbnailImage", updated.challengeThumbnailImage);
       }
 
 const res = await axios.post(
