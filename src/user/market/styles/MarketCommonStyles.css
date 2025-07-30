@@ -72,7 +72,8 @@
 
 .secondaryDivisionDefault {
   
-  border-radius : 0vh;
-  border: 0.5vh solid black;
+  border-radius : 1.25vh;
+  border: 0.0625vh solid rgb(192, 192, 192);
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
   
 }

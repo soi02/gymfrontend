@@ -48,6 +48,8 @@ import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle'
 import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts'
 import MainPage from './global/pages/MainPage'
 import MarketTopTabs from './user/market/commons/marketTopTabs'
+import BuddyChat from './user/buddy/pages/BuddyChat'
+import BuddyNotification from './user/buddy/pages/BuddyNotification'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -154,6 +156,10 @@ function AppContent() {
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
         <Route path='/gymmadang/buddy/buddyHome' element={<BuddyHome />} />
+        <Route path='/gymmadang/buddy/buddyChat' element={<BuddyChat />} />
+        <Route path='/gymmadang/buddy/buddyMy' element={<BuddyNotification />} />
+
+
 
         {/* 수련장 */}
         <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />

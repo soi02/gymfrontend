@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
+import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArticleFloatingFixedButton";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -91,9 +92,17 @@ export default function MarketBoardPage() {
         
             <div className = "container-fluid">
                 
-                {
-                    constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
-                }
+                <div className = "row">
+                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "80vh", overflowX : "hidden"}}>
+                        
+                        {
+                            constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
+                        }
+                        
+                                <MarketWriteArticleFloatingFixedButton />
+                        
+                    </div>
+                </div>
                 
             </div>
         
