@@ -1,0 +1,90 @@
+.buddy-container {
+  /* max-width: 600px; */
+  /* margin: 0 auto; */
+  padding: 24px;
+}
+
+.buddy-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.buddy-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.buddy-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.buddy-info {
+  display: flex;
+  align-items: center;
+}
+
+.buddy-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  border: 2px solid #ccc;
+}
+
+.buddy-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.buddy-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.buddy-intro {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 2px;
+}
+
+.buddy-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-accept {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-decline {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: #888;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
