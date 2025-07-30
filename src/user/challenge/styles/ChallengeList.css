@@ -1,7 +1,13 @@
+.challenge-list-wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
+}
+
 .challenge-list-page {
   padding: 16px;
-  position: relative;
   background: #f9f9f9;
+  box-sizing: border-box;
 }
 
 .challenge-list-header h2 {
