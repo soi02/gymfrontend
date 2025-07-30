@@ -160,18 +160,27 @@ export default function MarketArticlePage() {
                                         <div className = "col" style = {{marginBottom : "1.75vh", paddingLeft : "3vh", paddingRight : "3vh"}}>
                                             <div className = "row">
                                                 <div className = "col" style = {{fontSize : "2.625vh", fontWeight : "bold", marginBottom : "1vh"}}>
-                                                    관심 0개
+                                                    탐냄 1개
                                                 </div>
                                             </div>
+                                            <div className = "row gx-0">
+                                                <div className = "col-auto">
+                                                    <button type="button" className="btn btn-primary" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>탐나요!</button>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* 
                                             <div className = "row">
                                                 <div className = "col-auto" style = {{fontSize : "1.5vh", width : "15vh", height : "3vh"}}>
                                                     <div className = "row h-100">
                                                         <div className = "col" style = {{display : "flex", justifyContent : "center", alignItems : "center"}}>
-                                                            관심 있어요!
+                                                            탐나요!
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            */}
+
                                         </div>
                                     </div>
                                     <div className = "row">
