@@ -74,6 +74,9 @@ export default function RoutineAddPage() {
     const categories =  ["전체", "가슴", "등", "어깨", "팔", "하체"];
 
     const [selectedItems, setSelectedItems] = useState(new Set());
+    const navigate = useNavigate();
+
+
 
 
     // 여기는 부모 컴포넌트(RoutineAddPage) 안에 정의된 함수
@@ -209,6 +212,14 @@ export default function RoutineAddPage() {
                         <button
                             className={`routine-my-routine-add-btn ${selectedItems.size === 0 ? 'disabled' : ''}`}
                             disabled={selectedItems.size === 0}
+                            onClick={() => {
+                                if (selectedItems.size > 0) {
+                                    const selectedWorkouts = workoutList.filter(item => selectedItems.has(item.elementId));
+                                    navigate('/gymmadang/routine/addDetail', {
+                                        state: { selectedWorkouts }
+                                    });
+                                }
+                            }}
                         >
                             {selectedItems.size === 0
                                 ? '루틴에 포함할 운동을 선택해주시오'

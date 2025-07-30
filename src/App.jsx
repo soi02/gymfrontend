@@ -51,6 +51,7 @@ import MarketTopTabs from './user/market/commons/marketTopTabs'
 import BuddyChat from './user/buddy/pages/BuddyChat'
 import BuddyNotification from './user/buddy/pages/BuddyNotification'
 import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail'
+import RoutineAddDetailPage from './user/routine/pages/RoutineAddDetailPage'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -147,6 +148,7 @@ function AppContent() {
         <Route path='/gymmadang/routine' element={<RoutineHomePage />} />
         <Route path='/gymmadang/routine/free' element={<RoutineFreePage />} />
         <Route path='/gymmadang/routine/add' element={<RoutineAddPage />} />
+        <Route path='/gymmadang/routine/addDetail' element={<RoutineAddDetailPage />} />
         <Route path='/gymmadang/routine/myroutine' element={<MyRoutinePage />} />
         <Route path='/gymmadang/routine/workout' element={<WorkoutPage />} />
         <Route path='/gymmadang/routine/guide/:id' element={<GuidePage />} />
