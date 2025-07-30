@@ -29,28 +29,37 @@
 
 .buttonDefault {
   
-  background-color: white;
-  color: black;
-  font-weight: bold;
-  border-radius: 0vh;
-  border: 0.5vh solid black;
+  --var-bg-color : rgb(122, 85, 16);
+  --var-color : rgb(255, 255, 255);
+  --var-ft-weight : bold;
+  --var-ft-radius : 1.25vh;
+  --var-border : 0vh;
+  
+  background-color: var(--var-bg-color);
+  color: var(--var-color);
+  font-weight: var(--var-ft-weight);
+  border-radius: var(--var-ft-radius);
+  border: var(--var-border);
   
 }
 
 .buttonDefault:hover {
   
-  background-color: inherit;
-  color: inherit;
-  font-weight: bold;
-  border: 0.5vh solid black;
+  background-color: var(--var-bg-color);
+  color: var(--var-color);
+  font-weight: var(--var-ft-weight);
+  border-radius: var(--var-ft-radius);
+  border: var(--var-border);
   
 }
 
 .buttonDefault:active {
   
-  background-color: inherit !important;
-  color: inherit !important;
-  border: 0.5vh solid black !important;
+  background-color: var(--var-bg-color) !important;
+  color: var(--var-color) !important;
+  font-weight: var(--var-ft-weight) !important;
+  border-radius: var(--var-ft-radius) !important;
+  border: var(--var-border) !important;
   box-shadow: none !important;
   transform: none !important;
   transition: none !important;
@@ -59,8 +68,12 @@
 
 .searchBarDefault {
   
-  border-radius: 0vh;
-  border: 0.5vh solid black;
+  border-radius : 1.25vh;
+  padding-left : 2vh;
+  padding-left : 2vh;
+  padding-top : 1.25vh;
+  padding-bottom : 1.25vh;
+  border: 0.25vh solid rgb(192, 192, 192);
   
 }
 
