@@ -47,6 +47,7 @@ import { loginAction } from './redux/authSlice'
 import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle'
 import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts'
 import MainPage from './global/pages/MainPage'
+import MarketTopTabs from './user/market/commons/marketTopTabs'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -91,6 +92,7 @@ function AppContent() {
   const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
   const isTestSection = location.pathname.startsWith('/gymmadang/challenge/challengeTest');
   const isBuddySection = location.pathname.startsWith('/gymmadang/buddy');
+  const isMarketSection = location.pathname.startsWith('/gymmadang/market');
 
   
   // TopHeader 숨길 조건들
@@ -120,6 +122,13 @@ function AppContent() {
       {isBuddySection && !shouldHideTop && (
         <div style={{ borderBottom: '1px solid #eee' }}>
           <BuddyTopTabs />
+        </div>
+      )}
+      
+       {/* 장터 탭 메뉴 (상단 카테고리처럼) */}
+      {isMarketSection && !shouldHideTop && (
+        <div style={{ borderBottom: '1px solid #eee' }}>
+          <MarketTopTabs />
         </div>
       )}
 
