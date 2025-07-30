@@ -4,6 +4,7 @@ import axios from 'axios';
 import StepStart from '../steps/StepStart';
 import StepAgreement from '../steps/StepAgreement';
 import StepDate from '../steps/StepDate';
+import StepDurationDate from '../steps/StepDurationDate';
 import StepCapacity from '../steps/StepCapacity';
 import StepKeyword from '../steps/StepKeyword';
 import StepIntroduce from '../steps/StepIntroduce';
@@ -16,6 +17,7 @@ const steps = [
   StepStart,
   StepAgreement,
   StepDate,
+  StepDurationDate,
   StepCapacity,
   StepKeyword,
   StepIntroduce,
@@ -72,6 +74,7 @@ formDataToSend.append("challengeDescription", String(updated.challengeDescriptio
 formDataToSend.append("challengeMaxMembers", String(updated.challengeMaxMembers));
 formDataToSend.append("challengeStartDate", String(updated.challengeStartDate));
 formDataToSend.append("challengeEndDate", String(updated.challengeEndDate));
+formDataToSend.append("challengeDurationDays", String(updated.challengeDurationDays));
 formDataToSend.append("challengeCreator", String(updated.challengeCreator));
 
       // 키워드 배열

@@ -42,6 +42,34 @@
 
 
 
+/* step-duration */
+.step-duration-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.step-duration-button {
+  padding: 12px 18px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.step-duration-button.selected {
+  background-color: #111;
+  color: white;
+  font-weight: bold;
+  border-color: #111;
+}
+
+
+
 /* step-keyword */
 .step-keyword-section {
   margin-bottom: 24px;

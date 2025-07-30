@@ -24,7 +24,11 @@ export default function ChallengeList() {
       </p>
 
       {challenges.map((challenge) => (
-        <ChallengeCard key={challenge.challengeId} challenge={challenge} />
+        <ChallengeCard
+          key={challenge.challengeId}
+          challenge={challenge}
+          onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+        />
       ))}
 
 
