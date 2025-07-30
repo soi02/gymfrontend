@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import ChallengeStartModal from '../components/ChallengeStartModal'; // 모달 컴포넌트
+import ChallengeStartModal from '../components/ChallengeStartModal';
 import '../styles/ChallengeDetail.css';
 
 export default function ChallengeDetail() {
@@ -10,8 +10,11 @@ export default function ChallengeDetail() {
   const [challenge, setChallenge] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const BACKEND_BASE_URL = "http://localhost:8080"; 
+
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/challengeList/getChallengeDetail?id=${id}`)
+    // API 요청은 기존과 동일하게 백엔드 URL을 사용
+    axios.get(`${BACKEND_BASE_URL}/api/challengeList/getChallengeDetail?id=${id}`) 
       .then((res) => setChallenge(res.data))
       .catch((err) => {
         console.error("챌린지 상세 실패", err);
@@ -29,12 +32,17 @@ export default function ChallengeDetail() {
     challengeEndDate,
     challengeDurationDays,
     challengeMaxMembers,
-    challengeThumbnailPath,
+    challengeThumbnailPath, // 이 값은 이미 "/challengeImages/2025/07/30/..." 형태임
     keywords = [],
     currentMembers = 0
   } = challenge;
 
-  // 상태 판단
+  // challengeThumbnailPath 자체가 이미 `/challengeImages/`를 포함하고 있으므로,
+  // BACKEND_BASE_URL만 앞에 붙여줍니다.
+  const imageUrl = challengeThumbnailPath 
+    ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` // ✅ 여기를 수정!
+    : '/images/default-thumbnail.png'; 
+
   const today = new Date();
   const start = new Date(challengeStartDate);
   const end = new Date(challengeEndDate);
@@ -47,7 +55,7 @@ export default function ChallengeDetail() {
     <div className="challenge-detail-page">
       <img
         className="challenge-detail-thumbnail"
-        src={challengeThumbnailPath || '/images/default-thumbnail.png'}
+        src={imageUrl} 
         alt="챌린지 이미지"
       />
 

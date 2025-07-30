@@ -3,6 +3,8 @@ html, body {
   padding: 0;
   height: 100vh;
   overflow: hidden;
+        min-width: 375px !important;
+      max-width: 425px !important;
 }
 
 .challenge-intro-body {

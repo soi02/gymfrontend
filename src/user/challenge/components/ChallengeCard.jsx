@@ -1,78 +1,73 @@
 import '../styles/ChallengeCard.css';
 
 export default function ChallengeCard({ challenge }) {
-    // console.log("챌린지 데이터:", challenge); // 여기에 찍기
+    const BACKEND_BASE_URL = "http://localhost:8080"; 
 
-    
-    
     const {
-      challengeId,
-      challengeTitle,
-      challengeStartDate,
-      challengeEndDate,
-      challengeDurationDays,
-      challengeMaxMembers,
-      currentMembers = 0,
-      challengeThumbnailPath,
-      keywords = [], // 키워드 리스트도 추가되어 있다고 가정
+        challengeId,
+        challengeTitle,
+        challengeStartDate,
+        challengeEndDate,
+        challengeDurationDays,
+        challengeMaxMembers,
+        currentMembers = 0,
+        challengeThumbnailPath, // 이 값은 이미 "/challengeImages/2025/07/30/..." 형태임
+        keywords = [],
     } = challenge;
     
-    // console.log("챌린지 데이터:", challenge); 
-    // console.log("실제 썸네일 경로:", challengeThumbnailPath);
-    // console.log("썸네일 경로 길이:", challengeThumbnailPath ? challengeThumbnailPath.length : 'null/undefined');
-    // console.log("트림된 썸네일 경로 길이:", challengeThumbnailPath ? challengeThumbnailPath.trim().length : 'null/undefined');
-    // console.log("썸네일 경로 타입:", typeof challengeThumbnailPath);
+    // challengeThumbnailPath 자체가 이미 `/challengeImages/`를 포함하고 있으므로,
+    // BACKEND_BASE_URL만 앞에 붙여줍니다.
+    const imageUrl = challengeThumbnailPath 
+      ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` // ✅ 여기를 수정!
+      : '/images/default-thumbnail.png'; 
 
-  // 진행 상태 판단 로직
-  const today = new Date();
-  const start = new Date(challengeStartDate);
-  const end = new Date(challengeEndDate);
+    const today = new Date();
+    const start = new Date(challengeStartDate);
+    const end = new Date(challengeEndDate);
 
-  // console.log("start:", start, "end:", end);
+    let status = '모집 중';
+    if (today >= start && today <= end) {
+        status = '진행 중';
+    } else if (today > end) {
+        status = '종료';
+    }
 
-  let status = '모집 중';
-  if (today >= start && today <= end) {
-    status = '진행 중';
-  } else if (today > end) {
-    status = '종료';
-  }
+    return (
+        <div className="challenge-card">
+            <div className="challenge-card-thumbnail-container">
+                <img
+                    src={imageUrl} 
+                    alt="챌린지 썸네일"
+                    className="challenge-card-thumbnail"
+                />
+                <span className="challenge-card-badge">챌린지 생성</span>
+            </div>
 
-  return (
-    <div className="challenge-card">
-      <div className="challenge-card-thumbnail-container">
-        <img
-          src={challengeThumbnailPath || '/images/default-thumbnail.png'}
-          alt="챌린지 썸네일"
-          className="challenge-card-thumbnail"
-        />
-        <span className="challenge-card-badge">챌린지 생성</span>
-      </div>
+            <div className="challenge-card-info">
+                <div className="challenge-card-period-status">
+                    <span className="challenge-card-period">
+                        {challengeStartDate} ~ {challengeEndDate}
+                    </span>
+                    <span className="challenge-card-status">{status}</span>
+                </div>
+                <div className="challenge-card-duration">
+                    기간: {challengeDurationDays}일
+                </div>
 
-      <div className="challenge-card-info">
-        <div className="challenge-card-period-status">
-          <span className="challenge-card-period">
-            {challengeStartDate} ~ {challengeEndDate}
-          </span>
-          <span className="challenge-card-status">{status}</span>
+                <div className="challenge-card-title">{challengeTitle}</div>
+
+                <div className="challenge-card-keywords">
+                    {keywords.map((kw) => (
+                        <span key={kw} className="challenge-card-keyword">
+                            #{kw}
+                        </span>
+                    ))}
+                </div>
+
+                <div className="challenge-card-participants">
+                    {currentMembers}명 / {challengeMaxMembers}명
+                </div>
+            </div>
         </div>
-        <div className="challenge-card-duration">
-          기간: {challengeDurationDays}일
-        </div>
-
-        <div className="challenge-card-title">{challengeTitle}</div>
-
-        <div className="challenge-card-keywords">
-            {keywords.map((kw) => (
-            <span key={kw} className="challenge-card-keyword">
-                #{kw}
-            </span>
-            ))}
-        </div>
-
-        <div className="challenge-card-participants">
-          {currentMembers}명 / {challengeMaxMembers}명
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
