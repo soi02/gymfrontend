@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
+import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArticleFloatingFixedButton";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -94,6 +95,12 @@ export default function MarketBoardPage() {
                 {
                     constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
                 }
+                
+                <div className = "row">
+                    <div className = "col">
+                        <MarketWriteArticleFloatingFixedButton />
+                    </div>
+                </div>
                 
             </div>
         
