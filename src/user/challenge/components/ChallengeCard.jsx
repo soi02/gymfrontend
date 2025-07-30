@@ -49,11 +49,11 @@ export default function ChallengeCard({ challenge }) {
         <div className="challenge-card-title">{challengeTitle}</div>
 
         <div className="challenge-card-keywords">
-          {keywords.map((kw, idx) => (
-            <span key={idx} className="challenge-card-keyword">
-              #{kw}
+            {keywords.map((kw) => (
+            <span key={kw} className="challenge-card-keyword">
+                #{kw}
             </span>
-          ))}
+            ))}
         </div>
 
         <div className="challenge-card-participants">

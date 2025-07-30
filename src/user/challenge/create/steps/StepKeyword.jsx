@@ -2,30 +2,60 @@ import React, { useState } from 'react';
 import '../styles/ChallengeCreate.css'; // 스타일은 적절히 정리
 
 const keywordData = [
-  { category: '루틴', keywords: ['루틴', '스트렝스', '고중량', 'PR갱신', '바디프로필'] },
-  { category: '회복', keywords: ['스트레칭', '재활', '부상예방', '마사지볼', '슬로우워크'] },
-  { category: '소통', keywords: ['같이해요', '응원해요', '오늘도출첵', '그룹챗', '서로서로'] },
-  { category: '정보', keywords: ['자세교정', '식단정보', '초보루틴', '헬스상식', 'PT복습'] },
-  { category: '습관', keywords: ['물 2L', '미라클모닝', '일찍자기', '아침 산책'] },
-  { category: '동기부여', keywords: ['바디체크', 'Before/After', '체중감량', '미션인증', '기록공유'] },
-  { category: '자기관리', keywords: ['헬스노트', '루틴계획', '마이페이스', '한달기록', '나와의약속'] },
-  { category: '분위기', keywords: ['조용히혼자', '열정만렙', '따뜻한분위기', '꿀팁공유', '밈과함께'] }
+  { category: '루틴', keywords: [
+    { id: 1, name: '루틴' }, { id: 2, name: '스트렝스' }, { id: 3, name: '고중량' },
+    { id: 4, name: 'PR갱신' }, { id: 5, name: '바디프로필' }
+  ]},
+  { category: '회복', keywords: [
+    { id: 6, name: '스트레칭' }, { id: 7, name: '재활' }, { id: 8, name: '부상예방' },
+    { id: 9, name: '마사지볼' }, { id: 10, name: '슬로우워크' }
+  ]},
+  { category: '소통', keywords: [
+    { id: 11, name: '같이해요' }, { id: 12, name: '응원해요' }, { id: 13, name: '오늘도출첵' },
+    { id: 14, name: '그룹챗' }, { id: 15, name: '서로서로' }
+  ]},
+  { category: '정보', keywords: [
+    { id: 16, name: '자세교정' }, { id: 17, name: '식단정보' }, { id: 18, name: '초보루틴' },
+    { id: 19, name: '헬스상식' }, { id: 20, name: 'PT복습' }
+  ]},
+  { category: '습관', keywords: [
+    { id: 21, name: '물 2L' }, { id: 22, name: '미라클모닝' }, { id: 23, name: '일찍자기' },
+    { id: 24, name: '아침 산책' }
+  ]},
+  { category: '동기부여', keywords: [
+    { id: 25, name: '바디체크' }, { id: 26, name: 'Before/After' }, { id: 27, name: '체중감량' },
+    { id: 28, name: '미션인증' }, { id: 29, name: '기록공유' }
+  ]},
+  { category: '자기관리', keywords: [
+    { id: 30, name: '헬스노트' }, { id: 31, name: '루틴계획' }, { id: 32, name: '마이페이스' },
+    { id: 33, name: '한달기록' }, { id: 34, name: '나와의약속' }
+  ]},
+  { category: '분위기', keywords: [
+    { id: 35, name: '조용히혼자' }, { id: 36, name: '열정만렙' }, { id: 37, name: '따뜻한분위기' },
+    { id: 38, name: '꿀팁공유' }, { id: 39, name: '밈과함께' }
+  ]}
 ];
 
 export default function StepKeyword({ onNext, onBack }) {
-  const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [selectedKeywordIds, setSelectedKeywordIds] = useState([]);
 
-  const toggleKeyword = (keyword) => {
-    if (selectedKeywords.includes(keyword)) {
-      setSelectedKeywords(selectedKeywords.filter((k) => k !== keyword));
-    } else if (selectedKeywords.length < 5) {
-      setSelectedKeywords([...selectedKeywords, keyword]);
-    }
-  };
+const toggleKeyword = (id) => {
+  if (selectedKeywordIds.includes(id)) {
+    setSelectedKeywordIds(selectedKeywordIds.filter((k) => k !== id));
+  } else if (selectedKeywordIds.length < 5) {
+    setSelectedKeywordIds([...selectedKeywordIds, id]);
+  }
+};
+
+
+  
 
   const handleNext = () => {
-    onNext({ challengeKeywordNames: selectedKeywords });  // onNext 활용해서 키워드를 이름 그대로 폼데이터에 전달
+    onNext({ challengeKeywordIds: selectedKeywordIds });  // onNext 활용해서 키워드를 이름 그대로 폼데이터에 전달
   };
+
+  const isActive = (id) => selectedKeywordIds.includes(id);
+
 
   return (
     <div className="challenge-create-page">
@@ -33,7 +63,7 @@ export default function StepKeyword({ onNext, onBack }) {
 
       <h3 className="challenge-step-title">챌린지 만들기</h3>
       <h2 className="challenge-step-question">
-        <strong>{selectedKeywords.length > 0 ? `${selectedKeywords.length}개 선택됨 · ` : ''}키워드를 골라주세요</strong>
+        <strong>{selectedKeywordIds.length > 0 ? `${selectedKeywordIds.length}개 선택됨 · ` : ''}키워드를 골라주세요</strong>
       </h2>
       <p className="challenge-step-sub">최대 5개까지 선택할 수 있어요</p>
 
@@ -44,11 +74,11 @@ export default function StepKeyword({ onNext, onBack }) {
             <div className="step-keyword-list">
               {group.keywords.map((keyword) => (
                 <button
-                  key={keyword}
-                  className={`step-keyword-button ${selectedKeywords.includes(keyword) ? 'active' : ''}`}
-                  onClick={() => toggleKeyword(keyword)}
+                  key={keyword.id}  // 객체 전체가 아니라 id만 key로 사용
+                  className={`step-keyword-button ${isActive(keyword.id) ? 'active' : ''}`}
+                  onClick={() => toggleKeyword(keyword.id)}
                 >
-                  {keyword}
+                  {keyword.name}  
                 </button>
               ))}
             </div>
@@ -56,7 +86,7 @@ export default function StepKeyword({ onNext, onBack }) {
         ))}
       </div>
 
-      <button className="next-button" onClick={handleNext} disabled={selectedKeywords.length === 0}>
+      <button className="next-button" onClick={handleNext} disabled={selectedKeywordIds.length === 0}>
         다음
       </button>
     </div>
