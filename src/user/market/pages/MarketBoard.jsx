@@ -99,7 +99,7 @@ export default function MarketBoardPage() {
                             constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
                         }
                         
-                                <MarketWriteArticleFloatingFixedButton />
+                        <MarketWriteArticleFloatingFixedButton />
                         
                     </div>
                 </div>
