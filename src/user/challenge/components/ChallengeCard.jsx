@@ -1,26 +1,44 @@
-export default function ChallengeCard({ challenge, onClick }) {
-  const {
-    challengeId,
-    challengeTitle,
-    challengeStartDate,
-    challengeEndDate,
-    challengeDurationDays,
-    challengeMaxMembers,
-    currentMembers = 0,
-    challengeThumbnailPath,
-    keywords = [],
-  } = challenge;
+import '../styles/ChallengeCard.css';
 
+export default function ChallengeCard({ challenge }) {
+    // console.log("챌린지 데이터:", challenge); // 여기에 찍기
+
+    
+    
+    const {
+      challengeId,
+      challengeTitle,
+      challengeStartDate,
+      challengeEndDate,
+      challengeDurationDays,
+      challengeMaxMembers,
+      currentMembers = 0,
+      challengeThumbnailPath,
+      keywords = [], // 키워드 리스트도 추가되어 있다고 가정
+    } = challenge;
+    
+    // console.log("챌린지 데이터:", challenge); 
+    // console.log("실제 썸네일 경로:", challengeThumbnailPath);
+    // console.log("썸네일 경로 길이:", challengeThumbnailPath ? challengeThumbnailPath.length : 'null/undefined');
+    // console.log("트림된 썸네일 경로 길이:", challengeThumbnailPath ? challengeThumbnailPath.trim().length : 'null/undefined');
+    // console.log("썸네일 경로 타입:", typeof challengeThumbnailPath);
+
+  // 진행 상태 판단 로직
   const today = new Date();
   const start = new Date(challengeStartDate);
   const end = new Date(challengeEndDate);
 
+  // console.log("start:", start, "end:", end);
+
   let status = '모집 중';
-  if (today >= start && today <= end) status = '진행 중';
-  else if (today > end) status = '종료';
+  if (today >= start && today <= end) {
+    status = '진행 중';
+  } else if (today > end) {
+    status = '종료';
+  }
 
   return (
-    <div className="challenge-card" onClick={onClick} style={{ cursor: 'pointer' }}>
+    <div className="challenge-card">
       <div className="challenge-card-thumbnail-container">
         <img
           src={challengeThumbnailPath || '/images/default-thumbnail.png'}
@@ -37,13 +55,18 @@ export default function ChallengeCard({ challenge, onClick }) {
           </span>
           <span className="challenge-card-status">{status}</span>
         </div>
+        <div className="challenge-card-duration">
+          기간: {challengeDurationDays}일
+        </div>
 
         <div className="challenge-card-title">{challengeTitle}</div>
 
         <div className="challenge-card-keywords">
-          {keywords.map((kw) => (
-            <span key={kw} className="challenge-card-keyword">#{kw}</span>
-          ))}
+            {keywords.map((kw) => (
+            <span key={kw} className="challenge-card-keyword">
+                #{kw}
+            </span>
+            ))}
         </div>
 
         <div className="challenge-card-participants">

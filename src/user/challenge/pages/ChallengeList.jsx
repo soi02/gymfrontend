@@ -17,27 +17,31 @@ export default function ChallengeList() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 400, margin: '0 auto', padding: 16 }}>
-      <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', marginBottom: 10 }}>수련 목록</h2>
-      <p style={{ color: '#555', fontSize: '0.9rem', marginBottom: 20 }}>
-        원하는 챌린지를 골라 도전해보세요<br />재미와 건강, 보람까지 한 번에!
-      </p>
+    <div className="challenge-list-wrapper">
 
-      {challenges.map((challenge) => (
-        <ChallengeCard
-          key={challenge.challengeId}
-          challenge={challenge}
-          onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
-        />
-      ))}
+      <div style={{ maxWidth: 400, margin: '0 auto', padding: 16 }}>
+        <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', marginBottom: 10 }}>수련 목록</h2>
+        <p style={{ color: '#555', fontSize: '0.9rem', marginBottom: 20 }}>
+          원하는 챌린지를 골라 도전해보세요<br />재미와 건강, 보람까지 한 번에!
+        </p>
+
+        {challenges.map((challenge) => (
+          <ChallengeCard
+            key={challenge.challengeId}
+            challenge={challenge}
+            onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+          />
+        ))}
 
 
-      <button
-        className="challenge-list-floating-button"
-        onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
-      >
-        ＋
-      </button>
+        <button
+          className="challenge-list-floating-button"
+          onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
+        >
+          ＋
+        </button>
+
+      </div>
 
     </div>
   );
