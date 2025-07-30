@@ -50,6 +50,7 @@ import MainPage from './global/pages/MainPage'
 import MarketTopTabs from './user/market/commons/marketTopTabs'
 import BuddyChat from './user/buddy/pages/BuddyChat'
 import BuddyNotification from './user/buddy/pages/BuddyNotification'
+import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail'
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -175,6 +176,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
         <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
+        <Route path="/gymmadang/challenge/detail/:id" element={<ChallengeDetail />} />
 
 
 
