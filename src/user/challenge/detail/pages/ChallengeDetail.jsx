@@ -40,7 +40,7 @@ export default function ChallengeDetail() {
   // challengeThumbnailPath 자체가 이미 `/challengeImages/`를 포함하고 있으므로,
   // BACKEND_BASE_URL만 앞에 붙여줍니다.
   const imageUrl = challengeThumbnailPath 
-    ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` // ✅ 여기를 수정!
+    ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` // 여기를 수정!
     : '/images/default-thumbnail.png'; 
 
   const today = new Date();

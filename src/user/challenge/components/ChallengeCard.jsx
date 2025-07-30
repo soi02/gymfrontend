@@ -1,6 +1,6 @@
 import '../styles/ChallengeCard.css';
 
-export default function ChallengeCard({ challenge }) {
+export default function ChallengeCard({ challenge, onClick }) {
     const BACKEND_BASE_URL = "http://localhost:8080"; 
 
     const {
@@ -18,7 +18,7 @@ export default function ChallengeCard({ challenge }) {
     // challengeThumbnailPath 자체가 이미 `/challengeImages/`를 포함하고 있으므로,
     // BACKEND_BASE_URL만 앞에 붙여줍니다.
     const imageUrl = challengeThumbnailPath 
-      ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` // ✅ 여기를 수정!
+      ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` // 여기를 수정!
       : '/images/default-thumbnail.png'; 
 
     const today = new Date();
@@ -33,7 +33,7 @@ export default function ChallengeCard({ challenge }) {
     }
 
     return (
-        <div className="challenge-card">
+        <div className="challenge-card" onClick={onClick}>
             <div className="challenge-card-thumbnail-container">
                 <img
                     src={imageUrl} 
