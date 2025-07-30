@@ -24,7 +24,7 @@ export default function ChallengeList() {
       </p>
 
       {challenges.map((challenge) => (
-        <ChallengeCard key={challenge.challenge_id} challenge={challenge} />
+        <ChallengeCard key={challenge.challengeId} challenge={challenge} />
       ))}
 
 
