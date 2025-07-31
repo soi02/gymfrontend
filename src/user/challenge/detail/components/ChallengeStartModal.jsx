@@ -9,14 +9,14 @@ export default function ChallengeStartModal({ onClose, challengeId }) {
 
   const handleStart = async () => {
     try {
-      await axios.post(`http://localhost:8080/api/userChallenge/start`, {
+      await axios.post(`http://localhost:8080/api/challenge/startChallengeProcess`, {
         userId,
         challengeId,
       });
 
       alert("도전을 시작했어요!");
       onClose();
-      navigate('/gymmadang/myChallenge'); // 마이페이지로 이동 (원하면 변경 가능)
+      navigate('/gymmadang/challenge/challengeMy'); // 마이페이지로 이동 (원하면 변경 가능)
     } catch (err) {
       console.error("도전 시작 실패", err);
       alert("도전 시작에 실패했습니다.");

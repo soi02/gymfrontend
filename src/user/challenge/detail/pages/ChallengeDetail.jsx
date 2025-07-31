@@ -15,7 +15,7 @@ export default function ChallengeDetail() {
   const BACKEND_BASE_URL = "http://localhost:8080"; 
 
   useEffect(() => {
-    axios.get(`${BACKEND_BASE_URL}/api/challengeList/getChallengeDetailByChallengeIdProcess?challengeId=${challengeId}`) 
+    axios.get(`${BACKEND_BASE_URL}/api/challenge/getChallengeDetailByChallengeIdProcess?challengeId=${challengeId}`) 
       .then((res) => {
           console.log("챌린지 상세 데이터 수신:", res.data); // 성공 시 데이터 확인
           setChallenge(res.data);

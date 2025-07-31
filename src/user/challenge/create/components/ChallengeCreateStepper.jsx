@@ -102,7 +102,7 @@ export default function ChallengeCreateStepper() {
 
 
         const res = await axios.post(
-          "http://localhost:8080/api/challengeList/registerChallengeProcess",
+          "http://localhost:8080/api/challenge/registerChallengeProcess",
           formDataToSend,
           {
             headers: {

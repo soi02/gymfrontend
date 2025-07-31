@@ -10,7 +10,7 @@ export default function ChallengeList() {
   const [challenges, setChallenges] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/challengeList/getAllChallengeListProcess')
+    axios.get('http://localhost:8080/api/challenge/getAllChallengeListProcess')
       .then((res) => {
         console.log('챌린지 목록', res.data);
         setChallenges(res.data);
