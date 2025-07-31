@@ -184,7 +184,9 @@ export default function MarketArticlePage() {
                                         <div className = "col gx-0" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
                                             
                                             {
-                                                constMarketArticleElement.length  > 0 ? constMarketArticleElement : <></>
+                                                constMarketArticleElement.length > 0 ? 
+                                                constMarketArticleElement : 
+                                                <></>
                                             }
                                             
                                         </div>
@@ -230,7 +232,13 @@ export default function MarketArticlePage() {
                                                     <div className = "row">
                                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                             {
-                                                                constmarketCommentElementListOnArticle.length  > 0 ? constmarketCommentElementListOnArticle : <></>
+                                                                constmarketCommentElementListOnArticle.length  > 0 ? 
+                                                                constmarketCommentElementListOnArticle : 
+                                                                <>
+                                                                
+                                                                    댓글이 없다오.
+                                                                
+                                                                </>
                                                             }
                                                         </div>
                                                     </div>

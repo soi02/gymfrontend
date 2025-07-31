@@ -116,7 +116,13 @@ export default function MarketMyLikedProductsPage() {
                                                 <div className = "row">
                                                     <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                         {
-                                                            constmarketuserLikedProductElementList.length  > 0 ? constmarketuserLikedProductElementList : <></>
+                                                            constmarketuserLikedProductElementList.length > 0 ? 
+                                                            constmarketuserLikedProductElementList : 
+                                                            <>
+                                                
+                                                                탐낸 물품이 없다오.
+                                                
+                                                            </>
                                                         }
                                                         {/*
                                                             * 해당 const 리스트의 제일 왼쪽에 하트 활성화, 비활성화로 물품의 탐냄 상태를 반영함. (새로고침 시 하트를 비활성화한 물품 상세 글은, 내가 탐낸 물품 목록에서 사라짐)
