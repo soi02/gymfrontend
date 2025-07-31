@@ -43,20 +43,17 @@ export default function ChallengeCreateStepper() {
     challengeKeywordNameList: [],
   });
 
- useEffect(() => {
-    // userId가 없고, 현재 경로가 로그인 페이지가 아니라면 로그인 페이지로 이동
+
+  // 로그인 필요 안내 + 로그인 성공 후 원래 위치로 자동 이동
+  useEffect(() => {
+
     if (!userId) {
-      alert("로그인이 필요한 기능입니다.");
-      // 로그인 후 돌아올 경로를 'state'에 담아서 로그인 페이지로 전달
-      navigate("/gymmadang/login", { state: { from: location.pathname } }); 
-    } else if (!formData.challengeCreator) {
-      // userId가 있으나 formData.challengeCreator가 아직 설정되지 않았다면 설정
-      setFormData((prev) => ({
-        ...prev,
-        challengeCreator: userId,
-      }));
+      alert("이곳은 짐마당의 백성들만 들어올 수 있소. 장부에 이름을 등록해주시오.");
+        navigate('/gymmadang/login', { state: { from: location.pathname } });
     }
-  }, [userId, formData.challengeCreator, navigate, location.pathname]); // 의존성 배열에 location.pathname 추가
+
+  }, [userId, navigate, location.pathname]);
+
 
   const CurrentStep = steps[step];
 
