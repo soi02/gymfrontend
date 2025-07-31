@@ -1,5 +1,5 @@
 .challenge-detail-page {
-  max-width: 400px;
+  max-width: 200px;
   margin: 0 auto;
   padding: 16px;
   font-family: 'Pretendard', sans-serif;
@@ -44,15 +44,40 @@
   font-size: 0.8rem;
 }
 
+
+
+
+/* ChallengeDetail.css */
 .challenge-detail-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 18px;
-  background-color: #000;
+  /* 기존 스타일 */
+  padding: 15px 30px;
+  background-color: #4CAF50; /* 예시 색상 */
   color: white;
-  font-weight: bold;
-  font-size: 1rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-size: 1.1em;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* 버튼 너비 */
+  margin-top: 20px;
+}
+
+.challenge-detail-button:hover {
+  background-color: #45a049;
+}
+
+.challenge-detail-button:disabled {
+  background-color: #cccccc; /* 비활성화 시 회색 */
+  cursor: not-allowed; /* 커서 변경 */
+}
+
+/* 추가: 비활성화 상태임을 명확히 보여주는 클래스 (색상 등) */
+.challenge-detail-button-disabled {
+  background-color: #a0a0a0; /* 더 진한 회색 */
+  color: #555555;
+  cursor: not-allowed;
+}
+
+.challenge-detail-button-disabled:hover {
+  background-color: #a0a0a0; /* 호버 시에도 동일 */
 }

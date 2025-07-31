@@ -36,8 +36,10 @@ export default function ChallengeCreateStepper() {
     challengeTitle: '',
     challengeDescription: '',
     challengeMaxMembers: 0,
-    challengeStartDate: '',
-    challengeEndDate: '',
+    challengeRecruitStartDate: '',
+    challengeRecruitEndDate: '',
+    // challengeStartDate: '',
+    // challengeEndDate: '', // 이건 여기 말고 도전하기 누를 때 정해짐
     challengeDurationDays: 0,
     challengeThumbnailImage: null,
     challengeKeywordNameList: [],
@@ -74,8 +76,10 @@ export default function ChallengeCreateStepper() {
         formDataToSend.append("challengeTitle", updated.challengeTitle || '');
         formDataToSend.append("challengeDescription", updated.challengeDescription || '');
         formDataToSend.append("challengeMaxMembers", updated.challengeMaxMembers || 0);
-        formDataToSend.append("challengeStartDate", updated.challengeStartDate || '');
-        formDataToSend.append("challengeEndDate", updated.challengeEndDate || '');
+        formDataToSend.append("challengeRecruitStartDate", updated.challengeRecruitStartDate || '');
+        formDataToSend.append("challengeRecruitEndDate", updated.challengeRecruitEndDate || '');
+        // formDataToSend.append("challengeStartDate", updated.challengeStartDate || '');
+        // formDataToSend.append("challengeEndDate", updated.challengeEndDate || ''); // 여기서 안보내고, 도전하기 누르면 백엔드에 userChallenge 테이블에 저장
         formDataToSend.append("challengeDurationDays", updated.challengeDurationDays || 0);
         // challengeThumbnailPath는 백엔드에서 생성되므로 여기서 보낼 필요 없음
 
