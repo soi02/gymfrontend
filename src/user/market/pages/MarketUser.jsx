@@ -273,7 +273,13 @@ export default function MarketUserPage() {
                                         <div className = "row">
                                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                 {
-                                                    constmarketuserSoldProductElementList.length  > 0 ? constmarketuserSoldProductElementList : <></>
+                                                    constmarketuserSoldProductElementList.length > 0 ? 
+                                                    constmarketuserSoldProductElementList : 
+                                                    <>
+                                                
+                                                        판매한 물품이 없다오.
+                                                
+                                                    </>
                                                 }
                                             </div>
                                         </div>
@@ -299,7 +305,13 @@ export default function MarketUserPage() {
                                         <div className = "row">
                                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                 {
-                                                    constmarketuserBoughtProductElementList.length  > 0 ? constmarketuserBoughtProductElementList : <></>
+                                                    constmarketuserBoughtProductElementList.length > 0 ? 
+                                                    constmarketuserBoughtProductElementList : 
+                                                    <>
+                                                
+                                                        구매한 물품이 없다오.
+                                                
+                                                    </>
                                                 }
                                             </div>
                                         </div>
@@ -325,7 +337,13 @@ export default function MarketUserPage() {
                                         <div className = "row">
                                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                 {
-                                                    constmarketuserRateElementList.length  > 0 ? constmarketuserRateElementList : <></>
+                                                    constmarketuserRateElementList.length > 0 ? 
+                                                    constmarketuserRateElementList : 
+                                                    <>
+                                                    
+                                                        평가말이 없다오.
+                                                    
+                                                    </>
                                                 }
                                             </div>
                                         </div>
