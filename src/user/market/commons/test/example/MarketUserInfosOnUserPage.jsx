@@ -1,7 +1,7 @@
 import MarketUserProfileImage from "../../../components/test/example/MarketUserProfileImage";
 import '../../../styles/MarketCommonStyles.css';
 
-export default function MarketUserInfosOnUserPage() {
+export default function MarketUserInfosOnUserPage({marketUserInfoElem1}) {
     
     return(
         <>
@@ -17,12 +17,12 @@ export default function MarketUserInfosOnUserPage() {
                             <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "3vh", fontWeight : "bold"}}>
-                                        GoodDevil
+                                        {marketUserInfoElem1.marketUserNickname}
                                     </div>
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "2vh"}}>
-                                        #1004
+                                        #{marketUserInfoElem1.id}
                                     </div>
                                 </div>
                             </div>

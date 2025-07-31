@@ -186,6 +186,13 @@ function MarketUserRateElement({marketUserRateElem1}) {
 
 export default function MarketUserPage() {
     
+    const [marketUserInfo, setMarketUserInfo] = useState([
+        {id : 1004, marketUserNickname : "GoodDevil"}
+    ])
+    
+    const constMarketUserInfoElement =
+    marketUserInfo.map(userInfoElement => <MarketUserInfosOnUserPage key = {userInfoElement.id} marketUserInfoElem1 = {userInfoElement}/>);
+    
     const [marketuserSoldProductList, setMarketUserSoldProductList] = useState([
         {id : 5, marketUserId : 1004, marketUserNickname : "GoodDevil", imageLink : null, mainImageLink : null,
         articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 13579, 
@@ -245,7 +252,9 @@ export default function MarketUserPage() {
                 <div className = "row">
                     <div className = "col primaryDivisionDefault" style = {{height : "80vh", overflowX : "hidden"}}>
                         
-                        <MarketUserInfosOnUserPage />
+                        {
+                            constMarketUserInfoElement.length  > 0 ? constMarketUserInfoElement : <></>
+                        }
                         
                         <div className = "row">
                             <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
