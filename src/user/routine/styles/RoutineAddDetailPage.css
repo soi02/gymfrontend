@@ -16,48 +16,209 @@
     padding: 1rem;
 }
 
-.set-row {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0;
-    margin-bottom: 0.8rem;
-    gap: 0.5rem;
-    font-size: 0.95rem;
+.workout-box {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
+
+.workout-header {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-workout-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.delete-workout-btn:hover {
+  color: #7c1d0d;
+}
+
+
+.set-row {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.95rem;
+  padding: 0.3rem 0;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#set-select {
+  border-radius: 6px;
+  padding: 0.4rem 0rem;
+  background-color: #fff;
+  color: #333;
+}
+
+#set-select:focus {
+  outline: none;
+  border-color: #7c1d0d;
+}
+
 
 .set-row span {
-    min-width: 50px;
-    font-weight: 500;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
+
+.set-row span:first-child {
+  min-width: 50px;
+  margin-right: 0.6rem; /* ✅ 1세트 오른쪽 간격 넓힘 */
+}
+
+.set-row span.kg-label {
+  margin-right: 0.6rem; /* 너가 원하는 여백만큼 조절해줘! */
+}
+
+.routine-select-row label {
+  margin-right: 0.5rem; /* 또는 8px 정도 */
+}
+
+
 
 .set-row input {
-    width: 80px;
-    padding: 0.4rem 0.5rem;
-    border-radius: 6px;
-    border: none;
-    background: #ebebeb;
-    color: #333;
-    text-align: center;
-    font-size: 0.9rem;
+  width: 65px;
+  padding: 0.4rem 0.3rem;
+  border-radius: 6px;
+  border: none;
+  background: #ebebeb;
+  color: #333;
+  text-align: center;
+  font-size: 0.9rem;
 }
 
-.set-row input::placeholder {
-    color: #aaa;
+.set-row input:focus {
+  outline: none; /* 기본 노란색 제거 */
+  border: 2px solid #7c1d0d; /* 원하는 색으로 테두리 */
+}
+
+
+.set-row span:last-of-type {
+  margin-right: 0rem; /* ✅ "회"와 쓰레기통 사이 좁히기 */
+}
+
+.delete-set-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 0rem; /* ✅ 좌우 여백 줄임 */
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+.delete-set-btn:hover {
+  color: #7c1d0d;
 }
 
 .sticky-save-btn {
-    /* position: sticky; */
-    bottom: 0;
-    padding: 1rem;
     text-align: center;
+    margin-top: 2rem;
 }
 
 .sticky-save-btn button {
-    background-color: #7c1d0d; 
-    color: rgb(255, 255, 255);
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    background-color: #7c1d0d;
+    color: #fff;
+    padding: 0.9rem 2rem;
+    border-radius: 10px;
     font-weight: bold;
+    font-size: 1rem;
     border: none;
     cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal-box input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.modal-box input:focus {
+  border-color: #875046; 
+  box-shadow: 0 0 0 2px rgba(106, 76, 175, 0.2); /* glow 효과 */
+}
+
+
+.modal-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-btns button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modal-btns button:first-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-btns button:first-child:hover {
+  background-color: #bbb;
+}
+
+.modal-btns button:last-child {
+  background-color: #7c1d0d;  /* 메인 포인트 컬러 */
+  color: #fff;
+}
+
+.modal-btns button:last-child:hover {
+  background-color: #753226;
+}
+
