@@ -37,24 +37,28 @@ const keywordData = [
 ];
 
 export default function StepKeyword({ onNext, onBack }) {
-  const [selectedKeywordIds, setSelectedKeywordIds] = useState([]);
+  const [selectedKeywordIdList, setSelectedKeywordIdList] = useState([]);
 
-const toggleKeyword = (id) => {
-  if (selectedKeywordIds.includes(id)) {
-    setSelectedKeywordIds(selectedKeywordIds.filter((k) => k !== id));
-  } else if (selectedKeywordIds.length < 5) {
-    setSelectedKeywordIds([...selectedKeywordIds, id]);
-  }
-};
-
-
-  
-
-  const handleNext = () => {
-    onNext({ challengeKeywordIds: selectedKeywordIds });  // onNext 활용해서 키워드를 이름 그대로 폼데이터에 전달
+  const toggleKeyword = (id) => {
+    if (selectedKeywordIdList.includes(id)) {
+      setSelectedKeywordIdList(selectedKeywordIdList.filter((k) => k !== id));
+    } else if (selectedKeywordIdList.length < 5) {
+      setSelectedKeywordIdList([...selectedKeywordIdList, id]);
+    }
   };
 
-  const isActive = (id) => selectedKeywordIds.includes(id);
+  const handleNext = () => {
+    const allKeywords = keywordData.flatMap(group => group.keywords);
+    const selectedKeywordNames = selectedKeywordIdList.map(id => {
+      const keyword = allKeywords.find(k => k.id === id);
+      return keyword ? keyword.name : null;
+    }).filter(name => name !== null);
+
+    // ★★★ onNext에 전달하는 키 이름을 백엔드 @RequestParam과 동일하게 변경
+    onNext({ challengeKeywordNameList: selectedKeywordNames }); 
+  };
+
+  const isActive = (id) => selectedKeywordIdList.includes(id);
 
 
   return (
@@ -63,7 +67,7 @@ const toggleKeyword = (id) => {
 
       <h3 className="challenge-step-title">챌린지 만들기</h3>
       <h2 className="challenge-step-question">
-        <strong>{selectedKeywordIds.length > 0 ? `${selectedKeywordIds.length}개 선택됨 · ` : ''}키워드를 골라주세요</strong>
+        <strong>{selectedKeywordIdList.length > 0 ? `${selectedKeywordIdList.length}개 선택됨 · ` : ''}키워드를 골라주세요</strong>
       </h2>
       <p className="challenge-step-sub">최대 5개까지 선택할 수 있어요</p>
 
@@ -86,7 +90,7 @@ const toggleKeyword = (id) => {
         ))}
       </div>
 
-      <button className="next-button" onClick={handleNext} disabled={selectedKeywordIds.length === 0}>
+      <button className="next-button" onClick={handleNext} disabled={selectedKeywordIdList.length === 0}>
         다음
       </button>
     </div>

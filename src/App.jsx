@@ -179,7 +179,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
         <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
-        <Route path="/gymmadang/challenge/detail/:id" element={<ChallengeDetail />} />
+        <Route path="/gymmadang/challenge/detail/:challengeId" element={<ChallengeDetail />} />
 
         {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `/gymmadang` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
            혹시 필요하다면 다시 추가할 수 있습니다.

@@ -1,8 +1,30 @@
-.challenge-list-wrapper {
-  height: 100vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
+/* ChallengeList.css (또는 해당 CSS 파일) */
+
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
+
+.challenge-list-wrapper {
+  display: flex; /* Flexbox 레이아웃 적용 */
+  flex-direction: column; /* 세로 방향으로 아이템 배치 */
+  height: 100vh; /* 뷰포트 높이 100% */
+  /* overflow-y: auto; 이 속성은 이제 내부 컨테이너로 이동합니다. */
+}
+
+.challenge-list-container { /* ★ 새롭게 추가된 클래스 */
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+  overflow-y: auto; /* ★ 이 컨테이너에서 스크롤이 발생하도록 설정 */
+  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
+  box-sizing: border-box; /* padding이 너비/높이에 포함되도록 */
+}
+
+
 
 .challenge-list-page {
   padding: 16px;
@@ -53,7 +75,7 @@
 }
 
 .challenge-list-floating-button {
-  position: fixed;
+  position: fixed; /* 고정 위치 */
   right: 24px;
   bottom: 80px;
   width: 52px;
@@ -63,4 +85,5 @@
   border-radius: 50%;
   font-size: 1.5rem;
   border: none;
+  z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
 }
