@@ -1,62 +1,62 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
-import './App.css'
-import BottomNavigation from './global/pages/BottomNavigation'
-import TopHeader from './global/pages/TopHeader'
-import LoginPage from './auth/pages/LoginPage'
-import ErrorPage from './global/pages/ErrorPage'
-import NotificationPage from './global/pages/NotificationsPage'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import './App.css';
+import BottomNavigation from './global/pages/BottomNavigation'; // 공통 바텀바
+import TopHeader from './global/pages/TopHeader';
+import LoginPage from './auth/pages/LoginPage';
+import ErrorPage from './global/pages/ErrorPage';
+import NotificationPage from './global/pages/NotificationsPage';
 
-import ChallengeHome from './user/challenge/pages/ChallengeHome'
-import ChallengeList from './user/challenge/pages/ChallengeList'
-import ChallengeMy from './user/challenge/pages/ChallengeMy'
+import ChallengeHome from './user/challenge/pages/ChallengeHome';
+import ChallengeList from './user/challenge/pages/ChallengeList';
+import ChallengeMy from './user/challenge/pages/ChallengeMy';
 
-import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomNavigation'
-import ChallengeIntro from './user/challenge/pages/ChallengeIntro'
-import ChallengeCreate from './user/challenge/create/pages/ChallengeCreate'
+// ChallengeBottomNavigation 임포트는 이제 필요 없으므로 제거 또는 주석 처리
+// import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomNavigation';
+import ChallengeIntro from './user/challenge/pages/ChallengeIntro';
+import ChallengeCreate from './user/challenge/create/pages/ChallengeCreate';
 
-import WelcomePage from './global/pages/WelcomePage'
-import RegisterPage from './auth/pages/RegisterPage'
+import WelcomePage from './global/pages/WelcomePage';
+import RegisterPage from './auth/pages/RegisterPage';
 
-
-import RoutineHomePage from './user/routine/pages/RoutineHomePage'
-import BuddyRegister from './user/buddy/pages/BuddyRegister'
-import BuddyBottomNavigation from './user/buddy/commons/BuddyBottomNavigation'
-import ChallengeTestIntro from './user/challenge/pages/ChallengeTestIntro'
-import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage'
-import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult'
-import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation'
-import BuddyHome from './user/buddy/pages/BuddyHome'
-import ChallengeTopTabs from './user/challenge/commons/ChallengeTopTabs'
-import RoutineAddPage from './user/routine/pages/RoutineAddPage'
-import RoutineFreePage from './user/routine/pages/RoutineFreePage'
-import MyPage from './user/mypage/pages/MyPage'
-import MyRoutinePage from './user/routine/pages/MyRoutinePage'
-import WorkoutPage from './user/routine/pages/WorkoutPage'
-import GuidePage from './user/routine/pages/GuidePage'
-import DiaryPage from './user/routine/pages/DiaryPage.Jsx'
-import SummaryPage from './user/routine/pages/SummaryPage'
-import ResultPage from './user/routine/pages/ResultPage'
-import BuddyTopTabs from './user/buddy/commons/BuddyTopTabs'
-import { useEffect } from 'react'
-import MarketArticlePage from './user/market/pages/MarketArticle'
-import MarketBoardPage from './user/market/pages/MarketBoard'
-import MarketUserPage from './user/market/pages/MarketUser'
-import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import { loginAction } from './redux/authSlice'
-import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle'
-import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts'
-import MainPage from './global/pages/MainPage'
-import MarketTopTabs from './user/market/commons/marketTopTabs'
-import BuddyChat from './user/buddy/pages/BuddyChat'
-import BuddyNotification from './user/buddy/pages/BuddyNotification'
-import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail'
-import RoutineAddDetailPage from './user/routine/pages/RoutineAddDetailPage'
+import RoutineHomePage from './user/routine/pages/RoutineHomePage';
+import BuddyRegister from './user/buddy/pages/BuddyRegister';
+// BuddyBottomNavigation 임포트도 이제 필요 없으므로 제거 또는 주석 처리
+// import BuddyBottomNavigation from './user/buddy/commons/BuddyBottomNavigation';
+import ChallengeTestIntro from './user/challenge/pages/ChallengeTestIntro';
+import ChallengeTestPage from './user/challenge/pages/ChallengeTestPage';
+import ChallengeTestResult from './user/challenge/pages/ChallengeTestResult';
+import ChallengeRecommendation from './user/challenge/pages/ChallengeRecommendation';
+import BuddyHome from './user/buddy/pages/BuddyHome';
+import ChallengeTopTabs from './user/challenge/commons/ChallengeTopTabs';
+import RoutineAddPage from './user/routine/pages/RoutineAddPage';
+import RoutineFreePage from './user/routine/pages/RoutineFreePage';
+import MyPage from './user/mypage/pages/MyPage';
+import MyRoutinePage from './user/routine/pages/MyRoutinePage';
+import WorkoutPage from './user/routine/pages/WorkoutPage';
+import GuidePage from './user/routine/pages/GuidePage';
+import DiaryPage from './user/routine/pages/DiaryPage.Jsx';
+import SummaryPage from './user/routine/pages/SummaryPage';
+import ResultPage from './user/routine/pages/ResultPage';
+import BuddyTopTabs from './user/buddy/commons/BuddyTopTabs';
+import { useEffect } from 'react';
+import MarketArticlePage from './user/market/pages/MarketArticle';
+import MarketBoardPage from './user/market/pages/MarketBoard';
+import MarketUserPage from './user/market/pages/MarketUser';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { loginAction } from './redux/authSlice';
+import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle';
+import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts';
+import MainPage from './global/pages/MainPage';
+import MarketTopTabs from './user/market/commons/marketTopTabs';
+import BuddyChat from './user/buddy/pages/BuddyChat';
+import BuddyNotification from './user/buddy/pages/BuddyNotification';
+import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail';
+import RoutineAddDetailPage from './user/routine/pages/RoutineAddDetailPage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
-
   const dispatch = useDispatch();
 
   // verify token 관련 (새로고침해도 로그인 유지)
@@ -85,35 +85,41 @@ function AppContent() {
     checkAuth();
   }, []);
 
-
-
-
   const location = useLocation();
 
-  // TopHeader를 숨길 경로들
-  const hideHeaderFooterRoutes = ['/gymmadang', '/gymmadang/login', '/gymmadang/register', '/gymmadang/challenge/challengeCreate']; // 숨길 경로들
+  // TopHeader와 BottomNavigation을 숨길 경로들
+  // 'challengeTest' 경로들도 모두 포함되도록 수정했습니다.
+  const hideHeaderFooterRoutes = [
+    '/gymmadang',
+    '/gymmadang/login',
+    '/gymmadang/register',
+    '/gymmadang/challenge/challengeCreate',
+    '/gymmadang/challenge/challengeTest/intro',
+    // '/gymmadang/challenge/challengeTest/step/:stepId'와 같은 동적 경로는 startsWith로 처리
+    '/gymmadang/challenge/challengeTest/result',
+    '/gymmadang/challenge/challengeTest/recommend',
+    // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
+    '/gymmadang/routine/addDetail' 
+  ];
+
+  // TopHeader 숨길 조건들
+  const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
+                        location.pathname.startsWith('/gymmadang/challenge/challengeTest');
+
+  // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
+  const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || 
+                           location.pathname.startsWith('/gymmadang/challenge/challengeTest');
 
   const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
-  const isTestSection = location.pathname.startsWith('/gymmadang/challenge/challengeTest');
   const isBuddySection = location.pathname.startsWith('/gymmadang/buddy');
   const isMarketSection = location.pathname.startsWith('/gymmadang/market');
 
-  
-  // TopHeader 숨길 조건들
-  const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || isTestSection;
-
-  // Bottom 숨길 조건들
-  const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || isTestSection;
-
   const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
-
-
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
       {/* 탑헤더 조건 */}
       {!shouldHideTop && <TopHeader />}
-
 
       {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}
       {isChallengeSection && !shouldHideTop && !isChallengeIntro && (
@@ -122,14 +128,14 @@ function AppContent() {
         </div>
       )}
 
-       {/* 버디 탭 메뉴 (상단 카테고리처럼) */}
+      {/* 버디 탭 메뉴 (상단 카테고리처럼) */}
       {isBuddySection && !shouldHideTop && (
         <div style={{ borderBottom: '1px solid #eee' }}>
           <BuddyTopTabs />
         </div>
       )}
-      
-       {/* 장터 탭 메뉴 (상단 카테고리처럼) */}
+
+      {/* 장터 탭 메뉴 (상단 카테고리처럼) */}
       {isMarketSection && !shouldHideTop && (
         <div style={{ borderBottom: '1px solid #eee' }}>
           <MarketTopTabs />
@@ -162,17 +168,12 @@ function AppContent() {
         <Route path='/gymmadang/buddy/buddyChat' element={<BuddyChat />} />
         <Route path='/gymmadang/buddy/buddyMy' element={<BuddyNotification />} />
 
-
-
         {/* 수련장 */}
         <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
         <Route path="/gymmadang/challenge/challengeHome" element={<ChallengeHome />} />
-
         <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
         <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
-
         <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMy />} />
-
 
         <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
         <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
@@ -180,14 +181,15 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
         <Route path="/gymmadang/challenge/detail/:id" element={<ChallengeDetail />} />
 
-
-
-
-        {/* 수련장 관련 */}
+        {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `/gymmadang` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
+           혹시 필요하다면 다시 추가할 수 있습니다.
+        */}
+        {/*
         <Route path="/challenge" element={<ChallengeIntro />} />
         <Route path="/challengeHome" element={<ChallengeHome />} />
         <Route path="/challengeList" element={<ChallengeList />} />
         <Route path="/challengeMy" element={<ChallengeMy />} />
+        */}
         
         {/* 장터 관련 */}
         <Route path="/gymmadang/market" element={<MarketBoardPage />} />
@@ -199,39 +201,9 @@ function AppContent() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 
-
-       {/* 탑 네비게이션 조건 */}
-      {/* {!shouldHideTop && (
-        isChallengeSection
-          ? (location.pathname === '/challenge' 
-            ? null 
-            : <ChallengeBottomNavigation />)
-          : isBuddySection
-            ? <BuddyBottomNavigation />
-            : <BottomNavigation />
-      )} */}
-
-      {/* 바텀 네비게이션은 항상 표시 (단, 테스트 중은 제외) */}
-      {/* {!shouldHideBottom && (
-        isBuddySection
-          ? <BuddyBottomNavigation />
-          : <BottomNavigation />
-      )} */}
-       {/* 바텀 네비게이션은 항상 표시 (단, 숨겨야 할 조건 제외) */}
-      {!shouldHideBottom && (
-        isChallengeSection
-          ? (location.pathname === '/challenge' 
-            ? null 
-            : <ChallengeBottomNavigation />) // 챌린지 섹션의 경우 ChallengeBottomNavigation 사용
-          : <BottomNavigation /> // 그 외는 공통 BottomNavigation 사용
-      )}
-
-
-
-
-
-
-
+      {/* 바텀 네비게이션은 항상 표시 (단, 숨겨야 할 조건 제외) */}
+      {/* 이제 BuddyBottomNavigation, ChallengeBottomNavigation 대신 공통 BottomNavigation만 사용합니다. */}
+      {!shouldHideBottom && <BottomNavigation />}
     </div>
   );
 }
@@ -244,4 +216,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
