@@ -165,7 +165,9 @@ export default function MarketArticlePage() {
                                             </div>
                                             <div className = "row gx-0">
                                                 <div className = "col-auto">
-                                                    <button type="button" className="btn btn-primary" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>탐나요!</button>
+                                                    <button type="button" className="btn btn-primary" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                                        <i className="ri-heart-3-line"></i> 탐나요!
+                                                    </button>
                                                 </div>
                                             </div>
                                             

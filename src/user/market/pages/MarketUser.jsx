@@ -223,13 +223,13 @@ export default function MarketUserPage() {
     marketuserBoughtProductList.map(userBoughtProductElement => <MarketUserBoughtProductElement key = {userBoughtProductElement.id} marketUserBoughtProductElem1 = {userBoughtProductElement}/>);
     
     const [marketuserRateList, setMarketUserRateList] = useState([
-        {id : 1, marketUserAnonymousNickname : "Anonymous1", reviewUserContent : "My Dragon About Cows And Persimmon 1",
+        {id : 1, marketUserAnonymousNickname : "Anonymous1", reviewUserContent : "Cow Went, My Dragon. 1",
         createdAt : new Date("2024-07-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserAnonymousNickname : "Anonymous2", reviewUserContent : "My Dragon About Cows And Persimmon 2",
+        {id : 2, marketUserAnonymousNickname : "Anonymous2", reviewUserContent : "Cow Went, My Dragon. 2",
         createdAt : new Date("2024-07-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserAnonymousNickname : "Anonymous3", reviewUserContent : "My Dragon About Cows And Persimmon 3",
+        {id : 3, marketUserAnonymousNickname : "Anonymous3", reviewUserContent : "Cow Went, My Dragon. 3",
         createdAt : new Date("2024-07-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserAnonymousNickname : "Anonymous4", reviewUserContent : "My Dragon About Cows And Persimmon 4",
+        {id : 4, marketUserAnonymousNickname : "Anonymous4", reviewUserContent : "Cow Went, My Dragon. 4",
         createdAt : new Date("2024-07-13T12:34:56"), updatedAt : null},
     ]) 
     

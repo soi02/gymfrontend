@@ -29,7 +29,7 @@
 
 .buttonDefault {
   
-  --var-bg-color : rgb(122, 85, 16);
+  --var-bg-color : rgb(116, 78, 9);
   --var-color : rgb(255, 255, 255);
   --var-ft-weight : bold;
   --var-ft-radius : 1.25vh;
@@ -54,6 +54,45 @@
 }
 
 .buttonDefault:active {
+  
+  background-color: var(--var-bg-color) !important;
+  color: var(--var-color) !important;
+  font-weight: var(--var-ft-weight) !important;
+  border-radius: var(--var-ft-radius) !important;
+  border: var(--var-border) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  
+}
+
+.buttonCancellationDefault {
+  
+  --var-bg-color : rgb(219, 184, 142);
+  --var-color : rgb(255, 255, 255);
+  --var-ft-weight : bold;
+  --var-ft-radius : 1.25vh;
+  --var-border : 0vh;
+  
+  background-color: var(--var-bg-color);
+  color: var(--var-color);
+  font-weight: var(--var-ft-weight);
+  border-radius: var(--var-ft-radius);
+  border: var(--var-border);
+  
+}
+
+.buttonCancellationDefault:hover {
+  
+  background-color: var(--var-bg-color);
+  color: var(--var-color);
+  font-weight: var(--var-ft-weight);
+  border-radius: var(--var-ft-radius);
+  border: var(--var-border);
+  
+}
+
+.buttonCancellationDefault:active {
   
   background-color: var(--var-bg-color) !important;
   color: var(--var-color) !important;
