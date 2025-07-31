@@ -191,8 +191,8 @@ function AppContent() {
         
         {/* 장터 관련 */}
         <Route path="/gymmadang/market" element={<MarketBoardPage />} />
-        <Route path="/gymmadang/market/article" element={<MarketArticlePage />} />
-        <Route path="/gymmadang/market/user" element={<MarketUserPage />} />
+        <Route path="/gymmadang/market/article/:id" element={<MarketArticlePage />} />
+        <Route path="/gymmadang/market/user/:id" element={<MarketUserPage />} />
         <Route path="/gymmadang/market/writeArticle" element={<MarketWriteArticlePage />} />
         <Route path="/gymmadang/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
 

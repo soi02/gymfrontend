@@ -5,6 +5,93 @@ import MarketAnonymousUserMiniProfileImage from "../components/test/example/Mark
 import MarketProductImageOnArticle from "../components/test/example/MarketProductImageOnArticle";
 import '../styles/MarketCommonStyles.css';
 
+function MarketArticleElement({marketArticleElem1}) {
+    
+    return(
+        <>
+        
+        
+            <div className = "row gx-0">
+                    <div className = "col">
+                        <div className = "row gx-0">
+                            <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
+                                <div className = "row">
+                                    <div className = "col" style = {{height : "33vh", overflow : "hidden", position : "relative", marginBottom : "2vh"}}>
+                                        <MarketProductImageOnArticle />
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                        미완료
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col" style = {{fontSize : "3vh", marginBottom : "1vh"}}>
+                                        {marketArticleElem1.articleTitle}
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col" style = {{marginBottom : "2vh"}}>
+                                        <div className = "row h-100">
+                                            <div className = "col-auto" style = {{fontSize : "2.5vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                ￦ {marketArticleElem1.productCost}
+                                            </div>
+                                            <div className = "col">
+                                                
+                                            </div>
+                                            <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
+                                                <div className = "row">
+                                                    <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                        {marketArticleElem1.createdAt.toLocaleString()}
+                                                    </div>
+                                                    <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                        조회수 {marketArticleElem1.viewedCount}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col">
+                                        <div className = "row">
+                                            <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4vh"}}>
+                                                <div className = "row">
+                                                    <div className = "col-auto" style = {{width : "4.5vh", height : "4.5vh", overflow : "hidden", position : "relative"}}>
+                                                        <MarketAnonymousUserMiniProfileImage />
+                                                    </div>
+                                                    <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
+                                                        <div className = "row h-100">
+                                                            <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                {marketArticleElem1.marketUserNickname}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col">
+                                        {/* 판매 상태 체크 */}
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col" style = {{fontSize : "1.875vh", minHeight : "15vh", marginBottom : "4vh"}}>
+                                        {marketArticleElem1.articleContent}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        
+        </>
+    )
+    
+}
+
 function MarketCommentElementOnArticle({marketCommentElem1}) {
     
     return(
@@ -59,6 +146,15 @@ function MarketCommentElementOnArticle({marketCommentElem1}) {
 
 export default function MarketArticlePage() {
     
+    const [marketArticle, setMarketArticle] = useState([
+        {id : 1, marketUserId : 1, marketUserNickname : "GreatDevil", imageLink : null, mainImageLink : null,
+        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 12345, 
+        viewedCount : 67, isSellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null}
+    ]) 
+    
+    const constMarketArticleElement = 
+    marketArticle.map(articleElement => <MarketArticleElement key = {articleElement.id} marketArticleElem1 = {articleElement}/>);
+    
     const [marketCommentListOnArticle, setMarketArticleListOnArticle] = useState([
         {id : 1, marketUserId : 1, marketUserNickname : "GreatDevil", commentContentOnArticle : "First My Dragon", 
         createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
@@ -85,75 +181,12 @@ export default function MarketArticlePage() {
                             <div className = "row">
                                 <div className = "col primaryDivisionDefault" style = {{height : "80vh", paddingLeft : "2vh", paddingRight : "2vh", overflowX : "hidden"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
-                                            <div className = "row">
-                                                <div className = "col" style = {{height : "33vh", overflow : "hidden", position : "relative", marginBottom : "2vh"}}>
-                                                    <MarketProductImageOnArticle />
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                    미완료
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "3vh", marginBottom : "1vh"}}>
-                                                    My Neck
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{marginBottom : "2vh"}}>
-                                                    <div className = "row h-100">
-                                                        <div className = "col-auto" style = {{fontSize : "2.5vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                            ￦ 12345
-                                                        </div>
-                                                        <div className = "col">
-                                                            
-                                                        </div>
-                                                        <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                            2024. 6. 10. 오후 12:34:56
-                                                        </div>
-                                                        <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                            조회수 67
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4vh"}}>
-                                                            <div className = "row">
-                                                                <div className = "col-auto" style = {{width : "4.5vh", height : "4.5vh", overflow : "hidden", position : "relative"}}>
-                                                                    <MarketAnonymousUserMiniProfileImage />
-                                                                </div>
-                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
-                                                                    <div className = "row h-100">
-                                                                        <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                            GreatDevil
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    {/* 판매 상태 체크 */}
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1.875vh", minHeight : "15vh", marginBottom : "4vh"}}>
-                                                    My Dragon 1<br />
-                                                    My Dragon 2<br />
-                                                    My Dragon 3<br />
-                                                    My Dragon 4<br />
-                                                    My Dragon 5<br />
-                                                    My Dragon 6<br />
-                                                </div>
-                                            </div>
+                                        <div className = "col gx-0" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
+                                            
+                                            {
+                                                constMarketArticleElement.length  > 0 ? constMarketArticleElement : <></>
+                                            }
+                                            
                                         </div>
                                     </div>
                                     <div className = "row">
