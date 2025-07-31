@@ -80,19 +80,19 @@ export default function RoutineAddDetailPage() {
             return;
         }
 
-    const payload = {
-      userId: Number(userId), // ← 이 부분도 확인!
-      routineName: routineName,
-      workouts: selectedWorkoutList.map(workout => ({
-        elementId: workout.elementId,
-        sets: workout.sets.map(set => ({
-          kg: Number(set.weight),
-          reps: Number(set.reps)
+        const payload = {
+        userId: Number(userId), // ← 이 부분도 확인!
+        routineName: routineName,
+        workouts: routineData.map(workout => ({
+            elementId: workout.elementId,
+            sets: workout.sets.map(set => ({
+            kg: Number(set.weight),
+            reps: Number(set.reps)
+            }))
         }))
-      }))
-    };
+        };
 
-    console.log("보내는 payload", JSON.stringify(payload, null, 2));
+        console.log("보내는 payload", JSON.stringify(payload, null, 2));
 
 
         try {
