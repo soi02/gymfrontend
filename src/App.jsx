@@ -168,7 +168,8 @@ function AppContent() {
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
         <Route path='/gymmadang/buddy/buddyHome' element={<BuddyHome />} />
         <Route path='/gymmadang/buddy/buddyList' element={<BuddyChat />} />
-        <Route path='/gymmadang/buddy/buddyChat/:buddyId' element={<BuddyChatRoom />} />
+        {/* <Route path='/gymmadang/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
+        <Route path='/gymmadang/buddy/buddyChat/:matchingId' element={<BuddyChatRoom />} />
         <Route path='/gymmadang/buddy/buddyMy' element={<BuddyNotification />} />
 
         {/* 수련장 */}
