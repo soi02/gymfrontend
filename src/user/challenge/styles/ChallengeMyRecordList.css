@@ -1,0 +1,15 @@
+.my-challenges-container {
+  padding: 20px;
+}
+
+.my-challenges-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.challenge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

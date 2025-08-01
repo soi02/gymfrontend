@@ -23,7 +23,7 @@ export default function LoginPage() {
         setFormData({
             ...formData,
             [name]: newValue
-        });
+        }); 
     }
 
     const { login } = useUserService();
