@@ -75,7 +75,7 @@ export default function GuidePage() {
       <h4 className="routine-title">
         <span className="routine-subtitle">
           {meta.categoryName} &gt; {meta.elementName}
-        </span>
+        </span> 
       </h4>
 
       {meta.elementPicture && (
