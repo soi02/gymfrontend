@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux'; // ✅ 추가
 import '../styles/BuddyHome.css';
 
 export default function BuddyHome() {
     const [buddies, setBuddies] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    const auth = useSelector(state => state.auth); // ✅ 로그인 정보 가져오기
+    const senderId = auth.id;
+
     useEffect(() => {
         const fetchBuddies = async () => {
             try {
-                console.log('fetchBuddies 호출됨');
                 const token = localStorage.getItem('token');
                 const res = await axios.get('http://localhost:8080/api/buddy/list', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                // console.log("응답 전체:", res.data);
-                // 수정된 처리 방식
+
                 const processed = res.data.map(user => ({
                     ...user,
                     birthLabel: convertBirth(user.birth),
@@ -25,10 +27,9 @@ export default function BuddyHome() {
                         ? `http://localhost:8080/uploadFiles/${user.profile_image}`
                         : null,
                 }));
-                console.log('fetchBuddies 종료');
-
 
                 setBuddies(processed);
+
             } catch (error) {
                 console.error('버디 정보 불러오기 실패:', error);
             }
@@ -43,8 +44,31 @@ export default function BuddyHome() {
         return `(${year.slice(2)}년생)`;
     };
 
-    const handleLike = () => {
-        console.log(`${buddies[currentIndex].name}에게 좋아요`);
+    const handleLike = async () => {
+        // const receiverId = buddies[currentIndex].id;
+        const receiverId = buddies[currentIndex]?.user_id;
+        console.log("currentIndex:", currentIndex);
+        console.log("buddies length:", buddies.length);
+        console.log("current buddy:", buddies[currentIndex]);
+
+        // const receiverId = buddies[currentIndex]?.id;
+
+        if (!receiverId) {
+            console.error("receiverId가 없습니다!");
+            return;
+        }
+
+        try {
+            await axios.post("http://localhost:8080/api/buddy/request", {
+                sendBuddyId: senderId,
+                receiverBuddyId: receiverId,
+            });
+
+            console.log(`${buddies[currentIndex].name}에게 호감 요청 보냄`);
+        } catch (err) {
+            console.error("호감 요청 실패:", err);
+        }
+
         moveToNextBuddy();
     };
 
@@ -58,7 +82,6 @@ export default function BuddyHome() {
             setCurrentIndex((prevIndex) => prevIndex + 1);
         } else {
             alert("모든 버디를 다 봤어요!");
-            // 혹은 setBuddies([]) 로 종료
         }
     };
 
@@ -78,16 +101,12 @@ export default function BuddyHome() {
                         src={buddy.image}
                         alt={buddy.name}
                         className="buddy-card-image"
-                        // onError={(e) =>
-                        //     (e.target.src = 'https://via.placeholder.com/300x400?text=No+Image')
-                        // }
                         onError={(e) => {
                             const fallback = 'https://placehold.co/300x400?text=No+Image';
                             if (e.target.src !== fallback) {
                                 e.target.src = fallback;
                             }
                         }}
-                        //onerror 는 조건문 안 쓰면 무한 랜더링됨
                     />
                     <div className="buddy-card-info">
                         <h2>{buddy.name}, {buddy.birthLabel}</h2>
