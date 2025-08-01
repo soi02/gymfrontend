@@ -98,9 +98,8 @@ function AppContent() {
     '/gymmadang/challenge/challengeTest/intro',
     // '/gymmadang/challenge/challengeTest/step/:stepId'와 같은 동적 경로는 startsWith로 처리
     '/gymmadang/challenge/challengeTest/result',
-    '/gymmadang/challenge/challengeTest/recommend',
+    '/gymmadang/challenge/challengeTest/recommend'
     // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
-    '/gymmadang/routine/addDetail' 
   ];
 
   // TopHeader 숨길 조건들
