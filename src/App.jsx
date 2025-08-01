@@ -54,6 +54,7 @@ import BuddyChat from './user/buddy/pages/BuddyChat';
 import BuddyNotification from './user/buddy/pages/BuddyNotification';
 import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail';
 import RoutineAddDetailPage from './user/routine/pages/RoutineAddDetailPage';
+import BuddyChatRoom from './user/buddy/pages/BuddyChatRoom';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -165,7 +166,8 @@ function AppContent() {
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
         <Route path='/gymmadang/buddy/buddyHome' element={<BuddyHome />} />
-        <Route path='/gymmadang/buddy/buddyChat' element={<BuddyChat />} />
+        <Route path='/gymmadang/buddy/buddyList' element={<BuddyChat />} />
+        <Route path='/gymmadang/buddy/buddyChat/:buddyId' element={<BuddyChatRoom />} />
         <Route path='/gymmadang/buddy/buddyMy' element={<BuddyNotification />} />
 
         {/* 수련장 */}
