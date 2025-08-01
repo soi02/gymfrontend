@@ -8,7 +8,8 @@ import NotificationPage from './global/pages/NotificationsPage';
 
 import ChallengeHome from './user/challenge/pages/ChallengeHome';
 import ChallengeList from './user/challenge/pages/ChallengeList';
-import ChallengeMy from './user/challenge/pages/ChallengeMy';
+import ChallengeMyRecords from './user/challenge/pages/ChallengeMyRecords';
+
 
 // ChallengeBottomNavigation 임포트는 이제 필요 없으므로 제거 또는 주석 처리
 // import ChallengeBottomNavigation from './user/challenge/commons/ChallengeBottomNavigation';
@@ -173,7 +174,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeHome" element={<ChallengeHome />} />
         <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
         <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
-        <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMy />} />
+        <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMyRecords />} />
 
         <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
         <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
