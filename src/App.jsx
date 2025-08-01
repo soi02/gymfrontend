@@ -55,6 +55,7 @@ import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail';
 import RoutineAddDetailPage from './user/routine/pages/RoutineAddDetailPage';
 import BuddyChatRoom from './user/buddy/pages/BuddyChatRoom';
 import ChallengeMyRecordList from './user/challenge/pages/ChallengeMyRecordList';
+import ChallengeMyRecordDetail from './user/challenge/pages/ChallengeMyRecordDetail';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -182,6 +183,8 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
         <Route path="/gymmadang/challenge/detail/:challengeId" element={<ChallengeDetail />} />
+
+        <Route path="/gymmadang/challenge/challengeMyRecordList/:challengeId" element={<ChallengeMyRecordDetail />} />
 
         {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `/gymmadang` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
            혹시 필요하다면 다시 추가할 수 있습니다.

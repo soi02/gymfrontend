@@ -1,5 +1,8 @@
 import React from 'react';
-import '../styles/MyChallengeCard.css'; // CSS 파일 (4번에서 만들 예정)
+import '../styles/MyChallengeCard.css'; 
+
+// 백엔드 기본 URL을 MyChallengeCard 컴포넌트에서도 사용
+const BACKEND_BASE_URL = "http://localhost:8080"; 
 
 const MyChallengeCard = ({ challenge, onClick }) => {
   const {
@@ -12,6 +15,9 @@ const MyChallengeCard = ({ challenge, onClick }) => {
     todayAttended
   } = challenge;
 
+  // 이미지 경로를 백엔드 URL과 결합하여 완전한 URL로 만듭니다.
+  const fullImageUrl = `${BACKEND_BASE_URL}${challengeThumbnailPath}`;
+
   // 챌린지 진행률 계산
   const progressPercentage = (daysAttended / challengeDurationDays) * 100;
   
@@ -23,7 +29,7 @@ const MyChallengeCard = ({ challenge, onClick }) => {
 
   return (
     <div className="my-challenge-card" onClick={onClick}>
-      <img src={challengeThumbnailPath} alt={challengeTitle} className="challenge-thumbnail" />
+      <img src={fullImageUrl} alt={challengeTitle} className="challenge-thumbnail" />
       <div className="card-content">
         <h3>{challengeTitle}</h3>
         <p>총 {challengeDurationDays}일 챌린지 ({daysPassed}일차 진행 중)</p>
