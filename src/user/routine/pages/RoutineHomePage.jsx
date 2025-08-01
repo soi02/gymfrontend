@@ -62,7 +62,11 @@ export default function RoutineHomePage() {
                   </div>
                 </div>
 
-
+                {/* <div className="row">
+                  <div className="col" style={{textAlign: 'left',paddingLeft: '1.5rem', marginBottom: '0.5rem'}}>
+                    <h5>나의 루틴</h5>
+                  </div>
+                </div> */}
 
                 <div className="routine-grid">
                   {routines.map((routine, idx) => (
