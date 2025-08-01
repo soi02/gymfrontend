@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import MyChallengeCard from '../components/MyChallengeCard'; // 챌린지 카드 컴포넌트 (3번에서 만들 예정)
-import '../styles/ChallengeMyRecordList.css'; // CSS 파일 (4번에서 만들 예정)
+import MyChallengeCard from '../components/MyChallengeCard';
+import '../styles/ChallengeMyRecordList.css';
 import { useSelector } from 'react-redux';
 
-const BACKEND_BASE_URL = "http://localhost:8080"; // 백엔드 기본 URL
+const BACKEND_BASE_URL = "http://localhost:8080";
 
 const ChallengeMyRecordList = () => {
   const [myChallengeList, setMyChallengeList] = useState([]);
@@ -69,9 +69,9 @@ const ChallengeMyRecordList = () => {
       <div className="challenge-list">
         {myChallengeList.map(challenge => (
           <MyChallengeCard
-            key={challenge.challengeId}
+            key={challenge.challengeId} 
             challenge={challenge}
-            onClick={() => navigate(`/ChallengeMyRecordList/${challenge.challengeId}`)}
+            onClick={() => navigate(`/gymmadang/challenge/challengeMyRecordList/${challenge.challengeId}`)}
           />
         ))}
       </div>
