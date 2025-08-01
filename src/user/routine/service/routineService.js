@@ -11,5 +11,19 @@ export default function useRoutineService() {
         return response.data;
     }
 
-    return {getWorkoutList, getWorkoutGuide};
+    const saveRoutine = async(payload) => {
+        const response = await axios.post(
+            `http://localhost:8080/api/routine/saveRoutine`,
+            payload,
+            {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        
+        );
+        return response.data;
+    }
+
+    return {getWorkoutList, getWorkoutGuide, saveRoutine};
 }

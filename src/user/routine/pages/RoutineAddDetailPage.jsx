@@ -2,17 +2,23 @@
 import { useLocation } from "react-router-dom";
 import "../styles/RoutineAddDetailPage.css"
 import { useEffect, useState } from "react";
+import useRoutineService from "../service/routineService";
+import { jwtDecode } from "jwt-decode";
 
 
 export default function RoutineAddDetailPage() {
 
+    const routineService = useRoutineService();
+
     const location = useLocation();
     const { selectedWorkouts } = location.state || {};
 
+    const token = localStorage.getItem("token");
+    const userId = token ? jwtDecode(token).sub : null;
 
     const [setCount, setSetCount] = useState(4);
-    const [sets, setSets] = useState([]);
 
+    
 
     const [routineData, setRoutineData] = useState([]);
 
@@ -30,11 +36,78 @@ export default function RoutineAddDetailPage() {
     
     const updateSet = (workoutIdx, setIdx, field, value) => {
         setRoutineData(prev => {
-            const newData = [...prev];
-            newData[workoutIdx].sets[setIdx][field] = value;
+            const newData = prev.map((workout, wIdx) => {
+                if (wIdx === workoutIdx) {
+                    const updatedSets = workout.sets.map((set, sIdx) => {
+                        // 현재 세트 이후로 전부 동일하게 반영
+                        if (sIdx >= setIdx) {
+                            return { ...set, [field]: value };
+                        }
+                        return set;
+                    });
+                    return { ...workout, sets: updatedSets };
+                }
+                return workout;
+            });
             return newData;
         });
     };
+
+
+
+    const removeSet = (workoutIdx, setIdx) => {
+        setRoutineData(prev => {
+            const newData = prev.map((workout, idx) => {
+                if (idx === workoutIdx) {
+                    return {
+                        ...workout,
+                        sets: workout.sets.filter((_, i) => i !== setIdx)
+                    };
+                }
+                return workout;
+            });
+            return newData;
+        });
+    };
+
+    const removeWorkout = (workoutIdx) => {
+        setRoutineData(prev => prev.filter((_, idx) => idx !== workoutIdx));
+    }
+
+    const handleSave = async () => {
+        if (!routineName.trim()) {
+            alert("루틴 이름을 입력해주시오");
+            return;
+        }
+
+        const payload = {
+        userId: Number(userId), // ← 이 부분도 확인!
+        routineName: routineName,
+        workouts: routineData.map(workout => ({
+            elementId: workout.elementId,
+            sets: workout.sets.map(set => ({
+            kg: Number(set.weight),
+            reps: Number(set.reps)
+            }))
+        }))
+        };
+
+        console.log("보내는 payload", JSON.stringify(payload, null, 2));
+
+
+        try {
+            await routineService.saveRoutine(payload);
+            alert("루틴 저장완료! 바로 운동하러 가보시게.");
+            setShowModal(false); // 모달 닫기
+        } catch (error) {
+            console.error("저장에러:", error);
+            alert("루틴 저장 중 문제가 발생했소.");
+        }
+    };
+
+
+    const [showModal, setShowModal] = useState(false);
+    const [routineName, setRoutineName] = useState("");
 
 
     return (
@@ -67,10 +140,18 @@ export default function RoutineAddDetailPage() {
                 </div>
 
                 <div className="routine-scroll-area">
+
                     {routineData.map((workout, workoutIdx) => (
                         <div key={workout.elementId} className="workout-box">
                             <div className="workout-header">
-                                <strong>{workout.elementName}</strong>
+                                <span>{workout.elementName}</span>
+                                <button
+                                    className="delete-workout-btn"
+                                    onClick={() => removeWorkout(workoutIdx)}
+                                    title="운동 항목 삭제"
+                                >
+                                    <span className="material-symbols-outlined">x</span>
+                                </button>
                             </div>
 
                             {workout.sets.map((set, setIdx) => (
@@ -80,26 +161,52 @@ export default function RoutineAddDetailPage() {
                                         type="number"
                                         value={set.weight}
                                         onChange={(e) => updateSet(workoutIdx, setIdx, 'weight', e.target.value)}
-                                        placeholder="kg"
                                     />
-                                    <span>kg</span>
+                                    <span className="kg-label">kg</span>
                                     <input
                                         type="number"
                                         value={set.reps}
                                         onChange={(e) => updateSet(workoutIdx, setIdx, 'reps', e.target.value)}
-                                        placeholder="횟수"
                                     />
                                     <span>회</span>
+                                    <button
+                                        onClick={() => removeSet(workoutIdx, setIdx)}
+                                        className="delete-set-btn"
+                                        title="세트 삭제"
+                                    >
+                                        <span className="material-symbols-outlined">
+                                            delete
+                                        </span>
+                                    </button>
                                 </div>
                             ))}
                         </div>
                     ))}
 
-                    <div className="sticky-save-btn">
-                        {/* <button onClick={handleSave}>루틴 저장하기</button> */}
-                        <button >루틴 저장하기</button>
-                    </div>
                 </div>
+                <div className="sticky-save-btn">
+                    {/* <button onClick={handleSave}>루틴 저장하기</button> */}
+                    <button onClick={() => setShowModal(true)}>루틴 저장하기</button>
+                </div>
+                
+                {showModal && (
+                    <div className="modal-overlay">
+                        <div className="modal-box">
+                            <h5>루틴 이름을 입력해주시오.</h5>
+                            <input 
+                                type="text"
+                                value={routineName}
+                                onChange={(e) => setRoutineName(e.target.value)}
+                                placeholder="예: 하체 부수기"
+                            />
+                            <div className="modal-btns">
+                                <button onClick={() => setShowModal(false)}>취소</button>
+                                <button onClick={handleSave}>저장</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </>
     );
