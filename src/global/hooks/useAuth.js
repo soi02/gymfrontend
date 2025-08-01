@@ -9,8 +9,11 @@ export function useAuth() {
     const navigate = useNavigate();
 
     const loginCustom = (token, userInfo) => {
+
         localStorage.setItem("token", token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        
+
         dispatch(loginAction(userInfo));
         navigate("/");
     };

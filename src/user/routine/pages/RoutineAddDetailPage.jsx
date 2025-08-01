@@ -94,12 +94,12 @@ export default function RoutineAddDetailPage() {
             userId: Number(userId),
             routineName: routineName,
             routineDetailList: routineData.map((workout, idx) => ({
-            elementId: workout.elementId,
-            elementOrder: idx + 1,
-            setList: workout.sets.map(set => ({
-                kg: Number(set.weight || 0),
-                reps: Number(set.reps || 0)
-            }))
+                elementId: workout.elementId,
+                elementOrder: idx + 1,
+                setList: workout.sets.map(set => ({
+                    kg: Number(set.weight || 0),
+                    reps: Number(set.reps || 0)
+                }))
             }))
         };
 

@@ -50,12 +50,15 @@ export default function LoginPage() {
             const json = await login(formData);
 
             localStorage.setItem("token",json.token);
+            localStorage.setItem("userId", json.id); // ✅ 이거 추가!!!
+        
 
             const name = json.name;
             const id = json.id;
 
             dispatch(loginAction({ name: json.name, id: json.id }));
             console.log("로그인 성공 응답: " , json );
+            
             
             // Redux 상태가 업데이트되면 useEffect가 실행되어 자동 리다이렉트되므로
             // 여기서는 navigate('/welcome')을 직접 호출하지 않아도 됩니다.
