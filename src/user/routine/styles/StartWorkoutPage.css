@@ -67,3 +67,19 @@
   width: 24px;
   background-color: #7c1d0d;
 }
+.input-with-unit {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 8px;
+}
+
+.input-with-unit input {
+  width: 60px;
+  text-align: center;
+}
+
+.unit {
+  font-size: 0.9rem;
+  color: #666;
+}
