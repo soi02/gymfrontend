@@ -72,7 +72,7 @@ const ChallengeMyRecordList = () => {
           <MyChallengeCard
             key={challenge.challengeId} 
             challenge={challenge}
-            onClick={() => navigate(`/gymmadang/challenge/challengeMyRecordList/${challenge.challengeId}`)}
+            onClick={() => navigate(`/gymmadang/challenge/challengeMyRecordDetail/${challenge.challengeId}`)}
           />
         ))}
       </div>
