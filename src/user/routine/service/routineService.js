@@ -34,6 +34,11 @@ export default function useRoutineService() {
         return response.data;
     }
 
+      const getRoutineDetail = async (routineId) => {
+        const response = await axios.get(`${BASE_URL}/list/${routineId}`);
+        return response.data;
+    };
 
-    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId};
+
+    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail};
 }
