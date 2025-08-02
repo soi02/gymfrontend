@@ -5,6 +5,17 @@
   box-sizing: border-box;
 }
 
+/* 이미지 */
+.start-workout-image {
+  width: 60% !important;
+  max-width: 300px !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
 
 .routine-set-table {
   margin-top: 1rem;

@@ -6,14 +6,28 @@ import "../styles/StartWorkoutPage.css";
 
 export default function StartWorkoutPage() {
   const { routineId } = useParams();
-  const { getRoutineDetail } = useRoutineService();
+
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const { getFullRoutineDetail } = useRoutineService();
   const [exerciseList, setExerciseList] = useState([]);
+  const [routineSets, setRoutineSets] = useState([]);
+  const [currentSets, setCurrentSets] = useState([]);
+  const currentExercise = exerciseList[currentIndex];
+
+  useEffect(() => {
+    if (currentExercise) {
+      const setsForCurrent = routineSets.filter(set => set.detailId === currentExercise.detailId);
+      setCurrentSets(setsForCurrent);
+    }
+  }, [currentExercise, routineSets]);
+
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getRoutineDetail(routineId);
+      const res = await getFullRoutineDetail(routineId);
       setExerciseList(res.details || []);
+      setRoutineSets(res.sets || []);
     };
     fetch();
   }, [routineId]);
@@ -24,7 +38,6 @@ export default function StartWorkoutPage() {
     trackMouse: true, // 마우스로도 테스트 가능
   });
 
-  const currentExercise = exerciseList[currentIndex];
 
   return (
     <div className="main-content">
@@ -46,30 +59,65 @@ export default function StartWorkoutPage() {
                 </div>
 
                 {currentExercise && (
-                    <>
+                  <>
                     <div>
-                        <img
-                        src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
-                        alt="운동 이미지"
-                        style={{ width: "100%", maxHeight: "200px", objectFit: "contain" }}
-                        />
-                        <h3>{`${currentExercise.elementName}(${currentExercise.categoryName})`}</h3>
-
-                    
+                      <img  
+                        className="start-workout-image"
+                        src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`} />
+                      <h3>{`${currentExercise.elementName} (${currentExercise.categoryName})`}</h3>
                     </div>
 
                     <div className="routine-set-table">
-                        {[1, 2, 3, 4, 5].map((_, i) => (
-                        <div key={i} className="set-row">
+                        {currentSets.map((set, i) => (
+                          <div key={i} className="set-row">
                             <span>{i + 1}세트</span>
-                            <input type="number" placeholder="KG" />
-                            <input type="number" placeholder="횟수" />
-                            <input type="checkbox" />
-                        </div>
+                            <input
+                              type="number"
+                              value={set.kg}
+                              onChange={(e) => {
+                                const newSets = [...currentSets];
+                                newSets[i] = { ...newSets[i], kg: parseFloat(e.target.value) || 0 };
+                                setCurrentSets(newSets);
+                              }}
+                            />
+                            <input
+                              type="number"
+                              value={set.reps}
+                              onChange={(e) => {
+                                const newSets = [...currentSets];
+                                newSets[i] = { ...newSets[i], reps: parseInt(e.target.value) || 0 };
+                                setCurrentSets(newSets);
+                              }}
+                            />
+                            <input
+                              type="checkbox"
+                              checked={set.done || false}
+                              onChange={(e) => {
+                                const newRoutineSets = [...routineSets];
+                                const targetIndex = routineSets.findIndex(
+                                  s => s.detailId === currentExercise.detailId && s.setId === set.setId
+                                );
+                                if (targetIndex !== -1) {
+                                  newRoutineSets[targetIndex] = {
+                                    ...newRoutineSets[targetIndex],
+                                    done: e.target.checked
+                                  };
+                                  setRoutineSets(newRoutineSets);
+                                }
+                              }}
+                            />
+
+
+                          </div>
                         ))}
                     </div>
-                    </>
+                  </>
                 )}
+                <div className="routine-complete-btn">
+                  <button>
+                    운동 완료
+                  </button>
+                </div>
                 {/* <div style={{ textAlign: "center", marginTop: "1rem" }}>
                     <button disabled={currentIndex === 0} onClick={() => setCurrentIndex((i) => i - 1)}>⬅ 이전</button>
                     <button disabled={currentIndex === exerciseList.length - 1} onClick={() => setCurrentIndex((i) => i + 1)}>다음 ➡</button>
