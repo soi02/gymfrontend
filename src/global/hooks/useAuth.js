@@ -12,8 +12,6 @@ export function useAuth() {
 
         localStorage.setItem("token", token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        
-
         dispatch(loginAction(userInfo));
         navigate("/");
     };
