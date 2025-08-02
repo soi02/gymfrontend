@@ -32,7 +32,7 @@ export default function ChallengeCreateStepper() {
 
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
-    challengeCreator: null,
+    challengeCreator: userId,
     challengeTitle: '',
     challengeDescription: '',
     challengeMaxMembers: 0,
@@ -56,6 +56,14 @@ export default function ChallengeCreateStepper() {
 
   }, [userId, navigate, location.pathname]);
 
+    useEffect(() => {
+    if (userId) {
+      setFormData((prevData) => ({
+        ...prevData,
+        challengeCreator: userId,
+      }));
+    }
+  }, [userId]);
 
   const CurrentStep = steps[step];
 
