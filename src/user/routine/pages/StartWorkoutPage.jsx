@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useRoutineService from "../service/routineService";
 import { useSwipeable } from "react-swipeable";
+import "../styles/StartWorkoutPage.css";
 
 export default function StartWorkoutPage() {
   const { routineId } = useParams();
@@ -26,58 +27,58 @@ export default function StartWorkoutPage() {
   const currentExercise = exerciseList[currentIndex];
 
   return (
-    
-    <div {...handlers} style={{ padding: "1rem" }}>
-          <div className="top-bar">
-            {/* ⬇ 요게 progress bar */}
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '0.8rem 0' }}>
-{exerciseList.map((_, idx) => (
-  <div
-    key={idx}
-    onClick={() => setCurrentIndex(idx)}
-    style={{
-      width: currentIndex === idx ? 24 : 10,         // ✅ 길이 조절
-      height: 8,
-      borderRadius: 8,
-      margin: '0 4px',
-      backgroundColor: currentIndex === idx ? '#f33' : '#888',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-    }}
-  />
-))}
+    <div className="main-content">
 
-            </div>
+            <div
+            {...handlers} className="start-workout-container">
+                <div className="routine-top-bar">
+                    <div
+                        className="routine-progress-bar"
+                    >
+                        {exerciseList.map((_, idx) => (
+                        <div
+                            key={idx}
+                            onClick={() => setCurrentIndex(idx)}
+                            className={`routine-dot ${currentIndex === idx ? 'active' : ''}`}
+                        />
+                        ))}
+                    </div>
+                </div>
 
-        </div>
-      {currentExercise && (
-        <>
-          <div>
-            <h2>{currentExercise.elementName}</h2>
-            <img
-              src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
-              alt="운동 이미지"
-              style={{ width: "50%" }}
-            />
-            <p>{currentExercise.categoryName}</p>
-          </div>
+                {currentExercise && (
+                    <>
+                    <div>
+                        <img
+                        src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
+                        alt="운동 이미지"
+                        style={{ width: "100%", maxHeight: "200px", objectFit: "contain" }}
+                        />
+                        <h3>{`${currentExercise.elementName}(${currentExercise.categoryName})`}</h3>
 
-          <div className="set-table">
-            {[1, 2, 3, 4, 5].map((_, i) => (
-              <div key={i} className="set-row">
-                <span>{i + 1}세트</span>
-                <input type="number" placeholder="KG" />
-                <input type="number" placeholder="횟수" />
-                <input type="checkbox" />
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-      <div style={{ textAlign: "center", marginTop: "1rem" }}>
-        <button disabled={currentIndex === 0} onClick={() => setCurrentIndex((i) => i - 1)}>⬅ 이전</button>
-        <button disabled={currentIndex === exerciseList.length - 1} onClick={() => setCurrentIndex((i) => i + 1)}>다음 ➡</button>
-      </div>
+                    
+                    </div>
+
+                    <div className="routine-set-table">
+                        {[1, 2, 3, 4, 5].map((_, i) => (
+                        <div key={i} className="set-row">
+                            <span>{i + 1}세트</span>
+                            <input type="number" placeholder="KG" />
+                            <input type="number" placeholder="횟수" />
+                            <input type="checkbox" />
+                        </div>
+                        ))}
+                    </div>
+                    </>
+                )}
+                {/* <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                    <button disabled={currentIndex === 0} onClick={() => setCurrentIndex((i) => i - 1)}>⬅ 이전</button>
+                    <button disabled={currentIndex === exerciseList.length - 1} onClick={() => setCurrentIndex((i) => i + 1)}>다음 ➡</button>
+                </div> */}
     </div>
+
+
+
+    </div>
+    
   );
 }

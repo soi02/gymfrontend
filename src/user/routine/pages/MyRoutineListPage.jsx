@@ -34,6 +34,8 @@ export default function MyRoutineListPage() {
 
 
   return (
+    <div className="main-content">
+
     <div className="routine-detail-page">
       {/* 상단 헤더 */}
       <div className="routine-detail-header">
@@ -61,6 +63,7 @@ export default function MyRoutineListPage() {
         <button>수정하기</button>
         <button onClick={() => navigate(`/gymmadang/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
       </div>
+    </div>
     </div>
   );
 }
