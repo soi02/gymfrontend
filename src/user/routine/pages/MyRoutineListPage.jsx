@@ -56,6 +56,11 @@ export default function MyRoutineListPage() {
           </div>
         ))}
       </div>
+
+      <div>
+        <button>수정하기</button>
+        <button onClick={() => navigate(`/gymmadang/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
+      </div>
     </div>
   );
 }

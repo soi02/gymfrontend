@@ -42,7 +42,7 @@ export default function LoginPage() {
             if (from) {
                 navigate(from, { replace: true }); // 이전 페이지로 이동 (히스토리 대체)
             } else {
-                navigate('/welcome'); // 이전 경로가 없으면 기본 '환영' 페이지로 이동
+                navigate('/gymmadang/mainpage'); // 이전 경로가 없으면 기본 '메인' 페이지로 이동
             }
         }
     }, [currentUserId, navigate, location.state]); // 의존성 배열에 currentUserId 추가
