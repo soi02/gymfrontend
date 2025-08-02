@@ -71,7 +71,7 @@ export default function ChallengeDetail() {
   const recruitStart = new Date(challengeRecruitStartDate);
   const recruitEnd = new Date(challengeRecruitEndDate);
 
-  const isUserParticipating = challenge?.isUserParticipating || false;
+  const isUserParticipating = challenge?.userParticipating || false;
 
   // 날짜 비교 시 시분초를 무시하고 날짜만 비교하기 위해 자정으로 설정
   today.setHours(0, 0, 0, 0);

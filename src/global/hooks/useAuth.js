@@ -2,7 +2,7 @@
 
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { loginAction, logoutAction } from "../../../redux/authSlice";
+import { loginAction, logoutAction } from "../../redux/authSlice";
 
 export function useAuth() {
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export function useAuth() {
         localStorage.removeItem("token");
         localStorage.removeItem("userInfo");
         dispatch(logoutAction()); 
-        navigate("/login");
+        navigate("/gymmadang/login");
     };
 
     return { loginCustom, logoutCustom };

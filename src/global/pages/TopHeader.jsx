@@ -5,29 +5,25 @@ import logoImg from "../../assets/img/gymmadang_logo_kr.svg";
 import profileImg from "../../assets/img/default_profile_img.svg";
 import birdImg from "../../assets/img/bird.png";
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 export default function TopHeader() {
-  const authInfo = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+    const authInfo = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    
+    // 로그아웃 커스텀 훅 사용 전 코드
+    //   const handleLogout = () => {
+    //     dispatch(logoutAction());
+    //     localStorage.removeItem("token");
+    //   };
 
-// //   임시로 가짜 로그인 상태 삽입
-// const fakeAuthInfo = {
-//   isAuthenticated: true,
-//   nickname: "훈민정음",
-//   profileImage: null, // 필요시 커스텀 이미지도 지정 가능
-// };
+    // 로그아웃 커스텀 훅 사용 후 코드
+    const { logoutCustom } = useAuth();
 
-// // 실제 authInfo 대신 사용
-// const authInfo = fakeAuthInfo;
-
-  
     const [showPrompt, setShowPrompt] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
 
-  const handleLogout = () => {
-    dispatch(logoutAction());
-    localStorage.removeItem("token");
-  };
+
 
   return (
     <>
@@ -212,10 +208,11 @@ export default function TopHeader() {
             >
             나의 처소에 들르겠소
             </Link>
-            <Link to="/gymmadang/mypage">
+            <Link to="/gymmadang/login">
             <button
             onClick={() => {
-                handleLogout();
+                // handleLogout();
+                logoutCustom(); // 로그아웃 커스텀 훅 사용
                 setShowMenu(false);
             }}
             style={{

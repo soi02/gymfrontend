@@ -16,6 +16,7 @@ const ChallengeMyRecordList = () => {
 
 
   const userId = useSelector(state => state.auth.id);
+  console.log("현재 로그인한 사용자 ID:", userId);
 
   useEffect(() => {
   // userId가 없을 경우 로그인 페이지로 리다이렉트

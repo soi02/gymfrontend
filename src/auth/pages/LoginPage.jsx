@@ -6,6 +6,7 @@ import { loginAction } from '../../redux/authSlice';
 // import {jwtDecode} from "jwt-decode";
 
 import '../styles/LoginPage.css';
+import { useAuth } from '../../global/hooks/useAuth';
 
 
 export default function LoginPage() {
@@ -27,6 +28,7 @@ export default function LoginPage() {
     }
 
     const { login } = useUserService();
+    const { loginCustom } = useAuth();
     const navigate = useNavigate();
     const dispatch = useDispatch(); 
     const location = useLocation();
@@ -45,34 +47,39 @@ export default function LoginPage() {
         }
     }, [currentUserId, navigate, location.state]); // 의존성 배열에 currentUserId 추가
 
-    const handleLogin = async()=>{
-        try{
+    // 로그인 커스텀 훅 사용 전 코드
+    //     const handleLogin = async()=>{
+    //     try{
+    //         const json = await login(formData);
+
+    //         localStorage.setItem("token",json.token);
+
+    //         const name = json.name;
+    //         const id = json.id;
+
+    //         dispatch(loginAction({ name: json.name, id: json.id }));
+    //         console.log("로그인 성공 응답: " , json );
+
+    //     }catch(error){
+    //         setModalMessage(<><span>입력하신 성함과 암호가</span><br/> <span>짐의 장부와 맞지 않소이다.</span><br/><span> 재차 확인하여 주시기 바라오.</span></>);
+    //         console.log("로그인 에러: ",error)
+    //         return;
+    //     }
+    // }
+
+    // 로그인 커스텀 훅 사용 후 코드
+    const handleLogin = async () => {
+        try {
             const json = await login(formData);
-
-            localStorage.setItem("token",json.token);
-
-            const name = json.name;
-            const id = json.id;
-
-            dispatch(loginAction({ name: json.name, id: json.id }));
-            console.log("로그인 성공 응답: " , json );
             
-            // Redux 상태가 업데이트되면 useEffect가 실행되어 자동 리다이렉트되므로
-            // 여기서는 navigate('/welcome')을 직접 호출하지 않아도 됩니다.
-            // 하지만 즉시 리다이렉션을 원한다면, 로그인 성공 응답을 받은 직후에
-            // location.state?.from 값을 사용하여 navigate를 호출할 수 있습니다.
-            // 여기서는 useEffect에 맡기겠습니다.
-            
-        }catch(error){
-            setModalMessage(<><span>입력하신 성함과 암호가</span><br/> <span>짐의 장부와 맞지 않소이다.</span><br/><span> 재차 확인하여 주시기 바라오.</span></>);
-            console.log("로그인 에러: ",error)
+            loginCustom(json.token, { name: json.name, id: json.id });
+
+        } catch (error) {
+            setModalMessage(<><span>입력하신 성함과 암호가</span><br /> <span>짐의 장부와 맞지 않소이다.</span><br /><span> 재차 확인하여 주시기 바라오.</span></>);
+            console.log("로그인 에러: ", error);
             return;
         }
-        // 이 navigate는 useEffect에서 처리할 것이므로 제거하거나,
-        // 필요하다면 즉시 이동하도록 로직을 변경할 수 있습니다.
-        // 여기서는 useEffect가 리다이렉션을 담당하도록 제거합니다.
-        // navigate('/welcome') 
-    }
+    };
 
     return (
         <div className="login-container">
