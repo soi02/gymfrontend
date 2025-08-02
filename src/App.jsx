@@ -159,7 +159,7 @@ function AppContent() {
         <Route path='/gymmadang/routine/add' element={<RoutineAddPage />} />
         <Route path='/gymmadang/routine/addDetail' element={<RoutineAddDetailPage />} />
         <Route path='/gymmadang/routine/myroutine' element={<MyRoutineListPage />} />
-        <Route path='/gymmadang/routine/list/:id' element={<MyRoutinePage />} />
+        <Route path='/gymmadang/routine/list/:id' element={<MyRoutineListPage />} />
         <Route path='/gymmadang/routine/workout' element={<WorkoutPage />} />
         <Route path='/gymmadang/routine/guide/:id' element={<GuidePage />} />
         <Route path='/gymmadang/routine/summary' element={<SummaryPage />} />
