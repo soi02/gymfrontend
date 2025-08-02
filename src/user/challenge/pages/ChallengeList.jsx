@@ -4,19 +4,31 @@ import axios from 'axios';
 import ChallengeCard from '../components/ChallengeCard';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ChallengeList.css';
+import apiClient from '../../../global/api/apiClient';
 
 export default function ChallengeList() {
   const navigate = useNavigate();
   const [challenges, setChallenges] = useState([]);
 
+  // apiClient.js 사용 전 코드
+  // useEffect(() => {
+  //   axios.get('http://localhost:8080/api/challenge/getAllChallengeListProcess')
+  //     .then((res) => {
+  //       console.log('챌린지 목록', res.data);
+  //       setChallenges(res.data);
+  //     })
+  //     .catch((err) => console.error('챌린지 불러오기 실패', err));
+  // }, []);
+
+  // apiClient를 사용하고, baseURL은 생략합니다.
   useEffect(() => {
-    axios.get('http://localhost:8080/api/challenge/getAllChallengeListProcess')
-      .then((res) => {
-        console.log('챌린지 목록', res.data);
+    apiClient.get('/challenge/getAllChallengeListProcess')
+        .then((res) => {
+          console.log('챌린지 목록', res.data);
         setChallenges(res.data);
       })
       .catch((err) => console.error('챌린지 불러오기 실패', err));
-  }, []);
+    }, []);
 
   return (
 

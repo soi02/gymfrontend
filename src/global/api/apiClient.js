@@ -1,6 +1,6 @@
 import axios from "axios";
-import { store } from "../redux/store";
-import { logoutAction } from "../redux/authSlice";
+import { store } from "../../redux/store";
+import { logoutAction } from "../../redux/authSlice";
 
 // 공통 axios 인스턴스
 // 토큰 자동 추가 코드는 안 들어있음. 따라서 요청 보낼 때 명시적으로 헤더에 토큰 넣어줘야 함!
