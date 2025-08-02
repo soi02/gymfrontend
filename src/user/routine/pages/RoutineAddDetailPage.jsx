@@ -74,36 +74,47 @@ export default function RoutineAddDetailPage() {
         setRoutineData(prev => prev.filter((_, idx) => idx !== workoutIdx));
     }
 
-    const handleSave = async () => {
+        const handleSave = async () => {
         if (!routineName.trim()) {
             alert("루틴 이름을 입력해주시오");
             return;
         }
 
+        if (routineName.length > 10) {
+            alert("루틴 이름은 10자 이하로 입력해주시오.");
+            return;
+        }
+
+        if (routineData.length === 0) {
+            alert("운동 항목을 하나 이상 추가해주시오.");
+            return;
+        }
+
         const payload = {
-        userId: Number(userId), // ← 이 부분도 확인!
-        routineName: routineName,
-        workouts: routineData.map(workout => ({
-            elementId: workout.elementId,
-            sets: workout.sets.map(set => ({
-            kg: Number(set.weight),
-            reps: Number(set.reps)
+            userId: Number(userId),
+            routineName: routineName,
+            routineDetailList: routineData.map((workout, idx) => ({
+                elementId: workout.elementId,
+                elementOrder: idx + 1,
+                setList: workout.sets.map(set => ({
+                    kg: Number(set.weight || 0),
+                    reps: Number(set.reps || 0)
+                }))
             }))
-        }))
         };
 
         console.log("보내는 payload", JSON.stringify(payload, null, 2));
 
-
         try {
             await routineService.saveRoutine(payload);
             alert("루틴 저장완료! 바로 운동하러 가보시게.");
-            setShowModal(false); // 모달 닫기
+            setShowModal(false);
         } catch (error) {
             console.error("저장에러:", error);
             alert("루틴 저장 중 문제가 발생했소.");
         }
     };
+
 
 
     const [showModal, setShowModal] = useState(false);

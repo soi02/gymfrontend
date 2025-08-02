@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import routineCharacter from '../../../assets/img//routine/routine_character.png';
 import '../styles/RoutineHomePage.css'
 import { useNavigate } from 'react-router-dom';
+import useRoutineService from '../service/routineService';
 
 export default function RoutineHomePage() {
   const fullText = `오늘은 어떤 부위를\n운동해보시겠소?\n매번 즐겨하는 부위말고\n다른 부위도 단련해주시오.`;
   
   const [displayedText, setDisplayedText] = useState('');
-  const routines = ['가슴', '등', '어깨', '팔', '하체'];
+  // const routines = ['가슴', '등', '어깨', '팔', '하체'];
+  const [routines, setRoutines] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
 
   const handleFabClick = () => {
@@ -16,6 +18,17 @@ export default function RoutineHomePage() {
 
   const navigate = useNavigate();
 
+  const { getRoutinesByUserId } = useRoutineService();
+
+  const userId = localStorage.getItem("userId"); // 문자열 "userId"로!
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await getRoutinesByUserId(userId);
+        setRoutines(data);
+      };
+      fetchData();
+    }, []);
 
 
 
@@ -62,12 +75,19 @@ export default function RoutineHomePage() {
                   </div>
                 </div>
 
-
+                {/* <div className="row">
+                  <div className="col" style={{textAlign: 'left',paddingLeft: '1.5rem', marginBottom: '0.5rem'}}>
+                    <h5>나의 루틴</h5>
+                  </div>
+                </div> */}
 
                 <div className="routine-grid">
-                  {routines.map((routine, idx) => (
-                    <div key={idx} className="routine-card">{routine}</div>
-                  ))}
+                {routines.map((routine, idx) => (
+                  <div key={`${routine.routineId}-${idx}`} className="routine-card">
+                    {routine.routineName}
+                  </div>
+                ))}
+
                 </div>
 
                 {/* 하단 고정 버튼 영역 */}

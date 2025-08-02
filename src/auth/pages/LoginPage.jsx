@@ -77,6 +77,7 @@ export default function LoginPage() {
         } catch (error) {
             setModalMessage(<><span>입력하신 성함과 암호가</span><br /> <span>짐의 장부와 맞지 않소이다.</span><br /><span> 재차 확인하여 주시기 바라오.</span></>);
             console.log("로그인 에러: ", error);
+
             return;
         }
     };

@@ -1,19 +1,23 @@
 import axios from "axios"
 
 export default function useRoutineService() {
+
+    const BASE_URL = "http://localhost:8080/api/routine";
+
+
     const getWorkoutList = async() => {
-        const response = await axios.get("http://localhost:8080/api/routine/getArticleList");
+        const response = await axios.get(`${BASE_URL}/getArticleList`);
         return response.data;
     }
 
     const getWorkoutGuide = async(id) => {
-        const response = await axios.get(`http://localhost:8080/api/routine/getWorkoutGuide/${id}`);
+        const response = await axios.get(`${BASE_URL}/getWorkoutGuide/${id}`);
         return response.data;
     }
 
     const saveRoutine = async(payload) => {
         const response = await axios.post(
-            `http://localhost:8080/api/routine/saveRoutine`,
+            `${BASE_URL}/saveRoutine`,
             payload,
             {
                 headers: {
@@ -25,5 +29,11 @@ export default function useRoutineService() {
         return response.data;
     }
 
-    return {getWorkoutList, getWorkoutGuide, saveRoutine};
+    const getRoutinesByUserId = async(userId)  => {
+        const response = await axios.get(`${BASE_URL}/getRoutinesByUserId/${userId}`);
+        return response.data;
+    }
+
+
+    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId};
 }
