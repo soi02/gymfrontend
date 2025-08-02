@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useRoutineService from '../service/routineService'; // ← 이거 루틴 상세 가져오는 메서드 있어야 해!
+import useRoutineService from '../service/routineService';
 import '../styles/MyRoutineListPage.css'; // 스타일 따로
 
 export default function MyRoutineListPage() {
@@ -34,6 +34,8 @@ export default function MyRoutineListPage() {
 
 
   return (
+    <div className="main-content">
+
     <div className="routine-detail-page">
       {/* 상단 헤더 */}
       <div className="routine-detail-header">
@@ -61,6 +63,7 @@ export default function MyRoutineListPage() {
         <button>수정하기</button>
         <button onClick={() => navigate(`/gymmadang/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
       </div>
+    </div>
     </div>
   );
 }

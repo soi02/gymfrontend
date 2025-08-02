@@ -1,3 +1,10 @@
+/* MyRoutineListPage.css */
+.routine-detail-page {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fff;
+}
 
 
 .back-btn {
