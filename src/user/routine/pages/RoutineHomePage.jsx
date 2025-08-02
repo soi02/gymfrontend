@@ -3,6 +3,7 @@ import routineCharacter from '../../../assets/img//routine/routine_character.png
 import '../styles/RoutineHomePage.css'
 import { useNavigate } from 'react-router-dom';
 import useRoutineService from '../service/routineService';
+import { useSelector } from 'react-redux';
 
 export default function RoutineHomePage() {
   const fullText = `오늘은 어떤 부위를\n운동해보시겠소?\n매번 즐겨하는 부위말고\n다른 부위도 단련해주시오.`;
@@ -20,15 +21,25 @@ export default function RoutineHomePage() {
 
   const { getRoutinesByUserId } = useRoutineService();
 
-  const userId = localStorage.getItem("userId"); // 문자열 "userId"로!
+  const userId = useSelector(state => state.auth.id);
+  // console.log("현재 로그인한 사용자 ID", userId);
 
-    useEffect(() => {
+  useEffect(() => {
       const fetchData = async () => {
-        const data = await getRoutinesByUserId(userId);
-        setRoutines(data);
-      };
-      fetchData();
-    }, []);
+      const data = await getRoutinesByUserId(userId);
+
+      // 중복 제거 (routineId 기준)
+      const uniqueRoutines = data.filter(
+        (routine, index, self) =>
+          index === self.findIndex((r) => r.routineId === routine.routineId)
+      );
+
+      // ✅ 중복 제거된 데이터로 세팅해야 함!
+      setRoutines(uniqueRoutines);
+    };
+    fetchData();
+  }, []);
+
 
 
 
@@ -75,18 +86,26 @@ export default function RoutineHomePage() {
                   </div>
                 </div>
 
-                {/* <div className="row">
+                <div className="row">
                   <div className="col" style={{textAlign: 'left',paddingLeft: '1.5rem', marginBottom: '0.5rem'}}>
                     <h5>나의 루틴</h5>
                   </div>
-                </div> */}
+                </div>
 
                 <div className="routine-grid">
                 {routines.map((routine, idx) => (
-                  <div key={`${routine.routineId}-${idx}`} className="routine-card">
+                  <div
+                    key={`${routine.routineId}-${idx}`}
+                    className="routine-card"
+                    onClick={() => navigate(`/gymmadang/routine/list/${routine.routineId}`)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     {routine.routineName}
                   </div>
+
                 ))}
+
+                
 
                 </div>
 
