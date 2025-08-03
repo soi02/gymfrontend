@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import ChallengeProgressDisplay from '../detail/components/ChallengeProgressDisplay'; // 스티커판 UI 컴포넌트 (추가 생성)
 import ChallengeAttendanceForm from '../detail/components/ChallengeAttendanceForm'; // 인증 폼 컴포넌트 (추가 생성)
 // import '../styles/ChallengeMyRecordDetail.css'; // 상세 페이지 CSS
+import norigaeImg from '../../../assets/img/challenge/norigae/norigaeImg.png';
 
 const BACKEND_BASE_URL = "http://localhost:8080";
 
@@ -78,7 +79,7 @@ const ChallengeMyRecordDetail = () => {
         <h3>노리개 정보</h3>
         <p>이름: {progressData.norigaeName}</p>
         <p>달성률: {progressData.norigaeConditionRate}%</p>
-        <img src={progressData.norigaeIconPath} alt={progressData.norigaeName} />
+        <img src={norigaeImg} alt={progressData.norigaeName} />
       </div>
 
       {/* 스티커판 UI를 렌더링하는 컴포넌트 */}
