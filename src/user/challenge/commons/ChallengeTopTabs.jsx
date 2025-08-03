@@ -2,7 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 
 function TabItem({ to, label }) {
   const location = useLocation();
-  const isActive = location.pathname === to;
+    // 경로가 'to'로 시작하면 true
+    // 예: /gymmadang/challenge/challengeMyRecordDetail/123 -> /gymmadang/challenge/challengeMy 로 시작
+    const isActive = location.pathname.startsWith(to);
 
   return (
 <Link

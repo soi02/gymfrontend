@@ -1,60 +1,120 @@
+/* src/user/challenge/styles/ChallengeProgressDisplay.css */
+
 .progress-display-container {
-  margin-top: 30px;
+    margin-top: 20px;
 }
 
 .progress-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-  gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7개 열로 구성 */
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
 .progress-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  aspect-ratio: 1 / 1; /* 정사각형으로 유지 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    min-height: 80px; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* 호버 효과를 위한 transition */
 }
 
-.progress-item.status-인증완료 {
-  background-color: #e0f7e9; /* 연한 초록색 */
+/* 클릭 가능한 항목에 대한 스타일 */
+.progress-item.clickable {
+    cursor: pointer;
 }
 
-.progress-item.status-결석 {
-  background-color: #ffebee; /* 연한 빨간색 */
+.progress-item.clickable:hover {
+    transform: scale(1.05); /* 호버 시 약간 확대 */
 }
 
-.progress-item.status-미래 {
-  background-color: #f8f9fa; /* 연한 회색 */
-  color: #aaa;
+/* 상태별 배경색 */
+.status-인증완료 {
+    background-color: #e6ffe6; /* 연한 초록색 */
+}
+
+.status-결석 {
+    background-color: #ffe6e6; /* 연한 빨간색 */
+}
+
+.status-미래 {
+    background-color: #f0f0f0; /* 연한 회색 */
 }
 
 .item-date {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 5px;
+    font-size: 0.8em;
+    color: #666;
+    margin-bottom: 5px;
 }
 
 .item-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .attendance-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 사진이 아이템 영역을 꽉 채우도록 */
-  border-radius: 4px;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    max-height: 60px; /* 이미지 최대 높이 */
+    object-fit: cover;
 }
 
 .status-icon {
-  font-size: 24px;
+    font-size: 1.5em;
+}
+
+/* 모달 관련 스타일 */
+.photo-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.photo-modal-content {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.photo-modal-content img {
+    max-width: 100%;
+    max-height: 70vh; /* 모달 내 이미지 높이 */
+    display: block;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
