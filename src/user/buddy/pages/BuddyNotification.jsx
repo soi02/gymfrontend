@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // ✅ 추가
 import '../styles/BuddyNotification.css';
 
 export default function BuddyNotification() {
     const [notifications, setNotifications] = useState([]);
     const auth = useSelector(state => state.auth);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate(); // ✅ 추가
 
     // 알림 목록 불러오기
     const fetchNotifications = async () => {
@@ -17,17 +19,12 @@ export default function BuddyNotification() {
                 },
             });
 
-            // 예를 들어 받은 요청: status === "pending" && 내가 받는 사람(receiverBuddyId === auth.id)
-            // 보낸 요청: 내가 보낸 사람(sendBuddyId === auth.id)
-            // 형식에 맞게 변환 필요
-
-            // 임시 가공 (백엔드 반환 데이터에 따라 조절)
             const processed = res.data.map(item => {
                 const type = item.receiver_buddy_id === auth.id ? 'received' : 'sent';
                 return {
-                    id: item.matching_id,                   // matching_id로 키 지정
-                    name: type === 'received' ? item.sender_name : item.receiver_name,  // 상대방 이름 보여주기
-                    intro: type === 'received' ? item.sender_intro : item.receiver_intro,  // 상대방 소개글
+                    id: item.matching_id,
+                    name: type === 'received' ? item.sender_name : item.receiver_name,
+                    intro: type === 'received' ? item.sender_intro : item.receiver_intro,
                     profileImage: type === 'received'
                         ? (item.sender_image ? `http://localhost:8080/uploadFiles/${item.sender_image}` : 'https://placehold.co/100x100?text=No+Image')
                         : (item.receiver_image ? `http://localhost:8080/uploadFiles/${item.receiver_image}` : 'https://placehold.co/100x100?text=No+Image'),
@@ -37,6 +34,7 @@ export default function BuddyNotification() {
                     receiverBuddyId: item.receiver_buddy_id,
                 };
             });
+
             setNotifications(processed);
 
         } catch (err) {
@@ -44,9 +42,6 @@ export default function BuddyNotification() {
         }
     };
 
-    // useEffect(() => {
-    //     fetchNotifications();
-    // }, []);
     useEffect(() => {
         if (auth.id) {
             fetchNotifications();
@@ -58,21 +53,29 @@ export default function BuddyNotification() {
         try {
             await axios.post('http://localhost:8080/api/buddy/response', {
                 id,
-                status,  // "accepted" 또는 "rejected"
+                status,
                 sendBuddyId,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            alert(`요청을 ${status === 'accepted' ? '수락' : '거절'}했습니다.`);
-            fetchNotifications(); // 변경 후 목록 갱신
+
+            if (status === '수락') {
+                alert("요청을 수락했습니다. 채팅방으로 이동합니다.");
+                // navigate(`/chatroom/${id}/${auth.id}`); // ✅ 채팅방으로 이동
+                navigate(`/gymmadang/buddy/buddyChat/${id}`); // ✅ App.jsx의 경로와 일치
+            } else {
+                alert("요청을 거절했습니다.");
+                fetchNotifications(); // 목록 갱신
+            }
+
         } catch (err) {
             console.error("응답 실패:", err);
         }
     };
 
-    // 요청 취소 버튼 핸들러 (필요하면 백엔드 API 맞게 수정)
+    // 요청 취소 핸들러
     const handleCancel = async (id) => {
         try {
             await axios.post('http://localhost:8080/api/buddy/cancel-request', { id }, {
@@ -105,8 +108,8 @@ export default function BuddyNotification() {
                         <div className="buddy-buttons">
                             {noti.type === 'received' ? (
                                 <>
-                                    <button className="btn-accept" onClick={() => handleResponse(noti.id, 'accepted', noti.sendBuddyId)}>수락</button>
-                                    <button className="btn-decline" onClick={() => handleResponse(noti.id, 'rejected', noti.sendBuddyId)}>거절</button>
+                                    <button className="btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
+                                    <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
                                 </>
                             ) : (
                                 <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청취소</button>

@@ -1,69 +1,71 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
+import { useParams, useLocation } from 'react-router-dom';
 
-const BuddyChatRoom = ({ matchingId, senderId }) => {
+const BuddyChatRoom = () => {
+    const { matchingId } = useParams();
+    const location = useLocation();
+    const senderId = location.state?.senderId;
+
     const clientRef = useRef(null);
     const [connected, setConnected] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
 
+    //   import { Client } from '@stomp/stompjs';
+
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        // const sock = new SockJS('http://localhost:8080/ws-buddy');
-        // const stompClient = Stomp.over(sock);
-        const sock = new SockJS('http://localhost:8080/ws-buddy');
-        const stompClient = Stomp.over(() => sock); // 함수로 전달 → 경고 제거됨
-        stompClient.debug = str => console.log('[STOMP 디버그]:', str);
+        const stompClient = new Client({
+            webSocketFactory: () => {
+                const sock = new SockJS('http://localhost:8080/ws-buddy');
 
-        // stompClient.connect(
-        //     { Authorization: `Bearer ${token}` }, // 헤더에 토큰 추가
-        //     () => {
-        //         console.log('[2] STOMP 연결 성공 🎉');
+                sock.onopen = () => console.log('[SockJS] 연결 열림');
+                sock.onclose = () => console.log('[SockJS] 연결 닫힘');
+                sock.onerror = (e) => console.error('[SockJS] 오류 발생:', e);
 
-        //         stompClient.subscribe(`/topic/public/${matchingId}`, (message) => {
-        //             const msg = JSON.parse(message.body);
-        //             if (msg.matchingId === matchingId) {
-        //                 setMessages(prev => [...prev, msg]);
-        //             }
-        //         });
-
-        //         clientRef.current = stompClient;
-        //         setConnected(true);
-        //     },
-        //     (error) => {
-        //         console.error('[4] STOMP 연결 실패 ❌:', error);
-        //     }
-        // );
-        stompClient.connect(
-            {},  // ✅ 빈 헤더로 연결 테스트
-            () => {
-                console.log('[2] STOMP 연결 성공 🎉');
-
-                stompClient.subscribe(`/topic/public/${matchingId}`, (message) => {
-                    const msg = JSON.parse(message.body);
-                    if (msg.matchingId === matchingId) {
-                        setMessages(prev => [...prev, msg]);
-                    }
-                });
-
-                clientRef.current = stompClient;
-                setConnected(true);
+                return sock;
             },
-            (error) => {
-                console.error('[4] STOMP 연결 실패 ❌:', error);
-            }
-        );
+            reconnectDelay: 5000,
+            debug: (msg) => console.log('[STOMP 디버그]:', msg),
+        });
+
+        stompClient.onConnect = (frame) => {
+            console.log('[STOMP 연결 성공 🎉]', frame);
+
+            stompClient.subscribe(`/topic/public/${matchingId}`, (message) => {
+                console.log('[메시지 수신]', message);
+                const msg = JSON.parse(message.body);
+                if (msg.matchingId === matchingId) {
+                    setMessages((prev) => [...prev, msg]);
+                }
+            });
+
+            clientRef.current = stompClient;
+            setConnected(true);
+        };
+
+        stompClient.onStompError = (frame) => {
+            console.error('[STOMP 에러]', frame.headers['message']);
+            console.error(frame.body);
+        };
+
+        stompClient.onWebSocketClose = (event) => {
+            console.warn('[WebSocket 닫힘]', event);
+        };
+
+        stompClient.onWebSocketError = (event) => {
+            console.error('[WebSocket 오류]', event);
+        };
+
+        stompClient.activate();
 
         return () => {
-            if (clientRef.current?.connected) {
-                clientRef.current.disconnect(() => {
-                    console.log('[5] 연결 해제 완료');
-                });
-            }
+            console.log('[STOMP 연결 비활성화]');
+            stompClient.deactivate();
+            setConnected(false);
         };
     }, [matchingId]);
-
     const sendMessage = () => {
         if (!connected || !clientRef.current) {
             alert('서버 연결이 아직 완료되지 않았습니다.');
@@ -72,11 +74,15 @@ const BuddyChatRoom = ({ matchingId, senderId }) => {
 
         const msgObj = {
             sendBuddyId: senderId,
-            matchingId: matchingId,
-            message: input
+            matchingId,
+            message: input,
         };
 
-        clientRef.current.send('/app/chat.sendMessage', {}, JSON.stringify(msgObj));
+        clientRef.current.publish({
+            destination: '/app/chat.sendMessage',
+            body: JSON.stringify(msgObj),
+        });
+
         setInput('');
     };
 
@@ -84,12 +90,14 @@ const BuddyChatRoom = ({ matchingId, senderId }) => {
         <div>
             <div>
                 {messages.map((msg, idx) => (
-                    <div key={idx}><b>{msg.sendBuddyId}:</b> {msg.message}</div>
+                    <div key={idx}>
+                        <b>{msg.sendBuddyId}:</b> {msg.message}
+                    </div>
                 ))}
             </div>
             <input
                 value={input}
-                onChange={e => setInput(e.target.value)}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="메시지 입력"
             />
             <button onClick={sendMessage}>Send</button>
