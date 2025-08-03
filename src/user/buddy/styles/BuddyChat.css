@@ -1,0 +1,116 @@
+/* BuddyChat.css */
+
+/* 전체 컨테이너 스타일 */
+.chat-list-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  width: 100%;
+  max-width: 400px; /* 스마트폰 화면 크기 */
+  margin: 0 auto;
+  background-color: #fff;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* 헤더 부분 스타일 */
+/* .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+} */
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.unread-badge {
+  background-color: #4CAF50; /* 이미지의 초록색과 유사한 색상 */
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 20px;
+  min-width: 25px; /* 작은 숫자도 둥글게 보이기 위해 */
+  text-align: center;
+}
+
+/* 채팅 목록 부분 스타일 */
+.chat-rooms {
+  /* 목록 간 간격은 개별 아이템의 패딩으로 처리 */
+}
+
+.chat-room-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chat-room-item:hover {
+  background-color: #f7f7f7;
+}
+
+/* 아바타(프로필 사진) 부분 스타일 */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0; /* 이미지가 없을 경우 배경색 */
+  overflow: hidden;
+  margin-right: 15px;
+  flex-shrink: 0; /* 내용이 줄어들지 않도록 */
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 잘리지 않게 채우기 */
+}
+
+/* 채팅 정보 (이름, 메시지) 부분 스타일 */
+.chat-info {
+  flex-grow: 1;
+  overflow: hidden; /* 긴 텍스트가 넘치지 않게 */
+}
+
+.chat-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.last-message {
+  font-size: 14px;
+  color: #888;
+  white-space: nowrap; /* 한 줄로 표시 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* ...으로 표시 */
+}
+
+/* 채팅 시간 부분 스타일 */
+.chat-time {
+  font-size: 12px;
+  color: #aaa;
+  margin-left: 15px;
+  flex-shrink: 0; /* 내용이 줄어들지 않도록 */
+}
+
+/*
+  추가: 이미지에 있는 폰트와 유사하게 보이도록
+  특정 폰트(e.g., Apple SD Gothic Neo, Noto Sans KR)를 사용하면
+  더 비슷한 느낌을 낼 수 있습니다.
+  font-family 속성을 조정하여 원하는 폰트로 변경해 보세요.
+*/
+
+/* 예시: 특정 폰트를 사용할 경우 */
+/*
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+*/
