@@ -145,7 +145,20 @@ export default function RoutineFreePage() {
     />
     ));
     
+    const navigate = useNavigate();
 
+    const handleStartFreeWorkout = () => {
+        if(selectedItems.size === 0) {
+            alert("운동을 한 개 이상 선택하시오.");
+            return;
+        }
+
+        navigate("/gymmadang/routine/startFreeWorkout", {
+            state: {
+                selectedIds: [...selectedItems]
+            }
+        });
+    };
 
 
 
@@ -192,7 +205,7 @@ export default function RoutineFreePage() {
                                 key={cat}
                                 className={`btn btn-sm me-1 ${
                                     selectedCategory === cat
-                                        ? "btn-dark"
+                                        ? "btn-secondary"
                                         : "btn-outline-secondary"
                                 }`}
                                 onClick={() => setSelectedCategory(cat)}
@@ -222,6 +235,7 @@ export default function RoutineFreePage() {
                         <button
                             className={`routine-my-routine-add-btn ${selectedItems.size === 0 ? 'disabled' : ''}`}
                             disabled={selectedItems.size === 0}
+                            onClick={handleStartFreeWorkout}
                         >
                             {selectedItems.size === 0
                                 ? '오늘의 운동을 선택해주시오'

@@ -58,6 +58,7 @@ import ChallengeMyRecordList from './user/challenge/pages/ChallengeMyRecordList'
 import ChallengeMyRecordDetail from './user/challenge/pages/ChallengeMyRecordDetail';
 import MyRoutineListPage from './user/routine/pages/MyRoutineListPage';
 import StartWorkoutPage from './user/routine/pages/StartWorkoutPage';
+import StartFreeWorkoutPage from './user/routine/pages/StartFreeWorkoutPage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -162,6 +163,7 @@ function AppContent() {
         {/* <Route path='/gymmadang/routine/myroutine' element={<MyRoutineListPage />} /> */}
         <Route path='/gymmadang/routine/list/:routineId' element={<MyRoutineListPage />} />
         <Route path='/gymmadang/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
+        <Route path='/gymmadang/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
         <Route path='/gymmadang/routine/workout' element={<WorkoutPage />} />
         <Route path='/gymmadang/routine/guide/:id' element={<GuidePage />} />
         <Route path='/gymmadang/routine/summary' element={<SummaryPage />} />
