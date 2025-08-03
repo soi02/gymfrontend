@@ -15,7 +15,7 @@ export default function ChallengeCard({ challenge, onClick }) {
         challengeDurationDays,
         challengeMaxMembers,
 
-        participantCount = 0,
+        challengeParticipantCount = 0,
         challengeThumbnailPath,
         keywords = [],
     } = challenge;
@@ -78,7 +78,7 @@ export default function ChallengeCard({ challenge, onClick }) {
                 </div>
 
                 <div className="challenge-card-participants">
-                    {participantCount}명 / {challengeMaxMembers}명
+                    {challengeParticipantCount }명 / {challengeMaxMembers}명
                 </div>
             </div>
         </div>

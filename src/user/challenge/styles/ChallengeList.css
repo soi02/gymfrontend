@@ -27,9 +27,9 @@ body, html, #root {
 
 
 .challenge-list-page {
-  padding: 16px;
-  background: #f9f9f9;
-  box-sizing: border-box;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .challenge-list-header h2 {
@@ -86,4 +86,39 @@ body, html, #root {
   font-size: 1.5rem;
   border: none;
   z-index: 1000; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
+}
+
+
+
+
+.category-filters {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.filter-button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #eee;
+}
+
+.filter-button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.challenge-card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
