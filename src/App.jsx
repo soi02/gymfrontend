@@ -166,7 +166,7 @@ function AppContent() {
         <Route path='/gymmadang/routine/guide/:id' element={<GuidePage />} />
         <Route path='/gymmadang/routine/summary' element={<SummaryPage />} />
         <Route path='/gymmadang/routine/diary' element={<DiaryPage />} />
-        <Route path='/gymmadang/routine/result' element={<ResultPage />} />
+        <Route path='/gymmadang/routine/result/:workoutId' element={<ResultPage />} />
 
         {/* 벗 */}
         <Route path='/gymmadang/buddy' element={<BuddyRegister />} />

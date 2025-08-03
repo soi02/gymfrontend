@@ -16,7 +16,7 @@ export default function RoutineAddDetailPage() {
     const token = localStorage.getItem("token");
     const userId = token ? jwtDecode(token).sub : null;
 
-    const [setCount, setSetCount] = useState(4);
+    const [setCount, setSetCount] = useState(5);
 
     
 
