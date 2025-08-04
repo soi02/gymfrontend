@@ -1,7 +1,10 @@
 import { useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
+import { Link } from "react-router-dom";
 
 function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
+    
+    const { article, userInfo } = marketUserLikedProductElem1;
     
     return (
         <>
@@ -22,36 +25,42 @@ function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
                                             <div className = "col-auto" style = {{paddingLeft : "2vh", paddingRight : "2vh", display : "flex", alignItems : "center"}}>
                                                 <i className="ri-heart-3-fill"></i>
                                             </div>
-                                            <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                <MarketProductMainImage />
-                                            </div>
-                                            <div className = "col" style = {{position : "relative"}}>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                        미완료
+                                            <div className = "col">
+                                                <Link className = "linkDefault" to = {`/gymmadang/market/article/${article.id}`}>
+                                                    <div className = "row">
+                                                        <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                            paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                            <MarketProductMainImage />
+                                                        </div>
+                                                        <div className = "col" style = {{position : "relative"}}>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                    {article.sellEnded}
+                                                                </div>
+                                                            </div>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                                    {article.title}
+                                                                </div>
+                                                            </div>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                    {article.createdAt.toLocaleString()}
+                                                                </div>
+                                                            </div>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                                    {userInfo.nickname}
+                                                                </div>
+                                                            </div>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                                    ￦ {article.productCost}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                                        {marketUserLikedProductElem1.articleTitle}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                        {marketUserLikedProductElem1.createdAt.toLocaleString()}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                        {marketUserLikedProductElem1.marketUserNickname}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                        ￦ {marketUserLikedProductElem1.productCost}
-                                                    </div>
-                                                </div>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -70,22 +79,35 @@ function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
 export default function MarketMyLikedProductsPage() {
     
     const [marketuserLikedProductList, setMarketUserLikedProductList] = useState([
-        {id : 1, marketUserId : 1, marketUserNickname : "GreatDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 12345, 
-        viewedCount : 67, isSellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserId : 2, marketUserNickname : "EvilAngel", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 67890, 
-        viewedCount : 89, isSellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserId : 3, marketUserNickname : "ArmWrestler", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 98765, 
-        viewedCount : 12, isSellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserId : 4, marketUserNickname : "GymThief", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 43210, 
-        viewedCount : 34, isSellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
+        {id : 1, marketUserId : 11, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 12345, 
+        viewedCount : 67, sellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
+        {id : 2, marketUserId : 12, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 67890, 
+        viewedCount : 89, sellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
+        {id : 3, marketUserId : 13, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 98765, 
+        viewedCount : 12, sellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
+        {id : 4, marketUserId : 14, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 43210, 
+        viewedCount : 34, sellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
     ]) 
     
+    const [marketUserInfoListOnLikedProduct, setMarketUserInfoListOnLikedProduct] = useState([
+        {id : 11, userId : 11, nickname : "GreatDevil", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 12, userId : 12, nickname : "EvilAngel", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 13, userId : 13, nickname : "ArmWrestler", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 14, userId : 14, nickname : "GymThief", createdAt : new Date("2024-06-09T12:34:56")}
+    ])
+    
+    const mergedListOnLikedProduct = marketuserLikedProductList.map(article => {
+        const userInfo = marketUserInfoListOnLikedProduct.find(user => user.userId === article.marketUserId);
+        return { article, userInfo };
+    });
+    
     const constmarketuserLikedProductElementList = 
-    marketuserLikedProductList.map(userLikedProductElement => <MarketUserLikedProductElement key = {userLikedProductElement.id} marketUserLikedProductElem1 = {userLikedProductElement}/>);
+    mergedListOnLikedProduct.map(mergedElement => (
+    <MarketUserLikedProductElement key = {mergedElement.article.id} marketUserLikedProductElem1 = {mergedElement}/>));
     
     return(
         <>

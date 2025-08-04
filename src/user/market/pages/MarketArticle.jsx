@@ -7,9 +7,10 @@ import '../styles/MarketCommonStyles.css';
 
 function MarketArticleElement({marketArticleElem1}) {
     
+    const { article, userInfo } = marketArticleElem1;
+    
     return(
         <>
-        
         
             <div className = "row gx-0">
                     <div className = "col">
@@ -22,19 +23,19 @@ function MarketArticleElement({marketArticleElem1}) {
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                        미완료
+                                        {article.sellEnded}
                                     </div>
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "3vh", marginBottom : "1vh"}}>
-                                        {marketArticleElem1.articleTitle}
+                                        {article.title}
                                     </div>
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{marginBottom : "2vh"}}>
                                         <div className = "row h-100">
                                             <div className = "col-auto" style = {{fontSize : "2.5vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                ￦ {marketArticleElem1.productCost}
+                                                ￦ {article.productCost}
                                             </div>
                                             <div className = "col">
                                                 
@@ -42,10 +43,10 @@ function MarketArticleElement({marketArticleElem1}) {
                                             <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
                                                 <div className = "row">
                                                     <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                        {marketArticleElem1.createdAt.toLocaleString()}
+                                                        {article.createdAt.toLocaleString()}
                                                     </div>
                                                     <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                        조회수 {marketArticleElem1.viewedCount}
+                                                        조회수 {article.viewedCount}
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,7 +64,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                     <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                         <div className = "row h-100">
                                                             <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                {marketArticleElem1.marketUserNickname}
+                                                                {userInfo.nickname}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -79,7 +80,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "1.875vh", minHeight : "15vh", marginBottom : "4vh"}}>
-                                        {marketArticleElem1.articleContent}
+                                        {article.content}
                                     </div>
                                 </div>
                             </div>
@@ -93,6 +94,8 @@ function MarketArticleElement({marketArticleElem1}) {
 }
 
 function MarketCommentElementOnArticle({marketCommentElem1}) {
+    
+    const { comment, userInfo } = marketCommentElem1;
     
     return(
         <>
@@ -119,7 +122,7 @@ function MarketCommentElementOnArticle({marketCommentElem1}) {
                                                     <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                         <div className = "row h-100">
                                                             <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                {marketCommentElem1.marketUserNickname}
+                                                                {userInfo.nickname}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -128,7 +131,7 @@ function MarketCommentElementOnArticle({marketCommentElem1}) {
                                         </div>
                                         <div className = "row">
                                             <div className = "col" style = {{paddingLeft : "0vh", paddingRight : "0vh", fontSize : "1.75vh"}}>
-                                                {marketCommentElem1.commentContentOnArticle}
+                                                {comment.comment}
                                             </div>
                                         </div>
                                     </div>
@@ -146,28 +149,50 @@ function MarketCommentElementOnArticle({marketCommentElem1}) {
 
 export default function MarketArticlePage() {
     
+    
     const [marketArticle, setMarketArticle] = useState([
-        {id : 1, marketUserId : 1, marketUserNickname : "GreatDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 12345, 
-        viewedCount : 67, isSellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null}
+        {id : 1, marketUserId : 1004, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 12345, 
+        viewedCount : 67, sellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null}
     ]) 
     
-    const constMarketArticleElement = 
-    marketArticle.map(articleElement => <MarketArticleElement key = {articleElement.id} marketArticleElem1 = {articleElement}/>);
+    const [marketUserInfoOnArticle, setMarketUserInfoOnArticle] = useState([
+        {id : 1004, userId : 1004, nickname : "GoodDevil", createdAt : new Date("2024-06-09T12:34:56")}
+    ])
+    
+    const mergedListOnArticle = marketArticle.map(article => {
+        const userInfo = marketUserInfoOnArticle.find(user => user.userId === article.marketUserId);
+        return { article, userInfo };
+    });
+    
+    const constMarketArticleElement = mergedListOnArticle.map(mergedElement => (
+    <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
     
     const [marketCommentListOnArticle, setMarketArticleListOnArticle] = useState([
-        {id : 1, marketUserId : 1, marketUserNickname : "GreatDevil", commentContentOnArticle : "First My Dragon", 
+        {id : 1, articleId : 1, marketUserId : 11, comment : "First My Dragon", 
         createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserId : 2, marketUserNickname : "EvilAngel", commentContentOnArticle : "Second My Dragon",
+        {id : 2, articleId : 1, marketUserId : 12, comment : "Second My Dragon",
         createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserId : 3, marketUserNickname : "ArmWrestler", commentContentOnArticle : "Third My Dragon", 
+        {id : 3, articleId : 1, marketUserId : 13, comment : "Third My Dragon", 
         createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserId : 4, marketUserNickname : "GymThief", commentContentOnArticle : "Fourth My Dragon",
+        {id : 4, articleId : 1, marketUserId : 14, comment : "Fourth My Dragon",
         createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
     ]) 
     
-    const constmarketCommentElementListOnArticle = 
-    marketCommentListOnArticle.map(commentElementOnArticle => <MarketCommentElementOnArticle key = {commentElementOnArticle.id} marketCommentElem1 = {commentElementOnArticle}/>);
+    const [marketUserInfoListOnCommentOnArticle, setMarketUserInfoListOnCommentOnArticle] = useState([
+        {id : 11, userId : 11, nickname : "GreatDevil", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 12, userId : 12, nickname : "EvilAngel", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 13, userId : 13, nickname : "ArmWrestler", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 14, userId : 14, nickname : "GymThief", createdAt : new Date("2024-06-09T12:34:56")}
+    ])
+    
+    const mergedListOnCommentOnArticle = marketCommentListOnArticle.map(comment => {
+        const userInfo = marketUserInfoListOnCommentOnArticle.find(user => user.userId === comment.marketUserId);
+        return { comment, userInfo };
+    });
+    
+    const constmarketCommentElementListOnArticle = mergedListOnCommentOnArticle.map(mergedElement => (
+    <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>));
     
     return (
         
@@ -200,7 +225,7 @@ export default function MarketArticlePage() {
                                             </div>
                                             <div className = "row gx-0">
                                                 <div className = "col-auto">
-                                                    <button type="button" className="btn btn-primary" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                                    <button type="button" className="btn buttonDefault" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
                                                         <i className="ri-heart-3-line"></i> 탐나요!
                                                     </button>
                                                 </div>
@@ -234,11 +259,11 @@ export default function MarketArticlePage() {
                                                             {
                                                                 constmarketCommentElementListOnArticle.length  > 0 ? 
                                                                 constmarketCommentElementListOnArticle : 
-                                                                <>
+                                                                <br>
                                                                 
                                                                     댓글이 없다오.
                                                                 
-                                                                </>
+                                                                </br>
                                                             }
                                                         </div>
                                                     </div>
