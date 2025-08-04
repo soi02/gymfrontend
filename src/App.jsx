@@ -59,6 +59,7 @@ import ChallengeMyRecordDetail from './user/challenge/pages/ChallengeMyRecordDet
 import MyRoutineListPage from './user/routine/pages/MyRoutineListPage';
 import StartWorkoutPage from './user/routine/pages/StartWorkoutPage';
 import StartFreeWorkoutPage from './user/routine/pages/StartFreeWorkoutPage';
+import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -154,6 +155,7 @@ function AppContent() {
         <Route path="/gymmadang/notifications" element={<NotificationPage />} />
         <Route path="/gymmadang/mainpage" element={<MainPage />} />
         <Route path="/gymmadang/mypage" element={<MyPage />} />
+        <Route path="/gymmadang/routineCalendar" element={<MyPageRoutineCalendar />} />
 
         {/* 루틴 */}
         <Route path='/gymmadang/routine' element={<RoutineHomePage />} />
