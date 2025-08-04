@@ -5,8 +5,11 @@ import MarketUserInfosOnUserPage from "../commons/test/example/MarketUserInfosOn
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
+import { Link } from "react-router-dom";
 
 function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
+    
+    const { article, userInfo } = marketUserSoldProductElem1;
     
     return (
         <>
@@ -23,39 +26,41 @@ function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
-                                        <div className = "row">
-                                            <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                <MarketProductMainImage />
+                                        <Link className = "linkDefault" to = {`/gymmadang/market/article/${article.id}`}>
+                                            <div className = "row">
+                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                    paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                    <MarketProductMainImage />
+                                                </div>
+                                                <div className = "col" style = {{position : "relative"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                            {article.sellEnded}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                            {article.title}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                            {article.createdAt.toLocaleString()}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                            {userInfo.nickname}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                            ￦ {article.productCost}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className = "col" style = {{position : "relative"}}>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                        미완료
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                                        {marketUserSoldProductElem1.articleTitle}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                        {marketUserSoldProductElem1.createdAt.toLocaleString()}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                        {marketUserSoldProductElem1.marketUserNickname}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                        ￦ {marketUserSoldProductElem1.productCost}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 </div>  
                             </div>
@@ -71,6 +76,8 @@ function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
 
 function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
     
+    const { article, userInfo } = marketUserBoughtProductElem1;
+    
     return (
         <>
         
@@ -86,39 +93,41 @@ function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
-                                        <div className = "row">
-                                            <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                <MarketProductMainImage />
+                                        <Link className = "linkDefault" to = {`/gymmadang/market/article/${article.id}`}>
+                                            <div className = "row">
+                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                    paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                    <MarketProductMainImage />
+                                                </div>
+                                                <div className = "col" style = {{position : "relative"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                            {article.sellEnded}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                            {article.title}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                            {article.createdAt.toLocaleString()}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                            {userInfo.nickname}
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                            ￦ {article.productCost}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className = "col" style = {{position : "relative"}}>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                        미완료
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                                        {marketUserBoughtProductElem1.articleTitle}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                        {marketUserBoughtProductElem1.createdAt.toLocaleString()}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                        {marketUserBoughtProductElem1.marketUserNickname}
-                                                    </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                        ￦ {marketUserBoughtProductElem1.productCost}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 </div>  
                             </div>
@@ -168,7 +177,7 @@ function MarketUserRateElement({marketUserRateElem1}) {
                                         </div>
                                         <div className = "row">
                                             <div className = "col" style = {{paddingLeft : "0vh", paddingRight : "0vh", fontSize : "1.75vh"}}>
-                                                {marketUserRateElem1.reviewUserContent}
+                                                {marketUserRateElem1.content}
                                             </div>
                                         </div>
                                     </div>
@@ -194,49 +203,72 @@ export default function MarketUserPage() {
     marketUserInfo.map(userInfoElement => <MarketUserInfosOnUserPage key = {userInfoElement.id} marketUserInfoElem1 = {userInfoElement}/>);
     
     const [marketuserSoldProductList, setMarketUserSoldProductList] = useState([
-        {id : 5, marketUserId : 1004, marketUserNickname : "GoodDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 13579, 
-        viewedCount : 13, isSellEnded : 0, createdAt : new Date("2024-06-14T12:34:56"), updatedAt : null},
-        {id : 6, marketUserId : 1004, marketUserNickname : "GoodDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 24680, 
-        viewedCount : 24, isSellEnded : 0, createdAt : new Date("2024-06-15T12:34:56"), updatedAt : null},
-        {id : 7, marketUserId : 1004, marketUserNickname : "GoodDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 86420, 
-        viewedCount : 35, isSellEnded : 0, createdAt : new Date("2024-06-16T12:34:56"), updatedAt : null},
-        {id : 8, marketUserId : 1004, marketUserNickname : "GoodDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 97531, 
-        viewedCount : 46, isSellEnded : 0, createdAt : new Date("2024-06-17T12:34:56"), updatedAt : null}
+        {id : 5, marketUserId : 1004, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 13579, 
+        viewedCount : 13, sellEnded : 0, createdAt : new Date("2024-06-14T12:34:56"), updatedAt : null},
+        {id : 6, marketUserId : 1004, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 24680, 
+        viewedCount : 24, sellEnded : 0, createdAt : new Date("2024-06-15T12:34:56"), updatedAt : null},
+        {id : 7, marketUserId : 1004, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 86420, 
+        viewedCount : 35, sellEnded : 0, createdAt : new Date("2024-06-16T12:34:56"), updatedAt : null},
+        {id : 8, marketUserId : 1004, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 97531, 
+        viewedCount : 46, sellEnded : 0, createdAt : new Date("2024-06-17T12:34:56"), updatedAt : null}
     ]) 
+    
+    const [marketUserInfoOnSoldProduct, setMarketUserInfoOnSoldProduct] = useState([
+        {id : 1004, userId : 1004, nickname : "GoodDevil", createdAt : new Date("2024-06-09T12:34:56")}
+    ])
+    
+    const mergedListOnSoldProduct = marketuserSoldProductList.map(article => {
+        const userInfo = marketUserInfoOnSoldProduct.find(user => user.userId === article.marketUserId);
+        return { article, userInfo };
+    });
     
     const constmarketuserSoldProductElementList = 
-    marketuserSoldProductList.map(userSoldProductElement => <MarketUserSoldProductElement key = {userSoldProductElement.id} marketUserSoldProductElem1 = {userSoldProductElement}/>);
+    mergedListOnSoldProduct.map(mergedElement => (
+    <MarketUserSoldProductElement key = {mergedElement.article.id} marketUserSoldProductElem1 = {mergedElement}/>));
     
     const [marketuserBoughtProductList, setMarketUserBoughtProductList] = useState([
-        {id : 1, marketUserId : 1, marketUserNickname : "GreatDevil", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 12345, 
-        viewedCount : 67, isSellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserId : 2, marketUserNickname : "EvilAngel", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 67890, 
-        viewedCount : 89, isSellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserId : 3, marketUserNickname : "ArmWrestler", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 98765, 
-        viewedCount : 12, isSellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserId : 4, marketUserNickname : "GymThief", imageLink : null, mainImageLink : null,
-        articleTitle : "My Neck", articleContent : "My Dragon", productCostOption : 1, productCost : 43210, 
-        viewedCount : 34, isSellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
+        {id : 1, marketUserId : 11, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 12345, 
+        viewedCount : 67, sellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
+        {id : 2, marketUserId : 12, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 67890, 
+        viewedCount : 89, sellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
+        {id : 3, marketUserId : 13, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 98765, 
+        viewedCount : 12, sellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
+        {id : 4, marketUserId : 14, imageLink : null, mainImageId : null,
+        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 43210, 
+        viewedCount : 34, sellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
     ]) 
     
+    const [marketUserInfoOnBoughtProduct, setMarketUserInfoOBoughtProduct] = useState([
+        {id : 11, userId : 11, nickname : "GreatDevil", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 12, userId : 12, nickname : "EvilAngel", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 13, userId : 13, nickname : "ArmWrestler", createdAt : new Date("2024-06-09T12:34:56")},
+        {id : 14, userId : 14, nickname : "GymThief", createdAt : new Date("2024-06-09T12:34:56")}
+    ])
+    
+    const mergedListOnBoughtProduct = marketuserBoughtProductList.map(article => {
+        const userInfo = marketUserInfoOnBoughtProduct.find(user => user.userId === article.marketUserId);
+        return { article, userInfo };
+    });
+    
     const constmarketuserBoughtProductElementList = 
-    marketuserBoughtProductList.map(userBoughtProductElement => <MarketUserBoughtProductElement key = {userBoughtProductElement.id} marketUserBoughtProductElem1 = {userBoughtProductElement}/>);
+    mergedListOnBoughtProduct.map(mergedElement => (
+    <MarketUserBoughtProductElement key = {mergedElement.article.id} marketUserBoughtProductElem1 = {mergedElement}/>));
     
     const [marketuserRateList, setMarketUserRateList] = useState([
-        {id : 1, marketUserAnonymousNickname : "Anonymous1", reviewUserContent : "Cow Went, My Dragon. 1",
+        {id : 1, writerId : 11, evaluatedUserId : 1004, content : "Cow Went, My Dragon. 1",
         createdAt : new Date("2024-07-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserAnonymousNickname : "Anonymous2", reviewUserContent : "Cow Went, My Dragon. 2",
+        {id : 2, writerId : 12, evaluatedUserId : 1004, content : "Cow Went, My Dragon. 2",
         createdAt : new Date("2024-07-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserAnonymousNickname : "Anonymous3", reviewUserContent : "Cow Went, My Dragon. 3",
+        {id : 3, writerId : 13, evaluatedUserId : 1004, content : "Cow Went, My Dragon. 3",
         createdAt : new Date("2024-07-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserAnonymousNickname : "Anonymous4", reviewUserContent : "Cow Went, My Dragon. 4",
+        {id : 4, writerId : 14, evaluatedUserId : 1004, content : "Cow Went, My Dragon. 4",
         createdAt : new Date("2024-07-13T12:34:56"), updatedAt : null},
     ]) 
     
