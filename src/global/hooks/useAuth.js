@@ -9,17 +9,20 @@ export function useAuth() {
     const navigate = useNavigate();
 
     const loginCustom = (token, userInfo) => {
+        const payload = { ...userInfo, token };
 
         localStorage.setItem("token", token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        dispatch(loginAction(userInfo));
+
+        dispatch(loginAction(payload));
+        
         navigate("/");
     };
 
     const logoutCustom = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userInfo");
-        dispatch(logoutAction()); 
+        dispatch(logoutAction());
         navigate("/gymmadang/login");
     };
 
