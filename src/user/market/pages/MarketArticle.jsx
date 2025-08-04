@@ -279,7 +279,7 @@ export default function MarketArticlePage() {
                                                                                     <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
                                                                                     style = {{resize : "none", fontSize : "1.75vh", overflow : "hidden", alignSelf : "center"}}/>
                                                                                 </div>
-                                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
+                                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh"}}>
                                                                                     <div className = "row h-100 gx-0">
                                                                                         <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
                                                                                             <button className = "btn buttonDefault" style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
