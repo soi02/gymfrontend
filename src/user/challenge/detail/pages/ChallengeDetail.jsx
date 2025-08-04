@@ -4,6 +4,7 @@ import axios from 'axios';
 import ChallengeStartModal from '../components/ChallengeStartModal';
 import '../styles/ChallengeDetail.css';
 import { useSelector } from 'react-redux';
+import apiClient from '../../../../global/api/apiClient';
 
 export default function ChallengeDetail() {
   const { challengeId } = useParams();
@@ -17,30 +18,37 @@ export default function ChallengeDetail() {
 
   const BACKEND_BASE_URL = "http://localhost:8080"; 
 
-    useEffect(() => {
-        // ★★★ userId가 유효할 때만 API 호출 ★★★
-        // 이렇게 해야 백엔드로 null이 전달되지 않습니다.
-        // 비로그인 상태일 때는 상세 정보만 불러오고, isUserParticipating은 false로 처리될 것입니다.
-        if (challengeId) {
-            let url = `${BACKEND_BASE_URL}/api/challenge/getChallengeDetailByChallengeIdProcess?challengeId=${challengeId}`;
-            
-            // ★★★ userId가 있을 경우에만 쿼리 파라미터에 추가 ★★★
-            if (userId) {
-                url += `&userId=${userId}`;
-            }
+  useEffect(() => {
+    if (!challengeId) {
+      alert("잘못된 접근입니다.");
+      navigate('/gymmadang/challenge/challengeHome');
+      return;
+    }
 
-            axios.get(url) 
-                .then((res) => {
-                    console.log("챌린지 상세 데이터 수신:", res.data);
-                    setChallenge(res.data);
-                })
-                .catch((err) => {
-                    console.error("챌린지 상세 실패", err);
-                    alert("챌린지를 불러올 수 없습니다.");
-                    navigate(-1);
-                });
-        }
-    }, [challengeId, userId, navigate]); // userId를 의존성 배열에 추가
+    const fetchChallengeDetail = async () => {
+      try {
+        const params = {
+          challengeId: challengeId
+        };
+        // userId가 유효할 경우에만 params 객체에 추가
+        if (userId) {
+          params.userId = userId;
+        }
+
+        // ★★★ apiClient를 사용하여 URL과 파라미터를 분리하여 전송 ★★★
+        const res = await apiClient.get('/challenge/getChallengeDetailByChallengeIdProcess', { params });
+
+        console.log("챌린지 상세 데이터 수신:", res.data);
+        setChallenge(res.data);
+      } catch (err) {
+        console.error("챌린지 상세 실패", err);
+        alert("챌린지를 불러올 수 없습니다.");
+        navigate('/gymmadang/challenge/challengeHome');
+      }
+    };
+
+    fetchChallengeDetail();
+  }, [challengeId, userId, navigate]);
 
     if (!challenge) return <div>로딩 중...</div>;
 

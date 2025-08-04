@@ -1,9 +1,11 @@
 import axios from "axios"
+import { useSelector } from "react-redux";
 
 export default function useRoutineService() {
 
     const BASE_URL = "http://localhost:8080/api/routine";
 
+    const userId = useSelector(state => state.auth.id);
 
     const getWorkoutList = async() => {
         const response = await axios.get(`${BASE_URL}/getArticleList`);
@@ -52,7 +54,22 @@ export default function useRoutineService() {
         return await axios.get(`${BASE_URL}/result/${workoutId}`);
     }
 
+    const getWorkoutByDate = async (id, selectedDate) => {
+    return await axios.get(`${BASE_URL}/getWorkoutByDate`, {
+        params: {
+        userId: userId,
+        date: selectedDate
+        }
+    });
+    };
+
+    const getWorkoutDatesBetween = (userId, startDate, endDate) => {
+        return axios.get(`${BASE_URL}/getWorkoutDatesBetween`,{
+            params: { userId, startDate, endDate },
+        });
+    }
 
 
-    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout};
+
+    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout, getWorkoutByDate, getWorkoutDatesBetween};
 }

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isAuthenticated: false, // true: 로그인 함, false: 로그인 안함
     name: '',
-    id: null
+    id: null,
+    token: null
 }
 
 // authSlice : 슬라이스명
@@ -15,7 +16,8 @@ export const authSlice = createSlice({
         loginAction: (state, action) => {
             state.isAuthenticated = true;
             state.name = action.payload.name; 
-            state.id = action.payload.id; 
+            state.id = action.payload.id;
+            state.token = action.payload.token;
         }, 
 
     
@@ -23,6 +25,7 @@ export const authSlice = createSlice({
             state.isAuthenticated = false;
             state.name = '';
             state.id = null;
+            state.token = null;
         }
     }
 });
