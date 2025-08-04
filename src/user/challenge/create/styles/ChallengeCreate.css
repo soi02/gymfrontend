@@ -1,8 +1,113 @@
+/* StepStart 컴포넌트 전체 컨테이너 스타일 */
+.step-start-page {
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* 주요 질문 스타일 (예: 새로운 수련을 만들어보시겠소?) */
+.step-start-question {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 8px; /* 부가 설명과의 간격 */
+    color: #aa0000;
+}
+
+/* 부가 설명 스타일 (예: 직접 수련을 만들고...) */
+.step-start-sub {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 24px; /* 다음 버튼과의 간격 */
+}
+
+/* 시작하기, 만들기 등 다음 단계로 넘어가는 버튼 */
+.step-start-next-button {
+    margin-top: auto; /* 상위 컨테이너의 하단에 배치 */
+    width: 100%;
+    padding: 12px;
+    background-color: #111;
+    border: 1px solid #111;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+}
+
+/* 이미지 컨테이너 */
+.step-start-image-container {
+    width: 100%;
+    margin-top: 4.5rem;
+    margin-bottom: 1rem;
+    text-align: center; /* 이미지를 가운데 정렬 */
+}
+
+/* 이미지 스타일 */
+.step-start-image {
+    max-width: 80%; /* 컨테이너 너비에 맞게 크기 조절 */
+    height: auto;
+    object-fit: cover;
+}
+
+
+
+
+/* StepAgreement 관련 스타일 */
+.step-agreement-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+}
+
+.step-agreement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.step-agreement-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.step-agreement-label {
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+}
+
+/* 이미지 컨테이너 */
+.step-agreement-image-container {
+    width: 65%;
+    margin: 2rem auto 1rem; /* 위: 2rem, 좌우: auto(중앙정렬), 아래: 1rem */
+    text-align: center; /* 이미지(자식 요소)를 컨테이너 안에서 가운데 정렬 */
+}
+
+/* 이미지 스타일 */
+.step-agreement-image {
+    max-width: 80%; /* 컨테이너 너비에 맞게 크기 조절 */
+    height: auto;
+    object-fit: cover;
+}
+
+
+
 .challenge-create-page {
-  max-width: 375px;
-  margin: 0 auto;
-  padding: 24px;
-  font-family: 'Gowun Dodum', sans-serif;
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: 'Gowun Dodum', sans-serif;
+    display: flex; /* 이 속성을 추가하시오. */
+    flex-direction: column; /* 이 속성을 추가하시오. */
+    height: 100vh; /* 이 속성도 추가하여 전체 화면 높이를 사용하게 하시오. */
+    box-sizing: border-box;
 }
 
 .challenge-step-title {
