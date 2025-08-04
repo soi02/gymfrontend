@@ -77,6 +77,54 @@ export default function StartWorkoutPage() {
       alert("저장을 실패하였소.");
     }
   };
+  // 세트 추가
+  const handleAddSet = () => {
+    if (!currentExercise) return;
+
+    const setsForCurrent = routineSets.filter(set => set.detailId === currentExercise.detailId);
+
+    const lastSet = setsForCurrent[setsForCurrent.length - 1];
+    const newSetId = Math.max(...routineSets.map(s => s.setId), 0) + 1;
+
+    const newSet = {
+      detailId: currentExercise.detailId,
+      setId: newSetId,
+      kg: lastSet?.kg ?? null,      // 마지막 세트의 kg
+      reps: lastSet?.reps ?? null,  // 마지막 세트의 reps
+      done: false,
+    };
+
+    setRoutineSets([...routineSets, newSet]);
+  };
+
+
+  // 세트 삭제 (마지막 세트만 삭제)
+  const handleRemoveSet = () => {
+    if (!currentExercise) return;
+
+    const setsForCurrent = routineSets.filter(set => set.detailId === currentExercise.detailId);
+    if (setsForCurrent.length <= 1) return; // 1세트는 최소 보장
+
+    const lastSetId = setsForCurrent[setsForCurrent.length - 1].setId;
+
+    const newRoutineSets = routineSets.filter(set => set.setId !== lastSetId);
+    setRoutineSets(newRoutineSets);
+  };
+
+  // 모든 세트 완료
+  const handleCompleteAll = () => {
+    const updated = routineSets.map(set =>
+      set.detailId === currentExercise.detailId ? { ...set, done: true } : set
+    );
+    setRoutineSets(updated);
+  };
+
+  // 다음 운동으로 이동
+  const goToNextExercise = () => {
+    if (currentIndex < exerciseList.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
 
   return (
@@ -190,9 +238,26 @@ export default function StartWorkoutPage() {
                     </div>
                   </>
                 )}
+
+                <div className="routine-action-buttons">
+                  <div className="sfwp-button-row">
+                    <button onClick={handleAddSet}>➕ 세트추가</button>
+                    <button onClick={handleRemoveSet}>➖ 세트삭제</button>
+                  </div>
+                  <div className="sfwp-button-row">
+                    <button onClick={handleCompleteAll}>☑️ 모든 세트완료</button>
+                    <button onClick={goToNextExercise}>➡ 다음운동</button>
+                  </div>
+                </div>
+
+
+
+
+
+
                 <div className="routine-complete-btn">
                   <button onClick={handleComplete}>
-                    운동 완료
+                    전체 운동 완료
                   </button>
                 </div>
                 {/* <div style={{ textAlign: "center", marginTop: "1rem" }}>
