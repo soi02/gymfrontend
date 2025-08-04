@@ -16,12 +16,35 @@ export default function MyPageRoutineCalendar() {
     // console.log(name);
 
     const [value, setValue] = useState(new Date());
-    const [workoutDates, setWorkoutDates] = useState([
-    '2025-07-19', '2025-07-22' // 예시: 나중에 DB에서 받아오기
-    ])
+    const [workoutDates, setWorkoutDates] = useState([]);
+    useEffect(() => {
+        const fetchWorkoutDates = async () => {
+            if (!value) return;
+
+            // 🔥 달력 표시 범위 계산 (현재 달력 기준으로 6주 보임)
+            const start = new Date(value.getFullYear(), value.getMonth(), 1);
+            const end = new Date(value.getFullYear(), value.getMonth() + 1, 0);
+
+            const startStr = start.toISOString().split("T")[0];
+            const endStr = end.toISOString().split("T")[0];
+
+            try {
+                const res = await routineService.getWorkoutDatesBetween(id, startStr, endStr);
+                const dates = res.data; // ✅ 이미 문자열 배열이라면 그대로 써야 함!
+                setWorkoutDates(dates);
+
+            } catch (err) {
+            console.error("🔥 날짜 불러오기 실패", err);
+            }
+        };
+
+        fetchWorkoutDates();
+        }, [value, id]);
+
 
     const titleContent = ({ date, view, activeStartDate }) => {
-    const dateString = date.toISOString().split("T")[0];
+const dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+                    .toISOString().split("T")[0];
     const isWorkout = workoutDates.includes(dateString);
 
     // 표시 중인 달과 일치하는지 비교
@@ -36,23 +59,32 @@ export default function MyPageRoutineCalendar() {
     );
     };
 
-    const [workoutList, setWorkoutList] = useState([]);
+    const [workoutSummary, setWorkoutSummary] = useState(null);
 
-    useEffect(() => {
-        const fetchWorkout = async () => {
-        const selectedDate = new Date(value.getTime() - (value.getTimezoneOffset() * 60000))
+
+useEffect(() => {
+const fetchWorkout = async () => {
+  const selectedDate = new Date(value.getTime() - (value.getTimezoneOffset() * 60000))
                       .toISOString().split("T")[0];
-            
-        const response = await routineService.getWorkoutByDate(id, selectedDate);
-            //   console.log("🔥 response data:", response);
+
+  console.log("💡 Fetching workout with:", id, selectedDate); // 🔍 로그 확인
+
+  try {
+    const response = await routineService.getWorkoutByDate(id, selectedDate);
+    console.log("🔥 Got response:", response.data);
+
+    // 요약 저장!
+setWorkoutSummary(response.data.length > 0 ? response.data[0] : null);
+
+  } catch (err) {
+    console.error("🔥 날짜 불러오기 실패", err);
+  }
+};
 
 
-            setWorkoutList(response.data);
+  fetchWorkout();
+}, [value]);
 
-        };
-
-        fetchWorkout();
-    }, [value]);
 
 
 
@@ -82,23 +114,19 @@ export default function MyPageRoutineCalendar() {
             <div className="workout-result">
                 <h3>{value.toLocaleDateString()} 운동 기록</h3>
 
-                {workoutList.length === 0 ? (
+                {!workoutSummary ? (
                     <p>운동 기록이 없소</p>
                 ) : (
                     <ul>
-                    {workoutList.map((workout, idx) => (
-                        <li key={idx} className="workout-item">
-                        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-
-
-                            <div>
-                            <strong>{workout.elementName}</strong>
-                            <p>{workout.kg}kg × {workout.reps}회</p>
-                            {/* <small>Set ID: {workout.setId}</small> */}
-                            </div>
+                        {workoutSummary && (
+                        <div className="summary-section">
+                            {/* <h4>운동 요약</h4> */}
+                            <p>운동 종목 수: {workoutSummary.workoutCount}개</p>
+                            <p>소모 칼로리: {workoutSummary.calories} kcal</p>
+                            <p>운동 시간: {workoutSummary.workoutTime}분</p>
                         </div>
-                        </li>
-                    ))}
+                        )}
+
                     </ul>
                 )}
                 </div>
