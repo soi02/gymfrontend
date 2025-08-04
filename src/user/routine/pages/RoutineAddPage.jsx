@@ -62,7 +62,7 @@ function WorkoutElement({workoutList, onCheck, checked}) {
 
 export default function RoutineAddPage() {
 
-    const [workoutList, setWorkoutList] = useState([]);
+    const [workoutList, setWorkoutList] = useState([]); 
 
     const routineService = useRoutineService();
 

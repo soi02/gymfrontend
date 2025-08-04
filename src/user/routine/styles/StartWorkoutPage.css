@@ -83,3 +83,106 @@
   font-size: 0.9rem;
   color: #666;
 }
+.routine-action-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.sfwp-button-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.sfwp-button-row button {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.timer-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.timer-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* 전체 wrapper */
+.rest-timer-toggle {
+  display: flex;
+  flex-direction: column;  /* 수직 정렬 */
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+
+/* 토글 스위치 전체 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 슬라이더 스타일 */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* 토글 ON 상태 */
+input:checked + .slider {
+  background-color: #e8dc82;
+}
+
+input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+/* 텍스트 스타일 */
+.label-text {
+  margin-left: 0.5rem;
+}
