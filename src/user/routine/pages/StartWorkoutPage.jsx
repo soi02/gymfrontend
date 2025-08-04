@@ -126,6 +126,22 @@ export default function StartWorkoutPage() {
     }
   };
 
+  const [showTimerModal, setShowTimerModal] = useState(false);
+  const [countdown, setCountdown] = useState(60);
+
+  useEffect(() => {
+    if (showTimerModal && countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (countdown === 0) {
+      setShowTimerModal(false);
+      setCountdown(60);
+    }
+  }, [showTimerModal, countdown]);
+
+  const [useRestTimer, setUseRestTimer] = useState(true);
 
   return (
     <div className="main-content">
@@ -146,6 +162,8 @@ export default function StartWorkoutPage() {
                     </div>
                 </div>
 
+
+
                 {currentExercise && (
                   <>
                     <div>
@@ -154,6 +172,9 @@ export default function StartWorkoutPage() {
                         src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`} />
                       <h3>{`${currentExercise.elementName} (${currentExercise.categoryName})`}</h3>
                     </div>
+
+
+                    
 
                     <div className="routine-set-table">
                         {currentSets.map((set, i) => (
@@ -208,6 +229,7 @@ export default function StartWorkoutPage() {
                                 );
                                 setRoutineSets(newRoutineSets);
                               }}
+
                             />
 
 
@@ -229,8 +251,14 @@ export default function StartWorkoutPage() {
                                   };
                                   setRoutineSets(newRoutineSets);
                                 }
+
+                                if (e.target.checked && useRestTimer) {
+                                  setShowTimerModal(true);
+                                  setCountdown(60);
+                                }
                               }}
                             />
+
 
 
                           </div>
@@ -238,6 +266,20 @@ export default function StartWorkoutPage() {
                     </div>
                   </>
                 )}
+
+                <div className="rest-timer-toggle">
+                  <label className="switch">
+                    <input
+                      type="checkbox"
+                      checked={useRestTimer}
+                      onChange={(e) => setUseRestTimer(e.target.checked)}
+                    />
+                    <span className="slider" />
+                  </label>
+                  <span className="label-text">휴식 타이머</span>
+                </div>
+
+
 
                 <div className="routine-action-buttons">
                   <div className="sfwp-button-row">
@@ -264,6 +306,18 @@ export default function StartWorkoutPage() {
                     <button disabled={currentIndex === 0} onClick={() => setCurrentIndex((i) => i - 1)}>⬅ 이전</button>
                     <button disabled={currentIndex === exerciseList.length - 1} onClick={() => setCurrentIndex((i) => i + 1)}>다음 ➡</button>
                 </div> */}
+                {showTimerModal && (
+                  <div className="timer-modal">
+                    <div className="timer-modal-content">
+                      <p>⏳ 휴식시간: {countdown}초</p>
+                      <button onClick={() => {
+                        setShowTimerModal(false);
+                        setCountdown(60);
+                      }}>닫기</button>
+                    </div>
+                  </div>
+                )}
+
     </div>
 
 
