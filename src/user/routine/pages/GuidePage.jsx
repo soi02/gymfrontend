@@ -71,7 +71,15 @@ export default function GuidePage() {
 
 
   return (
-    <div className="main-content routine-main-content">
+
+
+
+
+
+
+    <div className="main-content routine-main-content"
+    style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
+    >
       <h4 className="routine-title">
         <span className="routine-subtitle">
           {meta.categoryName} &gt; {meta.elementName}
@@ -105,6 +113,8 @@ export default function GuidePage() {
         <p>{meta.memoContent}</p>
       </div>
     </div>
+
+
 
     );
 }
