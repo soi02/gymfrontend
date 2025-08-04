@@ -6,6 +6,20 @@ function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
     
     const { article, userInfo } = marketUserLikedProductElem1;
     
+    function funcSellEnded(sellEnded) {
+        
+        if (sellEnded == 1) {
+            
+            return "완료";
+            
+        } else if (sellEnded == 0) {
+            
+            return "미완료";
+            
+        }
+        
+    }
+    
     return (
         <>
         
@@ -35,7 +49,7 @@ function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
                                                         <div className = "col" style = {{position : "relative"}}>
                                                             <div className = "row">
                                                                 <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                                    {article.sellEnded}
+                                                                    {funcSellEnded(article.sellEnded)}
                                                                 </div>
                                                             </div>
                                                             <div className = "row">

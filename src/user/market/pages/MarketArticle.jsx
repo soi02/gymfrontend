@@ -9,6 +9,20 @@ function MarketArticleElement({marketArticleElem1}) {
     
     const { article, userInfo } = marketArticleElem1;
     
+    function funcSellEnded(sellEnded) {
+        
+        if (sellEnded == 1) {
+            
+            return "완료";
+            
+        } else if (sellEnded == 0) {
+            
+            return "미완료";
+            
+        }
+        
+    }
+    
     return(
         <>
         
@@ -23,7 +37,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                        {article.sellEnded}
+                                        {funcSellEnded(article.sellEnded)}
                                     </div>
                                 </div>
                                 <div className = "row">
@@ -254,6 +268,32 @@ export default function MarketArticlePage() {
                                             </div>
                                             <div className = "row">
                                                 <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                    <div className = "row">
+                                                        <div className = "col">
+                                                            <div className = "row h-100">
+                                                                <div className = "col" style = {{marginTop : "1.5vh", marginBottom : "4.5vh"}}>
+                                                                    <div clasName = "row h-100">
+                                                                        <div className = "col">
+                                                                            <div className = "row h-100">
+                                                                                <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle"}}>
+                                                                                    <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
+                                                                                    style = {{resize : "none", fontSize : "1.75vh", overflow : "hidden", alignSelf : "center"}}/>
+                                                                                </div>
+                                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
+                                                                                    <div className = "row h-100 gx-0">
+                                                                                        <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
+                                                                                            <button className = "btn buttonDefault" style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                            
+                                                        </div>
+                                                    </div>
+
                                                     <div className = "row">
                                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                             {

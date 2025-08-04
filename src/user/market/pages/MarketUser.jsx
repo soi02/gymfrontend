@@ -11,6 +11,20 @@ function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
     
     const { article, userInfo } = marketUserSoldProductElem1;
     
+    function funcSellEnded(sellEnded) {
+        
+        if (sellEnded == 1) {
+            
+            return "완료";
+            
+        } else if (sellEnded == 0) {
+            
+            return "미완료";
+            
+        }
+        
+    }
+    
     return (
         <>
         
@@ -35,7 +49,7 @@ function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
                                                 <div className = "col" style = {{position : "relative"}}>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {article.sellEnded}
+                                                            {funcSellEnded(article.sellEnded)}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
@@ -78,6 +92,20 @@ function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
     
     const { article, userInfo } = marketUserBoughtProductElem1;
     
+    function funcSellEnded(sellEnded) {
+        
+        if (sellEnded == 1) {
+            
+            return "완료";
+            
+        } else if (sellEnded == 0) {
+            
+            return "미완료";
+            
+        }
+        
+    }
+    
     return (
         <>
         
@@ -102,7 +130,7 @@ function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
                                                 <div className = "col" style = {{position : "relative"}}>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {article.sellEnded}
+                                                            {funcSellEnded(article.sellEnded)}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
