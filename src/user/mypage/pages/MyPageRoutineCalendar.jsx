@@ -13,7 +13,7 @@ export default function MyPageRoutineCalendar() {
     const routineService = useRoutineService();
 
 
-    console.log(name);
+    // console.log(name);
 
     const [value, setValue] = useState(new Date());
     const [workoutDates, setWorkoutDates] = useState([
@@ -40,10 +40,12 @@ export default function MyPageRoutineCalendar() {
 
     useEffect(() => {
         const fetchWorkout = async () => {
-            const selectedDate = value.toISOString().split("T")[0];
+        const selectedDate = new Date(value.getTime() - (value.getTimezoneOffset() * 60000))
+                      .toISOString().split("T")[0];
             
-            const response = await routineService.getWorkoutByDate(id, selectedDate);
-              console.log("🔥 response data:", response);
+        const response = await routineService.getWorkoutByDate(id, selectedDate);
+            //   console.log("🔥 response data:", response);
+
 
             setWorkoutList(response.data);
 
