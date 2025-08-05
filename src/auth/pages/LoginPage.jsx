@@ -42,10 +42,12 @@ export default function LoginPage() {
             if (from) {
                 navigate(from, { replace: true }); // 이전 페이지로 이동 (히스토리 대체)
             } else {
-                navigate('/gymmadang/mainpage'); // 이전 경로가 없으면 기본 '메인' 페이지로 이동
+                // 로그인 후 '/'로 이동하는 로직은 이미 loginCustom에 있으므로,
+                // 이 페이지에 남아있을 필요가 없습니다. 아래 라인은 제거해도 됩니다.
+                // navigate('/gymmadang/mainpage'); 
             }
         }
-    }, [currentUserId, navigate, location.state]); // 의존성 배열에 currentUserId 추가
+    }, [currentUserId, navigate, location.state]);
 
     // 로그인 커스텀 훅 사용 전 코드
     //     const handleLogin = async()=>{

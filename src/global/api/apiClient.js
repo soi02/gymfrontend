@@ -12,6 +12,23 @@ const apiClient = axios.create({
     },
 });
 
+// 요청 인터셉터 추가
+apiClient.interceptors.request.use(
+    (config) => {
+        // Redux store에서 토큰 가져오기
+        const token = store.getState().auth.token;
+
+        // 토큰이 존재하면 요청 헤더에 Authorization 추가
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 // 응답 인터셉터 : 에러처리
 apiClient.interceptors.response.use(
     (res) => res,

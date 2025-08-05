@@ -1,168 +1,112 @@
+// src/pages/ChallengeList.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apiClient from '../../../global/api/apiClient';
+import apiClient from '../../../global/api/apiClient'; // 기존 apiClient 사용
 import ChallengeCard from '../components/ChallengeCard';
 import '../styles/ChallengeList.css';
+import '../styles/ChallengeList.css'; // 필터링 UI 스타일 추가\
 
-
-import routineIcon from '../../../assets/img/challenge/category/routine.png';
-import recoveryIcon from '../../../assets/img/challenge/category/recovery.png';
-import communicationIcon from '../../../assets/img/challenge/category/communication.png';
-import stanceIcon from '../../../assets/img/challenge/category/stance.png';
-import informationIcon from '../../../assets/img/challenge/category/information.png';
-import selfcontrolIcon from '../../../assets/img/challenge/category/selfcontrol.png';
-import motivationIcon from '../../../assets/img/challenge/category/motivation.png';
-import habitIcon from '../../../assets/img/challenge/category/habit.png';
-
-// 카테고리별로 적용할 색상 배열을 정의합니다.
-const categoryColors = [
-  '#fff9e3', // 연회색
-  '#fff9e3', // 녹색
-  '#fff9e3', // 하늘색
-  '#fff9e3', // 노란색
-  '#fff9e3', // 연분홍
-  '#fff9e3', // 더 연한 회색
-  '#fff9e3', // 보라색
-  '#fff9e3', // 연한 핑크
-];
 
 export default function ChallengeList() {
-  const navigate = useNavigate();
-  const [challenges, setChallenges] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+    const navigate = useNavigate();
+    const [challenges, setChallenges] = useState([]);
+    const [categories, setCategories] = useState([]); // 카테고리 목록 상태
+    const [selectedCategoryId, setSelectedCategoryId] = useState(0);
 
-  const fetchChallenges = async (categoryId) => {
-    try {
-      let url;
-      if (categoryId === 0) {
-        url = 'http://localhost:8080/api/challenge/getAllChallengeListProcess';
-      } else {
-        url = `http://localhost:8080/api/challenge/getChallengesByCategoryId/${categoryId}`;
-      }
-      const res = await apiClient.get(url);
-      setChallenges(res.data);
-    } catch (err) {
-      console.error('챌린지 불러오기 실패', err);
-      setChallenges([]);
-    }
-  };
+    const fetchChallenges = async (categoryId) => {
+        try {
+            let url;
+            if (categoryId === 0) { // ★ number 0으로 비교
+                url = 'http://localhost:8080/api/challenge/getAllChallengeListProcess';
+            } else {
+                url = `http://localhost:8080/api/challenge/getChallengesByCategoryId/${categoryId}`;
+            }
 
-  const fetchCategories = async () => {
-    try {
-      const res = await apiClient.get('http://localhost:8080/api/challenge/getAllCategories');
-      setCategories(res.data);
-    } catch (err) {
-      console.error('카테고리 불러오기 실패', err);
-    }
-  };
+            const res = await apiClient.get(url);
+            console.log('챌린지 목록', res.data);
+            setChallenges(res.data);
+        } catch (err) {
+            console.error('챌린지 불러오기 실패', err);
+            setChallenges([]);
+        }
+    };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+    // 카테고리 목록을 가져오는 함수
+    const fetchCategories = async () => {
+        try {
+            // 백엔드에 모든 키워드 카테고리를 조회하는 API가 있다고 가정
+            const res = await apiClient.get('http://localhost:8080/api/challenge/getAllCategories');
+            setCategories(res.data);
+        } catch (err) {
+            console.error('카테고리 불러오기 실패', err);
+        }
+    };
+    
+    // 컴포넌트 마운트 시 카테고리 목록을 가져옵니다.
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
-  useEffect(() => {
-    if (selectedCategoryId !== 0) {
-      fetchChallenges(selectedCategoryId);
-    }
-  }, [selectedCategoryId]);
+    // ★ selectedCategoryId가 변경될 때마다 챌린지 목록을 다시 가져옵니다.
+    useEffect(() => {
+        fetchChallenges(selectedCategoryId);
+    }, [selectedCategoryId]);
 
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategoryId(Number(categoryId));
-  };
-  
-// 카테고리 데이터와 아이콘을 매핑하는 배열을 만듭니다.
-const categoryData = categories.slice(0, 8).map((category, index) => {
-  let icon;
-  switch (category.keywordCategoryName) {
-    case '루틴': icon = routineIcon; break;
-    case '회복': icon = recoveryIcon; break;
-    case '소통': icon = communicationIcon; break;
-    case '분위기': icon = stanceIcon; break;
-    case '정보': icon = informationIcon; break;
-    case '자기관리': icon = selfcontrolIcon; break;
-    case '동기부여': icon = motivationIcon; break;
-    case '습관': icon = habitIcon; break;
-    default: icon = null;
-  }
-  return { ...category, icon: icon };
-});
+    const handleCategoryClick = (categoryId) => {
+        // ★ 전달받은 categoryId를 number로 상태에 저장
+        setSelectedCategoryId(Number(categoryId));
+    };
 
+    return (
+        <div className="challenge-list-wrapper">
+            <div className="challenge-list-container">
+                <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', marginBottom: 10 }}>수련 목록</h2>
+                <p style={{ color: '#555', fontSize: '0.9rem', marginBottom: 20 }}>
+                    원하는 챌린지를 골라 도전해보세요
+                </p>
 
-const renderCategoryCubes = () => (
-    <div className="circular-layout-container">
-        <div className="circular-grid">
-            {categoryData.map((category, index) => (
-                <div key={category.keywordCategoryId} className={`circular-item item-${index + 1}`}>
-                    <div
-                        className="category-cube-se with-icon"
-                        style={{ backgroundColor: categoryColors[index % categoryColors.length] }}
-                        onClick={() => handleCategoryClick(category.keywordCategoryId)}
+                {/* 카테고리 필터링 버튼 영역 추가 */}
+                <div className="category-filters">
+                    <button
+                        key="all"
+                        className={`filter-button ${selectedCategoryId === 0 ? 'active' : ''}`}
+                        onClick={() => handleCategoryClick(0)} // ★ '0'을 숫자로 전달
                     >
-                        {/* 아이콘을 표시하는 부분 */}
-                        <div className="category-cube-icon">
-                            {category.icon && <img src={category.icon} alt={category.keywordCategoryName} />}
-                        </div>
-                        <div className="category-cube-text-container">
-                            {/* <span className="category-cube-name-small-se">챌린지</span> */}
-                            <span className="category-cube-name-se">{category.keywordCategoryName}</span>
-                        </div>
-                    </div>
+                        전체
+                    </button>
+                    {categories.map(category => (
+                        <button
+                            key={category.keywordCategoryId} // ★ DTO 필드 이름 변경
+                            className={`filter-button ${selectedCategoryId === category.keywordCategoryId ? 'active' : ''}`}
+                            onClick={() => handleCategoryClick(category.keywordCategoryId)}
+                        >
+                            {category.keywordCategoryName}
+                        </button>
+                    ))}
                 </div>
-            ))}
-            <div className="grid-center"></div>
+
+                {/* 챌린지 카드 목록 */}
+                <div className="challenge-cards-list">
+                    {challenges.length > 0 ? (
+                        challenges.map((challenge) => (
+                            <ChallengeCard
+                                key={challenge.challengeId}
+                                challenge={challenge}
+                                onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+                            />
+                        ))
+                    ) : (
+                        <p>등록된 챌린지가 없습니다.</p>
+                    )}
+                </div>
+            </div>
+
+            <button
+                className="challenge-list-floating-button"
+                onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
+            >
+                ＋
+            </button>
         </div>
-        <button
-            className="create-challenge-circular-button"
-            onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
-        >
-            새로운 수련을 만들겠소
-        </button>
-    </div>
-);
-
-  const renderChallengeList = () => (
-    <>
-      <div className="challenge-header">
-        <button className="back-button" onClick={() => setSelectedCategoryId(0)}>
-          ←
-        </button>
-        <h2 className="challenge-title">
-          {categories.find(c => c.keywordCategoryId === selectedCategoryId)?.keywordCategoryName}
-        </h2>
-        <div className="search-button">
-          <img src="/images/search-icon.svg" alt="Search" />
-        </div>
-      </div>
-      <div className="challenge-cards-list">
-        {challenges.length > 0 ? (
-          challenges.map((challenge) => (
-            <ChallengeCard
-              key={challenge.challengeId}
-              challenge={challenge}
-              onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
-            />
-          ))
-        ) : (
-          <p className="no-challenges-message">등록된 수련 목록이 없소이다.</p>
-        )}
-      </div>
-    </>
-  );
-
-  return (
-    <div className="challenge-list-wrapper">
-      <div className="challenge-list-container-se">
-        {selectedCategoryId === 0 ? (
-          <>
-            <h1 className="main-title-se">수련 목록</h1>
-            <p className="main-subtitle-se">마음에 드는 수련을 택하여 도전하시오.<br/>새로운 수련을 만들고 싶다면, 직접 만드는 것도 가능하오.</p>
-            {renderCategoryCubes()}
-          </>
-        ) : (
-          renderChallengeList()
-        )}
-      </div>
-    </div>
-  );
+    );
 }
