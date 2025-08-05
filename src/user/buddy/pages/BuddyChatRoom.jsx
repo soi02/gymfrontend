@@ -1,19 +1,51 @@
-// src/components/BuddyChatRoom.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
-// SockJS 임포트 제거
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/BuddyChatRoom.css'; // ✅ CSS 파일 임포트
 
 const BuddyChatRoom = () => {
   const { matchingId } = useParams();
   const loggedInUserId = useSelector(state => state.auth.id);
   const stompClient = useRef(null);
   const subscriptionRef = useRef(null);
+  const navigate = useNavigate(); // ✅ 뒤로가기 버튼에 사용할 navigate
+  const chatMessagesRef = useRef(null); // ✅ 자동 스크롤을 위한 Ref
 
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
+  const [otherBuddyName, setOtherBuddyName] = useState('상대방'); // ✅ 상대방 이름 상태
 
+  // ✅ 채팅 목록을 가져오는 함수
+  const fetchChats = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("토큰이 없어 채팅 기록을 불러올 수 없습니다.");
+        return;
+      }
+
+      const res = await axios.get(`http://localhost:8080/api/buddy/list/${matchingId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('기존 채팅 기록:', res.data);
+      setChats(res.data);
+    } catch (error) {
+      console.error("채팅 기록 불러오기 실패:", error);
+    }
+  };
+
+  // ✅ 채팅 자동 스크롤 함수
+  useEffect(() => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  }, [chats]);
+
+  // ✅ 기존 useEffect 훅
   useEffect(() => {
     if (!matchingId || !loggedInUserId) {
       console.log("매칭 ID 또는 사용자 ID가 없어 웹소켓 연결을 시도하지 않습니다.");
@@ -26,17 +58,17 @@ const BuddyChatRoom = () => {
       return;
     }
 
+    // 기존 채팅 기록을 먼저 불러옴
+    fetchChats();
+
+    // ... (기존 웹소켓 연결 로직은 그대로)
+
     if (stompClient.current && stompClient.current.connected) {
       console.log("기존 연결이 있어 정리 후 다시 연결합니다.");
       stompClient.current.deactivate();
     }
 
-    console.log("--- 새로운 WebSocket 연결 시작 (순수 웹소켓) ---");
-    console.log("현재 토큰:", token);
-    
-    // ⭐⭐ 이 부분을 수정합니다 ⭐⭐
     stompClient.current = new Client({
-      // SockJS 대신 순수 웹소켓 URL 사용
       brokerURL: `ws://localhost:8080/ws/chat`,
       connectHeaders: {
         Authorization: `Bearer ${token}`
@@ -52,12 +84,12 @@ const BuddyChatRoom = () => {
     stompClient.current.onConnect = (frame) => {
       console.log('✅ WebSocket 연결 성공! frame:', frame);
 
-      // 구독 로직
       if (subscriptionRef.current) {
         subscriptionRef.current.unsubscribe();
       }
       subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, (message) => {
         const receivedChat = JSON.parse(message.body);
+        // 받은 메시지를 기존 채팅 기록에 추가
         setChats(prevChats => [...prevChats, receivedChat]);
       });
     };
@@ -90,7 +122,7 @@ const BuddyChatRoom = () => {
     if (stompClient.current && stompClient.current.connected && message) {
       const chatMessage = {
         matchingId: matchingId,
-        senderId: loggedInUserId,
+        sendBuddyId: loggedInUserId,
         message: message,
       };
       stompClient.current.publish({
@@ -104,23 +136,60 @@ const BuddyChatRoom = () => {
     }
   };
 
+  // ✅ 시간 표시를 위한 포맷팅 함수
+  const formatTime = (isoString) => {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   return (
-    <div>
-      <h1>버디 채팅방: {matchingId}</h1>
-      <div style={{ height: '300px', border: '1px solid black', overflowY: 'scroll', padding: '10px' }}>
-        {chats.map((chat, index) => (
-          <div key={index}>
-            <strong>{chat.senderId}:</strong> {chat.message}
-          </div>
-        ))}
+    <div className="chat-container">
+      {/* ✅ 헤더 부분 */}
+      <div className="chat-header">
+        <span className="back-button" onClick={() => navigate(-1)}>
+          &lt;
+        </span>
+        <span className="buddy-name">{otherBuddyName}</span>
       </div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-      />
-      <button onClick={sendMessage}>보내기</button>
+
+      {/* ✅ 채팅 메시지 목록 */}
+      <div className="chat-messages" ref={chatMessagesRef}>
+        {chats.map((chat, index) => {
+          const isMyMessage = chat.sendBuddyId === loggedInUserId;
+          return (
+            <div
+              key={index}
+              className={`chat-message ${isMyMessage ? 'my-message' : 'other-message'}`}
+            >
+              {!isMyMessage && <div className="profile-pic"></div>}
+              <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
+                {chat.message}
+              </div>
+              <div className="message-time">
+                {formatTime(chat.timestamp)}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ✅ 메시지 입력 영역 */}
+      <div className="chat-input-area">
+        <input
+          type="text"
+          className="chat-input"
+          placeholder="메시지를 입력하세요"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+        />
+        <button className="send-button" onClick={sendMessage}>
+          보내기
+        </button>
+      </div>
     </div>
   );
 };

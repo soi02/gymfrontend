@@ -105,17 +105,22 @@ function AppContent() {
     '/gymmadang/challenge/challengeTest/intro',
     // '/gymmadang/challenge/challengeTest/step/:stepId'와 같은 동적 경로는 startsWith로 처리
     '/gymmadang/challenge/challengeTest/result',
-    '/gymmadang/challenge/challengeTest/recommend'
+    '/gymmadang/challenge/challengeTest/recommend',
+    // 이 부분을 추가하면 됩니다.
+    '/gymmadang/buddy/buddyChat'
     // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
+    
   ];
 
   // TopHeader 숨길 조건들
   const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
-                        location.pathname.startsWith('/gymmadang/challenge/challengeTest');
+                        location.pathname.startsWith('/gymmadang/challenge/challengeTest') ||
+                        location.pathname.startsWith('/gymmadang/buddy/buddyChat/');
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
   const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || 
-                           location.pathname.startsWith('/gymmadang/challenge/challengeTest');
+                           location.pathname.startsWith('/gymmadang/challenge/challengeTest') ||
+                           location.pathname.startsWith('/gymmadang/buddy/buddyChat/');
 
   const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
   const isBuddySection = location.pathname.startsWith('/gymmadang/buddy');

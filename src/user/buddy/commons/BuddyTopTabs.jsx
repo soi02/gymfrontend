@@ -47,7 +47,7 @@ export default function BuddyTopTabs() {
 }}>
 
       <TabItem to="/gymmadang/buddy/buddyHome" label="벗 홈" />
-      <TabItem to="/gymmadang/buddy/buddyChat" label="대화하기" />
+      <TabItem to="/gymmadang/buddy/buddyList" label="대화하기" />
       <TabItem to="/gymmadang/buddy/buddyMy" label="나의 벗 기록" />
     </div>
   );
