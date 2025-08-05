@@ -1,50 +1,62 @@
-import React from 'react';
-import '../styles/BuddyChat.css'; // Assuming you'll have a CSS file for styling
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../styles/BuddyChat.css';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function BuddyChat() {
-  const chatList = [
-    {
-      name: "Jane Gilbert",
-      lastMessage: "Hey! I'm in the city today.",
-      time: "12:14",
-      unreadCount: 0,
-      avatar: "url_to_jane_gilbert_avatar.png"
-    },
-    {
-      name: "Bill Jonson",
-      lastMessage: "Send me a letter, plz",
-      time: "11:10",
-      unreadCount: 0,
-      avatar: "url_to_bill_jonson_avatar.png"
-    },
-    {
-      name: "Jane Philips",
-      lastMessage: "Kisses XXX",
-      time: "10:45",
-      unreadCount: 0,
-      avatar: "url_to_jane_philips_avatar.png"
-    },
-    // ... add more chat data here
-  ];
+  const [chatList, setChatList] = useState([]);
+  const navigate = useNavigate();
+
+  const buddyId = useSelector(state => state.auth.id);
+  const token = useSelector(state => state.auth.token);
+
+  useEffect(() => {
+    if (!buddyId || !token) {
+      console.warn("사용자 정보가 없습니다. 채팅 리스트 요청을 중단합니다.");
+      return;
+    }
+
+    axios.get(`/api/buddy/rooms/${buddyId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => setChatList(res.data))
+    .catch(err => console.error("채팅 리스트 불러오기 실패:", err));
+  }, [buddyId, token]);
+
+  const getFullImageUrl = (filename) => {
+    return filename 
+      ? `http://localhost:8080/uploadFiles/${filename}`
+      : 'https://placehold.co/100x100?text=No+Image'; // 기본 이미지
+  };
 
   return (
     <div className="chat-list-container">
-      <div className="header">
-        <h1 className="title">Chats</h1>
-        <span className="unread-badge">3</span>
-      </div>
       <div className="chat-rooms">
         {chatList.map((chat, index) => (
-          <div key={index} className="chat-room-item">
+          <div 
+            key={index} 
+            className="chat-room-item"
+            onClick={() => navigate(`/gymmadang/buddy/buddyChat/${chat.matchingId}`)}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="avatar">
-              {/* 이미지 URL이나 아이콘을 여기에 넣으세요 */}
-              <img src={chat.avatar} alt={`${chat.name} 아바타`} />
+              <img 
+                src={getFullImageUrl(chat.opponentProfileImage)} 
+                alt={`${chat.opponentName} 아바타`} 
+              />
             </div>
             <div className="chat-info">
-              <div className="chat-name">{chat.name}</div>
+              <div className="chat-name">{chat.opponentName}</div>
               <div className="last-message">{chat.lastMessage}</div>
             </div>
-            <div className="chat-time">{chat.time}</div>
+            <div className="chat-time">
+              {chat.lastSentAt 
+                ? new Date(chat.lastSentAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+                : ''}
+            </div>
           </div>
         ))}
       </div>
