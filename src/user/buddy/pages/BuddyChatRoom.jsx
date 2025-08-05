@@ -3,21 +3,21 @@ import { Client } from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/BuddyChatRoom.css'; // ✅ CSS 파일 임포트
+import '../styles/BuddyChatRoom.css';
 
 const BuddyChatRoom = () => {
   const { matchingId } = useParams();
   const loggedInUserId = useSelector(state => state.auth.id);
   const stompClient = useRef(null);
   const subscriptionRef = useRef(null);
-  const navigate = useNavigate(); // ✅ 뒤로가기 버튼에 사용할 navigate
-  const chatMessagesRef = useRef(null); // ✅ 자동 스크롤을 위한 Ref
+  const navigate = useNavigate();
+  const chatMessagesRef = useRef(null);
 
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
-  const [otherBuddyName, setOtherBuddyName] = useState('상대방'); // ✅ 상대방 이름 상태
+  const [otherBuddyName, setOtherBuddyName] = useState('상대방');
 
-  // ✅ 채팅 목록을 가져오는 함수
+  // ✅ 수정: 채팅 기록과 상대방 이름을 API 응답에서 올바르게 가져오는 함수
   const fetchChats = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -32,20 +32,30 @@ const BuddyChatRoom = () => {
         }
       });
       console.log('기존 채팅 기록:', res.data);
-      setChats(res.data);
+      // 서버 응답에 따라 `chats`와 `otherBuddyName`을 각각 설정합니다.
+      // `res.data`가 배열인 경우와 객체인 경우를 모두 고려하여 처리합니다.
+      if (Array.isArray(res.data)) {
+        setChats(res.data);
+      } else if (res.data && res.data.chats) {
+        setChats(res.data.chats);
+        setOtherBuddyName(res.data.otherBuddyName || '상대방');
+      } else {
+        setChats([]);
+      }
     } catch (error) {
       console.error("채팅 기록 불러오기 실패:", error);
+      setChats([]); // 오류 발생 시 빈 배열로 초기화
     }
   };
 
-  // ✅ 채팅 자동 스크롤 함수
+  // ✅ 채팅 메시지 목록을 자동으로 맨 아래로 스크롤
   useEffect(() => {
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [chats]);
 
-  // ✅ 기존 useEffect 훅
+  // ✅ 웹소켓 연결 및 채팅 메시지 구독
   useEffect(() => {
     if (!matchingId || !loggedInUserId) {
       console.log("매칭 ID 또는 사용자 ID가 없어 웹소켓 연결을 시도하지 않습니다.");
@@ -58,10 +68,8 @@ const BuddyChatRoom = () => {
       return;
     }
 
-    // 기존 채팅 기록을 먼저 불러옴
+    // 컴포넌트 마운트 시, 기존 채팅 기록과 상대방 이름을 먼저 불러옴
     fetchChats();
-
-    // ... (기존 웹소켓 연결 로직은 그대로)
 
     if (stompClient.current && stompClient.current.connected) {
       console.log("기존 연결이 있어 정리 후 다시 연결합니다.");
@@ -168,8 +176,9 @@ const BuddyChatRoom = () => {
               <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
                 {chat.message}
               </div>
+              {/* ✅ 보낸 시간 표시 (sentAt 사용) */}
               <div className="message-time">
-                {formatTime(chat.timestamp)}
+                {formatTime(chat.sentAt)}
               </div>
             </div>
           );
@@ -187,7 +196,7 @@ const BuddyChatRoom = () => {
           onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
         />
         <button className="send-button" onClick={sendMessage}>
-          보내기
+          <i className="bi bi-send"></i>
         </button>
       </div>
     </div>

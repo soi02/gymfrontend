@@ -100,7 +100,18 @@
   margin-left: 15px;
   flex-shrink: 0; /* 내용이 줄어들지 않도록 */
 }
-
+.unread-count-badge {
+    background-color: #ff4d4f; /* 빨간색 배경 */
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 9999px; /* 동그란 모양 */
+    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 25px; /* 작은 숫자도 예쁘게 보이도록 최소 너비 설정 */
+}
 /*
   추가: 이미지에 있는 폰트와 유사하게 보이도록
   특정 폰트(e.g., Apple SD Gothic Neo, Noto Sans KR)를 사용하면
