@@ -161,6 +161,9 @@ const BuddyChatRoom = () => {
           &lt;
         </span>
         <span className="buddy-name">{otherBuddyName}</span>
+        <button className="video-call-button" onClick={() => alert("비디오 통화 기능은 아직 구현되지 않았습니다.")}>
+          <i className="bi bi-camera-video-fill"></i>
+        </button>
       </div>
 
       {/* ✅ 채팅 메시지 목록 */}
