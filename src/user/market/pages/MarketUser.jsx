@@ -223,6 +223,9 @@ function MarketUserRateElement({marketUserRateElem1}) {
 
 export default function MarketUserPage() {
     
+    const checkUserStatus = 1004;
+    const defaultUserStatus = 1004;
+    
     const [marketUserInfo, setMarketUserInfo] = useState([
         {id : 1004, marketUserNickname : "GoodDevil"}
     ])
@@ -303,6 +306,264 @@ export default function MarketUserPage() {
     const constmarketuserRateElementList = 
     marketuserRateList.map(userRateElement => <MarketUserRateElement key = {userRateElement.id} marketUserRateElem1 = {userRateElement}/>);
     
+    function MarketUserBoughtProductPageLayout() {
+        
+        if (checkUserStatus == defaultUserStatus) {
+        
+            return(
+                <>
+                
+                    <div className = "row">
+                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                    내 판매 물품 개수
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                    4 개
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                            {
+                                                constmarketuserSoldProductElementList.length > 0 ? 
+                                                constmarketuserSoldProductElementList : 
+                                                <>
+                                            
+                                                    판매한 물품이 없다오.
+                                            
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        } else {
+            
+            return(
+                <>
+                
+                    <div className = "row">
+                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                    판매 물품 개수
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                    4 개
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                            {
+                                                constmarketuserSoldProductElementList.length > 0 ? 
+                                                constmarketuserSoldProductElementList : 
+                                                <>
+                                            
+                                                    판매한 물품이 없다오.
+                                            
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        }
+        
+    }
+    
+    function MarketUserSoldProductPageLayout() {
+        
+        if (checkUserStatus == defaultUserStatus) {
+        
+            return(
+                <>
+                
+                    <div className = "row">
+                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                    내 구매 물품 개수
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                    4 개
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                            {
+                                                constmarketuserBoughtProductElementList.length > 0 ? 
+                                                constmarketuserBoughtProductElementList : 
+                                                <>
+                                            
+                                                    구매한 물품이 없다오.
+                                            
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        } else {
+            
+            return(
+                <>
+                
+                    <div className = "row">
+                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                    구매 물품 개수
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                    4 개
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                            {
+                                                constmarketuserBoughtProductElementList.length > 0 ? 
+                                                constmarketuserBoughtProductElementList : 
+                                                <>
+                                            
+                                                    구매한 물품이 없다오.
+                                            
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        }
+        
+    }
+    
+    function MarketUserRatePageLayout() {
+        
+        if (checkUserStatus == defaultUserStatus) {
+        
+            return(
+                <>
+                
+                    <div className = "row">
+                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                    내 신뢰 평가 개수
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                    4 개
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2.25vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                            {
+                                                constmarketuserRateElementList.length > 0 ? 
+                                                constmarketuserRateElementList : 
+                                                <>
+                                                
+                                                    평가말이 없다오.
+                                                
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        } else {
+            
+            return(
+                <>
+                
+                    <div className = "row">
+                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                    신뢰 평가 개수
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                    4 개
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2.25vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                            {
+                                                constmarketuserRateElementList.length > 0 ? 
+                                                constmarketuserRateElementList : 
+                                                <>
+                                                
+                                                    평가말이 없다오.
+                                                
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        }
+        
+    }
+    
     return (
         
         <>
@@ -316,101 +577,11 @@ export default function MarketUserPage() {
                             constMarketUserInfoElement.length  > 0 ? constMarketUserInfoElement : <></>
                         }
                         
-                        <div className = "row">
-                            <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "1.875vh"}}>
-                                        판매 물품 개수
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                        4 개
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                        <div className = "row">
-                                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                                {
-                                                    constmarketuserSoldProductElementList.length > 0 ? 
-                                                    constmarketuserSoldProductElementList : 
-                                                    <>
-                                                
-                                                        판매한 물품이 없다오.
-                                                
-                                                    </>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {<MarketUserBoughtProductPageLayout />}
                         
-                        <div className = "row">
-                            <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "1.875vh"}}>
-                                        구매 물품 개수
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                        4 개
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                        <div className = "row">
-                                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                                {
-                                                    constmarketuserBoughtProductElementList.length > 0 ? 
-                                                    constmarketuserBoughtProductElementList : 
-                                                    <>
-                                                
-                                                        구매한 물품이 없다오.
-                                                
-                                                    </>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {<MarketUserSoldProductPageLayout />}
                         
-                        <div className = "row">
-                            <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "1.875vh"}}>
-                                        유저 신뢰 평가 개수
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                        4 개
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2.25vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                        <div className = "row">
-                                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                                {
-                                                    constmarketuserRateElementList.length > 0 ? 
-                                                    constmarketuserRateElementList : 
-                                                    <>
-                                                    
-                                                        평가말이 없다오.
-                                                    
-                                                    </>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {<MarketUserRatePageLayout />}
                         
                     </div>
                 </div>
