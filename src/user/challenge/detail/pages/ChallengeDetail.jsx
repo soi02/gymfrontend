@@ -91,6 +91,7 @@ export default function ChallengeDetail() {
   let status = '';
   let buttonText = '';
   let isButtonDisabled = true; // 기본적으로 버튼 비활성화
+  let showChatButton = false; // 채팅방 버튼 표시 여부(기본적으로 비활성화, 변수명이 위에랑 달라서 false 라고 함)
 
 // 모집 기간 내에 있을 경우
 if (today >= recruitStart && today <= recruitEnd) {
@@ -99,6 +100,7 @@ if (today >= recruitStart && today <= recruitEnd) {
         status = '도전 중';
         buttonText = '도전 중';
         isButtonDisabled = true; // 버튼 비활성화
+        showChatButton = true; // 참여 중일 때 채팅방 버튼 활성화
     } else {
         // ★★★ 모집 중이고, 아직 참여하지 않은 경우의 로직 ★★★
         status = '모집 중';
@@ -116,6 +118,11 @@ else if (today < recruitStart) {
     buttonText = '모집 종료';
     isButtonDisabled = true;
 }
+
+  // 채팅방 입장 핸들러 함수
+  const handleChatEntry = () => {
+    navigate(`/gymmadang/challenge/groupchat/${challengeId}`);
+  };
 
 console.log("현재 날짜:", today.toISOString().split('T')[0]);
 console.log("챌린지 모집 시작일:", challengeRecruitStartDate);
@@ -147,25 +154,31 @@ console.log("버튼 비활성화 여부:", isButtonDisabled);
             <span key={i} className="keyword-badge">#{kw}</span>
           ))}
         </div>
-        {/* 동적으로 결정된 버튼 렌더링 (이전 방식보다 간결화) */}
+
+        {showChatButton && (
+          <button 
+            className="challenge-detail-button chat-button" // 새로운 CSS 클래스 추가
+            onClick={handleChatEntry}
+          >
+            채팅방 입장
+          </button>
+        )}
         <button
           className="challenge-detail-button"
           onClick={() => {
-              if (!isButtonDisabled) { // 버튼이 활성화된 경우에만 모달 띄움
-                  setShowModal(true);
-              }
-            }}
-          disabled={isButtonDisabled} // 계산된 isButtonDisabled 값으로 제어
-        >
-          {buttonText}
-        </button>
+              if (!isButtonDisabled) {
+                  setShowModal(true);
+              }
+            }}
+          disabled={isButtonDisabled}
+        >
+          {buttonText}
+        </button>
       </div>
       {showModal && (
         <ChallengeStartModal
           onClose={() => setShowModal(false)}
           challengeId={challengeId}
-          // challengeDurationDays를 모달로 전달할 필요가 있다면 여기에 추가
-          // challengeDurationDays={challengeDurationDays}
         />
       )}
     </div>

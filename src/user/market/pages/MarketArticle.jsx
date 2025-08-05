@@ -4,6 +4,7 @@ import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductImageOnArticle from "../components/test/example/MarketProductImageOnArticle";
 import '../styles/MarketCommonStyles.css';
+import { Link } from "react-router-dom";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -78,7 +79,9 @@ function MarketArticleElement({marketArticleElem1}) {
                                                     <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                         <div className = "row h-100">
                                                             <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                {userInfo.nickname}
+                                                                <Link className = "linkDefault" to = {`/gymmadang/market/user/${userInfo.userId}`}>
+                                                                    {userInfo.nickname}
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -101,6 +104,18 @@ function MarketArticleElement({marketArticleElem1}) {
                         </div>
                     </div>
             </div>
+        
+        </>
+    )
+    
+}
+
+function MarketProductInterestedLogElementOnArticle({elem1}) {
+    
+    return(
+        <>
+        
+            <i className="ri-heart-3-line"></i> 탐나요!
         
         </>
     )
@@ -136,7 +151,9 @@ function MarketCommentElementOnArticle({marketCommentElem1}) {
                                                     <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                         <div className = "row h-100">
                                                             <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                {userInfo.nickname}
+                                                                <Link className = "linkDefault" to = {`/gymmadang/market/user/${userInfo.userId}`}>
+                                                                    {userInfo.nickname}
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,6 +198,13 @@ export default function MarketArticlePage() {
     
     const constMarketArticleElement = mergedListOnArticle.map(mergedElement => (
     <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
+    
+    const [marketProductInterestedLogOnArticle, setMarketProductInterestedLogOnArticle] = useState([
+        {id : 11, marketUserId : 11, specificArticleId : 1, createdAt : new Date("2024-06-14T12:34:56")}
+    ])
+    
+    const constMarketProductInterestedLogElement = marketProductInterestedLogOnArticle.map(element =>
+    <MarketProductInterestedLogElementOnArticle key = {element.id} elem1 = {element}/>)
     
     const [marketCommentListOnArticle, setMarketArticleListOnArticle] = useState([
         {id : 1, articleId : 1, marketUserId : 11, comment : "First My Dragon", 
@@ -240,7 +264,15 @@ export default function MarketArticlePage() {
                                             <div className = "row gx-0">
                                                 <div className = "col-auto">
                                                     <button type="button" className="btn buttonDefault" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
-                                                        <i className="ri-heart-3-line"></i> 탐나요!
+                                                        
+                                                        {
+                                                            constMarketProductInterestedLogElement.length > 0 ? 
+                                                            constMarketProductInterestedLogElement : 
+                                                            <>
+                                                                <i className="ri-heart-3-fill"></i> 탐냄 취소
+                                                            </>
+                                                        }
+                                                        
                                                     </button>
                                                 </div>
                                             </div>
@@ -272,7 +304,7 @@ export default function MarketArticlePage() {
                                                         <div className = "col">
                                                             <div className = "row h-100">
                                                                 <div className = "col" style = {{marginTop : "1.5vh", marginBottom : "4.5vh"}}>
-                                                                    <div clasName = "row h-100">
+                                                                    <div className = "row h-100">
                                                                         <div className = "col">
                                                                             <div className = "row h-100">
                                                                                 <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle"}}>
