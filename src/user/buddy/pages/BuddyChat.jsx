@@ -8,8 +8,14 @@ function BuddyChat() {
   const [chatList, setChatList] = useState([]);
   const navigate = useNavigate();
 
-  const buddyId = useSelector(state => state.auth.id);
-  const token = useSelector(state => state.auth.token);
+  // Redux에서 사용자 ID와 토큰 가져오기
+  const reduxId = useSelector(state => state.auth.id);
+  const reduxToken = useSelector(state => state.auth.token);
+
+  // localStorage fallback (Redux에 값이 없을 경우 대비)
+  const savedAuth = JSON.parse(localStorage.getItem('auth'));
+  const buddyId = reduxId || savedAuth?.id;
+  const token = reduxToken || localStorage.getItem('token');
 
   useEffect(() => {
     if (!buddyId || !token) {
@@ -17,7 +23,7 @@ function BuddyChat() {
       return;
     }
 
-    axios.get(`/api/buddy/rooms/${buddyId}`, {
+    axios.get(`http://localhost:8080/api/buddy/rooms/${buddyId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -27,7 +33,7 @@ function BuddyChat() {
   }, [buddyId, token]);
 
   const getFullImageUrl = (filename) => {
-    return filename 
+    return filename
       ? `http://localhost:8080/uploadFiles/${filename}`
       : 'https://placehold.co/100x100?text=No+Image'; // 기본 이미지
   };
@@ -36,16 +42,16 @@ function BuddyChat() {
     <div className="chat-list-container">
       <div className="chat-rooms">
         {chatList.map((chat, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className="chat-room-item"
             onClick={() => navigate(`/gymmadang/buddy/buddyChat/${chat.matchingId}`)}
             style={{ cursor: 'pointer' }}
           >
             <div className="avatar">
-              <img 
-                src={getFullImageUrl(chat.opponentProfileImage)} 
-                alt={`${chat.opponentName} 아바타`} 
+              <img
+                src={getFullImageUrl(chat.opponentProfileImage)}
+                alt={`${chat.opponentName} 아바타`}
               />
             </div>
             <div className="chat-info">
@@ -53,9 +59,15 @@ function BuddyChat() {
               <div className="last-message">{chat.lastMessage}</div>
             </div>
             <div className="chat-time">
-              {chat.lastSentAt 
-                ? new Date(chat.lastSentAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+              {chat.lastSentAt
+                ? new Date(chat.lastSentAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                 : ''}
+              {/* ✅ unreadCount가 0보다 클 경우 뱃지 표시 */}
+              {chat.unreadCount > 0 && (
+                <div className="unread-count-badge">
+                  {chat.unreadCount}
+                </div>
+              )}
             </div>
           </div>
         ))}
