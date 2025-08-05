@@ -15,9 +15,17 @@ const BuddyChatRoom = () => {
 
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
-  const [otherBuddyName, setOtherBuddyName] = useState('상대방');
 
-  // ✅ 수정: 채팅 기록과 상대방 이름을 API 응답에서 올바르게 가져오는 함수
+  // ✅ 이미지 URL을 완성해주는 함수
+  const getFullImageUrl = (filename) => {
+    if (filename && filename.startsWith('http')) {
+      return filename;
+    }
+    return filename
+      ? `http://localhost:8080/uploadFiles/${filename}`
+      : 'https://placehold.co/100x100?text=No+Image';
+  };
+
   const fetchChats = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -32,30 +40,25 @@ const BuddyChatRoom = () => {
         }
       });
       console.log('기존 채팅 기록:', res.data);
-      // 서버 응답에 따라 `chats`와 `otherBuddyName`을 각각 설정합니다.
-      // `res.data`가 배열인 경우와 객체인 경우를 모두 고려하여 처리합니다.
       if (Array.isArray(res.data)) {
         setChats(res.data);
       } else if (res.data && res.data.chats) {
         setChats(res.data.chats);
-        setOtherBuddyName(res.data.otherBuddyName || '상대방');
       } else {
         setChats([]);
       }
     } catch (error) {
       console.error("채팅 기록 불러오기 실패:", error);
-      setChats([]); // 오류 발생 시 빈 배열로 초기화
+      setChats([]);
     }
   };
 
-  // ✅ 채팅 메시지 목록을 자동으로 맨 아래로 스크롤
   useEffect(() => {
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [chats]);
 
-  // ✅ 웹소켓 연결 및 채팅 메시지 구독
   useEffect(() => {
     if (!matchingId || !loggedInUserId) {
       console.log("매칭 ID 또는 사용자 ID가 없어 웹소켓 연결을 시도하지 않습니다.");
@@ -68,7 +71,6 @@ const BuddyChatRoom = () => {
       return;
     }
 
-    // 컴포넌트 마운트 시, 기존 채팅 기록과 상대방 이름을 먼저 불러옴
     fetchChats();
 
     if (stompClient.current && stompClient.current.connected) {
@@ -97,7 +99,6 @@ const BuddyChatRoom = () => {
       }
       subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, (message) => {
         const receivedChat = JSON.parse(message.body);
-        // 받은 메시지를 기존 채팅 기록에 추가
         setChats(prevChats => [...prevChats, receivedChat]);
       });
     };
@@ -144,7 +145,6 @@ const BuddyChatRoom = () => {
     }
   };
 
-  // ✅ 시간 표시를 위한 포맷팅 함수
   const formatTime = (isoString) => {
     if (!isoString) return '';
     const date = new Date(isoString);
@@ -153,33 +153,54 @@ const BuddyChatRoom = () => {
     return `${hours}:${minutes}`;
   };
 
+  const getOtherName = () => {
+    if (chats.length > 0) {
+      const firstChat = chats[0];
+      if (firstChat.sendBuddyId !== loggedInUserId) {
+        return firstChat.senderName || '상대방';
+      }
+      const otherChat = chats.find(chat => chat.sendBuddyId !== loggedInUserId);
+      return otherChat ? otherChat.senderName : '상대방';
+    }
+    return '상대방';
+  };
+
   return (
     <div className="chat-container">
-      {/* ✅ 헤더 부분 */}
       <div className="chat-header">
         <span className="back-button" onClick={() => navigate(-1)}>
           &lt;
         </span>
-        <span className="buddy-name">{otherBuddyName}</span>
+        <span className="buddy-name">{getOtherName()}</span>
         <button className="video-call-button" onClick={() => alert("비디오 통화 기능은 아직 구현되지 않았습니다.")}>
           <i className="bi bi-camera-video-fill"></i>
         </button>
       </div>
 
-      {/* ✅ 채팅 메시지 목록 */}
       <div className="chat-messages" ref={chatMessagesRef}>
         {chats.map((chat, index) => {
           const isMyMessage = chat.sendBuddyId === loggedInUserId;
+          const showSenderInfo = !isMyMessage;
+          const isConsecutiveMessage = index > 0 && chats[index - 1].sendBuddyId === chat.sendBuddyId;
+
           return (
             <div
               key={index}
               className={`chat-message ${isMyMessage ? 'my-message' : 'other-message'}`}
             >
-              {!isMyMessage && <div className="profile-pic"></div>}
+              {/* 상대방 메시지일 경우에만 프로필 사진을 항상 표시 */}
+              {!isMyMessage && (
+                <img
+                  src={getFullImageUrl(chat.senderProfileImageUrl)}
+                  alt={`${chat.senderName}님의 프로필 사진`}
+                  className="profile-pic"
+                />
+              )}
+
               <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
                 {chat.message}
               </div>
-              {/* ✅ 보낸 시간 표시 (sentAt 사용) */}
+
               <div className="message-time">
                 {formatTime(chat.sentAt)}
               </div>
@@ -188,7 +209,6 @@ const BuddyChatRoom = () => {
         })}
       </div>
 
-      {/* ✅ 메시지 입력 영역 */}
       <div className="chat-input-area">
         <input
           type="text"
