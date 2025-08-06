@@ -12,6 +12,7 @@ import StepKeyword from '../steps/StepKeyword';
 import StepIntroduce from '../steps/StepIntroduce';
 import StepImage from '../steps/StepImage';
 import StepDone from '../steps/StepDone';
+import StepDeposit from '../steps/StepDeposit';
 
 const steps = [
   StepStart,
@@ -19,6 +20,7 @@ const steps = [
   StepDate,
   StepDurationDate,
   StepCapacity,
+  StepDeposit,
   StepKeyword,
   StepIntroduce,
   StepImage,
@@ -43,6 +45,7 @@ export default function ChallengeCreateStepper() {
     challengeDurationDays: 0,
     challengeThumbnailImage: null,
     challengeKeywordNameList: [],
+    challengeDepositAmount: 0,
   });
 
 
@@ -84,6 +87,7 @@ export default function ChallengeCreateStepper() {
         formDataToSend.append("challengeTitle", updated.challengeTitle || '');
         formDataToSend.append("challengeDescription", updated.challengeDescription || '');
         formDataToSend.append("challengeMaxMembers", updated.challengeMaxMembers || 0);
+        formDataToSend.append("challengeDepositAmount", updated.challengeDepositAmount || 0);
         formDataToSend.append("challengeRecruitStartDate", updated.challengeRecruitStartDate || '');
         formDataToSend.append("challengeRecruitEndDate", updated.challengeRecruitEndDate || '');
         // formDataToSend.append("challengeStartDate", updated.challengeStartDate || '');
