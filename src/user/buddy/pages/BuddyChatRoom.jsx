@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Client } from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -16,6 +16,15 @@ const BuddyChatRoom = () => {
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
   const [otherBuddyName, setOtherBuddyName] = useState('상대방');
+
+  // ---------------- WebRTC 관련 상태 및 레퍼런스 ----------------
+  const [localStream, setLocalStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
+  const [isCalling, setIsCalling] = useState(false);
+  const peerConnectionRef = useRef(null);
+  const localVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
+  // -------------------------------------------------------------
 
   const getFullImageUrl = (filename) => {
     if (filename && filename.startsWith('http')) {
@@ -77,7 +86,51 @@ const BuddyChatRoom = () => {
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
-  }, [chats]);
+  }, [chats, isCalling]); // isCalling 상태 변경 시에도 스크롤을 맨 아래로 내립니다.
+
+  const handleStompMessage = useCallback(async (message) => {
+    const received = JSON.parse(message.body);
+
+    if (received.type === 'CHAT_MESSAGE') {
+      // 일반 채팅 메시지 처리
+      const receivedChat = received.payload;
+      if (receivedChat.sendBuddyId === loggedInUserId) {
+        setChats(prevChats => {
+          const updatedChats = prevChats.map(chat => {
+            if (chat.isOptimistic && chat.message === receivedChat.message) {
+              return { ...receivedChat, isOptimistic: false };
+            }
+            return chat;
+          });
+          return updatedChats.some(chat => chat.id === receivedChat.id) ? updatedChats : [...updatedChats, receivedChat];
+        });
+      } else {
+        setChats(prevChats => [...prevChats, receivedChat]);
+      }
+    } else if (received.type === 'WEBRTC_SIGNAL') {
+      // WebRTC 시그널링 메시지 처리
+      const signal = received.payload;
+      console.log('WebRTC 시그널 수신:', signal);
+      
+      if (!peerConnectionRef.current && signal.type !== 'hang-up') {
+        await createPeerConnection();
+      }
+
+      if (signal.type === 'offer') {
+        await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(signal));
+        const answer = await peerConnectionRef.current.createAnswer();
+        await peerConnectionRef.current.setLocalDescription(answer);
+        sendWebRTCSignal(answer);
+      } else if (signal.type === 'answer') {
+        await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(signal));
+      } else if (signal.type === 'ice-candidate') {
+        await peerConnectionRef.current.addIceCandidate(new RTCIceCandidate(signal.candidate));
+      } else if (signal.type === 'hang-up') {
+        hangUp();
+      }
+    }
+  }, [loggedInUserId]);
+
 
   useEffect(() => {
     if (!matchingId || !loggedInUserId) {
@@ -121,25 +174,7 @@ const BuddyChatRoom = () => {
       if (subscriptionRef.current) {
         subscriptionRef.current.unsubscribe();
       }
-      subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, (message) => {
-        const receivedChat = JSON.parse(message.body);
-
-        if (receivedChat.sendBuddyId === loggedInUserId) {
-            setChats(prevChats => {
-                const updatedChats = prevChats.map(chat => {
-                    // 낙관적 업데이트 메시지를 실제 메시지로 교체
-                    if (chat.isOptimistic && chat.message === receivedChat.message) {
-                        return { ...receivedChat, isOptimistic: false };
-                    }
-                    return chat;
-                });
-                // 중복 방지 로직: 이미 존재하는 메시지라면 추가하지 않음
-                return updatedChats.some(chat => chat.id === receivedChat.id) ? updatedChats : [...updatedChats, receivedChat];
-            });
-        } else {
-            setChats(prevChats => [...prevChats, receivedChat]);
-        }
-      });
+      subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, handleStompMessage);
     };
 
     stompClient.current.onWebSocketError = (error) => {
@@ -163,8 +198,11 @@ const BuddyChatRoom = () => {
       if (stompClient.current) {
         stompClient.current.deactivate();
       }
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+      }
     };
-  }, [matchingId, loggedInUserId]);
+  }, [matchingId, loggedInUserId, handleStompMessage]);
 
   const sendMessage = () => {
     if (stompClient.current && stompClient.current.connected && message) {
@@ -174,18 +212,22 @@ const BuddyChatRoom = () => {
         message: message,
       };
 
-      // ✅ 낙관적 업데이트를 위한 임시 메시지 생성
       const tempMessage = {
-          ...chatMessage,
-          isOptimistic: true,
-          read: false,
-          sentAt: new Date().toISOString() // 클라이언트 시간으로 임시 표시
+        ...chatMessage,
+        isOptimistic: true,
+        read: false,
+        sentAt: new Date().toISOString()
       };
       setChats(prevChats => [...prevChats, tempMessage]);
 
+      const payload = {
+        type: 'CHAT_MESSAGE',
+        payload: chatMessage
+      };
+
       stompClient.current.publish({
         destination: `/app/chat/send`,
-        body: JSON.stringify(chatMessage),
+        body: JSON.stringify(payload),
       });
       setMessage('');
     } else {
@@ -193,6 +235,99 @@ const BuddyChatRoom = () => {
       alert("메시지를 보낼 수 없습니다. 연결 상태를 확인하세요.");
     }
   };
+
+  const sendWebRTCSignal = (signal) => {
+    if (stompClient.current && stompClient.current.connected) {
+      const payload = {
+        type: 'WEBRTC_SIGNAL',
+        payload: { ...signal, matchingId: matchingId }
+      };
+      stompClient.current.publish({
+        destination: `/app/chat/send`,
+        body: JSON.stringify(payload),
+      });
+    }
+  };
+
+  // ---------------- WebRTC 관련 함수 ----------------
+
+  const createPeerConnection = async () => {
+    console.log('📞 RTCPeerConnection 생성 중...');
+    const configuration = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+    const peerConnection = new RTCPeerConnection(configuration);
+    peerConnectionRef.current = peerConnection;
+
+    peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        console.log('📡 ICE 후보자 전송');
+        sendWebRTCSignal({ type: 'ice-candidate', candidate: event.candidate });
+      }
+    };
+
+    peerConnection.ontrack = (event) => {
+      console.log('📺 원격 스트림 수신 시작');
+      setRemoteStream(event.streams[0]);
+    };
+
+    if (localStream) {
+      localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream);
+      });
+    }
+
+    return peerConnection;
+  };
+
+  const startCall = useCallback(async () => {
+    console.log('🚀 통화 시작');
+    setIsCalling(true);
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      setLocalStream(stream);
+
+      const peerConnection = await createPeerConnection();
+      stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+      console.log('✉️ SDP offer 전송');
+      sendWebRTCSignal(offer);
+
+    } catch (error) {
+      console.error(`🚨 미디어 접근 오류: ${error.message}`);
+      setIsCalling(false);
+    }
+  }, [localStream]);
+
+  const hangUp = useCallback(() => {
+    console.log('👋 통화 종료');
+    if (peerConnectionRef.current) {
+      peerConnectionRef.current.close();
+      peerConnectionRef.current = null;
+    }
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop());
+      setLocalStream(null);
+    }
+    setRemoteStream(null);
+    setIsCalling(false);
+
+    sendWebRTCSignal({ type: 'hang-up' });
+  }, [localStream]);
+
+  useEffect(() => {
+    if (localVideoRef.current && localStream) {
+      localVideoRef.current.srcObject = localStream;
+    }
+  }, [localStream]);
+
+  useEffect(() => {
+    if (remoteVideoRef.current && remoteStream) {
+      remoteVideoRef.current.srcObject = remoteStream;
+    }
+  }, [remoteStream]);
+  // -------------------------------------------------------------
 
   const formatTime = (isoString) => {
     if (!isoString) return '';
@@ -216,7 +351,7 @@ const BuddyChatRoom = () => {
 
   const isNewDay = (currentChat, previousChat) => {
     if (!previousChat) {
-      return true; // 첫 번째 메시지는 항상 날짜 구분선 표시
+      return true;
     }
     const currentDate = new Date(currentChat.sentAt).toDateString();
     const previousDate = new Date(previousChat.sentAt).toDateString();
@@ -225,13 +360,31 @@ const BuddyChatRoom = () => {
 
   return (
     <div className="chat-container">
+      {isCalling && (
+        <div className="video-call-overlay">
+          <div className="video-box my-video">
+            <video ref={localVideoRef} autoPlay muted playsInline></video>
+          </div>
+          <div className="video-box other-video">
+            <video ref={remoteVideoRef} autoPlay playsInline></video>
+          </div>
+          <button className="hangup-button" onClick={hangUp}>
+            통화 종료
+          </button>
+        </div>
+      )}
+
       <div className="chat-header">
         <span className="back-button" onClick={() => navigate(-1)}>
           &lt;
         </span>
         <span className="buddy-name">{otherBuddyName}</span>
-        <button className="video-call-button" onClick={() => alert("비디오 통화 기능은 아직 구현되지 않았습니다.")}>
-          <i className="bi bi-camera-video-fill"></i>
+        <button className="video-call-button" onClick={isCalling ? hangUp : startCall}>
+          {isCalling ? (
+            <i className="bi bi-camera-video-fill off"></i>
+          ) : (
+            <i className="bi bi-camera-video-fill"></i>
+          )}
         </button>
       </div>
 
