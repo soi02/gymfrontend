@@ -73,6 +73,9 @@ const SimpleWebSocketTest = () => {
       }}>테스트1</button>
 
       <button className="btn_1" style={{
+        backgroundColor: 'rgb(85,175,178)', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트1</button>
+      <button className="btn_1" style={{
         backgroundColor: ' #2F4F4F', color: 'white', border: 'none', width: '100px', height: '30px'
       }}>테스트2</button>
       <button className="btn_1" style={{
