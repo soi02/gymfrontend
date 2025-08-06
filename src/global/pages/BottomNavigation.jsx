@@ -90,7 +90,7 @@ export default function BottomNavigation() {
         left: '50%',
         transform: 'translateX(-46.9%)',
         width: '100%',
-        maxWidth: '500px',
+        maxWidth: '425px',
         borderTopLeftRadius: '1.1rem',
         borderTopRightRadius: '1.1rem',
         overflow: 'hidden',

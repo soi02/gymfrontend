@@ -130,7 +130,7 @@ function AppContent() {
   const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '375px', margin: '0 auto' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', margin: '0 auto' }}>
       {/* 탑헤더 조건 */}
       {!shouldHideTop && <TopHeader />}
 
