@@ -123,7 +123,22 @@ const BuddyChatRoom = () => {
       }
       subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, (message) => {
         const receivedChat = JSON.parse(message.body);
-        setChats(prevChats => [...prevChats, receivedChat]);
+
+        if (receivedChat.sendBuddyId === loggedInUserId) {
+            setChats(prevChats => {
+                const updatedChats = prevChats.map(chat => {
+                    // 낙관적 업데이트 메시지를 실제 메시지로 교체
+                    if (chat.isOptimistic && chat.message === receivedChat.message) {
+                        return { ...receivedChat, isOptimistic: false };
+                    }
+                    return chat;
+                });
+                // 중복 방지 로직: 이미 존재하는 메시지라면 추가하지 않음
+                return updatedChats.some(chat => chat.id === receivedChat.id) ? updatedChats : [...updatedChats, receivedChat];
+            });
+        } else {
+            setChats(prevChats => [...prevChats, receivedChat]);
+        }
       });
     };
 
@@ -158,6 +173,16 @@ const BuddyChatRoom = () => {
         sendBuddyId: loggedInUserId,
         message: message,
       };
+
+      // ✅ 낙관적 업데이트를 위한 임시 메시지 생성
+      const tempMessage = {
+          ...chatMessage,
+          isOptimistic: true,
+          read: false,
+          sentAt: new Date().toISOString() // 클라이언트 시간으로 임시 표시
+      };
+      setChats(prevChats => [...prevChats, tempMessage]);
+
       stompClient.current.publish({
         destination: `/app/chat/send`,
         body: JSON.stringify(chatMessage),
