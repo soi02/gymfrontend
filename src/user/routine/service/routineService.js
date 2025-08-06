@@ -1,11 +1,17 @@
 import axios from "axios"
 import { useSelector } from "react-redux";
 
+
+const API_BASE_URL = "http://localhost:8080/api/routine";
+
+
 export default function useRoutineService() {
 
     const BASE_URL = "http://localhost:8080/api/routine";
 
     const userId = useSelector(state => state.auth.id);
+
+    
 
     const getWorkoutList = async() => {
         const response = await axios.get(`${BASE_URL}/getArticleList`);
@@ -31,10 +37,17 @@ export default function useRoutineService() {
         return response.data;
     }
 
-    const getRoutinesByUserId = async(userId)  => {
-        const response = await axios.get(`${BASE_URL}/getRoutinesByUserId/${userId}`);
+    const getRoutinesByUserId = async (userId) => {
+        const token = localStorage.getItem("token");
+
+        const response = await axios.get(`${BASE_URL}/getRoutinesByUserId/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        });
+
         return response.data;
-    }
+    };
 
       const getRoutineDetail = async (routineId) => {
         const response = await axios.get(`${BASE_URL}/list/${routineId}`);
