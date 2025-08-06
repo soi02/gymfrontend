@@ -72,6 +72,7 @@ const SimpleWebSocketTest = () => {
         backgroundColor: 'rgb(182,212,214)', color: 'white', border: 'none', width: '100px', height: '30px'
       }}>테스트1</button>
 
+      {/* 새로추가한 민트 */}
       <button className="btn_1" style={{
         backgroundColor: 'rgb(85,175,178)', color: 'white', border: 'none', width: '100px', height: '30px'
       }}>테스트1</button>
