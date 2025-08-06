@@ -40,7 +40,7 @@ const SimpleWebSocketTest = () => {
       console.error('❌ STOMP 프로토콜 오류 발생:', frame);
       console.error('오류 정보:', frame.headers['message']);
     };
-    
+
     stompClient.onDisconnect = () => {
       console.log('⚠️ WebSocket 연결이 끊어졌습니다.');
     };
@@ -61,7 +61,81 @@ const SimpleWebSocketTest = () => {
     <div>
       <h1>간단한 WebSocket 연결 테스트</h1>
       <p>개발자 도구(F12)의 콘솔과 네트워크 탭을 확인하세요.</p>
-    </div>
+      
+      <button className="btn_1" style={{
+        backgroundColor: 'rgb(78, 142, 153)', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트1</button>
+      <button className="btn_1" style={{
+        backgroundColor: 'rgb(121,170,178)', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트1</button>
+      <button className="btn_1" style={{
+        backgroundColor: 'rgb(182,212,214)', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트1</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #2F4F4F', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트2</button>
+      <button className="btn_1" style={{
+        backgroundColor: ' #2B3D5B', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트2</button>
+      <button className="btn_1" style={{
+        backgroundColor: ' #7c1d0d', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트2</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #FFF7D2', color: 'black', border: 'none', width: '100px', height: '30px'
+      }}>테스트3</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #5E8276', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트3</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #001439', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트3</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #fff9e3', color: 'black', border: 'none', width: '100px', height: '30px'
+      }}>테스트4</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #ffb300', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트5</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #E2C04B', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트5</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #5E8276', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트5</button>
+
+      <button className="btn_1" style={{
+        backgroundColor: ' #C9373D', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트5</button>
+      <button className="btn_1" style={{
+        backgroundColor: ' #6F8A5D', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트5</button>
+      <button className="btn_1" style={{
+        backgroundColor: ' #2D4059', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트5</button>
+
+
+      안녕
+      <button className="btn_1" style={{
+        backgroundColor: ' #2F4F4F', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트2</button>
+       <button className="btn_1" style={{
+        backgroundColor: ' #7c1d0d', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트2</button>
+      <button className="btn_1" style={{
+        backgroundColor: ' #FFF7D2', color: 'black', border: 'none', width: '100px', height: '30px'
+      }}>테스트3</button>
+      <button className="btn_1" style={{
+        backgroundColor: ' #001439', color: 'white', border: 'none', width: '100px', height: '30px'
+      }}>테스트3</button>
+
+    </div>    
   );
 };
 

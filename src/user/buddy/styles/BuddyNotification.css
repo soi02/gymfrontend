@@ -79,7 +79,7 @@
   cursor: pointer;
 }
 
-.btn-cancel {
+.btn-cancel, .btn-go-to-chat {
   background-color: transparent;
   color: #888;
   border: 1px solid #ccc;

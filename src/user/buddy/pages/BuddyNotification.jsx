@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom';
 import '../styles/BuddyNotification.css';
 
 export default function BuddyNotification() {
     const [notifications, setNotifications] = useState([]);
     const auth = useSelector(state => state.auth);
     const token = localStorage.getItem('token');
-    const navigate = useNavigate(); // ✅ 추가
+    const navigate = useNavigate();
 
     // 알림 목록 불러오기
     const fetchNotifications = async () => {
@@ -63,8 +63,8 @@ export default function BuddyNotification() {
 
             if (status === '수락') {
                 alert("요청을 수락했습니다. 채팅방으로 이동합니다.");
-                // navigate(`/chatroom/${id}/${auth.id}`); // ✅ 채팅방으로 이동
-                navigate(`/gymmadang/buddy/buddyChat/${id}`); // ✅ App.jsx의 경로와 일치
+                // ✅ 수락 처리 후 다시 알림 목록을 불러와서 UI를 갱신
+                fetchNotifications(); 
             } else {
                 alert("요청을 거절했습니다.");
                 fetchNotifications(); // 목록 갱신
@@ -89,6 +89,11 @@ export default function BuddyNotification() {
             console.error("요청 취소 실패:", err);
         }
     };
+    
+    // ✅ '바로 채팅 가기' 버튼 클릭 핸들러 추가
+    const handleGoToChat = (matchingId) => {
+        navigate(`/gymmadang/buddy/buddyChat/${matchingId}`);
+    };
 
     return (
         <div className="buddy-container">
@@ -107,12 +112,36 @@ export default function BuddyNotification() {
 
                         <div className="buddy-buttons">
                             {noti.type === 'received' ? (
+                                // ✅ 요청을 받은 경우 상태에 따라 다른 버튼을 렌더링
                                 <>
-                                    <button className="btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
-                                    <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
+                                    {noti.status === '대기' ? (
+                                        <>
+                                            <button className="btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
+                                            <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
+                                        </>
+                                    ) : noti.status === '수락' ? (
+                                        <button 
+                                            className="btn-go-to-chat" 
+                                            onClick={() => handleGoToChat(noti.id)}
+                                        >
+                                            바로 채팅 가기
+                                        </button>
+                                    ) : null}
                                 </>
                             ) : (
-                                <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청취소</button>
+                                // ✅ 요청을 보낸 경우
+                                <>
+                                    {noti.status === '수락' ? (
+                                        <button 
+                                            className="btn-go-to-chat" 
+                                            onClick={() => handleGoToChat(noti.id)}
+                                        >
+                                            바로 채팅 가기
+                                        </button>
+                                    ) : (
+                                        <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청 취소</button>
+                                    )}
+                                </>
                             )}
                         </div>
                     </li>
