@@ -15,8 +15,8 @@ const BuddyChatRoom = () => {
 
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
+  const [otherBuddyName, setOtherBuddyName] = useState('상대방');
 
-  // ✅ 이미지 URL을 완성해주는 함수
   const getFullImageUrl = (filename) => {
     if (filename && filename.startsWith('http')) {
       return filename;
@@ -42,14 +42,34 @@ const BuddyChatRoom = () => {
       console.log('기존 채팅 기록:', res.data);
       if (Array.isArray(res.data)) {
         setChats(res.data);
-      } else if (res.data && res.data.chats) {
-        setChats(res.data.chats);
+        const otherChat = res.data.find(chat => chat.sendBuddyId !== loggedInUserId);
+        if (otherChat) {
+          setOtherBuddyName(otherChat.senderName);
+        }
       } else {
         setChats([]);
       }
     } catch (error) {
       console.error("채팅 기록 불러오기 실패:", error);
       setChats([]);
+    }
+  };
+
+  const markChatsAsRead = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("토큰이 없어 메시지를 읽음 처리할 수 없습니다.");
+        return;
+      }
+      await axios.post(`http://localhost:8080/api/buddy/chat/read/${matchingId}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('메시지 읽음 처리 완료!');
+    } catch (error) {
+      console.error("메시지 읽음 처리 실패:", error);
     }
   };
 
@@ -71,7 +91,11 @@ const BuddyChatRoom = () => {
       return;
     }
 
-    fetchChats();
+    const setupChatRoom = async () => {
+      await fetchChats();
+      await markChatsAsRead();
+    };
+    setupChatRoom();
 
     if (stompClient.current && stompClient.current.connected) {
       console.log("기존 연결이 있어 정리 후 다시 연결합니다.");
@@ -153,16 +177,25 @@ const BuddyChatRoom = () => {
     return `${hours}:${minutes}`;
   };
 
-  const getOtherName = () => {
-    if (chats.length > 0) {
-      const firstChat = chats[0];
-      if (firstChat.sendBuddyId !== loggedInUserId) {
-        return firstChat.senderName || '상대방';
-      }
-      const otherChat = chats.find(chat => chat.sendBuddyId !== loggedInUserId);
-      return otherChat ? otherChat.senderName : '상대방';
+  const formatDateDivider = (isoString) => {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const weekdays = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+    const weekday = weekdays[date.getDay()];
+
+    return `${year}년 ${month}월 ${day}일 ${weekday}`;
+  };
+
+  const isNewDay = (currentChat, previousChat) => {
+    if (!previousChat) {
+      return true; // 첫 번째 메시지는 항상 날짜 구분선 표시
     }
-    return '상대방';
+    const currentDate = new Date(currentChat.sentAt).toDateString();
+    const previousDate = new Date(previousChat.sentAt).toDateString();
+    return currentDate !== previousDate;
   };
 
   return (
@@ -171,7 +204,7 @@ const BuddyChatRoom = () => {
         <span className="back-button" onClick={() => navigate(-1)}>
           &lt;
         </span>
-        <span className="buddy-name">{getOtherName()}</span>
+        <span className="buddy-name">{otherBuddyName}</span>
         <button className="video-call-button" onClick={() => alert("비디오 통화 기능은 아직 구현되지 않았습니다.")}>
           <i className="bi bi-camera-video-fill"></i>
         </button>
@@ -180,31 +213,37 @@ const BuddyChatRoom = () => {
       <div className="chat-messages" ref={chatMessagesRef}>
         {chats.map((chat, index) => {
           const isMyMessage = chat.sendBuddyId === loggedInUserId;
-          const showSenderInfo = !isMyMessage;
-          const isConsecutiveMessage = index > 0 && chats[index - 1].sendBuddyId === chat.sendBuddyId;
+          const showDateDivider = isNewDay(chat, chats[index - 1]);
 
           return (
-            <div
-              key={index}
-              className={`chat-message ${isMyMessage ? 'my-message' : 'other-message'}`}
-            >
-              {/* 상대방 메시지일 경우에만 프로필 사진을 항상 표시 */}
-              {!isMyMessage && (
-                <img
-                  src={getFullImageUrl(chat.senderProfileImageUrl)}
-                  alt={`${chat.senderName}님의 프로필 사진`}
-                  className="profile-pic"
-                />
+            <React.Fragment key={index}>
+              {showDateDivider && (
+                <div className="date-divider">
+                  <span>{formatDateDivider(chat.sentAt)}</span>
+                </div>
               )}
+              <div
+                className={`chat-message ${isMyMessage ? 'my-message' : 'other-message'}`}
+              >
+                {!isMyMessage && (
+                  <img
+                    src={getFullImageUrl(chat.senderProfileImageUrl)}
+                    alt={`${chat.senderName}님의 프로필 사진`}
+                    className="profile-pic"
+                  />
+                )}
+                <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
+                  {chat.message}
+                </div>
 
-              <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
-                {chat.message}
+                <div className="message-time">
+                  {isMyMessage && !chat.read && (
+                    <span className="unread-count">1</span>
+                  )}
+                  <span>{formatTime(chat.sentAt)}</span>
+                </div>
               </div>
-
-              <div className="message-time">
-                {formatTime(chat.sentAt)}
-              </div>
-            </div>
+            </React.Fragment>
           );
         })}
       </div>

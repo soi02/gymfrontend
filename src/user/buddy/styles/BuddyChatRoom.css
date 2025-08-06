@@ -142,3 +142,25 @@
     background: none;
     border: none; /* 추가: 버튼 테두리 제거 */
 }
+
+.message-time .unread-count {
+  margin-right: 5px; /* 시간과의 간격 */
+  font-size: 12px;
+  color: #888;
+}
+
+/* 날짜 구분선 스타일 */
+.date-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0; /* 위아래 여백 */
+}
+
+.date-divider span {
+  background-color: rgba(255, 255, 255, 0.1); /* 반투명 배경색 */
+  padding: 5px 15px;
+  border-radius: 15px;
+  color: #585858; /* 글자색 */
+  font-size: 12px;
+}
