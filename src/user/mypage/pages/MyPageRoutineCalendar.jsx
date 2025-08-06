@@ -87,6 +87,8 @@ setWorkoutSummary(response.data.length > 0 ? response.data[0] : null);
 
 
 
+console.log("🕒 클라이언트 현재 시간:", new Date());
+console.log("🕒 타임존 오프셋 (분):", new Date().getTimezoneOffset());
 
 
 
