@@ -42,14 +42,14 @@ useEffect(() => {
 
 
 
-      <div className="result-summary-box">
+      <div className="routine-result-summary-box">
         {Array.from(new Set(workoutList.map(w => w.elementName))).map((name, idx) => {
           const reps = workoutList.find(w => w.elementName === name)?.reps;
           const kg = workoutList.find(w => w.elementName === name)?.kg;
           const count = workoutList.filter(w => w.elementName === name).length;
 
           return (
-            <div key={idx} className="result-summary-row">
+            <div key={idx} className="routine-result-summary-row">
               <span>{name}</span>
               <span>{kg}kg x {reps}회 x {count}세트</span>
             </div>
@@ -57,7 +57,7 @@ useEffect(() => {
         })}
       </div>
 
-      <div className="result-icons">
+      <div className="routine-result-icons">
         <span>🏋️‍♀️ {summary.totalSets}세트</span>
         <span>🔥 {summary.totalCalories}kcal</span>
         <span>⏱ {summary.totalMinutes.toString().padStart(2, "0")}:00</span>

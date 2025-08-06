@@ -1,14 +1,14 @@
 .main-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: auto;
-    text-align: center;
+  text-align: center;
 
 }
 
 .main-image {
-  width: 93%;
+  width: 95%;
   display: block;
   margin: 0 auto;
 }

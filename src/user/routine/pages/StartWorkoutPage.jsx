@@ -180,7 +180,7 @@ export default function StartWorkoutPage() {
                         {currentSets.map((set, i) => (
                           <div key={i} className="set-row">
                             <span>{i + 1}세트</span>
-                            <div className="input-with-unit">
+                            <div className="routine-input-with-unit">
                             <input
                               type="number"
                               value={String(set.kg ?? "")}
@@ -204,10 +204,10 @@ export default function StartWorkoutPage() {
                               }}
                             />
 
-                              <span className="unit">kg</span>
+                              <span className="routine-unit">kg</span>
                             </div>
 
-                            <div className="input-with-unit">
+                            <div className="routine-input-with-unit">
                             <input
                               type="number"
                               value={String(set.reps ?? "")}
@@ -233,7 +233,7 @@ export default function StartWorkoutPage() {
                             />
 
 
-                              <span className="unit">회</span>
+                              <span className="routine-unit">회</span>
                             </div>
 
                             <input
@@ -267,16 +267,16 @@ export default function StartWorkoutPage() {
                   </>
                 )}
 
-                <div className="rest-timer-toggle">
-                  <label className="switch">
+                <div className="routine-rest-timer-toggle">
+                  <label className="routine-switch">
                     <input
                       type="checkbox"
                       checked={useRestTimer}
                       onChange={(e) => setUseRestTimer(e.target.checked)}
                     />
-                    <span className="slider" />
+                    <span className="routine-slider" />
                   </label>
-                  <span className="label-text">휴식 타이머</span>
+                  <span className="routine-label-text">휴식 타이머</span>
                 </div>
 
 
@@ -307,7 +307,7 @@ export default function StartWorkoutPage() {
                     <button disabled={currentIndex === exerciseList.length - 1} onClick={() => setCurrentIndex((i) => i + 1)}>다음 ➡</button>
                 </div> */}
                 {showTimerModal && (
-                  <div className="timer-modal">
+                  <div className="routine-timer-modal">
                     <div className="timer-modal-content">
                       <p>⏳ 휴식시간: {countdown}초</p>
                       <button onClick={() => {

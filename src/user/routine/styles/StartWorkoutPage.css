@@ -74,12 +74,12 @@
   margin-right: 8px;
 }
 
-.input-with-unit input {
+.routine-input-with-unit input {
   width: 60px;
   text-align: center;
 }
 
-.unit {
+.routine-unit {
   font-size: 0.9rem;
   color: #666;
 }
@@ -104,7 +104,7 @@
   cursor: pointer;
 }
 
-.timer-modal {
+.routine-timer-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -117,7 +117,7 @@
   z-index: 999;
 }
 
-.timer-modal-content {
+.routine-timer-modal-content {
   background: white;
   padding: 2rem;
   border-radius: 10px;
@@ -125,7 +125,7 @@
 }
 
 /* 전체 wrapper */
-.rest-timer-toggle {
+.routine-rest-timer-toggle {
   display: flex;
   flex-direction: column;  /* 수직 정렬 */
   justify-content: center;
@@ -135,21 +135,21 @@
 
 
 /* 토글 스위치 전체 */
-.switch {
+.routine-switch {
   position: relative;
   display: inline-block;
   width: 48px;
   height: 26px;
 }
 
-.switch input {
+.routine-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
 /* 슬라이더 스타일 */
-.slider {
+.routine-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -161,7 +161,7 @@
   transition: 0.4s;
 }
 
-.slider::before {
+.routine-slider::before {
   position: absolute;
   content: "";
   height: 20px;
@@ -174,15 +174,15 @@
 }
 
 /* 토글 ON 상태 */
-input:checked + .slider {
+input:checked + .routine-slider {
   background-color: #e8dc82;
 }
 
-input:checked + .slider::before {
+input:checked + .routine-slider::before {
   transform: translateX(22px);
 }
 
 /* 텍스트 스타일 */
-.label-text {
+.routine-label-text {
   margin-left: 0.5rem;
 }
