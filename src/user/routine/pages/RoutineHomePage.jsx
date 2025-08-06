@@ -44,6 +44,8 @@ export default function RoutineHomePage() {
 
 
 
+
+
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -59,6 +61,9 @@ export default function RoutineHomePage() {
 
     return(
         <>
+        <div className="main-content">
+
+
         
           <div className="routine-homepage-body">
             <div className="routine-homepage-container">
@@ -120,6 +125,8 @@ export default function RoutineHomePage() {
             </div>
 
           </div>
+
+        </div>
         </>
     )
 }
