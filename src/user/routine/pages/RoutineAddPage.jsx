@@ -156,7 +156,7 @@ export default function RoutineAddPage() {
                     </div>
                 </div>
 
-                <div style={{ flex: 1, overflowY: "auto", padding: "1rem"}}>
+                <div style={{ flex: 1, overflowY: "auto", padding: "1rem", paddingTop: "0.3rem"}}>
                     <input
                         type="text"
                         className="form-control"

@@ -125,7 +125,7 @@ export default function RoutineAddDetailPage() {
         <>
             <div className="routine-main-content">
                 <div className="row">
-                    <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
+                    <div className="col" style={{ paddingTop: "0rem", paddingLeft: "1rem" }}>
                         <h3>루틴 세부설정</h3>
                         <p>
                             운동별 세트 수, 무게, 횟수를 설정해보시오.
