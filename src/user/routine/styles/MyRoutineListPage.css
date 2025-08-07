@@ -3,11 +3,12 @@
   height: 100vh;
   overflow-y: auto;
   padding: 1rem;
+  padding-bottom: 10rem;
   background: #fff;
 }
 
 
-.back-btn {
+.routine-back-btn {
   font-size: 1.5rem;
   margin-right: 1rem;
   background: none;
@@ -16,21 +17,39 @@
   cursor: pointer;
 }
 
-.exercise-card {
+.routine-exercise-card {
   display: flex;
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #3333331a;
 }
 
-.exercise-img {
+.routine-exercise-img {
   width: 55px;
   height: auto;
   margin-right: 1rem;
 }
 
-.exercise-info {
+.routine-exercise-info {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
 }
+
+.do-this-routine-btn {
+  display: block;
+  margin: 2rem auto 1rem auto; /* 위-좌우-아래 마진 */
+  width: 90%;
+  max-width: 400px;
+  padding: 1rem;
+  background: #7b2f27;
+  color: white;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+

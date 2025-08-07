@@ -44,6 +44,8 @@ export default function RoutineHomePage() {
 
 
 
+
+
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -59,13 +61,20 @@ export default function RoutineHomePage() {
 
     return(
         <>
+        <div className="main-content">
+
+
         
           <div className="routine-homepage-body">
             <div className="routine-homepage-container">
               <div className="routine-homepage-content">
-                <h2 className="routine-homepage-title"></h2>
-        
+
+              <div className="divider-line"></div>
+
                 {/* 캐릭터, 말풍선 */}
+                <div className="routine-homepage-title">
+                  득근록
+                </div>
 
                 <div className="row">
                   {/* 캐릭터 */}
@@ -88,7 +97,11 @@ export default function RoutineHomePage() {
 
                 <div className="row">
                   <div className="col" style={{textAlign: 'left',paddingLeft: '1.5rem', marginBottom: '0.5rem'}}>
-                    <h5>나의 루틴</h5>
+                    <h5
+                    style={{fontSize: '1.1rem',
+                            fontWeight: '600'
+                            }}
+                    >나의 루틴</h5>
                   </div>
                 </div>
 
@@ -120,6 +133,8 @@ export default function RoutineHomePage() {
             </div>
 
           </div>
+
+        </div>
         </>
     )
 }

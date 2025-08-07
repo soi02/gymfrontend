@@ -189,7 +189,7 @@ export default function RoutineFreePage() {
                     />
 
                     <div
-                        className="hide-scrollbar"
+                        className="routine-hide-scrollbar"
                         style={{
                             overflowX: "auto",
                             whiteSpace: "nowrap",

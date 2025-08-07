@@ -123,7 +123,7 @@ export default function RoutineAddDetailPage() {
 
     return (
         <>
-            <div className="main-content">
+            <div className="routine-main-content">
                 <div className="row">
                     <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
                         <h3>루틴 세부설정</h3>
@@ -153,11 +153,11 @@ export default function RoutineAddDetailPage() {
                 <div className="routine-scroll-area">
 
                     {routineData.map((workout, workoutIdx) => (
-                        <div key={workout.elementId} className="workout-box">
-                            <div className="workout-header">
+                        <div key={workout.elementId} className="routine-workout-box">
+                            <div className="routine-workout-header">
                                 <span>{workout.elementName}</span>
                                 <button
-                                    className="delete-workout-btn"
+                                    className="routine-delete-workout-btn"
                                     onClick={() => removeWorkout(workoutIdx)}
                                     title="운동 항목 삭제"
                                 >
@@ -166,7 +166,7 @@ export default function RoutineAddDetailPage() {
                             </div>
 
                             {workout.sets.map((set, setIdx) => (
-                                <div key={setIdx} className="set-row">
+                                <div key={setIdx} className="routine-set-row">
                                     <span>{setIdx + 1}세트</span>
                                     <input
                                         type="number"
@@ -182,7 +182,7 @@ export default function RoutineAddDetailPage() {
                                     <span>회</span>
                                     <button
                                         onClick={() => removeSet(workoutIdx, setIdx)}
-                                        className="delete-set-btn"
+                                        className="routine-delete-set-btn"
                                         title="세트 삭제"
                                     >
                                         <span className="material-symbols-outlined">
@@ -195,14 +195,14 @@ export default function RoutineAddDetailPage() {
                     ))}
 
                 </div>
-                <div className="sticky-save-btn">
+                <div className="routine-sticky-save-btn">
                     {/* <button onClick={handleSave}>루틴 저장하기</button> */}
                     <button onClick={() => setShowModal(true)}>루틴 저장하기</button>
                 </div>
                 
                 {showModal && (
-                    <div className="modal-overlay">
-                        <div className="modal-box">
+                    <div className="routine-modal-overlay">
+                        <div className="routine-modal-box">
                             <h5>루틴 이름을 입력해주시오.</h5>
                             <input 
                                 type="text"
@@ -210,7 +210,7 @@ export default function RoutineAddDetailPage() {
                                 onChange={(e) => setRoutineName(e.target.value)}
                                 placeholder="예: 하체 부수기"
                             />
-                            <div className="modal-btns">
+                            <div className="routine-modal-btns">
                                 <button onClick={() => setShowModal(false)}>취소</button>
                                 <button onClick={handleSave}>저장</button>
                             </div>

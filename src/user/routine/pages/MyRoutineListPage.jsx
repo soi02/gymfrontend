@@ -39,16 +39,16 @@ export default function MyRoutineListPage() {
     <div className="routine-detail-page">
       {/* 상단 헤더 */}
       <div className="routine-detail-header">
-        <button className="back-btn" onClick={() => navigate(-1)}>←</button>
+        <button className="routine-back-btn" onClick={() => navigate(-1)}>←</button>
         <h3>{routineName}</h3>
       </div>
 
       {/* 운동 리스트 */}
       <div className="routine-detail-list">
         {exerciseList.map((exercise, idx) => (
-          <div key={idx} className="exercise-card">
-            <img src={`http://localhost:8080/uploadFiles/${exercise.elementPicture}`} alt={exercise.name} className="exercise-img" />
-            <div className="exercise-info">
+          <div key={idx} className="routine-exercise-card">
+            <img src={`http://localhost:8080/uploadFiles/${exercise.elementPicture}`} alt={exercise.name} className="routine-exercise-img" />
+            <div className="routine-exercise-info">
 
               <div className="exercise-name">{exercise.categoryName}</div>
               <div className="exercise-name">{exercise.elementName}</div>
@@ -61,7 +61,7 @@ export default function MyRoutineListPage() {
 
       <div>
         {/* <button>수정하기</button> */}
-        <button onClick={() => navigate(`/gymmadang/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
+        <button className='do-this-routine-btn' onClick={() => navigate(`/gymmadang/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
       </div>
     </div>
     </div>

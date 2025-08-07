@@ -1,11 +1,9 @@
-html, body {
+
+.routine-homepage-body {
   margin: 0;
   padding: 0;
   height: 100vh;
   overflow: hidden;
-}
-
-.routine-homepage-body {
   background-color: #ffffff;
   height: 100vh;
   display: flex;
@@ -16,9 +14,9 @@ html, body {
 
 .routine-homepage-container {
   width: 100%;
-  max-width: 375px;
   height: 100vh;  
-  padding: 14px;
+  padding: 10px;
+  padding-top: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -29,16 +27,28 @@ html, body {
 .routine-homepage-content {
   width: 100%;
   text-align: center;
-  padding-top: 14px;
+  /* margin-top: 0; */
+  /* padding-top: 14px; */
   box-sizing: border-box;
 }
 
+.divider-line {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+  margin: 8px 0;
+}
+
+
+
+
 .routine-homepage-title {
-  font-size: 1.9rem;
-  font-weight: bold;
-  line-height: 1.5;
-  color: #111;
-  margin-bottom: 14px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-top: 0;
+    color: #111;
+    margin-bottom: 0.6rem;
+  /* margin-bottom: 14px; */
 }
 
 
@@ -73,27 +83,34 @@ html, body {
 
 .routine-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-top: 0px;
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
+  gap: 15px;
+  margin-top: 7px;
   padding: 0 10px;
 }
 
 .routine-card {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
+  /* background: #fff8dd; */
+  background: #fff9e3;
+  /* background: #fff4cc; */
+  color: #333;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 16px;
+  /* padding: 14px 12px; */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
 }
 
 .routine-card:hover {
   transform: scale(1.03);
-  background-color: #fff9e3;
-
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
+
+
+
 
 .routine-bottom-buttons {
   position: fixed;
@@ -101,7 +118,7 @@ html, body {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 375px;
+  max-width: 425px;
   padding: 0 14px;
   display: flex;
   justify-content: space-between;
