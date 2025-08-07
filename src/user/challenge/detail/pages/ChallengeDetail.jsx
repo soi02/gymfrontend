@@ -7,47 +7,68 @@ import '../styles/ChallengeDetail.css';
 import { useSelector } from 'react-redux';
 import apiClient from '../../../../global/api/apiClient';
 
+
+
+
+
+
 export default function ChallengeDetail() {
-  const { challengeId } = useParams();
-  console.log("URL에서 추출된 challengeId:", challengeId); 
+  const { challengeId } = useParams();
+  const navigate = useNavigate();
+  const [challenge, setChallenge] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const navigate = useNavigate();
-  const [challenge, setChallenge] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  // ★ 추가: 결제 URL을 저장할 상태
-  const [paymentUrl, setPaymentUrl] = useState(''); 
+  const userId = useSelector(state => state.auth.id); 
+  const BACKEND_BASE_URL = "http://localhost:8080"; 
 
-  const userId = useSelector(state => state.auth.id); 
-  const BACKEND_BASE_URL = "http://localhost:8080"; 
+  useEffect(() => {
+    // URLSearchParams를 사용하여 현재 URL에서 쿼리 파라미터를 추출합니다.
+    const urlParams = new URLSearchParams(window.location.search);
+    const pgToken = urlParams.get('pg_token');
+    const challengeIdFromUrl = urlParams.get('challengeId');
+    const userIdFromUrl = urlParams.get('userId');
 
-  useEffect(() => {
-    if (!challengeId) {
-      alert("잘못된 접근입니다.");
-      navigate('/gymmadang/challenge/challengeHome');
-      return;
-    }
+    // 결제 성공 후 리다이렉트된 경우
+    if (pgToken && challengeIdFromUrl && userIdFromUrl) {
+      console.log("결제 성공 리다이렉트 감지. pg_token:", pgToken);
+      // 백엔드의 결제 성공 API 호출은 백엔드 내부적으로 처리되므로, 
+      // 프론트엔드는 결제 성공 후 보여줄 페이지로 이동하면 됩니다.
+      alert('결제가 성공적으로 완료되었습니다! 챌린지에 참여합니다.');
+      // 챌린지 상세 페이지로 돌아가기 위해 URL을 정리하고 상태를 업데이트합니다.
+      // 또는 마이페이지 등으로 이동시킬 수 있습니다.
+      navigate(`/gymmadang/challenge/detail/${challengeId}`, { replace: true });
+      return;
+    }
+    
+    // 정상적인 챌린지 상세 페이지 로딩
+    if (!challengeId) {
+      alert("잘못된 접근입니다.");
+      navigate('/gymmadang/challenge/challengeHome');
+      return;
+    }
 
-    const fetchChallengeDetail = async () => {
-      try {
-        const params = {
-          challengeId: challengeId
-        };
-        if (userId) {
-          params.userId = userId;
-        }
+    const fetchChallengeDetail = async () => {
+      try {
+        const params = {
+          challengeId: challengeId
+        };
+        if (userId) {
+          params.userId = userId;
+        }
 
-        const res = await apiClient.get('/challenge/getChallengeDetailByChallengeIdProcess', { params });
-        console.log("챌린지 상세 데이터 수신:", res.data);
-        setChallenge(res.data);
-      } catch (err) {
-        console.error("챌린지 상세 실패", err);
-        alert("챌린지를 불러올 수 없습니다.");
-        navigate('/gymmadang/challenge/challengeHome');
-      }
-    };
+        const res = await apiClient.get('/challenge/getChallengeDetailByChallengeIdProcess', { params });
+        console.log("챌린지 상세 데이터 수신:", res.data);
+        setChallenge(res.data);
+      } catch (err) {
+        console.error("챌린지 상세 실패", err);
+        alert("챌린지를 불러올 수 없습니다.");
+        navigate('/gymmadang/challenge/challengeHome');
+      }
+    };
 
-    fetchChallengeDetail();
-  }, [challengeId, userId, navigate]);
+    fetchChallengeDetail();
+  }, [challengeId, userId, navigate]);
+
 
     if (!challenge) return <div>로딩 중...</div>;
 
@@ -62,7 +83,7 @@ export default function ChallengeDetail() {
     challengeKeywords = [],
     participantCount = 0,
     challengeDepositAmount = 0, // ★ 추가: 보증금 필드
-  } = challenge;
+  } = challenge || {}; // challenge가 null일 경우 빈 객체를 기본값으로 사용
 
   const imageUrl = challengeThumbnailPath 
     ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` 
@@ -110,34 +131,35 @@ else if (today < recruitStart) {
   };
 
   // ★ 추가: 결제 시작 핸들러 함수
-  const handlePaymentStart = async () => {
-    if (!userId) {
-      alert("로그인 후 이용 가능합니다.");
-      navigate('/gymmadang/login');
-      return;
-    }
+const handlePaymentStart = async () => {
+  if (!userId) {
+    alert("로그인 후 이용 가능합니다.");
+    navigate('/gymmadang/login');
+    return;
+  }
 
-    try {
-      const res = await apiClient.post(
-        `/challenge/join/payment`, 
-        null, // POST 요청이지만 바디에 보낼 데이터가 없음
-        {
-          params: { userId, challengeId }, // 쿼리 파라미터로 전송
-        }
-      );
-      
-      // 결제 준비 응답에서 PC용 리다이렉트 URL을 가져와서 새 창으로 엽니다.
-      if (res.data && res.data.next_redirect_pc_url) {
-        window.location.href = res.data.next_redirect_pc_url;
-      } else {
-        alert("결제 준비에 실패했습니다.");
-      }
+  try {
+    const res = await apiClient.post(
+      `/challenge/join/payment`, 
+      null,
+      {
+        params: { userId, challengeId },
+      }
+    );
+    
+    // 백엔드에서 PaymentReadyResponse DTO를 반환하므로,
+    // DTO의 redirectUrl 필드를 사용합니다.
+    if (res.data && res.data.redirectUrl) {
+      window.location.href = res.data.redirectUrl;
+    } else {
+      alert("결제 준비에 실패했습니다.");
+    }
 
-    } catch (err) {
-      console.error("결제 실패", err);
-      alert("결제 과정 중 오류가 발생했습니다: " + err.response.data);
-    }
-  };
+  } catch (err) {
+    console.error("결제 실패", err);
+    alert("결제 과정 중 오류가 발생했습니다: " + (err.response?.data || err.message));
+  }
+};
 
 
   return (
@@ -151,7 +173,7 @@ else if (today < recruitStart) {
         <h2>{challengeTitle}</h2>
         <p className="challenge-detail-description">{challengeDescription}</p>
         <div className="challenge-detail-info">
-          <div>💸 보증금: {challengeDepositAmount.toLocaleString()}원</div> {/* ★ 추가: 보증금 표시 */}
+          <div>💸 보증금: {challenge?.challengeDepositAmount.toLocaleString() || 0}원</div>
           <div>📅 모집 기간: {challengeRecruitStartDate} ~ {challengeRecruitEndDate}</div>
           <div>🕒 진행 기간: {challengeDurationDays}일</div> 
           <div>👥 {participantCount}명 / {challengeMaxMembers}명</div>

@@ -87,7 +87,7 @@ export default function ChallengeCreateStepper() {
         formDataToSend.append("challengeTitle", updated.challengeTitle || '');
         formDataToSend.append("challengeDescription", updated.challengeDescription || '');
         formDataToSend.append("challengeMaxMembers", updated.challengeMaxMembers || 0);
-        formDataToSend.append("challengeDepositAmount", updated.challengeDepositAmount || 0);
+        formDataToSend.append("challengeDepositAmount", String(updated.challengeDepositAmount) || 0);
         formDataToSend.append("challengeRecruitStartDate", updated.challengeRecruitStartDate || '');
         formDataToSend.append("challengeRecruitEndDate", updated.challengeRecruitEndDate || '');
         // formDataToSend.append("challengeStartDate", updated.challengeStartDate || '');

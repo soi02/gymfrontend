@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Stomp from 'stompjs';
-import '../styles/GroupChatRoom.css';
+// import '../styles/GroupChatRoom.css';
 import apiClient from '../../../../global/api/apiClient';
 
 export default function GroupChatRoom() {
