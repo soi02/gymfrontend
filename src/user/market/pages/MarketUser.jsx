@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MarketBottomFixed from "../commons/test/example/MarketBottomFixed";
 import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketUserInfosOnUserPage from "../commons/test/example/MarketUserInfosOnUserPage";
@@ -6,6 +6,7 @@ import MarketAnonymousUserMiniProfileImage from "../components/test/example/Mark
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
 import { Link } from "react-router-dom";
+import useMarketAPI from "../service/MarketService";
 
 function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
     
@@ -227,7 +228,7 @@ export default function MarketUserPage() {
     const defaultUserStatus = 1004;
     
     const [marketUserInfo, setMarketUserInfo] = useState([
-        {id : 1004, marketUserNickname : "GoodDevil"}
+        {id : 0, userId : 0, nickname : "ERROR", createdAt : "1970-01-01T00:00:00"}
     ])
     
     const constMarketUserInfoElement =
@@ -305,6 +306,26 @@ export default function MarketUserPage() {
     
     const constmarketuserRateElementList = 
     marketuserRateList.map(userRateElement => <MarketUserRateElement key = {userRateElement.id} marketUserRateElem1 = {userRateElement}/>);
+    
+    const marketAPI = useMarketAPI();
+    
+    useEffect(() => {
+        
+        const constUseEffect = async () => {
+            
+            try {
+                const constGetSelectMarketUserInfo = await marketAPI.getSelectMarketUserInfo(1004);
+                console.log(constGetSelectMarketUserInfo);
+                setMarketUserInfo([constGetSelectMarketUserInfo]);
+            } catch (error) {
+                console.error("로드 실패:", error);
+            }
+            
+        }
+        
+        constUseEffect();
+        
+    }, []);
     
     function MarketUserBoughtProductPageLayout() {
         

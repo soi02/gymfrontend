@@ -17,12 +17,12 @@ export default function MarketUserInfosOnUserPage({marketUserInfoElem1}) {
                             <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "3vh", fontWeight : "bold"}}>
-                                        {marketUserInfoElem1.marketUserNickname}
+                                        {marketUserInfoElem1.nickname}
                                     </div>
                                 </div>
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "2vh"}}>
-                                        #{marketUserInfoElem1.id}
+                                        #{marketUserInfoElem1.userId}
                                     </div>
                                 </div>
                             </div>
