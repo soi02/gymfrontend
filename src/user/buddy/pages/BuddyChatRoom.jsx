@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/BuddyChatRoom.css';
+import WebRtcCall from '../hooks/WebRtcCall.jsx'; 
 
 const BuddyChatRoom = () => {
   const { matchingId } = useParams();
@@ -16,15 +17,8 @@ const BuddyChatRoom = () => {
   const [chats, setChats] = useState([]);
   const [message, setMessage] = useState('');
   const [otherBuddyName, setOtherBuddyName] = useState('상대방');
-
-  // ---------------- WebRTC 관련 상태 및 레퍼런스 ----------------
-  const [localStream, setLocalStream] = useState(null);
-  const [remoteStream, setRemoteStream] = useState(null);
-  const [isCalling, setIsCalling] = useState(false);
-  const peerConnectionRef = useRef(null);
-  const localVideoRef = useRef(null);
-  const remoteVideoRef = useRef(null);
-  // -------------------------------------------------------------
+  const [isCallActive, setIsCallActive] = useState(false);
+  const [isStompConnected, setIsStompConnected] = useState(false); // ✅ STOMP 연결 상태 추가
 
   const getFullImageUrl = (filename) => {
     if (filename && filename.startsWith('http')) {
@@ -48,7 +42,6 @@ const BuddyChatRoom = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log('기존 채팅 기록:', res.data);
       if (Array.isArray(res.data)) {
         setChats(res.data);
         const otherChat = res.data.find(chat => chat.sendBuddyId !== loggedInUserId);
@@ -76,7 +69,6 @@ const BuddyChatRoom = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log('메시지 읽음 처리 완료!');
     } catch (error) {
       console.error("메시지 읽음 처리 실패:", error);
     }
@@ -86,51 +78,7 @@ const BuddyChatRoom = () => {
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
-  }, [chats, isCalling]); // isCalling 상태 변경 시에도 스크롤을 맨 아래로 내립니다.
-
-  const handleStompMessage = useCallback(async (message) => {
-    const received = JSON.parse(message.body);
-
-    if (received.type === 'CHAT_MESSAGE') {
-      // 일반 채팅 메시지 처리
-      const receivedChat = received.payload;
-      if (receivedChat.sendBuddyId === loggedInUserId) {
-        setChats(prevChats => {
-          const updatedChats = prevChats.map(chat => {
-            if (chat.isOptimistic && chat.message === receivedChat.message) {
-              return { ...receivedChat, isOptimistic: false };
-            }
-            return chat;
-          });
-          return updatedChats.some(chat => chat.id === receivedChat.id) ? updatedChats : [...updatedChats, receivedChat];
-        });
-      } else {
-        setChats(prevChats => [...prevChats, receivedChat]);
-      }
-    } else if (received.type === 'WEBRTC_SIGNAL') {
-      // WebRTC 시그널링 메시지 처리
-      const signal = received.payload;
-      console.log('WebRTC 시그널 수신:', signal);
-      
-      if (!peerConnectionRef.current && signal.type !== 'hang-up') {
-        await createPeerConnection();
-      }
-
-      if (signal.type === 'offer') {
-        await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(signal));
-        const answer = await peerConnectionRef.current.createAnswer();
-        await peerConnectionRef.current.setLocalDescription(answer);
-        sendWebRTCSignal(answer);
-      } else if (signal.type === 'answer') {
-        await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(signal));
-      } else if (signal.type === 'ice-candidate') {
-        await peerConnectionRef.current.addIceCandidate(new RTCIceCandidate(signal.candidate));
-      } else if (signal.type === 'hang-up') {
-        hangUp();
-      }
-    }
-  }, [loggedInUserId]);
-
+  }, [chats]);
 
   useEffect(() => {
     if (!matchingId || !loggedInUserId) {
@@ -151,7 +99,6 @@ const BuddyChatRoom = () => {
     setupChatRoom();
 
     if (stompClient.current && stompClient.current.connected) {
-      console.log("기존 연결이 있어 정리 후 다시 연결합니다.");
       stompClient.current.deactivate();
     }
 
@@ -163,46 +110,55 @@ const BuddyChatRoom = () => {
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
-      debug: (str) => {
-        console.log('STOMP Debug:', str);
-      },
     });
 
     stompClient.current.onConnect = (frame) => {
-      console.log('✅ WebSocket 연결 성공! frame:', frame);
+        console.log('✅ STOMP 연결 성공!', frame);
+        setIsStompConnected(true); // ✅ 연결 성공 시 상태 업데이트
+        if (subscriptionRef.current) {
+            subscriptionRef.current.unsubscribe();
+        }
+        subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, (message) => {
+            const receivedChat = JSON.parse(message.body);
 
-      if (subscriptionRef.current) {
-        subscriptionRef.current.unsubscribe();
-      }
-      subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, handleStompMessage);
+            if (receivedChat.sendBuddyId === loggedInUserId) {
+                setChats(prevChats => {
+                    const updatedChats = prevChats.map(chat => {
+                        if (chat.isOptimistic && chat.message === receivedChat.message) {
+                            return { ...receivedChat, isOptimistic: false };
+                        }
+                        return chat;
+                    });
+                    return updatedChats.some(chat => chat.id === receivedChat.id) ? updatedChats : [...updatedChats, receivedChat];
+                });
+            } else {
+                setChats(prevChats => [...prevChats, receivedChat]);
+            }
+        });
     };
 
     stompClient.current.onWebSocketError = (error) => {
       console.error('❌ WebSocket 오류:', error);
+      setIsStompConnected(false);
     };
 
     stompClient.current.onStompError = (frame) => {
       console.error('❌ STOMP 오류:', frame);
-      console.error('STOMP Error Body:', frame.body);
-      console.error('STOMP Error Headers:', frame.headers);
+      setIsStompConnected(false);
     };
 
     stompClient.current.onDisconnect = (frame) => {
-      console.log('--- 웹소켓 연결 해제 ---');
+        setIsStompConnected(false);
     };
 
     stompClient.current.activate();
 
     return () => {
-      console.log("--- WebSocket 연결 정리 ---");
       if (stompClient.current) {
         stompClient.current.deactivate();
       }
-      if (localStream) {
-        localStream.getTracks().forEach(track => track.stop());
-      }
     };
-  }, [matchingId, loggedInUserId, handleStompMessage]);
+  }, [matchingId, loggedInUserId]);
 
   const sendMessage = () => {
     if (stompClient.current && stompClient.current.connected && message) {
@@ -213,21 +169,16 @@ const BuddyChatRoom = () => {
       };
 
       const tempMessage = {
-        ...chatMessage,
-        isOptimistic: true,
-        read: false,
-        sentAt: new Date().toISOString()
+          ...chatMessage,
+          isOptimistic: true,
+          read: false,
+          sentAt: new Date().toISOString()
       };
       setChats(prevChats => [...prevChats, tempMessage]);
 
-      const payload = {
-        type: 'CHAT_MESSAGE',
-        payload: chatMessage
-      };
-
       stompClient.current.publish({
         destination: `/app/chat/send`,
-        body: JSON.stringify(payload),
+        body: JSON.stringify(chatMessage),
       });
       setMessage('');
     } else {
@@ -235,99 +186,6 @@ const BuddyChatRoom = () => {
       alert("메시지를 보낼 수 없습니다. 연결 상태를 확인하세요.");
     }
   };
-
-  const sendWebRTCSignal = (signal) => {
-    if (stompClient.current && stompClient.current.connected) {
-      const payload = {
-        type: 'WEBRTC_SIGNAL',
-        payload: { ...signal, matchingId: matchingId }
-      };
-      stompClient.current.publish({
-        destination: `/app/chat/send`,
-        body: JSON.stringify(payload),
-      });
-    }
-  };
-
-  // ---------------- WebRTC 관련 함수 ----------------
-
-  const createPeerConnection = async () => {
-    console.log('📞 RTCPeerConnection 생성 중...');
-    const configuration = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
-    const peerConnection = new RTCPeerConnection(configuration);
-    peerConnectionRef.current = peerConnection;
-
-    peerConnection.onicecandidate = (event) => {
-      if (event.candidate) {
-        console.log('📡 ICE 후보자 전송');
-        sendWebRTCSignal({ type: 'ice-candidate', candidate: event.candidate });
-      }
-    };
-
-    peerConnection.ontrack = (event) => {
-      console.log('📺 원격 스트림 수신 시작');
-      setRemoteStream(event.streams[0]);
-    };
-
-    if (localStream) {
-      localStream.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localStream);
-      });
-    }
-
-    return peerConnection;
-  };
-
-  const startCall = useCallback(async () => {
-    console.log('🚀 통화 시작');
-    setIsCalling(true);
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      setLocalStream(stream);
-
-      const peerConnection = await createPeerConnection();
-      stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
-
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(offer);
-      console.log('✉️ SDP offer 전송');
-      sendWebRTCSignal(offer);
-
-    } catch (error) {
-      console.error(`🚨 미디어 접근 오류: ${error.message}`);
-      setIsCalling(false);
-    }
-  }, [localStream]);
-
-  const hangUp = useCallback(() => {
-    console.log('👋 통화 종료');
-    if (peerConnectionRef.current) {
-      peerConnectionRef.current.close();
-      peerConnectionRef.current = null;
-    }
-    if (localStream) {
-      localStream.getTracks().forEach(track => track.stop());
-      setLocalStream(null);
-    }
-    setRemoteStream(null);
-    setIsCalling(false);
-
-    sendWebRTCSignal({ type: 'hang-up' });
-  }, [localStream]);
-
-  useEffect(() => {
-    if (localVideoRef.current && localStream) {
-      localVideoRef.current.srcObject = localStream;
-    }
-  }, [localStream]);
-
-  useEffect(() => {
-    if (remoteVideoRef.current && remoteStream) {
-      remoteVideoRef.current.srcObject = remoteStream;
-    }
-  }, [remoteStream]);
-  // -------------------------------------------------------------
 
   const formatTime = (isoString) => {
     if (!isoString) return '';
@@ -357,88 +215,96 @@ const BuddyChatRoom = () => {
     const previousDate = new Date(previousChat.sentAt).toDateString();
     return currentDate !== previousDate;
   };
+  
+  const handleVideoCallClick = () => {
+      setIsCallActive(true);
+  };
+  
+  const handleCallEnd = () => {
+      setIsCallActive(false);
+  };
 
   return (
     <div className="chat-container">
-      {isCalling && (
-        <div className="video-call-overlay">
-          <div className="video-box my-video">
-            <video ref={localVideoRef} autoPlay muted playsInline></video>
+      {isCallActive ? (
+        isStompConnected ? (
+          <WebRtcCall 
+            callId={matchingId}
+            onCallEnd={handleCallEnd}
+            stompClient={stompClient}
+            loggedInUserId={loggedInUserId}
+            matchingId={matchingId}
+          />
+        ) : (
+          <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+              웹소켓 연결 중... 잠시만 기다려주세요.
           </div>
-          <div className="video-box other-video">
-            <video ref={remoteVideoRef} autoPlay playsInline></video>
+        )
+      ) : (
+        <>
+          <div className="chat-header">
+            <span className="back-button" onClick={() => navigate(-1)}>
+              &lt;
+            </span>
+            <span className="buddy-name">{otherBuddyName}</span>
+            <button className="video-call-button" onClick={handleVideoCallClick}>
+              <i className="bi bi-camera-video-fill"></i>
+            </button>
           </div>
-          <button className="hangup-button" onClick={hangUp}>
-            통화 종료
-          </button>
-        </div>
-      )}
 
-      <div className="chat-header">
-        <span className="back-button" onClick={() => navigate(-1)}>
-          &lt;
-        </span>
-        <span className="buddy-name">{otherBuddyName}</span>
-        <button className="video-call-button" onClick={isCalling ? hangUp : startCall}>
-          {isCalling ? (
-            <i className="bi bi-camera-video-fill off"></i>
-          ) : (
-            <i className="bi bi-camera-video-fill"></i>
-          )}
-        </button>
-      </div>
+          <div className="chat-messages" ref={chatMessagesRef}>
+            {chats.map((chat, index) => {
+              const isMyMessage = chat.sendBuddyId === loggedInUserId;
+              const showDateDivider = isNewDay(chat, chats[index - 1]);
 
-      <div className="chat-messages" ref={chatMessagesRef}>
-        {chats.map((chat, index) => {
-          const isMyMessage = chat.sendBuddyId === loggedInUserId;
-          const showDateDivider = isNewDay(chat, chats[index - 1]);
-
-          return (
-            <React.Fragment key={index}>
-              {showDateDivider && (
-                <div className="date-divider">
-                  <span>{formatDateDivider(chat.sentAt)}</span>
-                </div>
-              )}
-              <div
-                className={`chat-message ${isMyMessage ? 'my-message' : 'other-message'}`}
-              >
-                {!isMyMessage && (
-                  <img
-                    src={getFullImageUrl(chat.senderProfileImageUrl)}
-                    alt={`${chat.senderName}님의 프로필 사진`}
-                    className="profile-pic"
-                  />
-                )}
-                <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
-                  {chat.message}
-                </div>
-
-                <div className="message-time">
-                  {isMyMessage && !chat.read && (
-                    <span className="unread-count">1</span>
+              return (
+                <React.Fragment key={index}>
+                  {showDateDivider && (
+                    <div className="date-divider">
+                      <span>{formatDateDivider(chat.sentAt)}</span>
+                    </div>
                   )}
-                  <span>{formatTime(chat.sentAt)}</span>
-                </div>
-              </div>
-            </React.Fragment>
-          );
-        })}
-      </div>
+                  <div
+                    className={`chat-message ${isMyMessage ? 'my-message' : 'other-message'}`}
+                  >
+                    {!isMyMessage && (
+                      <img
+                        src={getFullImageUrl(chat.senderProfileImageUrl)}
+                        alt={`${chat.senderName}님의 프로필 사진`}
+                        className="profile-pic"
+                      />
+                    )}
+                    <div className={`message-bubble ${isMyMessage ? 'my-message-bubble' : 'other-message-bubble'}`}>
+                      {chat.message}
+                    </div>
 
-      <div className="chat-input-area">
-        <input
-          type="text"
-          className="chat-input"
-          placeholder="메시지를 입력하세요"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-        />
-        <button className="send-button" onClick={sendMessage}>
-          <i className="bi bi-send"></i>
-        </button>
-      </div>
+                    <div className="message-time">
+                      {isMyMessage && !chat.read && (
+                        <span className="unread-count">1</span>
+                      )}
+                      <span>{formatTime(chat.sentAt)}</span>
+                    </div>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+
+          <div className="chat-input-area">
+            <input
+              type="text"
+              className="chat-input"
+              placeholder="메시지를 입력하세요"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            />
+            <button className="send-button" onClick={sendMessage}>
+              <i className="bi bi-send"></i>
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
