@@ -19,9 +19,9 @@ export default function StartFreeWorkoutPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentExercise = exerciseList[currentIndex];
   const [startTime, setStartTime] = useState(null);
-const [useRestTimer, setUseRestTimer] = useState(true);
-const [showTimerModal, setShowTimerModal] = useState(false);
-const [countdown, setCountdown] = useState(60);
+  const [useRestTimer, setUseRestTimer] = useState(true);
+  const [showTimerModal, setShowTimerModal] = useState(false);
+  const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
     setStartTime(new Date());

@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom"
 import useRoutineService from "../service/routineService";
 import { useEffect, useState } from "react";
 import '../styles/GuidePage.css';
+import { BiPencil } from "react-icons/bi";
+
 
 const formatSteps = (text) => {
   if (!text) return "";
@@ -69,12 +71,15 @@ export default function GuidePage() {
 
   const parsed = parseGuideText(instruction);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedMemo, setEditedMemo] = useState(meta.memoContent);
+
+
+
+
+
 
   return (
-
-
-
-
 
 
     <div className="main-content routine-main-content"
@@ -108,10 +113,63 @@ export default function GuidePage() {
         {formatSteps(parsed.breathing)}
       </div>
 
-        <h5>∙ 내 메모</h5>
-      <div className="routine-memo">
-        <p>{meta.memoContent}</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem'}}>
+        <h5 style={{ margin: 0 }}>∙ 내 메모</h5>
+        <BiPencil
+          size={20}
+          style={{ cursor: "pointer", marginRight: "1rem" }}
+          onClick={() => {
+            setEditedMemo(meta.memoContent);
+            setIsEditing(true);
+          }}
+        />
       </div>
+
+      <div className="routine-memo">
+        {isEditing ? (
+          <>
+            <textarea
+              className="memo-edit-box"
+              value={editedMemo}
+              onChange={(e) => setEditedMemo(e.target.value)}
+            />
+
+            <div style={{ marginTop: '1rem', textAlign: 'right' }}>
+              <button
+                className="memo-button-cancel"
+                onClick={() => setIsEditing(false)}
+              >
+                취소
+              </button>
+              <button
+                className="memo-button"
+                onClick={() => {
+                  routineService.updateMemeo(id, editedMemo)
+                  .then(() => {
+                    setMeta({...meta, memoContent: editedMemo });
+                    setIsEditing(false);
+                  })
+                  .catch((err) => {
+                    console.error("메모 저장 실패", err);
+                    alert("메모 저장 중 오류가 발생했소.")
+                  })
+                }}
+              >
+                저장
+              </button>
+            </div>
+
+          </>
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p style={{ margin: 0 }}>{meta.memoContent}</p>
+
+          </div>
+        )}
+      </div>
+
+
+
     </div>
 
 

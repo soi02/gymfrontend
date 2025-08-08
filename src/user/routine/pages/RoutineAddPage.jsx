@@ -193,6 +193,7 @@ export default function RoutineAddPage() {
                                     padding: "0.3rem 0.8rem",
                                     marginTop: "0.3rem",
                                     borderRadius: "999px",
+                                    
                                 }}
                             >
                                 {cat}
