@@ -17,7 +17,7 @@ const SimpleWebSocketTest = () => {
     };
 
     const stompClient = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8080/ws/chat'),
+      webSocketFactory: () => new SockJS('https://172.30.1.74:8443/ws/chat'),
       connectHeaders: connectHeaders,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,

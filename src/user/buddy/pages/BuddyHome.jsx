@@ -14,7 +14,7 @@ export default function BuddyHome() {
         const fetchBuddies = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get('http://localhost:8080/api/buddy/list', {
+                const res = await axios.get('https://172.30.1.74:8443/api/buddy/list', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -24,7 +24,7 @@ export default function BuddyHome() {
                     ...user,
                     birthLabel: convertBirth(user.birth),
                     image: user.profile_image
-                        ? `http://localhost:8080/uploadFiles/${user.profile_image}`
+                        ? `https://172.30.1.74:8443/uploadFiles/${user.profile_image}`
                         : null,
                 }));
 
@@ -59,7 +59,7 @@ export default function BuddyHome() {
         }
 
         try {
-            await axios.post("http://localhost:8080/api/buddy/request", {
+            await axios.post("https://172.30.1.74:8443/api/buddy/request", {
                 sendBuddyId: senderId,
                 receiverBuddyId: receiverId,
             });

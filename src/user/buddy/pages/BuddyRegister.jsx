@@ -48,7 +48,7 @@ export default function BuddyRegister() {
     //             buddyAgeList: buddyAgeList,
     //         };
 
-    //         const res = await axios.post('http://localhost:8080/api/buddy/register', data);
+    //         const res = await axios.post('https://172.30.1.74:8443/api/buddy/register', data);
     //         console.log('보내는 데이터:', data);
     //         setShowModal(true);
 
@@ -69,7 +69,7 @@ export default function BuddyRegister() {
             };
 
             // axios 요청 보낼 때 headers에 Authorization: Bearer 토큰 추가
-            const res = await axios.post('http://localhost:8080/api/buddy/register', data, {
+            const res = await axios.post('https://172.30.1.74:8443/api/buddy/register', data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
