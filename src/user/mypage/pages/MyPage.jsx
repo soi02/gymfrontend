@@ -83,24 +83,59 @@ useEffect(() => {
     <div>
       <div style={{ fontWeight: 500 }}>이번주 운동 기록</div>
         <div className="week-preview">
-        {getWeekRange().weekDates.map((dateStr, i) => {
-            const date = new Date(dateStr);
-            const day = date.getDate(); // 숫자 날짜 (예: 8)
-            const dayOfWeek = date.getDay(); // 0:일 ~ 6:토
-            const isWorkout = thisWeekWorkoutDates.includes(dateStr);
 
-            // 요일에 따른 색상 지정
-            let color = "#000"; // 기본 검정
-            if (dayOfWeek === 0) color = "#d04343";      // 일요일
-            else if (dayOfWeek === 6) color = "#5630ff"; // 토요일
 
-            return (
-            <div key={i} style={{ display: 'inline-block', width: '2.2rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '1.2rem' }}>{isWorkout ? '🔥' : '·'}</div>
-                <div style={{ fontSize: '0.8rem', color }}>{day}</div>
-            </div>
-            );
-        })}
+{getWeekRange().weekDates.map((dateStr, i) => {
+  const date = new Date(dateStr);
+  const day = date.getDate();
+  const dayOfWeek = date.getDay();
+  const isWorkout = thisWeekWorkoutDates.includes(dateStr);
+
+  let color = "#000";
+  if (dayOfWeek === 0) color = "#d04343"; // 일요일
+  else if (dayOfWeek === 6) color = "#5630ff"; // 토요일
+
+  return (
+    <div
+      key={i}
+      style={{
+        display: 'inline-block',
+        width: '2.2rem',
+        textAlign: 'center',
+        fontSize: '0.85rem',
+        color,
+        fontWeight: isWorkout ? 'bold' : 'normal',
+      }}
+    >
+      {isWorkout ? (
+        <div style={{ position: 'relative', height: '2rem' }}>
+          <span style={{ fontSize: '2rem', opacity: '0.8' }}>🔥</span>
+    <span
+    style={{
+        position: 'absolute',
+        top: '1.4rem', 
+        left: '50%',
+        transform: 'translateX(-50%)',
+        fontSize: '0.8rem',
+        fontWeight: 'bold',
+        color,
+        pointerEvents: 'none',
+    }}
+    >
+    {day}
+    </span>
+
+        </div>
+      ) : (
+        <div style={{ marginTop: '1.3rem' }}>{day}</div> // 🔥 없는 경우만 숫자
+      )}
+    </div>
+  );
+})}
+
+
+
+
         </div>
 
 
