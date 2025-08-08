@@ -335,7 +335,7 @@ const [showMenu, setShowMenu] = useState(false); // ✅ 이거 추가!
                   <div className="sfwp-button-row">
                     <button onClick={handleCompleteAll}>☑️ 모든 세트완료</button>
                   <button onClick={handleComplete}>
-                    전체 운동 완료
+                    🔔 오늘은 이만 하기
                   </button>
                   </div>
                 </div>

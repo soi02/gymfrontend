@@ -21,7 +21,7 @@ export default function MyPageRoutineCalendar() {
         const fetchWorkoutDates = async () => {
             if (!value) return;
 
-            // 🔥 달력 표시 범위 계산 (현재 달력 기준으로 6주 보임)
+            // 달력 표시 범위 계산 (현재 달력 기준으로 6주 보임)
             const start = new Date(value.getFullYear(), value.getMonth(), 1);
             const end = new Date(value.getFullYear(), value.getMonth() + 1, 0);
 
@@ -97,7 +97,7 @@ console.log("🕒 타임존 오프셋 (분):", new Date().getTimezoneOffset());
 
 
     return(
-                    <div
+            <div
                 className="main-content"
                 style={{ height: "100vh", display: "flex", flexDirection: "column" }}
             >
