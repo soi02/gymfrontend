@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useRoutineService from "../service/routineService";
 import { useSwipeable } from "react-swipeable";
-import "../styles/StartWorkoutPage.css";
+import "../styles/StartFreeWorkoutPage.css";
 
 export default function StartFreeWorkoutPage() {
   const location = useLocation();
@@ -19,6 +19,9 @@ export default function StartFreeWorkoutPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentExercise = exerciseList[currentIndex];
   const [startTime, setStartTime] = useState(null);
+const [useRestTimer, setUseRestTimer] = useState(true);
+const [showTimerModal, setShowTimerModal] = useState(false);
+const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
     setStartTime(new Date());
@@ -57,38 +60,43 @@ export default function StartFreeWorkoutPage() {
   });
 
   // 세트 추가
-  const handleAddSet = () => {
-    if (!currentExercise) return;
+const handleAddSet = () => {
+  if (!currentExercise) return;
 
-    const setsForCurrent = routineSets.filter(set => set.detailId === currentExercise.detailId);
+  const setsForCurrent = routineSets.filter(set => set.elementId === currentExercise.elementId);
+  const lastSet = setsForCurrent[setsForCurrent.length - 1];
 
-    const lastSet = setsForCurrent[setsForCurrent.length - 1];
-    const newSetId = Math.max(...routineSets.map(s => s.setId), 0) + 1;
+  const newSetId = setsForCurrent.length > 0 ? lastSet.setId + 1 : 1;
 
-    const newSet = {
-      detailId: currentExercise.detailId,
-      setId: newSetId,
-      kg: lastSet?.kg ?? null,      // 마지막 세트의 kg
-      reps: lastSet?.reps ?? null,  // 마지막 세트의 reps
-      done: false,
-    };
-
-    setRoutineSets([...routineSets, newSet]);
+  const newSet = {
+    elementId: currentExercise.elementId,
+    setId: newSetId,
+    kg: lastSet?.kg ?? null,
+    reps: lastSet?.reps ?? null,
+    done: false,
   };
+
+  setRoutineSets([...routineSets, newSet]);
+};
+
 
 
   // 세트 삭제 (마지막 세트만 삭제)
-  const handleRemoveSet = () => {
-    if (!currentExercise) return;
+const handleRemoveSet = () => {
+  if (!currentExercise) return;
 
-    const setsForCurrent = routineSets.filter(set => set.detailId === currentExercise.detailId);
-    if (setsForCurrent.length <= 1) return; // 1세트는 최소 보장
+  const setsForCurrent = routineSets.filter(set => set.elementId === currentExercise.elementId);
+  if (setsForCurrent.length <= 1) return;
 
-    const lastSetId = setsForCurrent[setsForCurrent.length - 1].setId;
+  const lastSet = setsForCurrent[setsForCurrent.length - 1];
 
-    const newRoutineSets = routineSets.filter(set => set.setId !== lastSetId);
-    setRoutineSets(newRoutineSets);
-  };
+  const newRoutineSets = routineSets.filter(
+    set => !(set.elementId === currentExercise.elementId && set.setId === lastSet.setId)
+  );
+
+  setRoutineSets(newRoutineSets);
+};
+
 
   // 모든 세트 완료
   const handleCompleteAll = () => {
@@ -142,121 +150,211 @@ export default function StartFreeWorkoutPage() {
   return (
     <div className="main-content">
       <div {...handlers} className="start-workout-container">
-        <div className="routine-top-bar">
-          <div className="routine-progress-bar">
-            {exerciseList.map((_, idx) => (
-              <div
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`routine-dot ${currentIndex === idx ? 'active' : ''}`}
-              />
-            ))}
-          </div>
-        </div>
+
+
+
+                <div className="routine-top-bar">
+                    <div
+                        className="routine-progress-bar"
+                    >
+                        {exerciseList.map((_, idx) => (
+                        <div
+                            key={idx}
+                            onClick={() => setCurrentIndex(idx)}
+                            className={`routine-dot ${currentIndex === idx ? 'active' : ''}`}
+                        />
+                        ))}
+                    </div>
+
+
+
+
+
+                </div>
 
         {currentExercise && (
           <>
-            <div>
-              <img
-                className="start-workout-image"
-                src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
-                alt={currentExercise.elementName}
-              />
-              <h3>{`${currentExercise.elementName} (${currentExercise.categoryName})`}</h3>
-            </div>
+                <div className="image-wrapper-with-arrows">
+                  <button
+                    className="routine-arrow-button left"
+                    onClick={() => setCurrentIndex((i) => i - 1)}
+                    disabled={currentIndex === 0}
+                    style={{ opacity: currentIndex === 0 ? 0 : 1 }}
+                  >
+                    &lt;
+                  </button>
 
-            <div className="routine-set-table">
-              {currentSets.map((set, i) => (
-                <div key={i} className="set-row">
-                  <span>{i + 1}세트</span>
-                  <div className="input-with-unit">
-                    <input
-                      type="number"
-                      value={String(set.kg ?? "")}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const parsed = value === "" ? "" : parseFloat(value);
-                        const newCurrentSets = currentSets.map((s, idx) =>
-                          idx >= i ? { ...s, kg: parsed } : s
-                        );
-                        setCurrentSets(newCurrentSets);
-
-                        const newRoutineSets = routineSets.map((s) =>
-                          s.elementId === currentExercise.elementId && s.setId >= set.setId
-                            ? { ...s, kg: parsed }
-                            : s
-                        );
-                        setRoutineSets(newRoutineSets);
-                      }}
-                    />
-                    <span className="unit">kg</span>
-                  </div>
-
-                  <div className="input-with-unit">
-                    <input
-                      type="number"
-                      value={String(set.reps ?? "")}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        const parsed = value === "" ? "" : parseInt(value);
-                        const newCurrentSets = currentSets.map((s, idx) =>
-                          idx >= i ? { ...s, reps: parsed } : s
-                        );
-                        setCurrentSets(newCurrentSets);
-
-                        const newRoutineSets = routineSets.map((s) =>
-                          s.elementId === currentExercise.elementId && s.setId >= set.setId
-                            ? { ...s, reps: parsed }
-                            : s
-                        );
-                        setRoutineSets(newRoutineSets);
-                      }}
-                    />
-                    <span className="unit">회</span>
-                  </div>
-
-                  <input
-                    type="checkbox"
-                    checked={set.done || false}
-                    onChange={(e) => {
-                      const newRoutineSets = [...routineSets];
-                      const targetIndex = routineSets.findIndex(
-                        s => s.elementId === currentExercise.elementId && s.setId === set.setId
-                      );
-                      if (targetIndex !== -1) {
-                        newRoutineSets[targetIndex] = {
-                          ...newRoutineSets[targetIndex],
-                          done: e.target.checked
-                        };
-                        setRoutineSets(newRoutineSets);
-                      }
-                    }}
+                  <img
+                    className="start-workout-image"
+                    src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
+                    alt={currentExercise.elementName}
                   />
+
+                  <button
+                    className="routine-arrow-button right"
+                    onClick={() => setCurrentIndex((i) => i + 1)}
+                    disabled={currentIndex === exerciseList.length - 1}
+                    style={{ opacity: currentIndex === exerciseList.length - 1 ? 0 : 1 }}
+                  >
+                    &gt;
+                  </button>
                 </div>
-              ))}
-            </div>
+
+                    <h5 className="start-workout-elementName">{`${currentExercise.elementName} (${currentExercise.categoryName})`}</h5>
+
+
+                    <div className="routine-set-table">
+                        {currentSets.map((set, i) => (
+                          <div key={i} className="routine-set-row">
+                            <span>{i + 1}세트</span>
+                            <div className="routine-input-with-unit">
+                            <input
+                              type="number"
+                              value={String(set.kg ?? "")}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                const parsed = value === "" ? "" : parseFloat(value);
+
+                                // ✅ currentSets: 이후 세트까지 동일 값 적용
+                                const newCurrentSets = currentSets.map((s, idx) =>
+                                  idx >= i ? { ...s, kg: parsed } : s
+                                );
+                                setCurrentSets(newCurrentSets);
+
+                                // ✅ routineSets도 같이 업데이트
+                                const newRoutineSets = routineSets.map((s) =>
+                                  s.detailId === currentExercise.detailId && s.setId >= set.setId
+                                    ? { ...s, kg: parsed }
+                                    : s
+                                );
+                                setRoutineSets(newRoutineSets);
+                              }}
+                            />
+
+                              <span className="routine-unit">kg</span>
+                            </div>
+
+                            <div className="routine-input-with-unit">
+                              <input
+                                type="number"
+                                value={String(set.reps ?? "")}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  const parsed = value === "" ? "" : parseInt(value);
+
+                                  // ✅ currentSets 변경
+                                  const newCurrentSets = currentSets.map((s, idx) =>
+                                    idx >= i ? { ...s, reps: parsed } : s
+                                  );
+                                  setCurrentSets(newCurrentSets);
+
+                                  // ✅ routineSets 변경
+                                  const newRoutineSets = routineSets.map((s) =>
+                                    s.detailId === currentExercise.detailId && s.setId >= set.setId
+                                      ? { ...s, reps: parsed }
+                                      : s
+                                  );
+                                  setRoutineSets(newRoutineSets);
+                                }}
+
+                              />
+
+
+                              <span className="routine-unit">회</span>
+                            </div>
+
+                            <input
+                              type="checkbox"
+                              style={{
+                                width: "15px",      
+                                height: "15px",
+                                transform: "scale(1.4)",
+                                cursor: "pointer",  
+                                accentColor: "#000000"
+                              }}
+                              checked={set.done || false}
+                                onChange={(e) => {
+                                const newRoutineSets = [...routineSets];
+                                const targetIndex = routineSets.findIndex(
+                                    s => s.elementId === currentExercise.elementId && s.setId === set.setId
+                                );
+
+                                if (targetIndex !== -1) {
+                                    newRoutineSets[targetIndex] = {
+                                    ...newRoutineSets[targetIndex],
+                                    done: e.target.checked
+                                    };
+                                    setRoutineSets(newRoutineSets);
+                                }
+
+                                if (e.target.checked && useRestTimer) {
+                                    setShowTimerModal(true);
+                                    setCountdown(60);
+                                }
+                                }}
+
+                            />
+
+
+
+                          </div>
+                        ))}
+                    </div>
           </>
         )}
 
-        <div className="routine-action-buttons">
-            <div className="sfwp-button-row">
-            <button onClick={handleAddSet}>➕ 세트추가</button>
-            <button onClick={handleRemoveSet}>➖ 세트삭제</button>
-            </div>
-            <div className="sfwp-button-row">
-            <button onClick={handleCompleteAll}>☑️ 모든 세트완료</button>
-            <button onClick={goToNextExercise}>➡ 다음운동</button>
-            </div>
-        </div>
+                <div className="routine-action-buttons">
+                  <div className="sfwp-button-row">
+                    <button onClick={handleAddSet}>➕ 세트추가</button>
+                    <button onClick={handleRemoveSet}>➖ 세트삭제</button>
+                    {/* <button onClick={goToNextExercise}>➡ 다음운동</button> */}
+                  </div>
+                  <div className="sfwp-button-row">
+                    <button onClick={handleCompleteAll}>☑️ 모든 세트완료</button>
+                  <button onClick={handleComplete}>
+                    전체 운동 완료
+                  </button>
+                  </div>
+                </div>
 
 
 
 
-        <div className="routine-complete-btn">
-          <button onClick={handleComplete}>
-            전체 운동 완료
-          </button>
-        </div>
+                <div className="routine-rest-timer-toggle">
+                  <label className="routine-switch">
+                    <input
+                      type="checkbox"
+                      checked={useRestTimer}
+                      onChange={(e) => setUseRestTimer(e.target.checked)}
+                    />
+                    <span className="routine-slider" />
+                  </label>
+                  <span className="routine-label-text">휴식 타이머</span>
+                </div>
+
+
+
+
+                {showTimerModal && (
+                  <div className="routine-timer-modal">
+                    <div className="routine-timer-modal-content">
+                      <p>⏳ 휴식시간: {countdown}초</p>
+                      {/* <div className="digital-timer">
+                        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+                      </div> */}
+
+
+
+                      <button
+                        className="swo-btn"
+                        onClick={() => {
+                        setShowTimerModal(false);
+                        setCountdown(60);
+                      }}>닫기</button>
+                    </div>
+                  </div>
+                )}
+
 
       </div>
     </div>

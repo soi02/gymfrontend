@@ -192,31 +192,31 @@ const [showMenu, setShowMenu] = useState(false); // ✅ 이거 추가!
 
                 {currentExercise && (
                   <>
-                <div className="image-wrapper-with-arrows">
-                  <button
-                    className="routine-arrow-button left"
-                    onClick={() => setCurrentIndex((i) => i - 1)}
-                    disabled={currentIndex === 0}
-                    style={{ opacity: currentIndex === 0 ? 0 : 1 }}
-                  >
-                    &lt;
-                  </button>
+                  <div className="image-wrapper-with-arrows">
+                    <button
+                      className="routine-arrow-button left"
+                      onClick={() => setCurrentIndex((i) => i - 1)}
+                      disabled={currentIndex === 0}
+                      style={{ opacity: currentIndex === 0 ? 0 : 1 }}
+                    >
+                      &lt;
+                    </button>
 
-                  <img
-                    className="start-workout-image"
-                    src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
-                    alt={currentExercise.elementName}
-                  />
+                    <img
+                      className="start-workout-image"
+                      src={`http://localhost:8080/uploadFiles/${currentExercise.elementPicture}`}
+                      alt={currentExercise.elementName}
+                    />
 
-                  <button
-                    className="routine-arrow-button right"
-                    onClick={() => setCurrentIndex((i) => i + 1)}
-                    disabled={currentIndex === exerciseList.length - 1}
-                    style={{ opacity: currentIndex === exerciseList.length - 1 ? 0 : 1 }}
-                  >
-                    &gt;
-                  </button>
-                </div>
+                    <button
+                      className="routine-arrow-button right"
+                      onClick={() => setCurrentIndex((i) => i + 1)}
+                      disabled={currentIndex === exerciseList.length - 1}
+                      style={{ opacity: currentIndex === exerciseList.length - 1 ? 0 : 1 }}
+                    >
+                      &gt;
+                    </button>
+                  </div>
 
 
 
@@ -330,7 +330,7 @@ const [showMenu, setShowMenu] = useState(false); // ✅ 이거 추가!
                   <div className="sfwp-button-row">
                     <button onClick={handleAddSet}>➕ 세트추가</button>
                     <button onClick={handleRemoveSet}>➖ 세트삭제</button>
-                    <button onClick={goToNextExercise}>➡ 다음운동</button>
+                    {/* <button onClick={goToNextExercise}>➡ 다음운동</button> */}
                   </div>
                   <div className="sfwp-button-row">
                     <button onClick={handleCompleteAll}>☑️ 모든 세트완료</button>

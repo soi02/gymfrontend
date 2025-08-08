@@ -3,24 +3,18 @@
   height: 100vh;
   overflow-y: auto;
   padding: 1rem;
+  padding-top: 0;
   padding-bottom: 10rem;
   background: #fff;
 }
 
 
-.routine-back-btn {
-  font-size: 1.5rem;
-  margin-right: 1rem;
-  background: none;
-  color: rgb(130, 32, 32);
-  border: none;
-  cursor: pointer;
-}
+
 
 .routine-exercise-card {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #3333331a;
 }
 
@@ -28,9 +22,11 @@
   width: 55px;
   height: auto;
   margin-right: 1rem;
+  margin-left: 0.5rem;
 }
 
 .routine-exercise-info {
+  margin-left: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -52,4 +48,35 @@
   text-align: center;
 }
 
+
+.routine-detail-header {
+  position: relative;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.routine-back-btn {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  color: rgb(130, 32, 32);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.routine-header-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
 
