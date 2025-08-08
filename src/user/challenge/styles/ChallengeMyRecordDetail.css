@@ -13,7 +13,7 @@
 }
 
 /* 획득한 노리개 뱃지 스타일 */
-.norigae-badge {
+.norigae-badge-icon {
   position: absolute;
   top: 10px; /* 원하는 위치로 조정 (상단에서 10px 아래) */
   right: 10px; /* 원하는 위치로 조정 (우측에서 10px 왼쪽) */
