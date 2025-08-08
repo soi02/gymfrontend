@@ -6,28 +6,43 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function MyPage() {
+  const name = useSelector((state) => state.auth.name);
+  const navigate = useNavigate();
 
-    const name = useSelector(state => state.auth.name);
+  return (
+    <div className="mypage-container">
+      {/* 유저 정보 */}
+<div className="profile-box" onClick={() => navigate("/gymmadang/editProfile")}>
+  <div className="profile-info-wrapper">
+    <div className="profile-info">
+      <div className="profile-img" />
+      <div className="profile-text">
+        <div className="username">{name}님</div>
+        <div className="greeting">정진 223일째</div>
+      </div>
+    </div>
 
-    console.log(name);
-
-    const navigator = useNavigate();
-
-
-
-
-
-    return(
-
-        <div className="mypage-container">
-        <div>{name}님 안녕하세요.</div>
-
-        <button type="button" onClick={() => navigator("/gymmadang/routineCalendar")}>
-        운동 기록 보기
-        </button>
+    <div className="go-arrow">{'>'}</div>
+  </div>
+</div>
 
 
+      {/* 간단 기능 */}
+      {/* <div className="quick-buttons">
+        <button onClick={() => navigate("/gymmadang/routineCalendar")}>운동 기록</button>
+        <button onClick={() => navigate("/gymmadang/routineList")}>내 루틴</button>
+        <button onClick={() => navigate("/gymmadang/market")}>중고거래</button>
+      </div> */}
+
+      <div className="each-box">
+        <div className="row-between" onClick={() => navigate("/gymmadang/routineCalendar")}>
+            <span>운동 기록</span>
+            <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
         </div>
 
-    )
+      </div>
+
+
+    </div>
+  );
 }

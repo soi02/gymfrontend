@@ -1,11 +1,8 @@
-html, body, #root {
-  height: 100%;
-}
 
 
 .mypage-container {
   padding: 1rem;
-  min-height: 100vh;
+  height: 100vh;
   overflow-y: auto; /* 스크롤 추가 */
 }
 
