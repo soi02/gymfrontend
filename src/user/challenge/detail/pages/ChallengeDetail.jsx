@@ -56,7 +56,7 @@ export default function ChallengeDetail() {
           params.userId = userId;
         }
 
-        const res = await apiClient.get('/challenge/getChallengeDetailByChallengeIdProcess', { params });
+        const res = await apiClient.get('/challenge/detail', { params });
         console.log("챌린지 상세 데이터 수신:", res.data);
         setChallenge(res.data);
       } catch (err) {
@@ -80,10 +80,10 @@ export default function ChallengeDetail() {
     challengeDurationDays, 
     challengeMaxMembers,
     challengeThumbnailPath,
-    challengeKeywords = [],
+    keywords = [], 
     participantCount = 0,
-    challengeDepositAmount = 0, // ★ 추가: 보증금 필드
-  } = challenge || {}; // challenge가 null일 경우 빈 객체를 기본값으로 사용
+    challengeDepositAmount = 0,
+  } = challenge || {};
 
   const imageUrl = challengeThumbnailPath 
     ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` 
@@ -173,14 +173,14 @@ const handlePaymentStart = async () => {
         <h2>{challengeTitle}</h2>
         <p className="challenge-detail-description">{challengeDescription}</p>
         <div className="challenge-detail-info">
-          <div>💸 보증금: {challenge?.challengeDepositAmount.toLocaleString() || 0}원</div>
-          <div>📅 모집 기간: {challengeRecruitStartDate} ~ {challengeRecruitEndDate}</div>
-          <div>🕒 진행 기간: {challengeDurationDays}일</div> 
-          <div>👥 {participantCount}명 / {challengeMaxMembers}명</div>
-          <div>📌 현재 상태: {status}</div> 
+          <div>보증금: {challenge?.challengeDepositAmount.toLocaleString() || 0}원</div>
+          <div>모집 기간: {challengeRecruitStartDate} ~ {challengeRecruitEndDate}</div>
+          <div>진행 기간: {challengeDurationDays}일</div> 
+          <div>{participantCount}명 / {challengeMaxMembers}명</div>
+          <div>현재 상태: {status}</div> 
         </div>
         <div className="challenge-detail-keywords">
-          {challengeKeywords.map((kw, i) => (
+          {keywords.map((kw, i) => (
             <span key={i} className="keyword-badge">#{kw}</span>
           ))}
         </div>

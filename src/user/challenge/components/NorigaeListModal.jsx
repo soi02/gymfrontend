@@ -1,7 +1,7 @@
 // src/user/challenge/components/NorigaeListModal.jsx
 
 import React from 'react';
-import '../../styles/NorigaeListModal.css'; // 별도 CSS 파일 생성
+import '../styles/NorigaeListModal.css'; // 별도 CSS 파일 생성
 
 const NorigaeListModal = ({ isOpen, onClose, norigaeList }) => {
     if (!isOpen) {
