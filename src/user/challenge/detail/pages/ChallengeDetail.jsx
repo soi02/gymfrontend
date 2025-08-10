@@ -21,53 +21,38 @@ export default function ChallengeDetail() {
   const userId = useSelector(state => state.auth.id); 
   const BACKEND_BASE_URL = "http://localhost:8080"; 
 
-  useEffect(() => {
-    // URLSearchParams를 사용하여 현재 URL에서 쿼리 파라미터를 추출합니다.
-    const urlParams = new URLSearchParams(window.location.search);
-    const pgToken = urlParams.get('pg_token');
-    const challengeIdFromUrl = urlParams.get('challengeId');
-    const userIdFromUrl = urlParams.get('userId');
+  useEffect(() => {
+    // ★ 수정된 부분: URL 파라미터를 감지하여 결제 성공 페이지로 이동시키는 로직 삭제
+    // 이 로직은 백엔드가 아닌 프론트엔드에서 결제 승인 API를 직접 호출할 때 필요합니다.
+    // 현재 구조에서는 백엔드가 최종적으로 성공 페이지로 리다이렉트하므로 필요 없습니다.
+    
+    if (!challengeId) {
+      alert("잘못된 접근입니다.");
+      navigate('/gymmadang/challenge/challengeHome');
+      return;
+    }
 
-    // 결제 성공 후 리다이렉트된 경우
-    if (pgToken && challengeIdFromUrl && userIdFromUrl) {
-      console.log("결제 성공 리다이렉트 감지. pg_token:", pgToken);
-      // 백엔드의 결제 성공 API 호출은 백엔드 내부적으로 처리되므로, 
-      // 프론트엔드는 결제 성공 후 보여줄 페이지로 이동하면 됩니다.
-      alert('결제가 성공적으로 완료되었습니다! 챌린지에 참여합니다.');
-      // 챌린지 상세 페이지로 돌아가기 위해 URL을 정리하고 상태를 업데이트합니다.
-      // 또는 마이페이지 등으로 이동시킬 수 있습니다.
-      navigate(`/gymmadang/challenge/myRecordList`, { replace: true });
-      return;
-    }
-    
-    // 정상적인 챌린지 상세 페이지 로딩
-    if (!challengeId) {
-      alert("잘못된 접근입니다.");
-      navigate('/gymmadang/challenge/challengeHome');
-      return;
-    }
+    const fetchChallengeDetail = async () => {
+      try {
+        const params = {
+          challengeId: challengeId
+        };
+        if (userId) {
+          params.userId = userId;
+        }
 
-    const fetchChallengeDetail = async () => {
-      try {
-        const params = {
-          challengeId: challengeId
-        };
-        if (userId) {
-          params.userId = userId;
-        }
+        const res = await apiClient.get('/challenge/detail', { params });
+        console.log("챌린지 상세 데이터 수신:", res.data);
+        setChallenge(res.data);
+      } catch (err) {
+        console.error("챌린지 상세 실패", err);
+        alert("챌린지를 불러올 수 없습니다.");
+        navigate('/gymmadang/challenge/challengeHome');
+      }
+    };
 
-        const res = await apiClient.get('/challenge/detail', { params });
-        console.log("챌린지 상세 데이터 수신:", res.data);
-        setChallenge(res.data);
-      } catch (err) {
-        console.error("챌린지 상세 실패", err);
-        alert("챌린지를 불러올 수 없습니다.");
-        navigate('/gymmadang/challenge/challengeHome');
-      }
-    };
-
-    fetchChallengeDetail();
-  }, [challengeId, userId, navigate]);
+    fetchChallengeDetail();
+  }, [challengeId, userId, navigate]);
 
 
     if (!challenge) return <div>로딩 중...</div>;
@@ -143,7 +128,12 @@ else if (today < recruitStart) {
                 `/challenge/join/payment`,
                 null,
                 {
-                    params: { userId, challengeId },
+                    params: { 
+                        userId, 
+                        challengeId,
+                        // ★ 변경된 부분: 백엔드에 전달할 성공 리다이렉트 URL
+                        redirectUrl: `${window.location.origin}/gymmadang/challenge/payment/success`
+                    },
                 }
             );
 

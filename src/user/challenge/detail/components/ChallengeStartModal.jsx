@@ -54,45 +54,44 @@ export default function ChallengeStartModal({ onClose, challengeId, challengeTit
                 {/* ★ 이미지 또는 아이콘 추가 */}
                 <div className="modal-icon-container">
                      {/* 이모지 사용 예시 */}
-                    <div className="modal-emoji">👏🎉</div>
+                    <div className="modal-emoji">🙌</div>
                     {/* 이미지 사용 예시 */}
                     {/* <img src={goalImg} alt="챌린지 시작" className="modal-icon"/> */}
                 </div>
 
                 <div className="challenge-start-modal-body">
-                    <h3 className="challenge-start-modal-title">챌린지 도전하기</h3>
+                    <span className="challenge-start-modal-header">수련을 시작하겠소?</span>
                     
-                    {/* ★ 챌린지 제목과 보증금 정보만 간결하게 표시 */}
-                    <p className="challenge-start-modal-description large">
-                        <strong>'{challengeTitle}'</strong>
-                        <br />챌린지에 도전하시겠어요?
-                    </p>
+                    {/* 챌린지 제목과 보증금 정보만 간결하게 표시 */}
+                    {/* <div>
+                        <span className='challenge-start-modal-title'>{challengeTitle}</span>
+                    </div> */}
 
-                    {/* ★ 보증금 정보는 별도 컴포넌트로 분리하여 강조 */}
+                    {/* 보증금 정보는 별도 컴포넌트로 분리하여 강조 */}
                     {challengeDepositAmount > 0 && (
                         <div className="challenge-payment-info">
                             <p className="challenge-start-modal-deposit">
                                 보증금: <strong>{challengeDepositAmount.toLocaleString()}원</strong>
                             </p>
                             <p className="challenge-start-modal-description small">
-                                챌린지 성공 시 100% 환급, 실패 시 50%는 기부됩니다.
+                                수련을 달성하면 100% 환급되오나,<br />실패한다면 50%가 대한장애인체육회에 기부될 것이오.
                             </p>
                         </div>
                     )}
                     
                     <p className="challenge-start-modal-description small">
-                        도전 중에는 취소할 수 없습니다. <br />
-                        끝까지 함께할 준비가 되셨나요?
+                        도전 중에는 취소할 수 없소이다. <br />
+                        끝까지 함께할 준비가 되었는가?
                     </p>
                     
                     <div className="challenge-start-modal-buttons">
-                        <button className="challenge-start-modal-btn challenge-start-modal-btn-cancel" onClick={onClose} disabled={isProcessing}>취소</button>
+                        <button className="challenge-start-modal-btn challenge-start-modal-btn-cancel" onClick={onClose} disabled={isProcessing}>보류하겠소</button>
                         <button
                             className="challenge-start-modal-btn challenge-start-modal-btn-primary"
                             onClick={handleConfirm}
                             disabled={isProcessing}
                         >
-                            {isProcessing ? '처리 중...' : '도전하기'}
+                            {isProcessing ? '처리 중...' : '도전하겠소'}
                         </button>
                     </div>
                 </div>

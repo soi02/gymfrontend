@@ -1,0 +1,98 @@
+/* src/challenge/styles/ChallengeSuccessPage.css */
+
+/* 페이지 전체 컨테이너: 화면 전체가 아닌, 콘텐츠를 감싸는 역할로 변경 */
+.success-page-container {
+    /* flexbox를 이용한 중앙 정렬을 위해 필요한 속성은 유지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-height를 제거하여 콘텐츠 높이만큼만 공간을 차지하도록 함 */
+    /* background-color는 페이지 전체가 아닌, 섹션 배경색으로 사용 */
+    /* background-color: #f0f2f5; */
+    color: #333;
+    /* 상단 여백을 추가하여 헤더와 카드 사이의 간격 조정 */
+    padding-top: 60px; /* 원하는 만큼 조절 가능 */
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.success-content {
+    /* 기존 코드와 동일 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: none;
+    max-width: 600px;
+    width: 90%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 성공 아이콘: 원형의 체크 아이콘 */
+.success-icon {
+    width: 45px; /* 아이콘 크기 확대 */
+    height: 45px;
+    background-color: #7c1d0d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 30px; /* 마진 조정 */
+    box-shadow: 0 4px 10px rgba(124, 29, 13, 0.1); /* 아이콘에만 그림자 추가 */
+}
+
+.success-icon svg {
+    width: 25px; /* SVG 크기 확대 */
+    height: 25px;
+}
+
+/* 제목: 폰트 크기 및 색상 조정 */
+.success-content h2 {
+    font-size: 1.5rem; /* 제목 폰트 크기 확대 */
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+/* 설명: 폰트 크기 및 색상 조정 */
+.success-content p {
+    font-size: 1rem; /* 설명 폰트 크기 확대 */
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+/* 버튼: 스타일 유지 */
+
+
+/* 주요 버튼 스타일 */
+.go-to-challenges-btn {
+    background: #7c1d0d;
+    color: white;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    padding: 15px 30px;
+    border: none;
+}
+
+.go-to-challenges-btn:hover {
+    background: #5a1409;
+}
+
+/* 애니메이션 키프레임 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

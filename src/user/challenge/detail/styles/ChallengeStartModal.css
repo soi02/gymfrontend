@@ -40,13 +40,15 @@
 .challenge-start-modal-header {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 /* 모달 제목 */
 .challenge-start-modal-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
+    font-size: 1.3rem;
+    /* font-weight: bold; */
+    margin-bottom: 20px;
     color: #333;
 }
 
@@ -60,7 +62,7 @@
     font-size: 0.95rem;
     color: #555;
     line-height: 1.5;
-    margin-bottom: 24px;
+    margin-bottom: 30px;
 }
 .challenge-start-modal-description.small {
     font-size: 12px;
@@ -70,10 +72,17 @@
 
 /* 보증금 표시 스타일 */
 .challenge-start-modal-deposit {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #7c1d0d;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.modal-emoji {
+    font-size: 3.5rem; /* 이모지 크기 조정 */
+    text-align: center;
+    margin-bottom: 20px; /* 이모지와 제목 간의 간격 */
 }
 
 /* 버튼 컨테이너 */
