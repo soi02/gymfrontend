@@ -9,7 +9,7 @@ import useMarketAPI from "../service/MarketService";
 
 export default function MarketArticlePage() {
     
-    const checkUserStatus = 1004;
+    const checkUserStatus = 1;
     const defaultUserStatus = 1004;
     
     const [marketArticle, setMarketArticle] = useState([
@@ -39,11 +39,16 @@ export default function MarketArticlePage() {
     <MarketArticleLikeButtonPageLayout key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
     
     const [marketProductInterestedLogOnArticle, setMarketProductInterestedLogOnArticle] = useState([
-        {id : 11, marketUserId : 11, specificArticleId : 1, createdAt : new Date("2024-06-14T12:34:56")}
+        {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
     ])
     
-    const constMarketProductInterestedLogElement = marketProductInterestedLogOnArticle.map(element =>
-    <MarketProductInterestedLogElementOnArticle key = {element.id} elem1 = {element}/>)
+    const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
+        {id : 1, marketUserId : 1, specificArticleId : 1, createdAt : new Date("1970-01-01T00:00:03")}
+    )
+    
+    const constMarketProductInterestedLogElement = marketProductInterestedLogOnArticle
+    .filter(element => element.specificArticleId === 1 && element.marketUserId === 1)
+    .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element.id} elem1 = {element}/>)
     
     const [marketCommentListOnArticle, setMarketCommentListOnArticle] = useState([
         {id : 0, articleId : 0, marketUserId : 0, comment : "ERROR", 
@@ -77,6 +82,7 @@ export default function MarketArticlePage() {
     //     return { comment, userInfo };
     // });
     
+    const [reloadingProductInterestedLogWhenUserAndArticleInfo, setReloadingProductInterestedLogWhenUserAndArticleInfo] = useState(false);
     const [commentOnArticleLoading, setCommentOnArticleLoading] = useState(true);
     const [commentOnArticleReloading, setCommentOnArticleReloading] = useState(false);
     
@@ -110,21 +116,25 @@ export default function MarketArticlePage() {
                 
                 console.log("Loading Test Start")
                 
-                const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle ] = await Promise.all([
+                const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
+                    constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticle(1),
                     marketAPI.getSelectMarketUserInfo(1004),
-                    marketAPI.getSelectMarketCommentOnArticle(1)
+                    marketAPI.getSelectMarketCommentOnArticle(1),
+                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(1, 1)
                 ]) 
+                
+                console.log("APITest")
+                console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
                 
                 setMarketArticle([constGetSelectSpecificMarketArticle]);
                 setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
-                
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
                     userInfo : APIElem1.marketUserInfoDto,
                 }))
-                
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
                 
             } catch (error) {
                 
@@ -143,31 +153,58 @@ export default function MarketArticlePage() {
         
     }, []);
     
+    // useEffect(() => {
+        
+    //     const constUseEffect = async () => {
+            
+    //         if (reloadingProductInterestedLogWhenUserAndArticleInfo) {
+                
+    //             try {
+                    
+    //             } catch (error) {
+                    
+    //             } finally {
+                    
+    //                 setReloadingProductInterestedLogWhenUserAndArticleInfo(false);
+    //                 console.log("Interest Reloading Test End")
+                    
+    //             }
+                
+    //         }
+            
+    //     }
+        
+    // }, [reloadingProductInterestedLogWhenUserAndArticleInfo])
+    
     useEffect(() => {
         
         const constUseEffect = async () => {
             
-            if (commentOnArticleReloading) {
+            if (commentOnArticleReloading || reloadingProductInterestedLogWhenUserAndArticleInfo) {
             
                 try {
                     
                     console.log("Reloading Test Start")
                     
-                    const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle ] = await Promise.all([
+                    const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
+                        constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                         marketAPI.getSelectSpecificMarketArticle(1),
                         marketAPI.getSelectMarketUserInfo(1004),
-                        marketAPI.getSelectMarketCommentOnArticle(1)
+                        marketAPI.getSelectMarketCommentOnArticle(1),
+                        marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(1, 1)
                     ]) 
+                    
+                    console.log("APITest")
+                    console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
                     
                     setMarketArticle([constGetSelectSpecificMarketArticle]);
                     setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
-                    
                     const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                         comment : APIElem1.marketCommentOnArticleDto,
                         userInfo : APIElem1.marketUserInfoDto,
                     }))
-                    
                     setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                    setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
                     
                 } catch (error) {
                     
@@ -175,6 +212,7 @@ export default function MarketArticlePage() {
                     
                 } finally {
                     
+                    setReloadingProductInterestedLogWhenUserAndArticleInfo(false);
                     setCommentOnArticleReloading(false);
                     setCommentOnArticleLoading(false);
                     console.log("Reloading Test End")
@@ -187,7 +225,7 @@ export default function MarketArticlePage() {
         
         constUseEffect();
         
-    }, [commentOnArticleReloading]);
+    }, [commentOnArticleReloading, reloadingProductInterestedLogWhenUserAndArticleInfo]);
     
     useEffect(() => {
             
@@ -237,8 +275,34 @@ export default function MarketArticlePage() {
     const constDivisionToDeleteMarketArticle = async () => {
         
         try {
-            const constPostDeleteMarketArticle = await marketAPI.postDeleteMarketArticle(3);
+            const constPostDeleteMarketArticle = await marketAPI.postDeleteMarketArticle(insertMarketProductInterestedLog);
             console.log(constPostDeleteMarketArticle);
+        } catch (error) {
+            console.error("로드 실패:", error);
+        }
+        
+    }
+    
+    const constButtonToInsertMarketProductInterestedLog = async () => {
+        
+        try {
+            
+            const constInsertMarketProductInterestedLog = await marketAPI.postInsertMarketProductInterestedLog(insertMarketProductInterestedLog);
+            setReloadingProductInterestedLogWhenUserAndArticleInfo(true);
+            
+        } catch (error) {
+            console.error("로드 실패:", error);
+        }
+        
+    }
+    
+    const constButtonToDeleteMarketProductInterestedLog = async () => {
+        
+        try {
+            
+            const constDeleteMarketProductInterestedLog = await marketAPI.postDeleteMarketProductInterestedLog(1);
+            setReloadingProductInterestedLogWhenUserAndArticleInfo(true);
+            
         } catch (error) {
             console.error("로드 실패:", error);
         }
@@ -363,12 +427,34 @@ export default function MarketArticlePage() {
         
     }
 
-    function MarketProductInterestedLogElementOnArticle({marketArticleElem1}) {
+    function MarketProductInterestedLogElementOnArticleWhenExists({marketArticleElem1}) {
         
         return(
             <>
             
-                <i className="ri-heart-3-line"></i> 탐나요!
+                <button type="button" className="btn buttonDefault" onClick = {constButtonToDeleteMarketProductInterestedLog} 
+                style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                            
+                        <i className="ri-heart-3-fill"></i> 탐냄 취소
+                    
+                </button>
+            
+            </>
+        )
+        
+    }
+    
+    function MarketProductInterestedLogElementOnArticleWhenNotExists({marketArticleElem1}) {
+        
+        return(
+            <>
+            
+                <button type="button" className="btn buttonDefault" onClick = {constButtonToInsertMarketProductInterestedLog} 
+                style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                    
+                        <i className="ri-heart-3-line"></i> 탐나요!
+                    
+                </button>
             
             </>
         )
@@ -608,6 +694,9 @@ export default function MarketArticlePage() {
     function MarketArticleLikeButtonPageLayout({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
+                                
+            if (constMarketProductInterestedLogElement.length > 0) {} else {}
+            <></>
         
         if (checkUserStatus == article.marketUserId) {
             
@@ -638,17 +727,17 @@ export default function MarketArticlePage() {
                 
                     <div className = "row gx-0">
                         <div className = "col-auto">
-                            <button type="button" className="btn buttonDefault" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                            
+                            {
+                                constMarketProductInterestedLogElement.length > 0 ? 
+                                constMarketProductInterestedLogElement
+                                : 
+                                <>
+                                    <MarketProductInterestedLogElementOnArticleWhenNotExists />
+                                </>
                                 
-                                {
-                                    constMarketProductInterestedLogElement.length > 0 ? 
-                                    constMarketProductInterestedLogElement : 
-                                    <>
-                                        <i className="ri-heart-3-fill"></i> 탐냄 취소
-                                    </>
-                                }
-                                
-                            </button>
+                            }
+                            
                         </div>
                     </div>
                 
