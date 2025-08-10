@@ -4,10 +4,17 @@ import {
     addScore,
     setKeywordResult,
     setRoutineResult
-} from '../../../redux/challengeTestSlice'; // 경로 확인 필요
+} from '../../../redux/challengeTestSlice';
 
-import '../styles/TestPage.css'; // CSS 별도 작성
+import '../styles/TestPage.css';
 import { useState, useEffect } from 'react';
+
+import testQ1 from '../../../assets/img/challenge/test/testQ1.png';
+import testQ2 from '../../../assets/img/challenge/test/testQ2.png';
+import testQ3 from '../../../assets/img/challenge/test/testQ3.png';
+import testQ4 from '../../../assets/img/challenge/test/testQ4.png';
+import testQ5 from '../../../assets/img/challenge/test/testQ5.png';
+import testQ6 from '../../../assets/img/challenge/test/testQ6.png';
 
 // TODO: 이 부분을 실제 백엔드 API 기본 URL로 교체해야 합니다.
 // 예: 'http://localhost:8080/api'
@@ -64,11 +71,15 @@ const keywordMapping = {
     '건강식단': 47,
 };
 
+const questionImages = {
+    1: testQ1, 2: testQ2, 3: testQ3, 4: testQ4, 5: testQ5, 6: testQ6
+};
+
+
 export default function ChallengeTestPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // ★ Redux 스토어에서 userId와 authToken을 가져옵니다.
     const { id: userId, token: authToken } = useSelector(state => state.auth);
 
     const { stepId } = useParams();
@@ -79,45 +90,45 @@ export default function ChallengeTestPage() {
     // STEP 1 ~ 6 성향 테스트 질문
     const questions = {
         1: {
-            question: '헬스에서 더 중요한 건 뭐라고 생각해?',
+            question: '헬스에서 더 중요한 것은 무엇이오?',
             options: [
-                { text: '목표를 향해 성취하는 과정', type: 'goal' },
-                { text: '사람들과의 연결과 소속감', type: 'relationship' }
+                { text: '목표를 향해 나아가 성취하는 과정이오', type: 'goal' },
+                { text: '사람들과 정을 나누고 인연을 쌓는 것이오', type: 'relationship' }
             ]
         },
         2: {
-            question: '힘들 땐 어떻게 극복하는 편인가요?',
+            question: '고단할 때는 어찌 극복하는 것이오?',
             options: [
-                { text: '휴식이나 회복 루틴으로 내 컨디션을 챙긴다', type: 'recovery' },
-                { text: '끝까지 버티며 기록을 이어간다', type: 'goal' }
+                { text: '휴식이나 회복으로 내 몸 상태를 살피오', type: 'recovery' },
+                { text: '끝까지 버티며 기록을 이어가고자 하오', type: 'goal' }
             ]
         },
         3: {
-            question: '나를 운동하게 만드는 원동력은?',
+            question: '그대를 움직이게 하는 원동력은 무엇이오?',
             options: [
-                { text: '함께 하는 사람들과의 약속', type: 'relationship' },
-                { text: '새로운 지식과 훈련법을 배우는 것', type: 'learning' }
+                { text: '함께하는 이들과의 약속이오', type: 'relationship' },
+                { text: '새로운 지식과 훈련법을 깨우치는 것이오', type: 'learning' }
             ]
         },
         4: {
-            question: '운동할 때 나는...',
+            question: '운동할 때 그대는 어떠하오?',
             options: [
-                { text: '새로운 시도나 도전에 흥미를 느낀다', type: 'learning' },
-                { text: '몸 상태에 따라 유연하게 루틴을 조절한다', type: 'recovery' }
+                { text: '새로운 시도와 도전에 흥미를 느끼오', type: 'learning' },
+                { text: '몸 상태에 따라 유연하게 훈련을 조절하오', type: 'recovery' }
             ]
         },
         5: {
-            question: '기록을 남길 땐 어떤 방식이 좋아요?',
+            question: '기록을 남길 때 그대는 어떤 방식을 선호하오?',
             options: [
-                { text: '혼자만의 기록을 조용히 쌓는다', type: 'goal' },
-                { text: '개인과 팀의 균형을 맞추는 게 좋다', type: 'balanced' }
+                { text: '홀로 조용히 기록을 쌓는 것이 좋소', type: 'goal' },
+                { text: '개인과 팀의 균형을 맞추는 것이 좋소', type: 'balanced' }
             ]
         },
         6: {
-            question: '꾸준히 하려면 어떤 방식이 더 잘 맞나요?',
+            question: '꾸준함을 유지하려면 어떤 방식이 그대에게 맞소?',
             options: [
-                { text: '서로 응원하며 함께하는 분위기', type: 'relationship' },
-                { text: '각자 목표는 다르지만 흐름은 맞추는 것', type: 'balanced' }
+                { text: '서로 응원하며 함께하는 분위기를 원하오', type: 'relationship' },
+                { text: '각자 목표는 다르나 흐름은 함께 맞추기를 원하오', type: 'balanced' }
             ]
         }
     };
@@ -188,8 +199,8 @@ export default function ChallengeTestPage() {
     // 결과를 저장하고 페이지를 이동하는 비동기 함수
     const saveAndNavigateToResult = async () => {
         if (!userId || !authToken) {
-            console.error('⚠️ 사용자 정보나 인증 토큰이 없습니다. 로그인 상태를 확인해주세요.');
-            setToastMessage("사용자 정보를 불러올 수 없습니다. 다시 로그인해주세요.");
+            console.error('사용자 정보나 인증 토큰이 없음. 로그인 상태를 확인 요망.');
+            setToastMessage('사용자 정보를 불러올 수 없으니, 다시 로그인을 시도해 주시오.');
             setToastVisible(true);
             setTimeout(() => setToastVisible(false), 2000);
             return;
@@ -204,7 +215,7 @@ export default function ChallengeTestPage() {
                 keywordIds: selectedKeywords.map(kw => keywordMapping[kw]).filter(id => id),
             };
 
-            console.log("⭐ 성향 테스트 저장 페이로드:", payload);
+            console.log("성향 테스트 저장 페이로드:", payload);
 
             // TODO: fetch를 사용하여 실제 백엔드 API에 POST 요청을 보냅니다.
             const response = await fetch(`${BACKEND_BASE_URL}/challenge/tendency-test/complete`, {
@@ -221,13 +232,13 @@ export default function ChallengeTestPage() {
                 throw new Error(`HTTP Error! Status: ${response.status}`);
             }
 
-            console.log("✅ 성향 테스트 결과 저장 성공!");
+            console.log("성향 테스트 결과 저장 성공");
 
             // 저장 성공 시, 결과 페이지로 이동합니다.
             navigate('/gymmadang/challenge/challengeTest/result');
         } catch (err) {
-            console.error('⚠️ 성향 테스트 결과 저장 실패', err);
-            setToastMessage("결과 저장에 실패했습니다. 다시 시도해주세요.");
+            console.error('성향 테스트 결과 저장 실패', err);
+            setToastMessage("성향 테스트 결과 저장에 실패했소. 다시 시도해 주시오.");
             setToastVisible(true);
             setTimeout(() => setToastVisible(false), 2000);
             
@@ -244,7 +255,7 @@ export default function ChallengeTestPage() {
         // ... (이전 코드와 동일한 유효성 검사 로직)
         if (step === 7) {
             if (selectedKeywords.length === 0) {
-                setToastMessage("관심사를 하나 이상 선택해주세요!");
+                setToastMessage("관심사를 하나 이상 선택해 주시오");
                 setToastVisible(true);
                 setTimeout(() => setToastVisible(false), 2000);
                 return;
@@ -254,13 +265,13 @@ export default function ChallengeTestPage() {
 
         if (step === 8) {
             if (selectedDays.length === 0) {
-                setToastMessage("운동하는 요일을 선택해주세요!");
+                setToastMessage("운동하는 요일을 선택해 주시오");
                 setToastVisible(true);
                 setTimeout(() => setToastVisible(false), 2000);
                 return;
             }
             if (!region) {
-                setToastMessage("운동 지역을 선택해주세요!");
+                setToastMessage("운동 지역을 선택해 주시오");
                 setToastVisible(true);
                 setTimeout(() => setToastVisible(false), 2000);
                 return;
@@ -292,8 +303,9 @@ export default function ChallengeTestPage() {
 
     return (
         <div className="test-page-body">
+            {/* 뒤로가기 버튼과 진행 표시를 담는 상단 컨테이너 */}
             <div className="test-page-top">
-                <button className="back-button" onClick={handleBack}>←</button>
+                <button className="ch-test-back-button" onClick={handleBack}>&lt;</button>
                 <div className="progress-dots">
                     {[...Array(totalSteps)].map((_, i) => (
                         <div key={i} className={`dot ${i < step ? 'active' : ''}`} />
@@ -302,10 +314,13 @@ export default function ChallengeTestPage() {
             </div>
 
 
+
             {/* STEP 1~6: 성향 테스트 질문 */}
             {step <= 6 && data && (
                 <>
+                    {/* 👇 단계별 이미지를 표시하는 코드 추가 */}
                     <h2 className="test-question-title">{data.question}</h2>
+                    <img src={questionImages[step]} alt={`Question ${step}`} className="test-question-image" />
                     <div className="choice-buttons">
                         {data.options.map((opt, idx) => (
                             <button key={idx} className="choice-btn" onClick={() => {

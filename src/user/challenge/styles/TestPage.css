@@ -20,21 +20,34 @@
   margin-bottom: 30px;
 }
 
-.back-button {
+.ch-test-back-button {
+  position: absolute;
+  top: 20px; /* 상단에서 20px 떨어짐 */
+  left: 20px; /* 왼쪽에서 20px 떨어짐 */
   background: none;
   border: none;
   font-size: 24px;
+  font-weight: bold;
+  color: rgb(179, 179, 179); /* 폰트 색상 */
   cursor: pointer;
+  z-index: 100;
+  padding: 5px;
+}
+
+.back-button:hover {
+  color: #000;
 }
 
 .progress-dots {
   display: flex;
   gap: 6px;
+  margin-left: 230px;
+  margin-top: 20px;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: #ccc;
 }
@@ -46,7 +59,7 @@
 .test-question-title {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 5px;
   text-align: center;
 
   min-height: 48px;  /* 한 줄 높이 기준 */
@@ -229,4 +242,13 @@
   margin-top: 15px;
   margin-bottom: 15px;
   color: #222;
+}
+
+.test-question-image {
+  width: 70%; /* 너비를 100%로 설정하여 부모 요소에 맞춤 */
+  max-width: 250px; /* 최대 너비 지정 */
+  height: auto; /* 비율 유지를 위해 높이 자동 설정 */
+  margin: 30px auto;
+  display: block; /* 중앙 정렬을 위해 블록 요소로 지정 */
+  
 }

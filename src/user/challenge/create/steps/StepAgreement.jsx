@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import '../styles/ChallengeCreate.css';
-import agreementImage from '/src/assets/img/challenge/test/agreement.png';
+import agreementImage from '/src/assets/img/challenge/create/agreement.png';
 
 
 export default function StepAgreement({ onNext, onBack }) {

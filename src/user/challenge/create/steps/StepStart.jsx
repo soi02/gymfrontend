@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ChallengeCreate.css';
-import startImage from '/src/assets/img/challenge/test/createChallenge.png';
+import startImage from '/src/assets/img/challenge/create/createChallenge.png';
 
 
 export default function StepStart({ onNext, onBack }) {

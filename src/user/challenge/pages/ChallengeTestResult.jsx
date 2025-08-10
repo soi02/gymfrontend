@@ -8,11 +8,11 @@ import {
 import '../styles/TestPage.css'; // 공통 스타일
 
 
-import goalImg from '../../../assets/img/challenge/test/goal.png';
-import relationshipImg from '../../../assets/img/challenge/test/relationship.png';
-import recoveryImg from '../../../assets/img/challenge/test/recovery.png';
-import learningImg from '../../../assets/img/challenge/test/learning.png';
-import balancedImg from '../../../assets/img/challenge/test/balanced.png';
+import goalImg from '../../../assets/img/challenge/testResult/goal.png';
+import relationshipImg from '../../../assets/img/challenge/testResult/relationship.png';
+import recoveryImg from '../../../assets/img/challenge/testResult/recovery.png';
+import learningImg from '../../../assets/img/challenge/testResult/learning.png';
+import balancedImg from '../../../assets/img/challenge/testResult/balanced.png';
 import { useEffect, useState } from 'react';
 import apiClient from '../../../global/api/apiClient';
 
