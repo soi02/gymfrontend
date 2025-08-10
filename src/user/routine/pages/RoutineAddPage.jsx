@@ -145,8 +145,14 @@ export default function RoutineAddPage() {
                 className="main-content"
                 style={{ height: "100vh", display: "flex", flexDirection: "column" }}
             >
+
+              <div className="rap-header">
+                <button className="rap-back-btn" onClick={() => navigate(-1)}>&lt;</button>
+                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
+              </div>
+
                 <div className="row">
-                    <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
+                    <div className="col" style={{ paddingTop: "0rem", paddingLeft: "2rem" }}>
                         <h3>루틴생성</h3>
                         <p>
                             루틴으로 저장하고 싶은 운동들을 선택해 보시오.

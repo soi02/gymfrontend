@@ -152,8 +152,11 @@ const handleRemoveSet = () => {
 
   return (
     <div className="main-content">
+        <div className="swp-header">
+        <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
+        <h3 className='swp-header-title'>운동 기록중</h3>
+        </div>
       <div {...handlers} className="start-workout-container">
-
 
 
                 <div className="routine-top-bar">

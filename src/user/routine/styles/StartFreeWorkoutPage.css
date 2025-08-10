@@ -6,6 +6,39 @@
   box-sizing: border-box;
 }
 
+
+
+.swp-header {
+  position: relative;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1rem;
+  padding-top: 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.swp-back-btn {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  color: rgb(179, 179, 179);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.swp-header-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
 .routine-kebab-button {
   font-size: 1.6rem;
   background: none;
