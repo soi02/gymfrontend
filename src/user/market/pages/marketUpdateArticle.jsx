@@ -2,25 +2,26 @@ import { useState } from "react";
 import MarketFetchMyPhotoOnWriteArticle from "../components/MarketFecthMyPhotoOnWriteArticle";
 import useMarketAPI from "../service/MarketService";
 
-export default function MarketWriteArticlePage() {
+export default function MarketUpdateArticlePage() {
     
-    const [insertMarketArticleElement, setInsertMarketArticleElement] = useState(
+    const [updateMarketArticleElement, setUpdateMarketArticleElement] = useState(
         {id : 1, marketUserId : 1004, imageLink : null, mainImageId : 0, title : "My Neck", content : "My Dragon", productCostOption : 0, productCost : 0,
-            viewedCount : 0, sellEnded : 0, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : null
+            viewedCount : 0, sellEnded : 0, createdAt : "1970-01-01T00:00:01", updatedAt : null
         }
     )
     
     const marketAPI = useMarketAPI();
     
-    const constButtonToInsertMarketArticle = async () => {
+    const constButtonToUpdateMarketArticle = async () => {
             
-        try {
-            const constPostInsertMarketArticle = await marketAPI.postInsertMarketArticle(insertMarketArticleElement);
-        } catch (error) {
-            console.error("로드 실패:", error);
+            try {
+                const constPostUpdateMarketArticle = await marketAPI.postUpdateMarketArticle(updateMarketArticleElement);
+                console.log(constPostUpdateMarketArticle);
+            } catch (error) {
+                console.error("로드 실패:", error);
+            }
+            
         }
-        
-    }
     
     return(
         <>
@@ -116,7 +117,7 @@ export default function MarketWriteArticlePage() {
                                     <div className = "col d-flex justify-content-center">
                                         <div className = "row">
                                             <div className = "col-auto">
-                                                <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketArticle} style = {{fontSize : "1.875vh", fontWeight : "bold"}}>게시</button>
+                                                <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle} style = {{fontSize : "1.875vh", fontWeight : "bold"}}>게시</button>
                                             </div>
                                         </div>
                                     </div>

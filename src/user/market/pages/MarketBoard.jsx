@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
 import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArticleFloatingFixedButton";
 import MarketSearchDivision from "../commons/test/example/MarketSearchDivision";
 import { Link } from "react-router-dom";
+import useMarketAPI from "../service/MarketService";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -89,22 +90,13 @@ function MarketArticleElement({marketArticleElem1}) {
 export default function MarketBoardPage() {
     
     const [marketArticleList, setMarketArticleList] = useState([
-        {id : 1, marketUserId : 1004, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 12345, 
-        viewedCount : 67, sellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserId : 1004, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 67890, 
-        viewedCount : 89, sellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserId : 1004, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 98765, 
-        viewedCount : 12, sellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserId : 1004, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 43210, 
-        viewedCount : 34, sellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
+        {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
+        title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
+        viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
     ]) 
     
     const [marketUserInfoList, setMarketUserInfoList] = useState([
-        {id : 1004, userId : 1004, nickname : "GoodDevil", createdAt : new Date("2024-06-09T12:34:56")}
+        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
     ])
     
     const mergedList = marketArticleList.map(article => {
@@ -115,6 +107,34 @@ export default function MarketBoardPage() {
     const constMarketArticleElementList = mergedList.map((mergedElement) => (
         <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement} />
     ))
+    
+    const marketAPI = useMarketAPI();
+    
+    useEffect(() => {
+        
+        const constUseEffect = async () => {
+            
+            try {
+                
+                const constGetSelectMarketArticle = await marketAPI.getSelectMarketArticle();
+                
+                const constArticleElementFromAPI = constGetSelectMarketArticle.map(mapElem1 =>  mapElem1.marketArticleDto )
+                const constUserInfoElementFromAPI = constGetSelectMarketArticle.map(mapElem1 => mapElem1.marketUserInfoDto )
+                
+                setMarketArticleList(constArticleElementFromAPI);
+                setMarketUserInfoList(constUserInfoElementFromAPI);
+                
+            } catch (error) {
+                
+                console.error("로드 실패:", error);
+                
+            }
+            
+        }
+        
+        constUseEffect();
+        
+    }, []);
     
     return (
         

@@ -228,7 +228,7 @@ export default function MarketUserPage() {
     const defaultUserStatus = 1004;
     
     const [marketUserInfo, setMarketUserInfo] = useState([
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : "1970-01-01T00:00:00"}
+        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
     ])
     
     const constMarketUserInfoElement =

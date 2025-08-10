@@ -29,7 +29,9 @@ export default function useMarketAPI() {
     }
     
     const getSelectSpecificMarketArticle = async(id) =>{
-        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketArticle/${id}`);
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketArticle`, {
+            params : {id}
+        });
         return response.data;
     }
     
@@ -47,9 +49,10 @@ export default function useMarketAPI() {
     }
     
     const postDeleteMarketArticle = async(id) => {
-        const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketArticle/${id}`,
-            { id } ,
-            {
+        const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketArticle`, 
+            {  } ,
+            {            
+                params : {id},
                 headers : {
                     "Content-Type": "application/json"
                 }
@@ -71,7 +74,9 @@ export default function useMarketAPI() {
     }
     
     const getSelectMarketCommentOnArticle = async(articleId) =>{
-        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketCommentOnArticle/${articleId}`);
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketCommentOnArticle`, {
+            params : {articleId}
+        });
         return response.data;
     }
     
@@ -89,9 +94,10 @@ export default function useMarketAPI() {
     }
     
     const postDeleteMarketCommentOnArticle = async(id) => {
-        const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketCommentOnArticle/${id}`,
-            { id } ,
-            {
+        const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketCommentOnArticle`,
+            {  } ,
+            {            
+                params : {id},
                 headers : {
                     "Content-Type": "application/json"
                 }
