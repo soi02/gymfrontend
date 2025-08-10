@@ -1,43 +1,162 @@
-/* StepStart 컴포넌트 전체 컨테이너 스타일 */
-.step-start-page {
-    max-width: 375px;
+/* 전체 레이아웃 컨테이너 */
+.step-layout-container {
+    max-width: 475px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 20px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    box-sizing: border-box;
 }
 
-/* 주요 질문 스타일 (예: 새로운 수련을 만들어보시겠소?) */
+/* 뒤로가기 및 엑스 버튼 헤더 */
+.step-start-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 13px;
+}
+
+/* 뒤로가기 버튼 */
+.ch-create-back-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: rgb(179, 179, 179);
+    cursor: pointer;
+    z-index: 100;
+    padding: 5px;
+}
+
+/* 닫기 (X) 버튼 */
+.ch-create-close-button {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: rgb(179, 179, 179);
+    padding: 5px; /* 적절한 패딩으로 수정 */
+}
+
+/* 페이지 콘텐츠 래퍼 (제목, 소제목, 내용, 버튼 포함) */
+.step-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 각 스텝의 고유 내용 영역 */
+.step-page-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* ✅ 컨텐츠를 상단으로 정렬 */
+    text-align: center;
+    /* 다음 버튼 영역을 고려하여 패딩 값 충분히 확보 */
+    padding-bottom: 120px; /* ✅ 패딩 값을 더 늘려 하단 텍스트가 가려지지 않게 합니다. */
+    overflow-y: auto; /* 내용이 넘치면 스크롤 가능하게 함 */
+}
+
+/* 주요 질문 스타일 */
 .step-start-question {
     font-size: 1.4rem;
     font-weight: bold;
-    margin-top: 12px;
-    margin-bottom: 8px; /* 부가 설명과의 간격 */
-    color: #aa0000;
+    margin-top: 0.1rem;
+    margin-left: 0.5rem;
+    margin-bottom: 13px;
+    color: #7c1d0d;
+    line-height: 1.4;
 }
 
-/* 부가 설명 스타일 (예: 직접 수련을 만들고...) */
+/* 부가 설명 스타일 */
 .step-start-sub {
     font-size: 0.9rem;
     color: #666;
-    margin-bottom: 24px; /* 다음 버튼과의 간격 */
+    margin-bottom: 24px;
+    margin-left: 0.5rem;
 }
 
-/* 시작하기, 만들기 등 다음 단계로 넘어가는 버튼 */
+/* 다음 단계 버튼 */
 .step-start-next-button {
-    margin-top: auto; /* 상위 컨테이너의 하단에 배치 */
-    width: 100%;
+    position: fixed; /* ✅ 하단에 고정되도록 position을 fixed로 변경 */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px); /* 좌우 패딩 20px씩 제외 */
+    max-width: 435px; /* 전체 컨테이너(475px) - 패딩(40px) */
     padding: 12px;
-    background-color: #111;
-    border: 1px solid #111;
+    background-color: #7c1d0d;
+    border: none;
     border-radius: 8px;
     font-size: 1rem;
     color: #fff;
     cursor: pointer;
-    box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+    box-sizing: border-box;
 }
+
+/* StepAgreement 관련 스타일 */
+.step-agreement-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+    text-align: left; /* 리스트 텍스트 정렬 */
+}
+
+.step-agreement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* 체크박스 스타일 */
+.step-agreement-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    transform: scale(1.4);
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    position: relative;
+    background-color: white;
+}
+
+.step-agreement-checkbox::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* rotate(-45deg)로 통일 */
+    transform: translate(-50%, -60%) rotate(-45deg) scale(0);
+    width: 4.5px;
+    height: 8px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transition: transform 0.2s ease-in-out;
+}
+
+.step-agreement-checkbox:checked {
+    background-color: #7c1d0d;
+    border-color: #7c1d0d;
+}
+
+.step-agreement-checkbox:checked::before {
+    transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+
+.step-agreement-label {
+    font-size: 0.95rem;
+    color: #333;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+
+
+
 
 /* 이미지 컨테이너 */
 .step-start-image-container {
@@ -49,44 +168,16 @@
 
 /* 이미지 스타일 */
 .step-start-image {
-    max-width: 80%; /* 컨테이너 너비에 맞게 크기 조절 */
+    max-width: 75%; /* 컨테이너 너비에 맞게 크기 조절 */
     height: auto;
     object-fit: cover;
 }
 
 
-
-
-/* StepAgreement 관련 스타일 */
-.step-agreement-list {
-    list-style: none;
-    padding: 0;
-    margin: 24px 0;
-}
-
-.step-agreement-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.step-agreement-checkbox {
-    width: 20px;
-    height: 20px;
-    margin-right: 12px;
-    cursor: pointer;
-}
-
-.step-agreement-label {
-    font-size: 1rem;
-    color: #333;
-    cursor: pointer;
-}
-
 /* 이미지 컨테이너 */
 .step-agreement-image-container {
-    width: 65%;
-    margin: 2rem auto 1rem; /* 위: 2rem, 좌우: auto(중앙정렬), 아래: 1rem */
+    width: 50%;
+    margin: 2.3rem auto 2rem; /* 위: 2rem, 좌우: auto(중앙정렬), 아래: 1rem */
     text-align: center; /* 이미지(자식 요소)를 컨테이너 안에서 가운데 정렬 */
 }
 
@@ -120,7 +211,7 @@
   font-size: 1.4rem;
   font-weight: bold;
   margin-top: 12px;
-  color: #aa0000;
+  color: #7c1d0d;
 }
 
 .challenge-step-sub {
@@ -130,7 +221,7 @@
 }
 
 .highlight {
-  color: #aa0000;
+  color: #7c1d0d;
 }
 
 .next-button {
@@ -145,6 +236,21 @@
 }
 
 
+
+
+
+/* react-date-range의 날짜 입력창 컨테이너 숨기기 */
+.rdrDateRangeWrapper .rdrDateDisplay {
+    display: none;
+}
+.rdrDateRangeWrapper .rdrMonthName {
+    display: none;
+}
+
+/* DateRange 컴포넌트 전체를 감싸는 div의 스타일 조정 */
+/* .date-range-wrapper {
+    margin-top: 0.1rem;
+} */
 
 
 /* step-duration */
