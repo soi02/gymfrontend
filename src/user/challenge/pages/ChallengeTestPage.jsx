@@ -87,6 +87,8 @@ export default function ChallengeTestPage() {
 
     const totalSteps = 8;
 
+    const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
+
     // STEP 1 ~ 6 성향 테스트 질문
     const questions = {
         1: {
@@ -97,7 +99,7 @@ export default function ChallengeTestPage() {
             ]
         },
         2: {
-            question: '고단할 때는 어찌 극복하는 것이오?',
+            question: '고단할 때는 어찌 극복하는 편이오?',
             options: [
                 { text: '휴식이나 회복으로 내 몸 상태를 살피오', type: 'recovery' },
                 { text: '끝까지 버티며 기록을 이어가고자 하오', type: 'goal' }
@@ -118,14 +120,14 @@ export default function ChallengeTestPage() {
             ]
         },
         5: {
-            question: '기록을 남길 때 그대는 어떤 방식을 선호하오?',
+            question: '기록을 남길 때\n그대는 어떤 방식을 선호하오?',
             options: [
                 { text: '홀로 조용히 기록을 쌓는 것이 좋소', type: 'goal' },
                 { text: '개인과 팀의 균형을 맞추는 것이 좋소', type: 'balanced' }
             ]
         },
         6: {
-            question: '꾸준함을 유지하려면 어떤 방식이 그대에게 맞소?',
+            question: '꾸준함을 유지하려면\n어떤 방식이 그대에게 맞소?',
             options: [
                 { text: '서로 응원하며 함께하는 분위기를 원하오', type: 'relationship' },
                 { text: '각자 목표는 다르나 흐름은 함께 맞추기를 원하오', type: 'balanced' }
@@ -296,52 +298,60 @@ export default function ChallengeTestPage() {
         }
     };
 
+    const handleOptionSelect = (option, index) => {
+        setSelectedOptionIndex(index); // 선택된 버튼의 인덱스 저장
+        dispatch(addScore({ type: option.type }));
+        console.log("📌 dispatched:", option.type);
+        setTimeout(() => {
+            navigate(`/gymmadang/challenge/challengeTest/step/${step + 1}`);
+            setSelectedOptionIndex(null); // 다음 페이지 이동 후 선택 상태 초기화
+        }, 300); // 선택된 색상을 잠시 보여준 뒤 페이지 이동
+    };
 
     const data = questions[step];
 
-    if (step <= 6 && !data) return <div>잘못된 접근입니다.</div>;
+    if (step <= 6 && !data) return <div>잘못된 접근이오.</div>;
 
-    return (
-        <div className="test-page-body">
-            {/* 뒤로가기 버튼과 진행 표시를 담는 상단 컨테이너 */}
-            <div className="test-page-top">
-                <button className="ch-test-back-button" onClick={handleBack}>&lt;</button>
-                <div className="progress-dots">
-                    {[...Array(totalSteps)].map((_, i) => (
-                        <div key={i} className={`dot ${i < step ? 'active' : ''}`} />
-                    ))}
-                </div>
-            </div>
+    return (
+        <div className="test-page-body">
+            {/* 뒤로가기 버튼과 진행 표시를 담는 상단 컨테이너 */}
+            <div className="test-page-top">
+                <button className="ch-test-back-button" onClick={handleBack}>&lt;</button>
+                <div className="progress-dots">
+                    {[...Array(totalSteps)].map((_, i) => (
+                        <div key={i} className={`dot ${i < step ? 'active' : ''}`} />
+                    ))}
+                </div>
+            </div>
 
 
 
-            {/* STEP 1~6: 성향 테스트 질문 */}
-            {step <= 6 && data && (
-                <>
-                    {/* 👇 단계별 이미지를 표시하는 코드 추가 */}
-                    <h2 className="test-question-title">{data.question}</h2>
-                    <img src={questionImages[step]} alt={`Question ${step}`} className="test-question-image" />
-                    <div className="choice-buttons">
-                        {data.options.map((opt, idx) => (
-                            <button key={idx} className="choice-btn" onClick={() => {
-                                dispatch(addScore({ type: opt.type }));
-                                console.log("📌 dispatched:", opt.type);
-                                navigate(`/gymmadang/challenge/challengeTest/step/${step + 1}`);
-                            }}>
+            {/* STEP 1~6: 성향 테스트 질문 */}
+            {step <= 6 && data && (
+                <>
+                    <h2 className="test-question-title">{data.question}</h2>
+                    <img src={questionImages[step]} alt={`Question ${step}`} className="test-question-image" />
+                    
+                    <div className="choice-buttons">
+                        {data.options.map((opt, idx) => (
+                            <button
+                                key={idx}
+                                // ❗❗❗ 수정된 부분: 선택된 버튼에 'selected' 클래스 추가
+                                className={`choice-btn ${selectedOptionIndex === idx ? 'selected' : ''}`}
+                                onClick={() => handleOptionSelect(opt, idx)}
+                            >
                                 {opt.text}
                             </button>
-                        ))}
-                    </div>
-                </>
-            )}
+                        ))}
+                    </div>
+                </>
+            )}
 
-            {/* STEP 7: 관심사 키워드 선택 */}
+            {/* STEP 7: 관심사 키워드 선택 */}
             {step === 7 && (
                 <>
-                    <h2 className="test-question-title">요즘 나의 관심사는?</h2>
-                    <div style={{ fontSize: '14px', marginTop: '-20px', marginBottom: '7px', textAlign: 'right' }}>
-                        최대 5개 선택할 수 있어요
-                    </div>
+                    <h2 className="test-question-title">나의 관심사는?</h2>
+                    <p className="test-description">최대 5개의 키워드를 선택할 수 있소</p>
                     <div style={{ textAlign: 'right', fontSize: '13px', marginBottom: '8px', paddingRight: '6px' }}>
                         선택됨: {selectedKeywords.length} / 5
                     </div>
@@ -372,7 +382,7 @@ export default function ChallengeTestPage() {
                 <>
                     <h2 className="test-question-title">언제, 어디서 주로 헬스를 하나요?</h2>
                     <div className="routine-section">
-                        <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', marginTop: '10px' }}>
+                        <div className="routine-section-title">
                             운동 요일 선택
                         </div>
                         <div className="routine-days">
@@ -386,7 +396,7 @@ export default function ChallengeTestPage() {
                                 </button>
                             ))}
                         </div>
-                        <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '8px', marginTop: '20px' }}>
+                        <div className="routine-section-title">
                             운동 지역 선택
                         </div>
                         <select
@@ -401,11 +411,10 @@ export default function ChallengeTestPage() {
                             <option value="기타">기타</option>
                         </select>
                     </div>
-
                     <button 
                         className="next-button" 
                         onClick={handleNext}
-                        disabled={isSaving || !isReadyToSave} // API 호출 중 또는 데이터가 미완성일 때 비활성화
+                        disabled={isSaving || !isReadyToSave}
                     >
                         {isSaving ? '저장 중...' : '결과 보기'}
                     </button>

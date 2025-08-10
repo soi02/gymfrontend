@@ -10,7 +10,7 @@ export default function ChallengeTestIntro() {
 
   // Redux state에서 사용자 이름 가져오기
   // 실제 Redux state 구조에 맞게 'auth.name' 부분을 수정해주세요.
-  const userName = useSelector(state => state.auth.name) || '헬스인'; 
+  const userName = useSelector(state => state.auth.name); 
 
   // 버튼 2개 핸들링 관련
   const handleChoiceClick = (choice) => {

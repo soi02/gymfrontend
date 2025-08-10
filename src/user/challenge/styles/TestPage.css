@@ -9,6 +9,9 @@
 
   display: flex;
   flex-direction: column;
+  
+  /* 수정된 부분: 고정된 버튼을 위한 하단 여백 추가 */
+  padding-bottom: 120px; /* 버튼 높이와 여백을 고려하여 충분히 여유를 줌 */
 }
 
 
@@ -53,12 +56,13 @@
 }
 
 .dot.active {
-  background-color: #2f80ed;
+  background-color: #7c1d0d;
 }
 
 .test-question-title {
   font-size: 18px;
   font-weight: 600;
+  margin-top: 9px;
   margin-bottom: 5px;
   text-align: center;
 
@@ -68,10 +72,19 @@
   justify-content: center;
 
   white-space: pre-line;  /* \n 줄바꿈 지원 */
+  line-height: 1.5; 
 }
 
 
 .choice-buttons {
+  /* 수정된 부분: 하단에 고정될 버튼 컨테이너 */
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: calc(100% - 40px); /* 양 옆 20px 여백 */
+  max-width: 335px; /* 375px - 40px */
+  margin: 0 auto;
+  
   display: flex;
   gap: 16px;
   flex-direction: column;
@@ -87,28 +100,47 @@
   line-height: 1.4;
   cursor: pointer;
   transition: all 0.2s ease;
-
-  /* ✅ 높이 강제 고정 (텍스트 길이에 상관없이 버튼 높이 동일) */
+  
   min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   white-space: pre-line;
+
+  color: #333;
+}
+
+.choice-btn.selected {
+  background-color: rgba(124, 29, 13, 0.1);
+  border-color: #7c1d0d;
+  color: #7c1d0d;
 }
 
 .choice-btn:hover {
-  border-color: #2f80ed;
-  color: #2f80ed;
+  border-color: #7c1d0d;
+  color: #7c1d0d;
 }
 
 
 
 /* step 7 : 관심사 키워드 관련 */
+.test-description {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
 .keyword-category-section {
   max-height: 60vh;
   overflow-y: auto;
-  padding-bottom: 80px; /* 버튼 안 가려지도록 여유 */
+  padding-bottom: 80px;
+  background-color: white; /* 배경색 추가 */
+  border-radius: 12px;
+  padding: 20px 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* 은은한 그림자 추가 */
 }
 
 .keyword-category-block {
@@ -117,8 +149,10 @@
 
 .keyword-category-title {
   font-weight: bold;
-  margin: 10px 0 10px 4px;
-  font-size: 15px;
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  color: #333;
 }
 
 .keyword-grid {
@@ -128,33 +162,36 @@
 }
 
 .keyword-btn {
-  border: 1.5px solid #333;
+  border: 1.5px solid #ddd;
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   font-size: 14px;
   background-color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .keyword-btn.selected {
-  background-color: #333;
-  color: white;
-  border-color: #333;
+  background-color: rgba(124, 29, 13, 0.1);
+  border-color: #7c1d0d;
+  color: #7c1d0d;
 }
 
 .next-button {
   position: fixed;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #007bff;
+  left: 20px; /* 왼쪽 여백 20px */
+  width: calc(100% - 40px); /* 전체 너비에서 양 옆 여백(20px*2)을 뺌 */
+  max-width: 335px; /* 375px - 20px - 20px = 335px */
+  background-color: #7c1d0d;
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
   border: none;
   font-size: 16px;
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+  text-align: center;
 }
-
 
 .toast-message {
   position: fixed;
@@ -205,11 +242,11 @@
 
 .day-btn {
   flex: 1;
-  min-width: 40px;
-  padding: 10px 0;
+  min-width: 35px;
+  padding: 9px 0;
   font-size: 14px;
-  border-radius: 20px;
-  border: 1.5px solid #aaa;
+  border-radius: 10px; /* 사각형에 가까운 형태로 변경 */
+  border: 1.5px solid #ddd;
   background-color: white;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -217,20 +254,48 @@
 }
 
 .day-btn.selected {
-  background-color: #2f80ed;
-  color: white;
-  border-color: #2f80ed;
+  background-color: rgba(124, 29, 13, 0.1);
+  border-color: #7c1d0d;
+  color: #7c1d0d;
 }
 
 
+.routine-section {
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.routine-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+  border-bottom: 1px solid #eee; /* 구분선 추가 */
+  padding-bottom: 8px;
+}
+
+.routine-days {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 25px; /* 하단 여백 증가 */
+  overflow-x: auto;
+}
+
 .region-select {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
-  border: 1.5px solid #ccc;
+  border: 1.5px solid #ddd;
   font-size: 14px;
   background-color: white;
-  margin-top: 10px;
+  appearance: none; /* 기본 화살표 제거 */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%237c1d0d%22%2F%3E%3C%2Fsvg%3E'); /* 사용자 정의 화살표 추가 */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  box-sizing: border-box;
 }
 
 
@@ -245,10 +310,9 @@
 }
 
 .test-question-image {
-  width: 70%; /* 너비를 100%로 설정하여 부모 요소에 맞춤 */
+  width: 90%; /* 너비를 100%로 설정하여 부모 요소에 맞춤 */
   max-width: 250px; /* 최대 너비 지정 */
   height: auto; /* 비율 유지를 위해 높이 자동 설정 */
   margin: 30px auto;
   display: block; /* 중앙 정렬을 위해 블록 요소로 지정 */
-  
 }

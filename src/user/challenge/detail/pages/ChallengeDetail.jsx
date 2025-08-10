@@ -36,7 +36,7 @@ export default function ChallengeDetail() {
       alert('결제가 성공적으로 완료되었습니다! 챌린지에 참여합니다.');
       // 챌린지 상세 페이지로 돌아가기 위해 URL을 정리하고 상태를 업데이트합니다.
       // 또는 마이페이지 등으로 이동시킬 수 있습니다.
-      navigate(`/gymmadang/challenge/detail/${challengeId}`, { replace: true });
+      navigate(`/gymmadang/challenge/myRecordList`, { replace: true });
       return;
     }
     
@@ -131,35 +131,32 @@ else if (today < recruitStart) {
   };
 
   // ★ 추가: 결제 시작 핸들러 함수
-const handlePaymentStart = async () => {
-  if (!userId) {
-    alert("로그인 후 이용 가능합니다.");
-    navigate('/gymmadang/login');
-    return;
-  }
+    const handlePaymentStart = async () => {
+        if (!userId) {
+            alert("로그인 후 이용 가능합니다.");
+            navigate('/gymmadang/login');
+            return;
+        }
 
-  try {
-    const res = await apiClient.post(
-      `/challenge/join/payment`, 
-      null,
-      {
-        params: { userId, challengeId },
-      }
-    );
-    
-    // 백엔드에서 PaymentReadyResponse DTO를 반환하므로,
-    // DTO의 redirectUrl 필드를 사용합니다.
-    if (res.data && res.data.redirectUrl) {
-      window.location.href = res.data.redirectUrl;
-    } else {
-      alert("결제 준비에 실패했습니다.");
-    }
+        try {
+            const res = await apiClient.post(
+                `/challenge/join/payment`,
+                null,
+                {
+                    params: { userId, challengeId },
+                }
+            );
 
-  } catch (err) {
-    console.error("결제 실패", err);
-    alert("결제 과정 중 오류가 발생했습니다: " + (err.response?.data || err.message));
-  }
-};
+            if (res.data && res.data.redirectUrl) {
+                window.location.href = res.data.redirectUrl;
+            } else {
+                alert("결제 준비에 실패했습니다.");
+            }
+        } catch (err) {
+            console.error("결제 실패", err);
+            alert("결제 과정 중 오류가 발생했습니다: " + (err.response?.data || err.message));
+        }
+    };
 
 
   return (
@@ -194,29 +191,26 @@ const handlePaymentStart = async () => {
           </button>
         )}
         <button
-          className="challenge-detail-button"
-          onClick={() => {
-              // 모달 대신 결제 핸들러 직접 호출
-              if (!isButtonDisabled) {
-                  // 보증금 없는 챌린지일 경우
-                  if (challengeDepositAmount === 0) {
-                      setShowModal(true); // 기존 모달을 사용하여 바로 참여
-                  } else {
-                      handlePaymentStart(); // 보증금 있는 챌린지는 결제 시작
-                  }
-              }
-            }}
-          disabled={isButtonDisabled}
-        >
-          {buttonText}
+                    className="challenge-detail-button"
+                    onClick={() => {
+                        if (!isButtonDisabled) {
+                            setShowModal(true); // ★ 수정: 무조건 모달을 띄움
+                        }
+                    }}
+                    disabled={isButtonDisabled}
+                >
+                    {buttonText}
         </button>
       </div>
-      {showModal && (
-        <ChallengeStartModal
-          onClose={() => setShowModal(false)}
-          challengeId={challengeId}
-        />
-      )}
+            {showModal && (
+                <ChallengeStartModal
+                    onClose={() => setShowModal(false)}
+                    challengeId={challengeId}
+                    challengeTitle={challengeTitle} // ★ 추가: 모달에 제목 전달
+                    challengeDepositAmount={challengeDepositAmount} // ★ 추가: 모달에 보증금 전달
+                    onPaymentStart={handlePaymentStart} // ★ 추가: 결제 시작 핸들러 전달
+                />
+            )}
     </div>
   );
 }
