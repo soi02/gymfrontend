@@ -232,7 +232,6 @@ const handleCompleteAll = () => {
       </label>
     </div>
 
-    {/* 👇 여기 새로 추가 */}
     <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
       <button
         type="button"
@@ -254,7 +253,6 @@ const handleCompleteAll = () => {
         ＋
       </button>
     </div>
-    {/* 👆 여기까지 */}
 
     <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
       닫기
