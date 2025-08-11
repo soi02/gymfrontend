@@ -1,15 +1,12 @@
-// src/challenge/create/steps/StepDeposit.jsx
-
 import React, { useState } from 'react';
-import BackButton from '../components/BackButton';
-import '../styles/ChallengeCreate.css'; // 공통 스타일 사용
+import '../styles/ChallengeCreate.css';
+import StepLayout from './StepLayout';
 
 export default function StepDeposit({ data, onNext, onBack }) {
   const [depositAmount, setDepositAmount] = useState(data.challengeDepositAmount || '');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const amount = Number(depositAmount);
 
     if (amount <= 0 || !Number.isInteger(amount)) {
@@ -22,13 +19,15 @@ export default function StepDeposit({ data, onNext, onBack }) {
   };
 
   return (
-    <div className="challenge-create-container">
-      <h2 className="challenge-create-title">챌린지 보증금 설정</h2>
-      <p className="challenge-create-description">
-        챌린지 참여에 필요한 보증금을 설정해주세요.
-      </p>
-      
-      <form onSubmit={handleSubmit} className="challenge-create-form">
+    <StepLayout
+      onBack={onBack}
+      onNext={handleSubmit}
+      question='<span class="highlight">보증금을<br />설정해주시오.</span>'
+      subText="수련에 참여할 자들이 내야 할<br />보증금을 정하여 주시오."
+      nextButtonText="다음"
+      isNextButtonDisabled={depositAmount === '' || error !== ''}
+    >
+      <div className="form-group">
         <label htmlFor="deposit" className="form-label">
           보증금 (원)
         </label>
@@ -37,18 +36,16 @@ export default function StepDeposit({ data, onNext, onBack }) {
           type="number"
           value={depositAmount}
           onChange={(e) => setDepositAmount(e.target.value)}
-          placeholder="예: 10000"
+          placeholder="예: 3000"
           className="form-input"
         />
         {error && <p className="error-message">{error}</p>}
-        
-        <div className="button-group">
-          <BackButton onBack={onBack} />
-          <button type="submit" className="next-button">
-            다음
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#666', marginTop: '20px', lineHeight: '1.5rem' }}>
+        ※ 수련 성공 시 <strong>100% 환불</strong>받을 수 있으며,<br />
+        실패 시 50%는 대한장애인체육회에 기부될 것이오.
+      </p>
+    </StepLayout>
   );
 }
