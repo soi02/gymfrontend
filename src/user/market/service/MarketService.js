@@ -118,11 +118,11 @@ export default function useMarketAPI() {
         return response.data;
     }
     
-    const postDeleteMarketProductInterestedLog = async(specificArticleId) => {
+    const postDeleteMarketProductInterestedLog = async(marketUserId,specificArticleId) => {
         const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketProductInterestedLog`,
             {  } ,
             {            
-                params : {specificArticleId},
+                params : {marketUserId, specificArticleId},
                 headers : {
                     "Content-Type": "application/json"
                 }

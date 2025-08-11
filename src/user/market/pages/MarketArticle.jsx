@@ -302,7 +302,7 @@ export default function MarketArticlePage() {
         
         try {
             
-            const constDeleteMarketProductInterestedLog = await marketAPI.postDeleteMarketProductInterestedLog(1);
+            const constDeleteMarketProductInterestedLog = await marketAPI.postDeleteMarketProductInterestedLog(2, 1);
             setReloadingProductInterestedLogWhenUserAndArticleInfo(true);
             
         } catch (error) {

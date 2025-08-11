@@ -5,11 +5,12 @@ import useMarketAPI from "../service/MarketService";
 
 export default function MarketMyLikedProductsPage() {
     
-    const checkUserStatus = 1;
+    const checkUserStatus = 2;
     const defaultUserStatus = 1004;
     
     const [checkLoadEnded, setCheckLoadEnded] = useState(true);
     const [reloadProcessing, setReloadProcessing] = useState(false);
+    const [reloadLikeDivision, setReloadLikeDivision] = useState(false);
     
     const [marketuserLikedProductList, setMarketUserLikedProductList] = useState([
         {id : 1, marketUserId : 11, imageLink : null, mainImageId : null,
@@ -44,10 +45,15 @@ export default function MarketMyLikedProductsPage() {
             article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
-            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
+            interestedLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
         }
     ]);
+    
+    const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
+        {id : 1, marketUserId : 2, specificArticleId : 1, createdAt : new Date("1970-01-01T00:00:03")}
+    )
     
     const constmarketuserLikedProductElementList = 
     mergeMarketUserLikedProduct.map(mergedElement => (
@@ -132,9 +138,23 @@ export default function MarketMyLikedProductsPage() {
     
     useEffect(() => {
         
+        if (reloadLikeDivision) {
+            
+            // const constSelectMarketProductInterestedLogWhenUserAndArticleInfo = await MarketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1);
+            setReloadLikeDivision(false);
+            console.log("Like Division Reload State Ended");
+            
+        }
+        
+    }, [reloadLikeDivision])
+    
+    useEffect(() => {
+        
         if (checkLoadEnded) {
             
         } else {
+            
+            console.log("Load State Start");
             
             const constmarketuserLikedProductElementList = 
             mergeMarketUserLikedProduct.map(mergedElement => (
@@ -142,14 +162,102 @@ export default function MarketMyLikedProductsPage() {
             console.log(mergeMarketUserLikedProduct);
             
             setCheckLoadEnded(true);
+            console.log("Load State Ended");
             
         }
         
     }, [checkLoadEnded]) // useEffect for Checking Load Ended
+    
+        //
+    
+        // const constDivisionToSelectMarketProductInterestedLogWhenUserAndArticleInfo = async() => {
+            
+        //     try {
+                
+        //         const constPostSelectMarketProductInterestedLogWhenUserAndArticleInfo = await MarketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1)
+        //         setReloadLikeDivision(true);
+                
+        //     } catch (error) {
+        //         console.error("로드 실패:", error);
+        //     }
+            
+        // }
+        
+        // constDivisionToSelectMarketProductInterestedLogWhenUserAndArticleInfo();
+        
+        // const constDivisionToInsertMarketProductInterestedLog = async() => {
+            
+        //     try {
+                
+        //         const constPostInsertMarketProductInterestedLog = await MarketAPI.postInsertMarketProductInterestedLog(insertMarketProductInterestedLog);
+        //         setReloadLikeDivision(true);
+                
+        //     } catch (error) {
+        //         console.error("로드 실패:", error);
+        //     }
+            
+        // }
+        
+        // const constDivisionToDeleteMarketProductInterestedLog = async() => {
+            
+        //     try {
+                
+        //         const constPostDeleteMarketProductInterestedLog = await MarketAPI.postDeleteMarketProductInterestedLog(2, 1);
+        //         setReloadLikeDivision(true);
+                
+        //     } catch (error) {
+        //         console.error("로드 실패:", error);
+        //     }
+            
+        // }
+        
+        // function MarketProductInterestedLogElementOnArticleWhenExists() {
+            
+        //     return(
+        //         <>
+                
+        //             <div className = "row">
+        //                 <div className = "col" onClick = {constDivisionToDeleteMarketProductInterestedLog} style = {{padding : "1.5vh"}}>
+        //                     <i className="ri-heart-3-line"></i>
+        //                 </div>
+        //             </div>
+                
+        //         </>
+        //     )
+            
+        // }
+        
+        // function MarketProductInterestedLogElementOnArticleWhenNotExists() {
+            
+        //     return(
+        //         <>
+                
+        //             <div className = "row">
+        //                 <div className = "col" onClick = {constDivisionToInsertMarketProductInterestedLog} style = {{padding : "1.5vh"}}>
+        //                     <i className="ri-heart-3-fill"></i>
+        //                 </div>
+        //             </div>
+                
+        //         </>
+        //     )
+            
+        // }
+        
+        //
+        
+    function testFuncParam(a, b, c) {
+        
+        const constA = a;
+        const constB = b;
+        const constC = c;
+        console.log("testFuncParam");
+        console.log(a, b, c);
+        
+    }
         
     function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
         
-        const { article, userInfo } = marketUserLikedProductElem1;
+        const { article, userInfo, interestedLog } = marketUserLikedProductElem1; // interestedLog 는 하트 표시 여부에 반영
         
         function funcSellEnded(sellEnded) {
             
@@ -179,10 +287,19 @@ export default function MarketMyLikedProductsPage() {
                             <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
                                 <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
+                                        <div className = "col" style = {{marginLeft : "1vh", marginRight : "1vh"}}>
                                             <div className = "row h-100">
-                                                <div className = "col-auto" style = {{paddingLeft : "2vh", paddingRight : "2vh", display : "flex", alignItems : "center"}}>
-                                                    <i className="ri-heart-3-fill"></i>
+                                                <div className = "col-auto" style = {{paddingLeft : "1.5vh", paddingRight : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" onClick = {() => testFuncParam(article.id, userInfo.id, interestedLog.id)} style = {{padding : "1.5vh"}}>
+                                                            <i className="ri-heart-3-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {/* {constPostSelectMarketProductInterestedLogWhenUserAndArticleInfo.length > 0 ?
+                                                    <constDivisionToDeleteMarketProductInterestedLog /> :
+                                                    <constDivisionToInsertMarketProductInterestedLog />} */}
+                                                    
                                                 </div>
                                                 <div className = "col">
                                                     <Link className = "linkDefault" to = {`/gymmadang/market/article/${article.id}`}>
