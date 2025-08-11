@@ -10,7 +10,10 @@ import useMarketAPI from "../service/MarketService";
 export default function MarketArticlePage() {
     
     const checkUserStatus = 2;
+    const checkArticleId = 1;
     const defaultUserStatus = 1004;
+    
+    //
     
     const [marketArticle, setMarketArticle] = useState([
         {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
@@ -22,14 +25,29 @@ export default function MarketArticlePage() {
         {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
     ])
     
-    const checkArticleWriteUser = marketUserInfoOnArticle.map(article => article.userId)[0];
+    const checkArticleWriteUserBefore = marketUserInfoOnArticle.map(article => article.userId)[0];
     
     const mergedListOnArticle = marketArticle.map(article => {
         const userInfo = marketUserInfoOnArticle.find(user => user.userId === article.marketUserId);
         return { article, userInfo };
     });
     
-    const constMarketArticleElement = mergedListOnArticle.map(mergedElement => (
+    //
+    
+    const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
+        {
+            
+            article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
+            title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
+            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            
+        }
+    ])
+    
+    const [checkArticleWriteUser, setCheckArticleWriteUser] = useState(mergeMarketArticleInfo[0].article.marketUserId);
+    
+    const constMarketArticleElement = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
     
     const constMarketArticleUpdateOrDeleteDivisionPageLayout = mergedListOnArticle.map(mergedElement => (
@@ -116,20 +134,25 @@ export default function MarketArticlePage() {
                 
                 console.log("Loading Test Start")
                 
-                const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
+                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
                     constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
-                    marketAPI.getSelectSpecificMarketArticle(1),
-                    marketAPI.getSelectMarketUserInfo(1),
-                    marketAPI.getSelectMarketCommentOnArticle(1),
-                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1)
+                    marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
+                    marketAPI.getSelectMarketUserInfo(checkUserStatus),
+                    marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
+                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                 ]) 
                 
                 console.log("APITest")
-                console.log(constGetSelectMarketCommentOnArticle);
-                console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
+                console.log(constGetSelectSpecificMarketArticleInfo)
+                console.log(constGetSelectMarketCommentOnArticle)
                 
-                setMarketArticle([constGetSelectSpecificMarketArticle]);
+                const constGetSelectSpecificMarketArticleInfoAndDistincted = {
+                    article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
+                    userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
+                }
+                setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
                 setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
+                setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
                     userInfo : APIElem1.marketUserInfoDto
@@ -187,19 +210,19 @@ export default function MarketArticlePage() {
                     
                     console.log("Reloading Test Start")
                     
-                    const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
+                    const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
                         constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
-                        marketAPI.getSelectSpecificMarketArticle(1),
-                        marketAPI.getSelectMarketUserInfo(1),
-                        marketAPI.getSelectMarketCommentOnArticle(1),
-                        marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1)
+                        marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
+                        marketAPI.getSelectMarketUserInfo(checkUserStatus),
+                        marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
+                        marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                     ]) 
                     
                     console.log("APITest2")
                     console.log(constGetSelectMarketCommentOnArticle);
                     console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
                     
-                    setMarketArticle([constGetSelectSpecificMarketArticle]);
+                    setMarketArticle([constGetSelectSpecificMarketArticleInfo]);
                     setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
                     const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                         comment : APIElem1.marketCommentOnArticleDto,

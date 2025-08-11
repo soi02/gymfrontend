@@ -104,7 +104,18 @@ export default function MarketBoardPage() {
         return { article, userInfo };
     });
     
-    const constMarketArticleElementList = mergedList.map((mergedElement) => (
+    const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
+        {
+            
+            article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
+            title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
+            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            
+        }
+    ])
+    
+    const constMarketArticleElementList = mergeMarketArticleInfo.map((mergedElement) => (
         <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement} />
     ))
     
@@ -117,13 +128,21 @@ export default function MarketBoardPage() {
             try {
                 
                 const constGetSelectMarketArticle = await marketAPI.getSelectMarketArticle();
-                console.log(constGetSelectMarketArticle)
                 
-                const constArticleElementFromAPI = constGetSelectMarketArticle.map(mapElem1 =>  mapElem1.marketArticleDto )
-                const constUserInfoElementFromAPI = constGetSelectMarketArticle.map(mapElem1 => mapElem1.marketUserInfoDto )
+                // console.log(constGetSelectMarketArticle)
                 
-                setMarketArticleList(constArticleElementFromAPI);
-                setMarketUserInfoList(constUserInfoElementFromAPI);
+                // const constArticleElementFromAPI = constGetSelectMarketArticle.map(mapElem1 =>  mapElem1.marketArticleDto )
+                // const constUserInfoElementFromAPI = constGetSelectMarketArticle.map(mapElem1 => mapElem1.marketUserInfoDto )
+                
+                // setMarketArticleList(constArticleElementFromAPI);
+                // setMarketUserInfoList(constUserInfoElementFromAPI);
+                
+                const constGetSelectMarketArticleAndDistincted = constGetSelectMarketArticle.map(APIElem1 => ({
+                    article : APIElem1.marketArticleDto,
+                    userInfo : APIElem1.marketUserInfoDto
+                }))
+                
+                setMergeMarketArticleInfo(constGetSelectMarketArticleAndDistincted);
                 
             } catch (error) {
                 

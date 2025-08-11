@@ -35,6 +35,13 @@ export default function useMarketAPI() {
         return response.data;
     }
     
+    const getSelectSpecificMarketArticleInfo = async(id) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketArticleInfo`, {
+            params : {id}
+        });
+        return response.data;
+    }
+    
     const postUpdateMarketArticle = async(payload) => {
         const id = payload.id;
         const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketArticle/${id}`,
@@ -165,12 +172,16 @@ export default function useMarketAPI() {
     }
     
     const getSelectMarketDealedLogWhenBuyer = async(buyerId) =>{
-        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketDealedLogWhenBuyer/${buyerId}`);
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketDealedLogWhenBuyer`, {
+            params : {buyerId}
+        });
         return response.data;
     }
     
     const getSelectMarketDealedLogWhenSeller = async(sellerId) =>{
-        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketDealedLogWhenSeller/${sellerId}`);
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketDealedLogWhenSeller`, {
+            params : {sellerId}
+        });
         return response.data;
     }
     
@@ -217,7 +228,7 @@ export default function useMarketAPI() {
     }
     
     return {
-        getSelectMarketUserInfo, postInsertMarketArticle, getSelectMarketArticle, getSelectSpecificMarketArticle, postUpdateMarketArticle, postDeleteMarketArticle, 
+        getSelectMarketUserInfo, postInsertMarketArticle, getSelectMarketArticle, getSelectSpecificMarketArticle, getSelectSpecificMarketArticleInfo, postUpdateMarketArticle, postDeleteMarketArticle, 
         postInsertMarketCommentOnArticle, getSelectMarketCommentOnArticle, postUpdateMarketCommentOnArticle, postDeleteMarketCommentOnArticle, 
         postInsertMarketProductInterestedLog, postDeleteMarketProductInterestedLog, 
         getSelectMarketProductInterestedLogWhenUserInfo, getSelectMarketProductInterestedLogWhenArticleInfo, getSelectMarketProductInterestedLogWhenUserAndArticleInfo,
