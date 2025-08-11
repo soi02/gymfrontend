@@ -224,7 +224,7 @@ function MarketUserRateElement({marketUserRateElem1}) {
 
 export default function MarketUserPage() {
     
-    const checkUserStatus = 1004;
+    const checkUserStatus = 1;
     const defaultUserStatus = 1004;
     
     const [marketUserInfo, setMarketUserInfo] = useState([
@@ -314,7 +314,7 @@ export default function MarketUserPage() {
         const constUseEffect = async () => {
             
             try {
-                const constGetSelectMarketUserInfo = await marketAPI.getSelectMarketUserInfo(1004);
+                const constGetSelectMarketUserInfo = await marketAPI.getSelectMarketUserInfo(1);
                 console.log(constGetSelectMarketUserInfo);
                 setMarketUserInfo([constGetSelectMarketUserInfo]);
             } catch (error) {

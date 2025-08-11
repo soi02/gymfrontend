@@ -48,7 +48,6 @@ import { loginAction } from './redux/authSlice';
 import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle';
 import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts';
 import MainPage from './global/pages/MainPage';
-import MarketTopTabs from './user/market/commons/marketTopTabs';
 import BuddyChat from './user/buddy/pages/BuddyChat';
 import BuddyNotification from './user/buddy/pages/BuddyNotification';
 import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail';
@@ -62,6 +61,7 @@ import StartFreeWorkoutPage from './user/routine/pages/StartFreeWorkoutPage';
 import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 import SimpleWebSocketTest from './user/buddy/pages/SimpleWebSocketTest';
 import GroupChatRoom from './user/challenge/groupchat/pages/GroupChatRoom';
+import MarketTopTabs from './user/market/commons/MarketTopTabs';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!

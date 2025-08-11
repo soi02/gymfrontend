@@ -117,6 +117,7 @@ export default function MarketBoardPage() {
             try {
                 
                 const constGetSelectMarketArticle = await marketAPI.getSelectMarketArticle();
+                console.log(constGetSelectMarketArticle)
                 
                 const constArticleElementFromAPI = constGetSelectMarketArticle.map(mapElem1 =>  mapElem1.marketArticleDto )
                 const constUserInfoElementFromAPI = constGetSelectMarketArticle.map(mapElem1 => mapElem1.marketUserInfoDto )

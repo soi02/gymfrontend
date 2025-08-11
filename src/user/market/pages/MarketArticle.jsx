@@ -9,7 +9,7 @@ import useMarketAPI from "../service/MarketService";
 
 export default function MarketArticlePage() {
     
-    const checkUserStatus = 1;
+    const checkUserStatus = 2;
     const defaultUserStatus = 1004;
     
     const [marketArticle, setMarketArticle] = useState([
@@ -43,11 +43,11 @@ export default function MarketArticlePage() {
     ])
     
     const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
-        {id : 1, marketUserId : 1, specificArticleId : 1, createdAt : new Date("1970-01-01T00:00:03")}
+        {id : 1, marketUserId : 2, specificArticleId : 1, createdAt : new Date("1970-01-01T00:00:03")}
     )
     
     const constMarketProductInterestedLogElement = marketProductInterestedLogOnArticle
-    .filter(element => element.specificArticleId === 1 && element.marketUserId === 1)
+    .filter(element => element.specificArticleId === 1 && element.marketUserId === 2)
     .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element.id} elem1 = {element}/>)
     
     const [marketCommentListOnArticle, setMarketCommentListOnArticle] = useState([
@@ -102,7 +102,7 @@ export default function MarketArticlePage() {
     <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>)});
     
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
-        {id : 1, articleId : 1, marketUserId : 1004, content : "My Dragon 1004", 
+        {id : 1, articleId : 1, marketUserId : 1, content : "My Dragon 1", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
     )
     
@@ -119,19 +119,20 @@ export default function MarketArticlePage() {
                 const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
                     constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticle(1),
-                    marketAPI.getSelectMarketUserInfo(1004),
+                    marketAPI.getSelectMarketUserInfo(1),
                     marketAPI.getSelectMarketCommentOnArticle(1),
-                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(1, 1)
+                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1)
                 ]) 
                 
                 console.log("APITest")
+                console.log(constGetSelectMarketCommentOnArticle);
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
                 
                 setMarketArticle([constGetSelectSpecificMarketArticle]);
                 setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
-                    userInfo : APIElem1.marketUserInfoDto,
+                    userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
                 setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
@@ -189,12 +190,13 @@ export default function MarketArticlePage() {
                     const [ constGetSelectSpecificMarketArticle, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
                         constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                         marketAPI.getSelectSpecificMarketArticle(1),
-                        marketAPI.getSelectMarketUserInfo(1004),
+                        marketAPI.getSelectMarketUserInfo(1),
                         marketAPI.getSelectMarketCommentOnArticle(1),
-                        marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(1, 1)
+                        marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1)
                     ]) 
                     
-                    console.log("APITest")
+                    console.log("APITest2")
+                    console.log(constGetSelectMarketCommentOnArticle);
                     console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
                     
                     setMarketArticle([constGetSelectSpecificMarketArticle]);

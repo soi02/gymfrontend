@@ -5,7 +5,7 @@ import useMarketAPI from "../service/MarketService";
 export default function MarketWriteArticlePage() {
     
     const [insertMarketArticleElement, setInsertMarketArticleElement] = useState(
-        {id : 1, marketUserId : 1004, imageLink : null, mainImageId : 0, title : "My Neck", content : "My Dragon", productCostOption : 0, productCost : 0,
+        {id : 1, marketUserId : 1, imageLink : null, mainImageId : 0, title : "My Neck", content : "My Dragon", productCostOption : 0, productCost : 0,
             viewedCount : 0, sellEnded : 0, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : null
         }
     )
