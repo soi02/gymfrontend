@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import apiClient from '../../../global/api/apiClient'; // 기존 apiClient 사용
 import ChallengeCard from '../components/ChallengeCard';
 import '../styles/ChallengeList.css';
-import '../styles/ChallengeList.css'; // 필터링 UI 스타일 추가\
+import CategoryGrid from './CategoryGrid';
 
 
 export default function ChallengeList() {
@@ -47,16 +47,6 @@ export default function ChallengeList() {
         }
     };
 
-    // 카테고리 목록을 가져오는 함수
-    // const fetchCategories = async () => {
-    //     try {
-    //         // 백엔드에 모든 키워드 카테고리를 조회하는 API가 있다고 가정
-    //         const res = await apiClient.get('http://localhost:8080/api/challenge/getAllCategories');
-    //         setCategories(res.data);
-    //     } catch (err) {
-    //         console.error('카테고리 불러오기 실패', err);
-    //     }
-    // };
     
   useEffect(() => {
     fetchKeywordTree();
@@ -86,70 +76,69 @@ export default function ChallengeList() {
     return challenges.filter(ch => (ch.keywords || []).includes(keywordName));
   }, [challenges, selectedKeywordId, selectedCategory]);
 
-  return (
-    <div className="challenge-list-wrapper">
-      <div className="challenge-list-container">
-        <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', marginBottom: 10 }}>수련 목록</h2>
-        <p style={{ color: '#555', fontSize: '0.9rem', marginBottom: 20 }}>
-          원하는 챌린지를 골라 도전해보세요
-        </p>
+    return (
+        <div className="challenge-list-wrapper">
+            <div className="challenge-list-container">
+                <div className="filter-header-section">
+                    <h2>수련 목록</h2>
+                      <p>원하는 챌린지를 골라 도전해보세요</p>
+                </div>
+                
+                {/* 챌린지 카테고리 그리드 컴포넌트 */}
+                {/* '전체' 버튼을 제외하고 카테고리 목록만 전달합니다 */}
+                <CategoryGrid
+                    categories={keywordTree} // keywordTree 상태를 그대로 사용
+                    onCategoryClick={handleCategoryClick}
+                    selectedCategoryId={selectedCategoryId}
+                />
 
-        {/* 카테고리 필터 */}
-        <div className="category-filters">
-          <button
-            className={`filter-button ${selectedCategoryId === 0 ? 'active' : ''}`}
-            onClick={() => handleCategoryClick(0)}
-          >
-            전체
-          </button>
-          {keywordTree.map(cat => (
+                {/* '전체' 버튼을 별도로 구현하고 싶다면 이 위치에 추가 */}
+                {/* <button
+                    className={`filter-button ${selectedCategoryId === 0 ? 'active' : ''}`}
+                    onClick={() => handleCategoryClick(0)}
+                >
+                    전체
+                </button> */}
+
+                {/* 키워드 필터 (선택된 카테고리일 때만 노출) */}
+                {/* 이 부분은 기존 코드 그대로 유지합니다 */}
+                {selectedCategoryId > 0 && (
+                    <div className="keyword-filters" style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                        {(selectedCategory?.keywords || []).map(kw => (
+                            <button
+                                key={kw.keywordId}
+                                className={`filter-button ${selectedKeywordId === kw.keywordId ? 'active' : ''}`}
+                                onClick={() => setSelectedKeywordId(prev => (prev === kw.keywordId ? null : kw.keywordId))}
+                            >
+                                #{kw.keywordName}
+                            </button>
+                        ))}
+                    </div>
+                )}
+
+                {/* 챌린지 카드 목록 */}
+                {/* 이 부분은 기존 코드 그대로 유지합니다 */}
+                <div className="challenge-cards-list" style={{ marginTop: 12 }}>
+                    {challengesAfterKeywordFilter.length > 0 ? (
+                        challengesAfterKeywordFilter.map((challenge) => (
+                            <ChallengeCard
+                                key={challenge.challengeId}
+                                challenge={challenge}
+                                onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+                            />
+                        ))
+                    ) : (
+                        <p>등록된 챌린지가 없습니다.</p>
+                    )}
+                </div>
+            </div>
+
             <button
-              key={cat.keywordCategoryId}
-              className={`filter-button ${selectedCategoryId === cat.keywordCategoryId ? 'active' : ''}`}
-              onClick={() => handleCategoryClick(cat.keywordCategoryId)}
+                className="challenge-list-floating-button"
+                onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
             >
-              {cat.keywordCategoryName}
+                ＋
             </button>
-          ))}
         </div>
-
-        {/* 키워드 필터 (선택된 카테고리일 때만 노출) */}
-        {selectedCategoryId > 0 && (
-          <div className="keyword-filters" style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            {(selectedCategory?.keywords || []).map(kw => (
-              <button
-                key={kw.keywordId}
-                className={`filter-button ${selectedKeywordId === kw.keywordId ? 'active' : ''}`}
-                onClick={() => setSelectedKeywordId(prev => (prev === kw.keywordId ? null : kw.keywordId))}
-              >
-                #{kw.keywordName}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* 챌린지 카드 */}
-        <div className="challenge-cards-list" style={{ marginTop: 12 }}>
-          {challengesAfterKeywordFilter.length > 0 ? (
-            challengesAfterKeywordFilter.map((challenge) => (
-              <ChallengeCard
-                key={challenge.challengeId}
-                challenge={challenge}
-                onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
-              />
-            ))
-          ) : (
-            <p>등록된 챌린지가 없습니다.</p>
-          )}
-        </div>
-      </div>
-
-      <button
-        className="challenge-list-floating-button"
-        onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
-      >
-        ＋
-      </button>
-    </div>
-  );
+    );
 }

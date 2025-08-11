@@ -60,7 +60,7 @@ export default function StepIntroduce({ onNext, onBack, data }) {
           <label className="field-label">수련 내용</label>
           <textarea
             className="field-control field-textarea"
-            placeholder="수련 목표와 진행 방식을 간단히 적어주시오."
+            placeholder="수련의 목표와 진행 방식을 간단히 적어주시오."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength={300}
