@@ -60,7 +60,9 @@ const CategoryGrid = ({ categories, onCategoryClick, selectedCategoryId }) => {
       {categories.map(cat => (
         <button
           key={cat.keywordCategoryId}
-          className={`category-item ${selectedCategoryId === cat.keywordCategoryId ? 'active' : ''}`}
+          // selectedCategoryId가 null일 수 있으므로 === 대신 ==을 사용하거나
+          // Number(selectedCategoryId)를 사용해 타입 비교를 명확히 하는 것이 좋습니다.
+          className={`category-item ${Number(selectedCategoryId) === cat.keywordCategoryId ? 'active' : ''}`}
           onClick={() => onCategoryClick(cat.keywordCategoryId)}
           style={{ backgroundColor: categoryColors[cat.keywordCategoryName] || '#f7f7f7' }}
         >

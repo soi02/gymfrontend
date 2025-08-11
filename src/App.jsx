@@ -63,6 +63,7 @@ import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 import SimpleWebSocketTest from './user/buddy/pages/SimpleWebSocketTest';
 import GroupChatRoom from './user/challenge/groupchat/pages/GroupChatRoom';
 import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartPaymentSuccess';
+import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -195,6 +196,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
         <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
         <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMyRecordList />} />
+        <Route path="/gymmadang/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
         <Route path="/gymmadang/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
 
         <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />

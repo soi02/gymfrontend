@@ -7,7 +7,7 @@
 
 .challenge-list-container {
   max-width: 400px; /* 모바일 UI에 맞게 너비 제한 */
-  margin: 0 auto;
+  margin: 0;
   padding: 16px;
   flex-grow: 1;
   overflow-y: auto;
@@ -101,24 +101,68 @@
 }
 
 /* --- 챌린지 카드 목록 --- */
-.challenge-cards-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 카드 배치 */
-  gap: 16px; /* 카드 간 간격 */
-  margin-bottom: 100px; /* 플로팅 버튼과 겹치지 않게 하단 여백 추가 */
+/* --- 챌린지 카드 목록 (가로 슬라이더) --- */
+/* 페이지 래퍼 */
+.challenge-list-wrapper.clean{
+  display:flex; flex-direction:column; height:100vh; background:#fff;
 }
 
-/* --- 플로팅 버튼 --- */
-.challenge-list-floating-button {
-  position: fixed;
-  right: 24px;
-  bottom: 80px;
-  width: 52px;
-  height: 52px;
-  background: #333;
-  color: white;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  border: none;
-  z-index: 1000;
+/* 헤더 */
+.page-header{ position:sticky; top:0; z-index:5; background:#fff; padding:16px 16px 8px; border-bottom:1px solid #f3f4f6; }
+.page-title{
+  font-size:22px; font-weight:900; letter-spacing:-0.3px; color:#111827; margin:0;
+}
+
+/* 키워드 칩 바 */
+.keyword-chips{
+  margin-top:10px; display:flex; flex-wrap:nowrap; gap:8px; overflow-x:auto; padding-bottom:8px;
+}
+.keyword-chips::-webkit-scrollbar{ display:none; }
+.chip{
+  border:1px solid #e5e7eb; background:#f9fafb; color:#374151;
+  padding:8px 12px; border-radius:999px; font-size:14px; white-space:nowrap;
+}
+.chip.active{ background:#111827; color:#fff; border-color:#111827; }
+
+/* 카드 레일(가로 스크롤) */
+.challenge-card.redesigned.clean {
+  background: var(--cc-bg);
+  border: 1px solid var(--cc-line);
+  border-radius: var(--cc-radius);
+  color: var(--cc-text);
+  width: var(--card-width);
+  box-shadow: var(--cc-shadow);
+  transition: transform .15s ease, box-shadow .15s ease;
+  cursor: pointer;
+
+  flex: 0 0 var(--card-width);
+  scroll-snap-align: center; /* ← 여기 center 로 변경 */
+}
+.challenge-card.redesigned.clean:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(17,24,39,0.08);
+}
+
+/* 카드 리스트 컨테이너 */
+.cards-rail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 16px 90px;
+
+  scroll-snap-type: x mandatory; /* ← 스냅 활성화 */
+  scroll-padding: 0 50%; /* 중앙 기준 스냅을 위해 좌우 여백 */
+}
+.cards-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.empty-text{ color:#6b7280; padding:16px; }
+
+/* 플로팅 버튼 */
+.fab{
+  position:fixed; right:20px; bottom:80px; width:56px; height:56px;
+  border-radius:50%; border:1px solid #e5e7eb; background:#111827; color:#fff;
+  font-size:24px; line-height:56px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
