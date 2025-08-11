@@ -46,7 +46,7 @@ export default function MarketMyLikedProductsPage() {
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
-            interestedLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
+            interestedLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")},
             
         }
     ]);
@@ -244,20 +244,199 @@ export default function MarketMyLikedProductsPage() {
         // }
         
         //
+    
+    function ShowInterestedButtonSetting({interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId}) {
         
-    function testFuncParam(a, b, c) {
+        return(
+            <>
+            
+                {
+                    (interestedLogSpecificArticleId === articleId && interestedLogMarketUserId === userInfoId) ? 
+                    <TestDeleteButton interestedLogSpecificArticleId = {interestedLogSpecificArticleId} interestedLogMarketUserId = {interestedLogMarketUserId}
+                    articleId = {articleId} userInfoId = {userInfoId} interestedLogId = {interestedLogId}/>
+                    :
+                    <TestInsertButton interestedLogSpecificArticleId = {interestedLogSpecificArticleId} interestedLogMarketUserId = {interestedLogMarketUserId}
+                    articleId = {articleId} userInfoId = {userInfoId} interestedLogId = {interestedLogId}/>
+                }
+            
+            </>
+        )
         
-        const constA = a;
-        const constB = b;
-        const constC = c;
-        console.log("testFuncParam");
-        console.log(a, b, c);
+
+        
+    }
+    
+    function TestInsertButton({interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId}) {
+        
+        return(
+            <>
+                
+                <div className = "row">
+                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "1.5vh"}}>
+                        {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
+                        <i className="ri-heart-3-line"></i>
+                    </div>
+                </div>
+                
+            </>
+        )
+        
+    }
+    
+    function TestDeleteButton({interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId}) {
+        
+        return(
+            <>
+                
+                <div className = "row">
+                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "1.5vh"}}>
+                        {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
+                        <i className="ri-heart-3-fill"></i>
+                    </div>
+                </div>
+                
+            </>
+        )
+        
+    } // insertbutton 과 deletebutton 합치기
+    
+    function TestInsertProcess({interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId}) {
+        
+        return(
+            <>
+            
+            
+            
+            </>
+        )
+        
+    }
+    
+    const constTestInsertProcess = async (interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId) => {
+        
+        // try {
+            
+        //     const constPostInsertMarketProductInterestedLog = await MarketAPI.postInsertMarketProductInterestedLog(insertMarketProductInterestedLog);
+            
+        //     const constSetMarketUserLikedProductElements = constPostInsertMarketProductInterestedLog.map(APIElem1 => ({
+        //         interestedLog : APIElem1.marketProductInterestedLogDto,
+        //         userInfo : APIElem1.marketUserInfoDto,
+        //         article : APIElem1.marketArticleDto
+        //     }));
+            
+        //     setMergeMarketUserLikedProduct(constSetMarketUserLikedProductElements);
+        //     ShowInterestedButtonSetting(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId);
+            
+        // } catch (error) {
+        //     console.error("로드 실패:", error);
+        // }
+        
+        try {
+            
+            const constPostInsertMarketProductInterestedLog = await MarketAPI.postInsertMarketProductInterestedLog(2, 1)
+            setReloadLikeDivision(true);
+            
+        } catch (error) {
+            console.error("로드 실패:", error);
+        }
+        
+    }
+    
+    function TestDeleteProcess({interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId}) {
+        
+        return(
+            <>
+            
+            
+            
+            </>
+        )
+        
+    }
+    
+    const constTestDeleteProcess = async (interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId) => {
+        
+        // try {
+            
+        //     const [ constPostDeleteMarketProductInterestedLog, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
+        //         MarketAPI.postDeleteMarketProductInterestedLog(2, 1),
+        //         MarketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(2, 1)
+        //     ])
+        //     console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
+            
+        //     const constSetMarketUserLikedProductElements = constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.map(APIElem1 => ({
+        //         interestedLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")},
+        //         userInfo : APIElem1.marketUserInfoDto,
+        //         article : APIElem1.marketArticleDto
+        //     }));
+        //     console.log(constSetMarketUserLikedProductElements);
+            
+        //     setMergeMarketUserLikedProduct(constSetMarketUserLikedProductElements);
+        //     ShowInterestedButtonSetting(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId);
+            
+        // } catch (error) {
+        //     console.error("로드 실패:", error);
+        // }
+        
+        try {
+            
+            const constPostDeleteMarketProductInterestedLog = await MarketAPI.postDeleteMarketProductInterestedLog(2, 1);
+            
+            setReloadLikeDivision(true);
+            
+        } catch (error) {
+            console.error("로드 실패:", error);
+        }
         
     }
         
     function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
         
         const { article, userInfo, interestedLog } = marketUserLikedProductElem1; // interestedLog 는 하트 표시 여부에 반영
+        
+        const [ likeChecked, setLikeChecked ] = useState(true);
+        
+        function clickPossibleWhenLikeChecked({a, b, c}) {
+            
+            console.log("aa");
+            setLikeChecked(false);
+            
+        }
+        
+        function clickPossibleWhenLikeUnchecked({a, b, c}) {
+            
+            console.log("bb");
+            setLikeChecked(true);
+            
+        }
+        
+        function funcLikeChecked({likeChecked}) {
+            
+            if (likeChecked) {
+                
+                return (
+                    <>
+                    
+                        <TestDeleteButton interestedLogSpecificArticleId = {interestedLog.specificArticleId} interestedLogMarketUserId = {interestedLog.marketUserId}
+                        articleId = {article.id} userInfoId = {userInfo.id} interestedLogId = {interestedLog.id}/>
+                    
+                    </>
+                )
+                
+            } else {
+                
+                return (
+                    <>
+                    
+                        <TestInsertButton interestedLogSpecificArticleId = {interestedLog.specificArticleId} interestedLogMarketUserId = {interestedLog.marketUserId}
+                        articleId = {article.id} userInfoId = {userInfo.id} interestedLogId = {interestedLog.id}/>
+                    
+                    </>
+                )
+                
+            }
+            
+        }
         
         function funcSellEnded(sellEnded) {
             
@@ -290,11 +469,50 @@ export default function MarketMyLikedProductsPage() {
                                         <div className = "col" style = {{marginLeft : "1vh", marginRight : "1vh"}}>
                                             <div className = "row h-100">
                                                 <div className = "col-auto" style = {{paddingLeft : "1.5vh", paddingRight : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                    <div className = "row">
-                                                        <div className = "col" onClick = {() => testFuncParam(article.id, userInfo.id, interestedLog.id)} style = {{padding : "1.5vh"}}>
-                                                            <i className="ri-heart-3-fill"></i>
+                                                    
+                                                    {
+                                                    likeChecked ? 
+                                                    (<>
+                                                    
+                                                        <div className = "row">
+                                                            <div className = "col" onClick = {clickPossibleWhenLikeChecked} style = {{padding : "1.5vh"}}>
+                                                                <i className="ri-heart-3-fill"></i>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    
+                                                    </>):
+                                                    (<>
+                                                    
+                                                        <div className = "row">
+                                                            <div className = "col" onClick = {clickPossibleWhenLikeUnchecked} style = {{padding : "1.5vh"}}>
+                                                                <i className="ri-heart-3-line"></i>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </>)
+                                                    }
+                                                    
+                                                    {/* {funcLikeChecked(likeChecked)} */}
+                                                    
+                                                    {/* <ShowInterestedButtonSetting interestedLogSpecificArticleId = {interestedLog.specificArticleId} interestedLogMarketUserId = {interestedLog.marketUserId}
+                                                    articleId = {article.id} userInfoId = {userInfo.id} interestedLogId = {interestedLog.id}/> */}
+                                                    
+                                                    {/* {
+                                                        (interestedLog.specificArticleId === article.id && interestedLog.marketUserId === userInfo.id) ? 
+                                                        <TestDeleteButton articleId = {article.id} userInfoId = {userInfo.id} interestedLogId = {interestedLog.id}/>
+                                                        :
+                                                        <TestInsertButton articleId = {article.id} userInfoId = {userInfo.id} interestedLogId = {interestedLog.id}/>
+                                                    } */}
+                                                    
+                                                    
+                                                    
+                                                    {/* <div className = "row">
+                                                        <div className = "col" onClick = {() => testFuncParam(article.id, userInfo.id, interestedLog.id)} style = {{padding : "1.5vh"}}>
+                                                            {버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기)}
+                                                            <i className="ri-heart-3-line"></i>
+                                                        </div>
+                                                    </div> */}
+
                                                     
                                                     {/* {constPostSelectMarketProductInterestedLogWhenUserAndArticleInfo.length > 0 ?
                                                     <constDivisionToDeleteMarketProductInterestedLog /> :
