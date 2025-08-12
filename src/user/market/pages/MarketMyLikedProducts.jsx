@@ -51,10 +51,6 @@ export default function MarketMyLikedProductsPage() {
         }
     ]);
     
-    const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
-        {id : 1, marketUserId : 2, specificArticleId : 1, createdAt : new Date("1970-01-01T00:00:03")}
-    )
-    
     const constmarketuserLikedProductElementList = 
     mergeMarketUserLikedProduct.map(mergedElement => (
     <MarketUserLikedProductElement key = {mergedElement.article.id} marketUserLikedProductElem1 = {mergedElement}/>));
@@ -396,16 +392,22 @@ export default function MarketMyLikedProductsPage() {
         
         const [ likeChecked, setLikeChecked ] = useState(true);
         
-        function clickPossibleWhenLikeChecked({a, b, c}) {
+        const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
+            {id : 1, marketUserId : checkUserStatus, specificArticleId : article.id, createdAt : new Date("1970-01-01T00:00:03")}
+        )
+        
+        function clickPossibleWhenLikeChecked({marketUserId, specificArticleId}) {
             
-            console.log("aa");
+            console.log("deleteLike");
+            MarketAPI.postDeleteMarketProductInterestedLog(marketUserId, specificArticleId);
             setLikeChecked(false);
             
         }
         
-        function clickPossibleWhenLikeUnchecked({a, b, c}) {
+        function clickPossibleWhenLikeUnchecked({insertMarketProductInterestedLog}) {
             
-            console.log("bb");
+            console.log("insertLike");
+            MarketAPI.postInsertMarketProductInterestedLog(insertMarketProductInterestedLog);
             setLikeChecked(true);
             
         }
@@ -475,7 +477,8 @@ export default function MarketMyLikedProductsPage() {
                                                     (<>
                                                     
                                                         <div className = "row">
-                                                            <div className = "col" onClick = {clickPossibleWhenLikeChecked} style = {{padding : "1.5vh"}}>
+                                                            <div className = "col" onClick = {() => clickPossibleWhenLikeChecked({marketUserId : checkUserStatus, specificArticleId : article.id})} 
+                                                            style = {{padding : "1.5vh"}}>
                                                                 <i className="ri-heart-3-fill"></i>
                                                             </div>
                                                         </div>
@@ -484,7 +487,8 @@ export default function MarketMyLikedProductsPage() {
                                                     (<>
                                                     
                                                         <div className = "row">
-                                                            <div className = "col" onClick = {clickPossibleWhenLikeUnchecked} style = {{padding : "1.5vh"}}>
+                                                            <div className = "col" onClick = {() => clickPossibleWhenLikeUnchecked({insertMarketProductInterestedLog})} 
+                                                            style = {{padding : "1.5vh"}}>
                                                                 <i className="ri-heart-3-line"></i>
                                                             </div>
                                                         </div>

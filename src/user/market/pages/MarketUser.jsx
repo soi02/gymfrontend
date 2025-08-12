@@ -224,7 +224,7 @@ function MarketUserRateElement({marketUserRateElem1}) {
 
 export default function MarketUserPage() {
     
-    const checkUserStatus = 1;
+    const checkUserStatus = 2;
     const defaultUserStatus = 1004;
     
     const [checkLoadEnded, setCheckLoadEnded] = useState(true);
