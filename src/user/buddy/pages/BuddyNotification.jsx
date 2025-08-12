@@ -21,14 +21,22 @@ export default function BuddyNotification() {
             );
 
             const processed = res.data.map(item => {
-                const type = item.receiver_buddy_id === auth.id ? 'received' : 'sent';
+                // 로그인한 사용자가 요청을 보낸 사람인지 확인
+                const isSender = item.send_buddy_id === auth.id;
+                // 로그인한 사용자가 요청을 받은 사람인지 확인
+                const isReceiver = item.receiver_buddy_id === auth.id;
+
+                // 만약 로그인한 사용자가 보낸 사람이라면 'sent', 받은 사람이라면 'received'
+                const type = isSender ? 'sent' : 'received';
+
                 return {
                     id: item.matching_id,
-                    name: type === 'received' ? item.sender_name : item.receiver_name,
-                    intro: type === 'received' ? item.sender_intro : item.receiver_intro,
-                    profileImage: type === 'received'
-                        ? (item.sender_image ? `http://localhost:8080/uploadFiles/${item.sender_image}` : 'https://placehold.co/100x100?text=No+Image')
-                        : (item.receiver_image ? `http://localhost:8080/uploadFiles/${item.receiver_image}` : 'https://placehold.co/100x100?text=No+Image'),
+                    // 이름과 소개글도 type에 따라 올바르게 설정
+                    name: type === 'sent' ? item.receiver_name : item.sender_name,
+                    intro: type === 'sent' ? item.receiver_intro : item.sender_intro,
+                    profileImage: type === 'sent'
+                        ? (item.receiver_image ? `http://localhost:8080/uploadFiles/${item.receiver_image}` : 'https://placehold.co/100x100?text=No+Image')
+                        : (item.sender_image ? `http://localhost:8080/uploadFiles/${item.sender_image}` : 'https://placehold.co/100x100?text=No+Image'),
                     type,
                     status: item.status,
                     sendBuddyId: item.send_buddy_id,
@@ -110,7 +118,7 @@ export default function BuddyNotification() {
             });
         }
     };
-    
+
     const handleGoToChat = (matchingId) => {
         navigate(`/buddy/buddyChat/${matchingId}`);
     };
@@ -131,7 +139,7 @@ export default function BuddyNotification() {
                         </div>
 
                         <div className="buddy-buttons">
-                            {noti.type === 'received' ? (
+                            {noti.type === 'received' ? ( // 내가 받은 요청인 경우
                                 <>
                                     {noti.status === '대기중' ? (
                                         <>
@@ -139,26 +147,22 @@ export default function BuddyNotification() {
                                             <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
                                         </>
                                     ) : noti.status === '수락' ? (
-                                        <button 
-                                            className="btn-go-to-chat" 
-                                            onClick={() => handleGoToChat(noti.id)}
-                                        >
-                                            채팅 가기
-                                        </button>
+                                        <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
+                                    ) : noti.status === '거절' ? (
+                                        // 거절된 알림에 대한 UI를 추가
+                                        <span className="rejected-status">거절됨</span>
                                     ) : null}
                                 </>
-                            ) : (
+                            ) : ( // 내가 보낸 요청인 경우
                                 <>
-                                    {noti.status === '수락' ? (
-                                        <button 
-                                            className="btn-go-to-chat" 
-                                            onClick={() => handleGoToChat(noti.id)}
-                                        >
-                                            채팅 가기
-                                        </button>
-                                    ) : (
+                                    {noti.status === '대기중' ? (
                                         <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청 취소</button>
-                                    )}
+                                    ) : noti.status === '수락' ? (
+                                        <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
+                                    ) : noti.status === '거절' ? (
+                                        // 거절된 알림에 대한 UI를 추가
+                                        <span className="rejected-status">거절됨</span>
+                                    ) : null}
                                 </>
                             )}
                         </div>
