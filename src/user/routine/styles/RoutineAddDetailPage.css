@@ -1,32 +1,67 @@
 .routine-main-content {
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
+    padding-bottom: 12.5rem;
+}
+
+.radp-header {
+  position: relative;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -0.3rem;
+  padding-top: 0;
+  margin-bottom: 0rem;
+  border-bottom: 1px solid #eee;
+}
+
+.radp-back-btn {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  color: rgb(179, 179, 179);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.radp-header-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .routine-select-row {
     text-align: right;
-    margin: 1rem 1.3rem 0 0;
+    margin: 0rem 1.3rem 0.5rem 0;
 }
 
 .routine-scroll-area {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .routine-workout-box {
     background-color: #f9f9f9;
     border-radius: 12px;
     padding: 1rem;
-    margin-bottom: 1.5rem;
+    padding-right: 1rem;
+    /* padding-bottom: 1.5rem; */
+    margin-bottom: 1rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
 }
 
 .routine-workout-header {
   font-size: 1.15rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #222;
   display: flex;
   justify-content: space-between;
@@ -52,14 +87,14 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.95rem;
-  padding: 0.3rem 0;
-  margin-bottom: 0.5rem;
+  padding: 0.1rem 0;
+  /* margin-bottom: 1rem; */
   flex-wrap: wrap;
 }
 
 #set-select {
   border-radius: 6px;
-  padding: 0.4rem 0rem;
+  padding: 0.1rem 0rem;
   background-color: #fff;
   color: #333;
 }
@@ -76,23 +111,23 @@
 }
 
 .routine-set-row span:first-child {
-  min-width: 50px;
-  margin-right: 0.6rem; /* ✅ 1세트 오른쪽 간격 넓힘 */
+  /* min-width: 50px; */
+  margin-right: 0.5rem;
 }
 
 .routine-set-row span.kg-label {
-  margin-right: 0.6rem; /* 너가 원하는 여백만큼 조절해줘! */
+  margin-right: 0.5rem;
 }
 
 .routine-select-row label {
-  margin-right: 0.5rem; /* 또는 8px 정도 */
+  margin-right: 0.5rem; 
 }
 
 
 
 .routine-set-row input {
   width: 65px;
-  padding: 0.4rem 0.3rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 6px;
   border: none;
   background: #ebebeb;
@@ -108,7 +143,7 @@
 
 
 .routine-set-row span:last-of-type {
-  margin-right: 0rem; /* ✅ "회"와 쓰레기통 사이 좁히기 */
+  margin-right: 0.3rem; /* ✅ "회"와 쓰레기통 사이 좁히기 */
 }
 
 .routine-delete-set-btn {
@@ -131,13 +166,15 @@
 
 .routine-sticky-save-btn {
     text-align: center;
-    margin-top: 2rem;
+
 }
 
 .routine-sticky-save-btn button {
     background-color: #7c1d0d;
     color: #fff;
     padding: 0.9rem 2rem;
+    margin-bottom: 0;
+    margin: 1rem 0 0 0; /* 위만 여백 */
     border-radius: 10px;
     font-weight: bold;
     font-size: 1rem;

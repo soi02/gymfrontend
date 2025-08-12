@@ -48,7 +48,6 @@ import { loginAction } from './redux/authSlice';
 import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle';
 import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts';
 import MainPage from './global/pages/MainPage';
-import MarketTopTabs from './user/market/commons/marketTopTabs';
 import BuddyChat from './user/buddy/pages/BuddyChat';
 import BuddyNotification from './user/buddy/pages/BuddyNotification';
 import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail';
@@ -63,6 +62,9 @@ import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 import SimpleWebSocketTest from './user/buddy/pages/SimpleWebSocketTest';
 import GroupChatRoom from './user/challenge/groupchat/pages/GroupChatRoom';
 import AutoJoinRoom from './user/buddy/pages/AutoJoinRoom';
+import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartPaymentSuccess';
+import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
+import MarketTopTabs from './user/market/commons/MarketTopTabs';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -199,6 +201,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
         <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
         <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMyRecordList />} />
+        <Route path="/gymmadang/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
         <Route path="/gymmadang/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
 
         <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
@@ -206,6 +209,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
         <Route path="/gymmadang/challenge/detail/:challengeId" element={<ChallengeDetail />} />
+        <Route path="/gymmadang/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
 
         <Route path="/gymmadang/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
 

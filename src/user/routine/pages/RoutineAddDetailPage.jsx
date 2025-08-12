@@ -1,5 +1,5 @@
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/RoutineAddDetailPage.css"
 import { useEffect, useState } from "react";
 import useRoutineService from "../service/routineService";
@@ -19,6 +19,7 @@ export default function RoutineAddDetailPage() {
     const [setCount, setSetCount] = useState(5);
 
     
+const navigate = useNavigate();
 
     const [routineData, setRoutineData] = useState([]);
 
@@ -123,9 +124,13 @@ export default function RoutineAddDetailPage() {
 
     return (
         <>
+              <div className="radp-header">
+                <button className="radp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
+                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
+              </div>
             <div className="routine-main-content">
                 <div className="row">
-                    <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
+                    <div className="col" style={{ paddingTop: "0rem", paddingLeft: "1rem" }}>
                         <h3>루틴 세부설정</h3>
                         <p>
                             운동별 세트 수, 무게, 횟수를 설정해보시오.
@@ -134,6 +139,7 @@ export default function RoutineAddDetailPage() {
                         </p>
                     </div>
                 </div>
+
 
                 <div className="row">
                     <div className="col routine-select-row">

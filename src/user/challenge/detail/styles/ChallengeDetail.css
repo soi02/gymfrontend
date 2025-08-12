@@ -1,82 +1,181 @@
-.challenge-detail-page {
-  max-width: 400px;
+/* ▼ 추가: 안전 여백 + 바텀바/CTA 높이 변수 */
+:root{
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bottom-bar-h: 64px;   /* 실제 바텀바 높이로 맞춰줘 */
+  --cta-h: 52px;          /* .cdp-cta 높이와 동일 */
+}
+/* 페이지 래퍼 */
+.cdp{
+  max-width: 420px;
   margin: 0 auto;
-  padding: 16px;
+  background:#fff;
+  color:#111827;
+  min-height: 100dvh;
+
+  /* 바텀바 영역만큼 하단 여유 */
+  padding-bottom: calc(var(--bottom-bar-h) + var(--safe-bottom));
 }
 
-.challenge-detail-thumbnail {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 12px;
+/* 히어로 이미지 그대로 */
+.cdp-hero{ position: relative; width: 100%; aspect-ratio: 16/10; background:#f3f4f6; overflow: hidden; }
+.cdp-hero img{ width:100%; height:100%; object-fit:cover; display:block; transform: translateZ(0); }
+/* 히어로 배지 좌우 여백 20px 정렬 */
+.cdp-hero-badges{
+  position:absolute;
+  left:20px; bottom:12px;
+  display:flex; gap:8px; flex-wrap:wrap;
 }
 
-.challenge-detail-content h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0 0 8px;
-}
+/* 필 배지들 그대로 */
+.pill{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#f3f4f6; color:#374151; border:1px solid #e5e7eb; font-size:12px; font-weight:700; }
+.pill-dday{ background:#ecfdf5; color:#065f46; border-color:#bbf7d0; }
+.pill-upcoming{ background:#e0ecff; color:#1e40af; border-color:#bfdbfe; }
+.pill-closed{ background:#fee2e2; color:#991b1b; border-color:#fecaca; }
 
-.challenge-detail-description {
-  font-size: 0.95rem;
-  color: #444;
-  margin-bottom: 16px;
-}
-
-.challenge-detail-info > div {
-  margin-bottom: 6px;
-  font-size: 0.9rem;
-}
-
-.challenge-detail-keywords {
-  margin: 10px 0;
-}
-
-.keyword-badge {
-  display: inline-block;
-  background-color: #eee;
-  color: #333;
-  padding: 6px 10px;
-  margin-right: 6px;
-  margin-bottom: 6px;
-  border-radius: 16px;
-  font-size: 0.8rem;
+/* 본문: 양옆 20px + CTA 높이만큼 추가 여백 */
+.cdp-body{
+  padding: 16px 20px;
+  padding-bottom: calc(var(--cta-h) + 24px);
 }
 
 
+.cdp-title{ font-size:22px; font-weight:900; letter-spacing:-0.3px; margin:6px 0 10px; }
+.cdp-chips{ display:flex; gap:8px; margin-bottom:10px; }
+.chip{ border:1px solid #e5e7eb; background:#f9fafb; color:#374151; padding:6px 10px; border-radius:999px; font-size:12px; white-space:nowrap; }
+.chip.more{ color:#6b7280; }
 
+.cdp-meta{ list-style:none; padding:0; margin:10px 0 14px; display:flex; flex-direction:column; gap:8px; }
+.cdp-meta li{ display:flex; align-items:center; gap:8px; color:#4b5563; font-size:14px; }
+.cdp-meta .dot{ width:6px; height:6px; border-radius:50%; background:#9ca3af; display:inline-block; }
 
-/* ChallengeDetail.css */
-.challenge-detail-button {
-  /* 기존 스타일 */
-  padding: 15px 30px;
-  background-color: #4CAF50; /* 예시 색상 */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%; /* 버튼 너비 */
-  margin-top: 20px;
+.cdp-desc{ color:#374151; font-size:14px; line-height:1.6; margin:6px 0 14px; }
+
+/* 보조 버튼 */
+.cdp-secondary{
+  width:100%; padding:12px 14px; border-radius:12px; border:1px solid #e5e7eb; background:#fff;
+  color:#111827; font-weight:700; margin-top:8px;
 }
 
-.challenge-detail-button:hover {
-  background-color: #45a049;
+/* ▼ 하단 고정 CTA: 바텀바 높이만큼 위로 띄워서 겹침 방지 */
+.cdp-footer{
+  position: sticky;
+  bottom: var(--bottom-bar-h);   /* 바텀바 위에 고정 */
+  left: 0; right: 0;
+  background:#fff;
+
+  /* ← margin 대신 padding으로 20px 적용 */
+  padding: 12px 20px calc(12px + var(--safe-bottom));
+
+  border-top:1px solid #f3f4f6;
+  z-index: 30;
 }
 
-.challenge-detail-button:disabled {
-  background-color: #cccccc; /* 비활성화 시 회색 */
-  cursor: not-allowed; /* 커서 변경 */
+.cdp-cta{
+  width:100%; height:var(--cta-h);
+  border:none; border-radius:14px;
+  background:#7c1d0d; color:#fff; font-weight:800; font-size:16px;
+  box-shadow:0 8px 16px rgba(17,24,39,0.08);
+}
+.cdp-cta.disabled{ background:#d1d5db; color:#6b7280; box-shadow:none; }
+.cdp-cta:disabled{ cursor:not-allowed; }
+
+/* 로딩 */
+.cdp-loading{ max-width:420px; margin:0 auto; padding:40px 16px; color:#6b7280; }
+
+
+
+
+
+/* 핵심 정보: 토스톤 플랫 */
+/* 칩(행) 자체는 테두리선 없이, 배경도 아주 옅게 */
+.cdp-facts.clean { display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 14px; }
+.fact-row{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 12px;
+  background:#fff;        /* or #f9fafb */
+  border:none;            /* ← 테두리 제거 */
+  border-radius:12px;
+  box-shadow: 0 4px 14px rgba(17,24,39,0.06); /* 아주 은은한 그림자 */
 }
 
-/* 추가: 비활성화 상태임을 명확히 보여주는 클래스 (색상 등) */
-.challenge-detail-button-disabled {
-  background-color: #a0a0a0; /* 더 진한 회색 */
-  color: #555555;
-  cursor: not-allowed;
+/* 아이콘: 둥근 배경 + 소프트 섀도우(테두리 없음) */
+.ico-soft{
+  width:32px; height:32px; border-radius:999px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:#fff;
+  box-shadow:
+    0 1px 2px rgba(17,24,39,0.10),
+    0 6px 14px rgba(17,24,39,0.08); /* 부드러운 그림자 */
+}
+.ico-soft .bi{
+  font-size:16px; color:#111827;
+  filter: drop-shadow(0 1px 0 rgba(17,24,39,0.12)); /* 아이콘 자체도 살짝 입체감 */
 }
 
-.challenge-detail-button-disabled:hover {
-  background-color: #a0a0a0; /* 호버 시에도 동일 */
+/* 아이콘 & 텍스트 */
+.fact-row .bi{ font-size:16px; color:#6b7280; line-height:1; }
+/* 텍스트 스케일 */
+.fact-label{ color:#6b7280; font-size:12px; }
+.fact-value{ color:#111827; font-size:14px; font-weight:800; }
+.fact-value.money{ font-variant-numeric: tabular-nums; }
+.fact-nums{ display:inline-flex; align-items:baseline; gap:2px; }
+.fact-nums strong{ font-size:14px; font-weight:800; color:#111827; font-variant-numeric: tabular-nums; }
+.fact-nums .muted{ font-size:12px; color:#9ca3af; }
+
+/* 설명 카드 */
+.cdp-desc-card{
+  padding:12px; border:1px solid #e5e7eb; background:#f9fafb; border-radius:12px;
+}
+.cdp-desc-card p{ margin:0; color:#374151; line-height:1.6; font-size:14px; }
+
+
+/* 한 장짜리 정보 카드 */
+.cdp-info-card{
+  display: grid;
+  grid-template-columns: 1fr;      /* 모바일에선 세로 스택 */
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(17,24,39,0.06); /* 테두리 없이 그림자만 */
+  margin: 10px 0 14px;
+}
+
+/* 아이템 한 줄 */
+.info-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 둥근 아이콘 + 소프트 섀도우 */
+.ico-soft{
+  width: 36px; height: 36px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(17,24,39,0.10),
+    0 6px 14px rgba(17,24,39,0.08);
+}
+.ico-soft svg{ width: 18px; height: 18px; color: #111827; }
+
+/* 텍스트 스케일 */
+.info-text{ display: grid; gap: 2px; }
+.info-text .label{ font-size: 12px; color: #6b7280; }
+.info-text .value{ font-size: 14px; color: #111827; font-weight: 800; }
+.info-text .value.money{ font-variant-numeric: tabular-nums; }
+.info-text .value strong{ font-weight: 900; }
+.info-text .value .muted{ font-size: 12px; color: #9ca3af; }
+
+/* 설명 카드 톤 유지 */
+.cdp-desc-card{
+  padding: 12px; border-radius: 12px;
+  background: #f9fafb;
+}
+.cdp-desc-card p{ margin:0; color:#374151; line-height:1.6; font-size:14px; }
+
+/* (선택) 조금 넓은 화면에선 2열 배치 */
+@media (min-width: 380px){
+  .cdp-info-card{ grid-template-columns: 1fr 1fr; }
+  .cdp-info-card .info-item:nth-child(3){ grid-column: span 2; }
 }

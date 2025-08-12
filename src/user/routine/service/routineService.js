@@ -84,5 +84,14 @@ export default function useRoutineService() {
 
 
 
-    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout, getWorkoutByDate, getWorkoutDatesBetween};
+    const updateMemeo = async (elementId, memoContent) => {
+        const payload = { elementId, memoContent };
+        return await axios.post(`${BASE_URL}/updateMemo`, payload, {
+            headers: { "Content-Type" : "application/json" }
+        });
+    };
+
+
+
+    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout, getWorkoutByDate, getWorkoutDatesBetween, updateMemeo};
 }

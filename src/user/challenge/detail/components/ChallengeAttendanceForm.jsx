@@ -48,12 +48,13 @@ const ChallengeAttendanceForm = ({ challengeId, userId, onAttendanceSuccess }) =
 
       console.log("인증 성공:", response.data);
       alert("챌린지 인증 완료!");
-      
-      // 성공 시 부모 컴포넌트(ChallengeMyRecordDetail)에 알림
-      onAttendanceSuccess();
 
-      // 상태 초기화
-      setPhoto(null);
+      
+        setPhoto(null);
+        if (onAttendanceSuccess) {
+            onAttendanceSuccess(); // <-- 이 부분이 중요합니다.
+        }
+        alert("챌린지 인증이 완료되었습니다!");
       
     } catch (err) {
       console.error("인증 실패:", err);

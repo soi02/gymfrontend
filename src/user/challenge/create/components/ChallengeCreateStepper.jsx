@@ -40,11 +40,9 @@ export default function ChallengeCreateStepper() {
     challengeMaxMembers: 0,
     challengeRecruitStartDate: '',
     challengeRecruitEndDate: '',
-    // challengeStartDate: '',
-    // challengeEndDate: '', // 이건 여기 말고 도전하기 누를 때 정해짐
     challengeDurationDays: 0,
     challengeThumbnailImage: null,
-    challengeKeywordNameList: [],
+    keywordIds: [], 
     challengeDepositAmount: 0,
   });
 
@@ -87,19 +85,19 @@ export default function ChallengeCreateStepper() {
         formDataToSend.append("challengeTitle", updated.challengeTitle || '');
         formDataToSend.append("challengeDescription", updated.challengeDescription || '');
         formDataToSend.append("challengeMaxMembers", updated.challengeMaxMembers || 0);
-        formDataToSend.append("challengeDepositAmount", updated.challengeDepositAmount || 0);
+        formDataToSend.append("challengeDepositAmount", String(updated.challengeDepositAmount) || 0);
         formDataToSend.append("challengeRecruitStartDate", updated.challengeRecruitStartDate || '');
         formDataToSend.append("challengeRecruitEndDate", updated.challengeRecruitEndDate || '');
-        // formDataToSend.append("challengeStartDate", updated.challengeStartDate || '');
-        // formDataToSend.append("challengeEndDate", updated.challengeEndDate || ''); // 여기서 안보내고, 도전하기 누르면 백엔드에 userChallenge 테이블에 저장
         formDataToSend.append("challengeDurationDays", updated.challengeDurationDays || 0);
-        // challengeThumbnailPath는 백엔드에서 생성되므로 여기서 보낼 필요 없음
 
-        // @RequestParam("challengeKeywordNameList") List<String> challengeKeywordNameList 에 매핑
-        if (updated.challengeKeywordNameList && updated.challengeKeywordNameList.length > 0) {
-          updated.challengeKeywordNameList.forEach((keywordName) =>
-            formDataToSend.append("challengeKeywordNameList", String(keywordName))
-          );
+        
+        // ✅ keywordIds는 같은 키로 여러 번 append 해야 @ModelAttribute List<Integer>로 바인딩됨
+        if (Array.isArray(updated.keywordIds) && updated.keywordIds.length > 0) {
+          updated.keywordIds.forEach((id) => {
+            formDataToSend.append('keywordIds', String(id));
+          });
+        } else {
+          console.warn('keywordIds 비어 있음:', updated.keywordIds);
         }
 
         // @RequestPart(value = "challengeThumbnailImage", required = false) MultipartFile challengeThumbnailImage 에 매핑
@@ -107,6 +105,8 @@ export default function ChallengeCreateStepper() {
           formDataToSend.append("challengeThumbnailImage", updated.challengeThumbnailImage);
         }
         
+      console.log("전송 keywordIds:", updated.keywordIds);
+
         // FormData 내용을 확인하기 위한 디버깅 코드
         for (let [key, value] of formDataToSend.entries()) {
             console.log(`${key}:`, value);
@@ -123,21 +123,24 @@ export default function ChallengeCreateStepper() {
           }
         );
 
-        console.log("챌린지 생성 완료 응답:", res.data);
-        if (res.data === "챌린지 생성 완료") { // 백엔드 응답 메시지 확인
-            navigate('/gymmadang/challenge/challengeList'); // / 붙은 절대경로로 
+        // API 호출 성공/실패 여부를 `formData`에 저장하고, 다음 단계로 이동합니다.
+        if (res.data === "챌린지 생성 성공") {
+            setFormData((prevData) => ({ ...prevData, createStatus: 'success' }));
         } else {
+            setFormData((prevData) => ({ ...prevData, createStatus: 'fail' }));
             alert("챌린지 생성 실패: " + res.data);
         }
         
-      } catch (error) {
-        console.error("챌린지 생성 실패:", error);
-        alert("챌린지 생성 중 오류가 발생했습니다.");
-      }
-    }
+      } catch (error) {
+        console.error("챌린지 생성 실패:", error);
+        alert("챌린지 생성 중 오류가 발생했습니다.");
+        setFormData((prevData) => ({ ...prevData, createStatus: 'fail' }));
+      }
+    }
 
-    setStep((prev) => prev + 1);
-  };
+    // API 호출 성공/실패와 관계없이 다음 스텝으로 이동
+    setStep((prev) => prev + 1);
+  };
 
   const back = () => setStep((prev) => prev - 1);
 

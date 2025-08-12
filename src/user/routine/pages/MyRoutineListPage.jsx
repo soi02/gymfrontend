@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useRoutineService from '../service/routineService';
 import '../styles/MyRoutineListPage.css'; // 스타일 따로
@@ -12,6 +12,8 @@ export default function MyRoutineListPage() {
 
   const [routineName, setRoutineName] = useState('');
   const [exerciseList, setExerciseList] = useState([]);
+
+
 
 
     useEffect(() => {
@@ -34,13 +36,16 @@ export default function MyRoutineListPage() {
 
 
   return (
+
+
+    
     <div className="main-content">
 
     <div className="routine-detail-page">
       {/* 상단 헤더 */}
       <div className="routine-detail-header">
-        <button className="routine-back-btn" onClick={() => navigate(-1)}>←</button>
-        <h3>{routineName}</h3>
+        <button className="routine-back-btn" onClick={() => navigate(-1)}>&lt;</button>
+        <h3 className='routine-header-title'>{routineName}</h3>
       </div>
 
       {/* 운동 리스트 */}
@@ -50,7 +55,7 @@ export default function MyRoutineListPage() {
             <img src={`http://localhost:8080/uploadFiles/${exercise.elementPicture}`} alt={exercise.name} className="routine-exercise-img" />
             <div className="routine-exercise-info">
 
-              <div className="exercise-name">{exercise.categoryName}</div>
+              <div className="exercise-category" style={{fontSize:'0.8rem'}}>{exercise.categoryName}</div>
               <div className="exercise-name">{exercise.elementName}</div>
               {/* <div className="exercise-name">{exercise.elementName}</div> */}
 

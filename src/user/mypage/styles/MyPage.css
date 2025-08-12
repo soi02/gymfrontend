@@ -1,4 +1,103 @@
 .mypage-container {
-  padding: 1rem;
+  padding: 1.5rem;
+  /* background-color: #f9f9f9; */
   min-height: 100vh;
+  font-family: 'Gowun Dodum', sans-serif;
+}
+
+.profile-box {
+  background: rgb(255, 255, 255);
+  border-radius: 1rem;
+  border: #88888837 1px solid;
+margin-top: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 1rem;
+}
+
+
+.profile-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* 아이콘이랑 텍스트 간격 */
+}
+
+.go-arrow {
+  font-size: 1.3rem;
+  color: #999;
+}
+
+
+
+.profile-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #eee;
+  margin-right: 0.3rem;
+}
+
+.profile-text .username {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.profile-text .greeting {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.quick-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+
+.quick-buttons button {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.quick-buttons button:hover {
+  background-color: #ffebee;
+}
+
+
+
+.each-box {
+  background: white;
+  border-radius: 1rem;
+  border: #88888837 1px solid;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 1rem;
+}
+
+.row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+
+.week-preview {
+  margin-top: 0.3rem;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+  color: #7c7c7c;
+  letter-spacing: 0.3rem;
 }

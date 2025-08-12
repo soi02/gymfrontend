@@ -76,3 +76,72 @@
   color: #5d4037;
   white-space: pre-wrap;
 }
+.memo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.memo-modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.memo-edit-box {
+  width: 100%;
+  min-height: 200px;
+  resize: none;
+  border: solid 1px #ffedcd;
+  background-color: rgb(243, 231, 211);
+  border-radius: 13px;
+  font-size: 1rem;
+  color: #5a3d31;
+  line-height: 1.7;
+  padding: 1rem;
+  font-family: inherit;
+  outline: none;
+}
+
+
+.memo-edit-box:focus {
+  border-color: #7b2f27;
+  box-shadow: 0 0 0 2px rgba(123, 47, 39, 0.2);
+}
+
+.memo-button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  background: #7b2f27;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+.memo-button-cancel {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  background: #828282;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+
+.memo-button:hover {
+  background: #5e241d;
+}

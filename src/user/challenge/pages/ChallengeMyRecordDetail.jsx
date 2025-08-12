@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import ChallengeProgressDisplay from '../detail/components/ChallengeProgressDisplay';
 import ChallengeAttendanceForm from '../detail/components/ChallengeAttendanceForm';
 import '../styles/ChallengeMyRecordDetail.css'; 
+// import NorigaeAwardModal from '../components/NorigaeAwardModal';
+import NorigaeListModal from '../components/NorigaeListModal';
 
 const BACKEND_BASE_URL = "http://localhost:8080";
 
@@ -17,6 +19,12 @@ const ChallengeMyRecordDetail = () => {
   const [progressData, setProgressData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [norigaeAward, setNorigaeAward] = useState(null); // 새로 획득한 노리개 정보
+  const [isNorigaeModalOpen, setIsNorigaeModalOpen] = useState(false); // 모달 상태
+
+    // 추가: 획득한 노리개 목록을 보여주는 모달 상태
+  const [isNorigaeListModalOpen, setIsNorigaeListModalOpen] = useState(false); 
   
   // fetchChallengeProgress 함수를 컴포넌트 최상위 스코프에 정의
   // useCallback을 사용하여 함수를 메모이제이션하면, 불필요한 재렌더링을 방지할 수 있습니다.
@@ -28,6 +36,14 @@ const ChallengeMyRecordDetail = () => {
         params: { userId: userId, challengeId: challengeId }
       });
       console.log("챌린지 상세 진행 상황 API 응답:", response.data);
+
+      // 획득한 노리개가 있는지 확인
+      if (response.data.newlyAwardedNorigaeTierId) {
+        setNorigaeAward(response.data.newlyAwardedNorigaeTierId);
+        setIsNorigaeModalOpen(true);
+      }
+
+
       setProgressData(response.data);
     } catch (err) {
       console.error("챌린지 상세 진행 상황 조회 실패:", err);
@@ -36,6 +52,9 @@ const ChallengeMyRecordDetail = () => {
       setLoading(false);
     }
   }, [userId, challengeId]); // 의존성 배열에 userId와 challengeId 추가
+
+
+
 
   useEffect(() => {
     if (!userId) {
@@ -47,6 +66,25 @@ const ChallengeMyRecordDetail = () => {
     // useEffect 내에서 정의된 함수가 아니므로 바로 호출
     fetchChallengeProgress();
   }, [challengeId, userId, navigate, fetchChallengeProgress]); // 의존성 배열에 fetchChallengeProgress 추가
+
+
+    // 획득 순간 모달 닫기 핸들러
+    // const handleCloseNorigaeAwardModal = () => {
+    //     setIsNorigaeModalOpen(false);
+    //     setNorigaeAward(null);
+    // };
+
+    // 추가: 획득 뱃지 목록 모달 열기/닫기 핸들러
+    const handleOpenNorigaeListModal = () => {
+      console.log('버튼 클릭됨');
+        setIsNorigaeListModalOpen(true);
+    };
+
+    const handleCloseNorigaeListModal = () => {
+        setIsNorigaeListModalOpen(false);
+    };
+
+
 
   if (loading) {
     return <div>로딩 중...</div>;
@@ -69,20 +107,41 @@ const ChallengeMyRecordDetail = () => {
 
       {/* 획득한 노리개 등급 정보를 표시 (조건부 렌더링) */}
       {progressData.awardedNorigaeName && (
-        <div className="norigae-badge">
+        <div className="norigae-badge-display">
           <img 
             src={progressData.awardedNorigaeIconPath} 
             alt={progressData.awardedNorigaeName} 
+            className="norigae-badge-icon"
           />
+          <p>{progressData.awardedNorigaeName} 노리개 획득!</p>
         </div>
       )}
+
+              {/* 추가: 획득 뱃지 보기 버튼 */}
+        <button onClick={handleOpenNorigaeListModal} className="view-badges-button">
+            획득 뱃지 보기
+        </button>
       
       {/* 스티커판 UI를 렌더링하는 컴포넌트 */}
       <ChallengeProgressDisplay statusList={progressData.challengeAttendanceStatus} />
       
       {/* 일일 인증 사진 업로드 폼 컴포넌트 */}
-      {/* fetchChallengeProgress 함수를 prop으로 전달 */}
       <ChallengeAttendanceForm challengeId={challengeId} userId={userId} onAttendanceSuccess={fetchChallengeProgress} />
+      
+      {/* 노리개 획득 모달 */}
+      {/* <NorigaeAwardModal
+        isOpen={isNorigaeModalOpen} 
+        onClose={handleCloseNorigaeAwardModal} 
+        awardedTierId={norigaeAward}
+      /> */}
+
+              {/* 획득 뱃지 목록 모달 렌더링 */}
+        <NorigaeListModal
+            isOpen={isNorigaeListModalOpen}
+            onClose={handleCloseNorigaeListModal} // <--- 이 부분이 추가되어야 합니다.
+            norigaeList={progressData.awardedNorigaeList}
+        />
+
     </div>
   );
 };

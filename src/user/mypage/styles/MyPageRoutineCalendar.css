@@ -1,11 +1,9 @@
-html, body, #root {
-  height: 100%;
-}
 
 
 .mypage-container {
   padding: 1rem;
-  min-height: 100vh;
+  padding-top: 0;
+  height: 100vh;
   overflow-y: auto; /* 스크롤 추가 */
 }
 
@@ -74,8 +72,8 @@ html, body, #root {
 
 /* 오늘 날짜 */
 .react-calendar__tile--now {
-  background: #bbb4b4;
-  color: #3f3f39;
+  /* background: #224eff; */
+  /* color: #0affba; */
   font-weight: bold;
 }
 
@@ -83,7 +81,7 @@ html, body, #root {
 
 /* 호버 시 배경 */
 .react-calendar__tile:hover {
-  background: #333;
+  background: hsl(47, 100%, 82%);
 }
 
 /* 🔥 포함된 날짜 wrapper */
@@ -93,21 +91,37 @@ html, body, #root {
   justify-content: center;
   align-items: center;
 }
-.day-wrapper.neighboring span {
-  color: #bbb; /* 흐리게 보이게 */
+
+/* 숫자 스타일 */
+.day-wrapper span:first-child {
+  position: relative;
+  z-index: 2;
+  /* font-weight: bold; */
+  color: rgb(109, 109, 109);
+  /* text-shadow: 0 0 2px #000, 0 0 4px #000; 테두리 효과 */
+}
+.day-wrapper.neighboring span:first-child {
+  color: #aaa9a9;        /* 아주 흐린 회색 */
+  opacity: 0.4;          /* 더 흐리게 보여! */
+  font-weight: normal;
 }
 
 /* 🔥 아이콘 스타일 */
 .fire-icon {
   position: absolute;
-  right: 5px;
-  font-size: 2rem;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8rem;
+  z-index: 1;  /* 숫자보다 뒤로! */
+  opacity: 0.8;  /* 배경처럼 */
 }
+
 
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none !important;
 }
 
+.workout-result {
+    padding: 1rem;;
+}
