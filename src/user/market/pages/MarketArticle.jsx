@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MarketBottomFixed from "../commons/test/example/MarketBottomFixed";
 import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
@@ -16,6 +16,8 @@ export default function MarketArticlePage() {
     const checkUserStatus = 2;
     const checkArticleId = loadedId;
     const defaultUserStatus = 1004;
+    
+    const contentRef = useRef(null);
     
     //
     
@@ -294,11 +296,29 @@ export default function MarketArticlePage() {
         
     }, [commentOnArticleLoading])
     
+    const constApplyTextContent = (element1) => {
+        
+        const { name, value } = element1.target;
+        
+        setInsertMarketCommentOnArticleElement(insertMarketCommentOnArticleElement => ({
+            ...insertMarketCommentOnArticleElement,
+            [name] : value
+        }));
+        
+    }
+    
     const constButtonToInsertMarketCommentOnArticle = async () => {
+        
+        const submitCommentOnArticleData = {
+            ...insertMarketCommentOnArticleElement,
+            content : contentRef.current.value
+        };
+        
+        setInsertMarketCommentOnArticleElement(submitCommentOnArticleData);
         
         try {
             
-            const constPostInsertMarketCommentOnArticle = await marketAPI.postInsertMarketCommentOnArticle(insertMarketCommentOnArticleElement);
+            const constPostInsertMarketCommentOnArticle = await marketAPI.postInsertMarketCommentOnArticle(submitCommentOnArticleData);
             setCommentOnArticleReloading(true);
             setCommentOnArticleLoading(true);
             
@@ -867,6 +887,8 @@ export default function MarketArticlePage() {
                                                                             <div className = "row h-100">
                                                                                 <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle"}}>
                                                                                     <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
+                                                                                    id = "content" name = "content" value = {insertMarketCommentOnArticleElement.content} 
+                                                                                    onChange = {constApplyTextContent} ref = {contentRef}
                                                                                     style = {{resize : "none", fontSize : "1.75vh", overflow : "hidden", alignSelf : "center"}}/>
                                                                                 </div>
                                                                                 <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh"}}>
@@ -892,10 +914,10 @@ export default function MarketArticlePage() {
                                                                 <>
                                                                     
                                                                     <div className = "row">
-                                                                        <div className = "col" style = {{fontSize : "2.75vh", paddingLeft : "3vh", paddingRight : "3vh",
+                                                                        <div className = "col" style = {{fontSize : "2.25vh", paddingLeft : "3vh", paddingRight : "3vh",
                                                                             marginBottom : "4vh"
                                                                         }}>
-                                                                            게시글에 쓴 댓글이 없다오.
+                                                                            게시글에 쓰인 댓글이 없다오.
                                                                         </div>
                                                                     </div>
                                                                 
