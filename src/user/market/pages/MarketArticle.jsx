@@ -120,7 +120,7 @@ export default function MarketArticlePage() {
     <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>)});
     
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
-        {id : 1, articleId : 1, marketUserId : 1, content : "My Dragon 1", 
+        {id : 1, articleId : 1, marketUserId : checkUserStatus, content : "My Dragon 1", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
     )
     

@@ -68,7 +68,7 @@ export default function MarketMyLikedProductsPage() {
             try {
                 
                 const [ constGetSelectMarketProductInterestedLogWhenUserInfo ] = await Promise.all([
-                    MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(2)
+                    MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(checkUserStatus)
                 ])
                 console.log(constGetSelectMarketProductInterestedLogWhenUserInfo)
                 
@@ -105,7 +105,7 @@ export default function MarketMyLikedProductsPage() {
                 try {
                     
                     const [ constGetSelectMarketProductInterestedLogWhenUserInfo ] = await Promise.all([
-                        MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(2)
+                        MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(checkUserStatus)
                     ])
                     console.log(constGetSelectMarketProductInterestedLogWhenUserInfo)
                     
