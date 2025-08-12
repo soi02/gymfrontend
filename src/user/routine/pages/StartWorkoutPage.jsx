@@ -164,9 +164,10 @@ const [showMenu, setShowMenu] = useState(false); // ✅ 이거 추가!
             <div
             {...handlers} className="start-workout-container">
 
-
-
-
+              <div className="swp-header">
+                <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
+                <h3 className='swp-header-title'>운동 기록중</h3>
+              </div>
 
 
                 <div className="routine-top-bar">

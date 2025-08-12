@@ -1,86 +1,105 @@
-// src/components/ChallengeCard.jsx
-
 import '../styles/ChallengeCard.css';
 
 export default function ChallengeCard({ challenge, onClick }) {
-    const BACKEND_BASE_URL = "http://localhost:8080"; 
+  const BACKEND_BASE_URL = "http://localhost:8080";
 
-    const {
-        challengeId,
-        challengeTitle,
+  const {
+    challengeId,
+    challengeTitle,
+    challengeRecruitStartDate,
+    challengeRecruitEndDate,
+    challengeDurationDays,
+    challengeMaxMembers,
+    challengeParticipantCount = 0,
+    challengeThumbnailPath,
+    keywords = [],
+  } = challenge || {};
 
-        challengeRecruitStartDate,
-        challengeRecruitEndDate,
+  const imageUrl = challengeThumbnailPath
+    ? `${BACKEND_BASE_URL}${challengeThumbnailPath}`
+    : '/images/default-thumbnail.png';
 
-        challengeDurationDays,
-        challengeMaxMembers,
+  // 날짜 포맷
+  const fmt = (d) => {
+    if (!d) return '-';
+    const dt = new Date(d);
+    if (isNaN(dt)) return d;
+    const y = dt.getFullYear();
+    const m = String(dt.getMonth() + 1).padStart(2, '0');
+    const da = String(dt.getDate()).padStart(2, '0');
+    return `${y}.${m}.${da}`;
+  };
 
-        challengeParticipantCount = 0,
-        challengeThumbnailPath,
-        keywords = [],
-    } = challenge;
-    
-    const imageUrl = challengeThumbnailPath 
-      ? `${BACKEND_BASE_URL}${challengeThumbnailPath}` 
-      : '/images/default-thumbnail.png'; 
+  // 상태 계산
+  const today = new Date();
+  const recruitStart = new Date(challengeRecruitStartDate);
+  const recruitEnd = new Date(challengeRecruitEndDate);
 
-    // --- 챌린지 상태 계산 로직 (모집 기간 기준) ---
-    const today = new Date();
-    const recruitStart = new Date(challengeRecruitStartDate);
-    const recruitEnd = new Date(challengeRecruitEndDate);
+  let status = '모집 종료';
+  if (today < recruitStart) status = '모집 예정';
+  else if (today >= recruitStart && today <= recruitEnd) status = '모집 중';
 
-    let status = ''; // 기본 상태 초기화
-    if (today < recruitStart) {
-        status = '모집 예정';
-    } else if (today >= recruitStart && today <= recruitEnd) {
-        status = '모집 중';
-    } else { // today > recruitEnd (모집 기간이 지났을 경우)
-        status = '모집 종료'; // 챌린지 모집이 끝났음을 나타냄
-        // 챌린지가 실제로 '종료'되었는지 여부는 challengeDurationDays와는 별개로
-        // 각 유저가 참여한 기간에 따라 달라지므로, 카드에서는 모집 상태만 보여주는 것이 명확합니다.
-        // 또는 "모집 종료" 후 일정 기간이 지나면 "종료"로 표시하는 추가 로직을 고려할 수 있습니다.
-    }
+  // D-Day (모집 중일 때만)
+  const daysBetween = (a, b) => {
+    const ONE = 24 * 60 * 60 * 1000;
+    const da = new Date(a.getFullYear(), a.getMonth(), a.getDate());
+    const db = new Date(b.getFullYear(), b.getMonth(), b.getDate());
+    return Math.round((db - da) / ONE);
+  };
+  const dday = status === '모집 중' ? Math.max(0, daysBetween(today, recruitEnd)) : null; // 당일은 D-0
 
-    return (
-        <div className="challenge-card" onClick={onClick}>
-            <div className="challenge-card-thumbnail-container">
-                <img
-                    src={imageUrl} 
-                    alt="챌린지 썸네일"
-                    className="challenge-card-thumbnail"
-                />
-                {/* 뱃지는 필요에 따라 '모집 중', '모집 예정', '모집 종료' 등으로 동적으로 변경 가능 */}
-                <span className="challenge-card-badge">{status}</span> 
-            </div>
+  // 진행바
+  const percent = Math.max(
+    0,
+    Math.min(100, challengeMaxMembers ? Math.round((challengeParticipantCount / challengeMaxMembers) * 100) : 0)
+  );
 
-            <div className="challenge-card-info">
-                <div className="challenge-card-period-status">
-                    <span className="challenge-card-period">
-                        {/* 모집 기간을 표시 */}
-                        모집 기간 {challengeRecruitStartDate} ~ {challengeRecruitEndDate}
-                    </span>
-                    {/* 상태는 이미 뱃지로 표시되었으므로 중복될 수 있습니다. 필요에 따라 조절 */}
-                    {/* <span className="challenge-card-status">{status}</span> */}
-                </div>
-                <div className="challenge-card-duration">
-                    진행 기간 {challengeDurationDays}일
-                </div>
+  return (
+    <article
+      className="challenge-card redesigned clean"
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick?.(e)}
+      aria-label={`${challengeTitle} 카드`}
+    >
+      <div className="cc-thumb">
+        <img src={imageUrl} alt={`${challengeTitle} 썸네일`} loading="lazy" />
+        {/* 모집 중 → D-Day, 그 외 → 상태칩 */}
+        {status === '모집 중' ? (
+          <span className="cc-badge badge-dday">마감 D-{dday}</span>
+        ) : (
+          <span className={`cc-badge ${status === '모집 예정' ? 'badge-upcoming' : 'badge-closed'}`}>
+            {status}
+          </span>
+        )}
+        <span className="cc-pill">{challengeDurationDays ?? '-'}일 진행</span>
+      </div>
 
-                <div className="challenge-card-title">{challengeTitle}</div>
+      <div className="cc-body">
+        <h3 className="cc-title" title={challengeTitle}>{challengeTitle}</h3>
 
-                <div className="challenge-card-keywords">
-                    {/* 키워드 배열이 있다면 map 함수 사용 */}
-                    {keywords && keywords.map((kw, index) => (
-                        <span key={index} className="challenge-card-keyword">
-                            #{kw}
-                        </span>
-                    ))}
-                </div>
-
-                <div className="challenge-card-participants">
-                    {challengeParticipantCount }명 / {challengeMaxMembers}명
-                </div>
-            </div>
+        <div className="cc-dates" aria-label="모집 기간">
+          <span className="cc-date">{fmt(challengeRecruitStartDate)} ~ {fmt(challengeRecruitEndDate)}</span>
         </div>
-    );
+
+        {/* 항상 렌더링해서 영역 고정 */}
+        <div className="cc-tags" aria-label="키워드">
+          {keywords.slice(0, 6).map((kw, i) => (
+            <span className="cc-tag" key={`${challengeId}-kw-${i}`}>#{kw}</span>
+          ))}
+          {keywords.length > 6 && <span className="cc-tag more">+{keywords.length - 6}</span>}
+        </div>
+
+        <div className="cc-meta">
+          <div className="cc-progress">
+            <div className="cc-progress-bar" style={{ width: `${percent}%` }} />
+          </div>
+          <div className="cc-count" aria-label="참여 인원">
+            {challengeParticipantCount}명 / {challengeMaxMembers}명
+          </div>
+        </div>
+      </div>
+    </article>
+  );
 }

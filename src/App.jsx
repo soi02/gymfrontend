@@ -61,6 +61,8 @@ import StartFreeWorkoutPage from './user/routine/pages/StartFreeWorkoutPage';
 import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 import SimpleWebSocketTest from './user/buddy/pages/SimpleWebSocketTest';
 import GroupChatRoom from './user/challenge/groupchat/pages/GroupChatRoom';
+import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartPaymentSuccess';
+import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
 import MarketTopTabs from './user/market/commons/MarketTopTabs';
 
 
@@ -194,6 +196,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
         <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
         <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMyRecordList />} />
+        <Route path="/gymmadang/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
         <Route path="/gymmadang/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
 
         <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
@@ -201,6 +204,7 @@ function AppContent() {
         <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
         <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
         <Route path="/gymmadang/challenge/detail/:challengeId" element={<ChallengeDetail />} />
+        <Route path="/gymmadang/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
 
         <Route path="/gymmadang/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
 

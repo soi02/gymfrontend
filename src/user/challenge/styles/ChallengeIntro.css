@@ -1,26 +1,21 @@
-html, body {
+/* 기존 레이아웃 스타일 유지 */
+.ch-intro-body {
   margin: 0;
   padding: 0;
   height: 100vh;
   overflow: hidden;
-        min-width: 375px !important;
-      max-width: 425px !important;
-}
-
-.challenge-intro-body {
   background-color: #ffffff;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   position: relative;
 }
 
-.challenge-intro-welcome-container {
+.ch-intro-container {
   width: 100%;
-  max-width: 375px;
   height: 100vh;
-  padding: 14px;
+  padding: 10px;
+  padding-top: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -28,130 +23,145 @@ html, body {
   padding-bottom: 120px;
 }
 
-.challenge-intro-content {
+.ch-intro-content {
   width: 100%;
   text-align: center;
-  /* padding-top: 0.01rem; */
   box-sizing: border-box;
 }
 
-.challenge-intro-title {
+.ch-divider-line {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+  margin: 8px 0;
+}
+
+.ch-intro-title {
   font-size: 1.2rem;
   font-weight: bold;
   line-height: 1.5;
+  margin-top: 0;
   color: #111;
   margin-bottom: 0.6rem;
 }
 
-.challenge-intro-subtitle {
-  font-size: 0.9rem;
-  color: #555;
-  /* margin-bottom: 14px; */
-  /* margin-top: 40px; */
-}
-
-/* 이미지 */
-.challenge-intro-character-img {
-  width: 65%;
-  margin-top: 0.1rem;
-}
-
-/* 말풍선 */
-.challenge-intro-character-with-speech {
+/* 챌린지 캐릭터와 말풍선을 세로로 배치하는 컨테이너 */
+.ch-character-and-bubble-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  margin-bottom: 20px;
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가운데 정렬 */
 }
 
+/* 캐릭터 이미지 스타일 */
+.ch-intro-character-img {
+  width: 38%; /* 이미지 크기 조정 */
+  margin-top: 15px;
+  margin-bottom: 12px; /* 말풍선과의 간격 조정 */
+}
 
-.challenge-intro-speech-bubble {
+/* 말풍선 스타일 */
+.ch-speech-bubble {
   position: relative;
   background: #f1f1f1;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 10px 16px;
-  margin-top: 20px;
-  font-size: 14px;
-  max-width: 300px;
+  border-radius: 10px;
+  padding: 15px;
+  max-width: 300px; /* 말풍선 너비 조정 */
+  margin: 0 auto;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.challenge-intro-speech-bubble::after {
-  content: "";
+.ch-speech-bubble p {
+  margin: 0;
+}
+
+/* 말풍선 꼬리 (아래쪽 중앙으로) */
+.ch-speech-arrow {
   position: absolute;
-  top: -20px;
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border: 10px solid transparent;
-  border-bottom-color: #f1f1f1;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #f1f1f1;
 }
 
-
-/* 안내문구 */
-.challenge-intro-gap-helper {
+/* 안내 문구 스타일 */
+.ch-helper-text-container {
   position: fixed;
-  bottom: 215px;
-  left: 0;
-  right: 0;
+  bottom: 195px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 425px;
   text-align: center;
+  z-index: 99;
+}
+
+.ch-helper-text {
   font-size: 14px;
   color: #888;
-  max-width: 375px;
-  margin: 0 auto;
+  margin: 0;
 }
 
-.challenge-intro-helper-text {
-  font-size: 14px;
-  color: #888;
-  /* margin-bottom: 10px; */
-}
-
-
-/* 선택 버튼 2개 */
-.challenge-choice-group {
+/* 버튼 스타일 */
+.ch-bottom-buttons {
   position: fixed;
-  bottom: 90px;
-  left: 0;
-  right: 0;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 425px;
+  padding: 0 14px;
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 0 35px;
-  max-width: 375px;
-  margin: 0 auto;
-  box-sizing: border-box;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 99;
 }
 
-.challenge-choice-btn {
-  width: calc((100% - 20px) / 2);
-  aspect-ratio: 1 / 0.8;
-  font-size: 13.5px;
-  border: 1.2px solid #e0e0e0;
-  border-radius: 16px;
-  background-color: #ffffff;
-  color: #888;
-  font-weight: 500;
-  transition: all 0.2s ease;
+.ch-choice-btn {
+  flex: 1;
+  padding: 14px;
+  font-size: 15px;
+  /* font-weight: 600; */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #7c1d0d;
+  color: white;
+  border: 2px solid #7c1d0d;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   line-height: 1.4;
-  padding: 12px;
-  box-sizing: border-box;
-  white-space: normal;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.challenge-choice-btn:hover {
-  background-color: #f5f7fb;
+.ch-choice-btn-2 {
+  flex: 1;
+  padding: 14px;
+  font-size: 15px;
+  /* font-weight: 600; */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: white;
+  color: 7c1d0d;
+  border: 2px solid #7c1d0d;
+  text-align: center;
+  line-height: 1.4;
 }
 
-.challenge-choice-btn.active {
-  border-color: #2f80ed;
-  color: #2f80ed;
-  background-color: #eaf3ff;
+.ch-choice-btn:hover {
+  background-color: rgb(252, 231, 228);
+  color: #7c1d0d;
+  border: 2px solid #7a463d;
+}
+
+.ch-choice-btn.active {
+  background-color: #7c1d0d;
+  color: white;
+  border: 2px solid #7c1d0d;
 }

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import useRoutineService from "../service/routineService";
 import { useSwipeable } from "react-swipeable";
@@ -15,13 +15,51 @@ export default function StartFreeWorkoutPage() {
 
   const [exerciseList, setExerciseList] = useState([]);
   const [routineSets, setRoutineSets] = useState([]);
-  const [currentSets, setCurrentSets] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentExercise = exerciseList[currentIndex];
   const [startTime, setStartTime] = useState(null);
   const [useRestTimer, setUseRestTimer] = useState(true);
   const [showTimerModal, setShowTimerModal] = useState(false);
   const [countdown, setCountdown] = useState(60);
+
+// 기본 60초
+const [restDuration, setRestDuration] = useState(60);
+
+// 10초 단위 증감 + 최소/최대 클램프
+const STEP = 10;
+const MIN = 10;
+const MAX = 600;
+const clamp = (n) => Math.max(MIN, Math.min(MAX, n));
+const decRest = () => setRestDuration(v => clamp(v - STEP));
+const incRest = () => setRestDuration(v => clamp(v + STEP));
+
+useEffect(() => {
+  const v = Number(localStorage.getItem("restDuration"));
+  if (Number.isFinite(v) && v > 0) setRestDuration(v);
+}, []);
+useEffect(() => {
+  localStorage.setItem("restDuration", String(restDuration));
+}, [restDuration]);
+
+
+  const currentSets = useMemo(() => {
+    if (!currentExercise) return [];
+    return routineSets.filter(s => s.elementId === currentExercise.elementId);
+  }, [routineSets, currentExercise]);
+
+  const [showTimerMenu, setShowTimerMenu] = useState(false);
+  const timerMenuRef = useRef(null);
+
+  useEffect(() => {
+    const onClickOutsie = (e) => {
+        if (timerMenuRef.current && !timerMenuRef.current.contains(e.target)) {
+            setShowTimerMenu(false);
+        }
+    };
+    if (showTimerMenu) document.addEventListener("mousedown", onClickOutsie);
+    return () => document.removeEventListener("mousedown", onClickOutsie);
+  }, [showTimerMenu]);
+
 
   useEffect(() => {
     setStartTime(new Date());
@@ -46,12 +84,27 @@ export default function StartFreeWorkoutPage() {
     fetch();
   }, []);
 
-  useEffect(() => {
-    if (currentExercise) {
-      const setsForCurrent = routineSets.filter(set => set.elementId === currentExercise.elementId);
-      setCurrentSets(setsForCurrent);
-    }
-  }, [currentExercise, routineSets]);
+// ⏱️ 카운트다운 1초마다 감소
+useEffect(() => {
+  if (!showTimerModal) return;        // 모달 안 켜져 있으면 타이머 off
+  if (countdown <= 0) return;         // 0이면 더 이상 감소 X
+
+  const tid = setTimeout(() => {
+    setCountdown((c) => c - 1);
+  }, 1000);
+
+  return () => clearTimeout(tid);     // 언마운트/리렌더 시 정리
+}, [showTimerModal, countdown]);
+
+// ⏱️ 0초가 되면 자동 처치(옵션)
+useEffect(() => {
+  if (showTimerModal && countdown === 0) {
+    // 필요에 따라 알림/소리/진동 넣기
+    setShowTimerModal(false);   // 자동 닫기 (원치 않으면 지워도 됨)
+    setCountdown(60);           // 다음을 위해 초기화
+  }
+}, [showTimerModal, countdown]);
+
 
   const handlers = useSwipeable({
     onSwipedLeft: () => setCurrentIndex((prev) => Math.min(prev + 1, exerciseList.length - 1)),
@@ -99,12 +152,14 @@ const handleRemoveSet = () => {
 
 
   // 모든 세트 완료
-  const handleCompleteAll = () => {
-    const updated = routineSets.map(set =>
-      set.detailId === currentExercise.detailId ? { ...set, done: true } : set
-    );
-    setRoutineSets(updated);
-  };
+const handleCompleteAll = () => {
+  if (!currentExercise) return;
+  const updated = routineSets.map(set =>
+    set.elementId === currentExercise.elementId ? { ...set, done: true } : set
+  );
+  setRoutineSets(updated);
+};
+
 
   // 다음 운동으로 이동
   const goToNextExercise = () => {
@@ -152,8 +207,62 @@ const handleRemoveSet = () => {
 
   return (
     <div className="main-content">
-      <div {...handlers} className="start-workout-container">
+        <div className="swp-header">
+        <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
+        <h3 className='swp-header-title'>운동 기록중</h3>
+        <button
+            className="swp-timer-btn"
+            aria-label="휴식 타이머 설정"
+            onClick={() => setShowTimerMenu(v => !v)}
+        >
+          <i className="bi bi-gear"></i>
 
+        </button>
+{showTimerMenu && (
+  <div ref={timerMenuRef} className="swp-timer-popover">
+    <div className="swp-timer-popover-row">
+      <span>휴식 타이머</span>
+      <label className="routine-switch" style={{ marginLeft: "auto" }}>
+        <input
+          type="checkbox"
+          checked={useRestTimer}
+          onChange={(e) => setUseRestTimer(e.target.checked)}
+        />
+        <span className="routine-slider" />
+      </label>
+    </div>
+
+    <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
+      <button
+        type="button"
+        className="rest-step"
+        onClick={decRest}
+        disabled={restDuration <= MIN}
+        aria-label="휴식시간 10초 감소"
+      >
+        −
+      </button>
+      <span className="rest-value">{restDuration}초</span>
+      <button
+        type="button"
+        className="rest-step"
+        onClick={incRest}
+        disabled={restDuration >= MAX}
+        aria-label="휴식시간 10초 증가"
+      >
+        ＋
+      </button>
+    </div>
+
+    <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
+      닫기
+    </button>
+  </div>
+)}
+
+        
+        </div>
+      <div {...handlers} className="start-workout-container">
 
 
                 <div className="routine-top-bar">
@@ -214,24 +323,18 @@ const handleRemoveSet = () => {
                             <input
                               type="number"
                               value={String(set.kg ?? "")}
-                              onChange={(e) => {
+                                onChange={(e) => {
                                 const value = e.target.value;
                                 const parsed = value === "" ? "" : parseFloat(value);
 
-                                // ✅ currentSets: 이후 세트까지 동일 값 적용
-                                const newCurrentSets = currentSets.map((s, idx) =>
-                                  idx >= i ? { ...s, kg: parsed } : s
-                                );
-                                setCurrentSets(newCurrentSets);
-
-                                // ✅ routineSets도 같이 업데이트
+                                // ✅ routineSets만 업데이트 (현재 운동 + 현재세트 이후)
                                 const newRoutineSets = routineSets.map((s) =>
-                                  s.detailId === currentExercise.detailId && s.setId >= set.setId
+                                    s.elementId === currentExercise.elementId && s.setId >= set.setId
                                     ? { ...s, kg: parsed }
                                     : s
                                 );
                                 setRoutineSets(newRoutineSets);
-                              }}
+                                }}
                             />
 
                               <span className="routine-unit">kg</span>
@@ -242,23 +345,17 @@ const handleRemoveSet = () => {
                                 type="number"
                                 value={String(set.reps ?? "")}
                                 onChange={(e) => {
-                                  const value = e.target.value;
-                                  const parsed = value === "" ? "" : parseInt(value);
+                                    const value = e.target.value;
+                                    const parsed = value === "" ? "" : parseInt(value);
 
-                                  // ✅ currentSets 변경
-                                  const newCurrentSets = currentSets.map((s, idx) =>
-                                    idx >= i ? { ...s, reps: parsed } : s
-                                  );
-                                  setCurrentSets(newCurrentSets);
+                                    const newRoutineSets = routineSets.map((s) =>
+                                        s.elementId === currentExercise.elementId && s.setId >= set.setId
+                                        ? { ...s, reps: parsed }
+                                        : s
+                                    );
+                                    setRoutineSets(newRoutineSets);
+                                    }}
 
-                                  // ✅ routineSets 변경
-                                  const newRoutineSets = routineSets.map((s) =>
-                                    s.detailId === currentExercise.detailId && s.setId >= set.setId
-                                      ? { ...s, reps: parsed }
-                                      : s
-                                  );
-                                  setRoutineSets(newRoutineSets);
-                                }}
 
                               />
 
@@ -292,7 +389,7 @@ const handleRemoveSet = () => {
 
                                 if (e.target.checked && useRestTimer) {
                                     setShowTimerModal(true);
-                                    setCountdown(60);
+                                    setCountdown(restDuration);
                                 }
                                 }}
 
@@ -324,7 +421,7 @@ const handleRemoveSet = () => {
 
 
 
-                <div className="routine-rest-timer-toggle">
+                {/* <div className="routine-rest-timer-toggle">
                   <label className="routine-switch">
                     <input
                       type="checkbox"
@@ -334,7 +431,7 @@ const handleRemoveSet = () => {
                     <span className="routine-slider" />
                   </label>
                   <span className="routine-label-text">휴식 타이머</span>
-                </div>
+                </div> */}
 
 
 

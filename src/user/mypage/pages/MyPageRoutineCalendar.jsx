@@ -114,7 +114,7 @@ console.log("🕒 타임존 오프셋 (분):", new Date().getTimezoneOffset());
             />
 
             <div className="workout-result">
-                <h3>{value.toLocaleDateString()} 운동 기록</h3>
+                <h5>{value.toLocaleDateString()} 운동 기록</h5>
 
                 {!workoutSummary ? (
                     <p>운동 기록이 없소</p>

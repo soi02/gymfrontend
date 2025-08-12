@@ -8,13 +8,14 @@ import {
 import '../styles/TestPage.css'; // 공통 스타일
 
 
-import goalImg from '../../../assets/img/challenge/test/goal.png';
-import relationshipImg from '../../../assets/img/challenge/test/relationship.png';
-import recoveryImg from '../../../assets/img/challenge/test/recovery.png';
-import learningImg from '../../../assets/img/challenge/test/learning.png';
-import balancedImg from '../../../assets/img/challenge/test/balanced.png';
+import goalImg from '../../../assets/img/challenge/testResult/goal.png';
+import relationshipImg from '../../../assets/img/challenge/testResult/relationship.png';
+import recoveryImg from '../../../assets/img/challenge/testResult/recovery.png';
+import learningImg from '../../../assets/img/challenge/testResult/learning.png';
+import balancedImg from '../../../assets/img/challenge/testResult/balanced.png';
 import { useEffect, useState } from 'react';
 import apiClient from '../../../global/api/apiClient';
+
 
 
 // 백엔드 tendency 테이블의 ID와 매핑
@@ -47,6 +48,8 @@ export default function ChallengeTestResult() {
   const navigate = useNavigate();
   const { scores, keywords } = useSelector((state) => state.test);
   const [recommendedChallenges, setRecommendedChallenges] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const userName = useSelector(state => state.auth.name);
 
   // 유효성 검사: 모든 점수가 0이면 테스트 안 한 것
   const hasValidScore = Object.values(scores).some((v) => v > 0);
@@ -109,34 +112,36 @@ export default function ChallengeTestResult() {
 console.log("📊 radarData", radarData);
 
 
-  useEffect(() => {
-    const fetchRecommendedChallenges = async () => {
-      try {
-        const keywordIds = keywords.map(kw => keywordMapping[kw]).filter(id => id);
-        // const tendencyId = tendencyMapping[topType];
+    useEffect(() => {
+        const fetchRecommendedChallenges = async () => {
+            setIsLoading(true); // ❗ API 호출 시작 시 로딩 상태를 true로 설정
+            try {
+                // Redux 스토어에서 가져온 keywords 배열을 ID 배열로 변환
+                const keywordIds = keywords.map(kw => keywordMapping[kw]).filter(id => id);
 
-        console.log("추천 API 호출 파라미터:", { keywordIds });
+                console.log("추천 API 호출 파라미터:", { keywordIds });
 
-        const res = await apiClient.get('/challenge/getRecommendedChallengeListProcess', {
-          params: {
-            // tendencyId: tendencyId,
-            keywordIds: keywordIds.join(',')
-          }
-        });
+                // apiClient를 사용하여 GET 요청을 보냄
+                const res = await apiClient.get('/challenge/getRecommendedChallengeListProcess', {
+                    params: {
+                        keywordIds: keywordIds.join(',') // 쉼표로 구분된 문자열로 전달
+                    }
+                });
 
-        console.log('추천 챌린지 목록', res.data);
-        setRecommendedChallenges(res.data);
-      } catch (err) {
-        console.error('추천 챌린지 불러오기 실패', err);
-      }
-    };
+                console.log('추천 챌린지 목록', res.data);
+                setRecommendedChallenges(res.data); // 응답 데이터를 상태에 저장
+            } catch (err) {
+                console.error('추천 챌린지 불러오기 실패', err);
+            } finally {
+                setIsLoading(false); // ❗ API 호출 완료 시 로딩 상태를 false로 설정
+            }
+        };
     
-    // 테스트 결과가 유효할 때만 API 호출
-    if (hasValidScore) {
-        fetchRecommendedChallenges();
-    }
-  }, [hasValidScore, topType, keywords]);
-
+        // 테스트 결과가 유효할 때만 API 호출
+        if (hasValidScore) {
+            fetchRecommendedChallenges();
+        }
+    }, [hasValidScore, keywords]); // ✅ 의존성 배열에 keywords를 추가하여 변경 시 재호출
 
   return (
 
@@ -170,10 +175,10 @@ console.log("📊 radarData", radarData);
 
 {/* 대표 성향 섹션 */}
 <div style={{ textAlign: 'center', marginBottom: '27px' }}>
-  <h2 className="test-result-title">[닉네임]님의 타입은</h2>
+  <h2 className="test-result-title">{userName}님의 타입은</h2>
 
   {/* 성향명 강조 */}
-  <div style={{ fontSize: '22px', fontWeight: '700', color: '#2f80ed', marginBottom: '17px' }}>
+  <div style={{ fontSize: '22px', fontWeight: '700', color: '#7c1d0d', marginBottom: '17px' }}>
     {labelMap[topType]}
   </div>
 
@@ -233,7 +238,7 @@ console.log("📊 radarData", radarData);
         }}
       />
       <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-      <Radar name="나의 성향" dataKey="A" stroke="#2f80ed" fill="#2f80ed" fillOpacity={0.4} />
+      <Radar name="나의 성향" dataKey="A" stroke="#7c1d0d" fill="#7c1d0d" fillOpacity={0.2} />
     </RadarChart>
   </ResponsiveContainer>
 </div>
@@ -244,28 +249,32 @@ console.log("📊 radarData", radarData);
           이런 챌린지는 어때요?
         </h3>
 
-        <ul style={{ listStyle: 'none', padding: 0, marginBottom: '18px' }}>
-          {recommendedChallenges.length > 0 ? (
-            recommendedChallenges.map((challenge, idx) => (
-
-                    <li 
-                      key={challenge.challengeId}
-                      style={{          
-                        background: '#f8f9fa',
-                        borderRadius: '12px',
-                        padding: '12px 14px',
-                        fontSize: '14px',
-                        marginBottom: '10px',
-                        boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)',}}
-                              onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
-                            >
-                      {challenge.challengeTitle}
-              </li>
-            ))
-          ) : (
-            <li>추천 챌린지가 없습니다.</li>
-          )}
-        </ul>
+                <ul style={{ listStyle: 'none', padding: 0, marginBottom: '18px' }}>
+                    {isLoading ? ( // ❗ 로딩 중일 때 로딩 메시지 표시
+                        <li style={{ textAlign: 'center', color: '#888' }}>추천 챌린지를 불러오는 중입니다...</li>
+                    ) : (
+                        recommendedChallenges.length > 0 ? (
+                            recommendedChallenges.map((challenge, idx) => (
+                                <li 
+                                    key={challenge.challengeId}
+                                    style={{ 
+                                        background: '#f8f9fa',
+                                        borderRadius: '12px',
+                                        padding: '12px 14px',
+                                        fontSize: '14px',
+                                        marginBottom: '10px',
+                                        boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)',
+                                    }}
+                                    onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+                                >
+                                    {challenge.challengeTitle}
+                                </li>
+                            ))
+                        ) : (
+                            <li>추천 챌린지가 없습니다.</li>
+                        )
+                    )}
+                </ul>
 
 {/* 버튼 영역 */}
 <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -276,13 +285,13 @@ console.log("📊 radarData", radarData);
       justifyContent: 'center',
       alignItems: 'center',
       gap: '8px',
-      background: '#e7f0ff',
-      color: '#2f80ed',
-      border: '1px solid #b3d4ff',
-      borderRadius: '12px',
+      background:'#7c1d0d',
+      color: 'white',
+      border: '1px solid #7c1d0d',
+      borderRadius: '10px',
       padding: '12px 14px',
-      fontSize: '14px',
-      fontWeight: '600',
+      fontSize: '15px',
+      // fontWeight: '600',
       cursor: 'pointer',
       boxShadow: '0 1px 4px rgba(0,0,0,0.06)'
     }}

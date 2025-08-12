@@ -78,95 +78,95 @@ useEffect(() => {
         <button onClick={() => navigate("/gymmadang/market")}>중고거래</button>
       </div> */}
 
-<div className="each-box">
-  <div className="row-between" onClick={() => navigate("/gymmadang/routineCalendar")}>
-    <div>
-      <div style={{ fontWeight: 500 }}>이번주 운동 기록</div>
-        <div className="week-preview">
+        <div className="each-box">
+        <div className="row-between" onClick={() => navigate("/gymmadang/routineCalendar")}>
+            <div>
+            <div style={{ fontWeight: 500 }}>이번주 운동 기록</div>
+                <div className="week-preview">
 
 
-{getWeekRange().weekDates.map((dateStr, i) => {
-  const date = new Date(dateStr);
-  const day = date.getDate();
-  const dayOfWeek = date.getDay();
-  const isWorkout = thisWeekWorkoutDates.includes(dateStr);
+                {getWeekRange().weekDates.map((dateStr, i) => {
+                const date = new Date(dateStr);
+                const day = date.getDate();
+                const dayOfWeek = date.getDay();
+                const isWorkout = thisWeekWorkoutDates.includes(dateStr);
 
-  let color = "#000";
-  if (dayOfWeek === 0) color = "#d04343"; // 일요일
-  else if (dayOfWeek === 6) color = "#5630ff"; // 토요일
+                let color = "#000";
+                if (dayOfWeek === 0) color = "#d04343"; // 일요일
+                else if (dayOfWeek === 6) color = "#5630ff"; // 토요일
 
-  return (
-    <div
-      key={i}
-      style={{
-        display: 'inline-block',
-        width: '2.2rem',
-        textAlign: 'center',
-        fontSize: '0.85rem',
-        color,
-        fontWeight: isWorkout ? 'bold' : 'normal',
-      }}
-    >
-      {isWorkout ? (
-        <div style={{ position: 'relative', height: '2rem' }}>
-          <span style={{ fontSize: '2rem', opacity: '0.8' }}>🔥</span>
-    <span
-    style={{
-        position: 'absolute',
-        top: '1.4rem', 
-        left: '50%',
-        transform: 'translateX(-50%)',
-        fontSize: '0.8rem',
-        fontWeight: 'bold',
-        color,
-        pointerEvents: 'none',
-    }}
-    >
-    {day}
-    </span>
+                return (
+                    <div
+                    key={i}
+                    style={{
+                        display: 'inline-block',
+                        width: '2.2rem',
+                        textAlign: 'center',
+                        fontSize: '0.85rem',
+                        color,
+                        fontWeight: isWorkout ? 'bold' : 'normal',
+                    }}
+                    >
+                    {isWorkout ? (
+                        <div style={{ position: 'relative', height: '2rem' }}>
+                        <span style={{ fontSize: '2rem', opacity: '0.8' }}>🔥</span>
+                    <span
+                    style={{
+                        position: 'absolute',
+                        top: '1.4rem', 
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        fontSize: '0.8rem',
+                        fontWeight: 'bold',
+                        color,
+                        pointerEvents: 'none',
+                    }}
+                    >
+                    {day}
+                    </span>
 
+                        </div>
+                    ) : (
+                        <div style={{ marginTop: '1.3rem' }}>{day}</div> // 🔥 없는 경우만 숫자
+                    )}
+                    </div>
+                );
+                })}
+
+
+
+
+                </div>
+
+
+            </div>
+            <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
         </div>
-      ) : (
-        <div style={{ marginTop: '1.3rem' }}>{day}</div> // 🔥 없는 경우만 숫자
-      )}
-    </div>
-  );
-})}
-
-
-
-
         </div>
 
+        <div className="each-box">
+        <div className="row-between" onClick={() => navigate("/gymmadang/errorPage")}>
+            <div>
+            <div style={{ fontWeight: 500 }}>수련장 출석</div>
 
-    </div>
-    <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
-  </div>
-</div>
+                윤수야 수련장 출첵 여기서 표시해
 
-<div className="each-box">
-  <div className="row-between" onClick={() => navigate("/gymmadang/errorPage")}>
-    <div>
-      <div style={{ fontWeight: 500 }}>수련장 출석</div>
+            </div>
+            <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
+        </div>
+        </div>
 
-        윤수야 수련장 출첵 여기서 표시해
+        <div className="each-box">
+        <div className="row-between" onClick={() => navigate("/gymmadang/errorPage")}>
+            <div>
+            <div style={{ fontWeight: 500 }}>장터</div>
 
-    </div>
-    <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
-  </div>
-</div>
+                정혁아 장터 관련해서 여기서 표시해
 
-<div className="each-box">
-  <div className="row-between" onClick={() => navigate("/gymmadang/errorPage")}>
-    <div>
-      <div style={{ fontWeight: 500 }}>장터</div>
-
-        정혁아 장터 관련해서 여기서 표시해
-
-    </div>
-    <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
-  </div>
-</div>
+            </div>
+            <span style={{ fontSize: "1.2rem", color: "#888" }}>{'>'}</span>
+        </div>
+        </div>
 
 
 
