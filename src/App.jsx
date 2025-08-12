@@ -161,11 +161,11 @@ function AppContent() {
       )}
 
       <Routes>
-        <Route path='/gymmadang' element={<WelcomePage />} />
-        <Route path='/gymmadang/register' element={<RegisterPage />} />
-        <Route path='/gymmadang/login' element={<LoginPage />} />
+        <Route path='/' element={<WelcomePage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
         <Route path="/gymmadang/notifications" element={<NotificationPage />} />
-        <Route path="/gymmadang/mainpage" element={<MainPage />} />
+        <Route path="/gymmadang" element={<MainPage />} />
         <Route path="/gymmadang/mypage" element={<MyPage />} />
         <Route path="/gymmadang/routineCalendar" element={<MyPageRoutineCalendar />} />
 
