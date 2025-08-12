@@ -48,6 +48,8 @@ export default function GroupChatRoom() {
         }
         
         const socket = new WebSocket('ws://localhost:8080/ws/group-chat');
+        // const socket = new WebSocket('wss://gymmadangapi.null-pointer-exception.com/ws/group-chat');
+
         stompClient.current = Stomp.over(socket);
         stompClient.current.debug = null;
 
