@@ -65,8 +65,8 @@ export default function LoginPage() {
                 <p className="login-subtitle">그대의 이름이 짐마당의 열쇠요</p>
 
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-                    <input name="accountName" onChange={handleChange} value={formData.accountName} type="text" className="login-input" placeholder="아이디" required />
-                    <input name='password' onChange={handleChange} value={formData.password} type="password" className="login-input" placeholder="비밀번호" required />
+                    <input name="accountName" onChange={handleChange} value={formData.accountName} type="text" className="login-input" placeholder="아이디 : 1" required />
+                    <input name='password' onChange={handleChange} value={formData.password} type="password" className="login-input" placeholder="비밀번호 : 1" required />
 
                     <button type="submit" className="loginpage-btn sign-in-btn">입장하기</button>
                 </form>
