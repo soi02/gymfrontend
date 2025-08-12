@@ -76,5 +76,5 @@ const CategoryGrid = ({ categories, onCategoryClick, selectedCategoryId }) => {
     </div>
   );
 };
-a
+
 export default CategoryGrid;
