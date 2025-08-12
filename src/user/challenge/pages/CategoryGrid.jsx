@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Vite 환경에서 동적으로 이미지를 불러오기 위한 import.meta.glob 사용
-const categoryImages = import.meta.glob('/src/assets/img/challenge/category/*.png', { eager: true, as: 'url' });
+const categoryImages = import.meta.glob('/src/assets/img/challenge/categoryIcon/*.png', { eager: true, as: 'url' });
 
 // 카테고리 이름에 따른 색상 매핑
 const categoryColors = {
@@ -27,14 +27,14 @@ const categoryColors = {
 
 const getImagePath = (categoryName) => {
   const nameMapping = {
-    '루틴': 'routine',
-    '회복': 'recovery',
-    '소통': 'communication',
-    '정보': 'information',
-    '습관': 'habit',
-    '동기부여': 'motivation',
-    '자기관리': 'selfcontrol',
-    '분위기': 'stance',
+    '루틴': 'ct_routine',
+    '회복': 'ct_recovery',
+    '소통': 'ct_communication',
+    '정보': 'ct_information',
+    '습관': 'ct_habit',
+    '동기부여': 'ct_motivation',
+    '자기관리': 'ct_selfcontrol',
+    '분위기': 'ct_stance',
   };
 
   const imageName = nameMapping[categoryName];
@@ -43,7 +43,7 @@ const getImagePath = (categoryName) => {
     return null;
   }
 
-  const imagePathKey = `/src/assets/img/challenge/category/${imageName}.png`;
+  const imagePathKey = `/src/assets/img/challenge/categoryIcon/${imageName}.png`;
   const imagePath = categoryImages[imagePathKey];
   
   if (!imagePath) {
@@ -55,27 +55,26 @@ const getImagePath = (categoryName) => {
 };
 
 const CategoryGrid = ({ categories, onCategoryClick, selectedCategoryId }) => {
-  return (
-    <div className="category-grid">
-      {categories.map(cat => (
-        <button
-          key={cat.keywordCategoryId}
-          // selectedCategoryId가 null일 수 있으므로 === 대신 ==을 사용하거나
-          // Number(selectedCategoryId)를 사용해 타입 비교를 명확히 하는 것이 좋습니다.
-          className={`category-item ${Number(selectedCategoryId) === cat.keywordCategoryId ? 'active' : ''}`}
-          onClick={() => onCategoryClick(cat.keywordCategoryId)}
-          style={{ backgroundColor: categoryColors[cat.keywordCategoryName] || '#f7f7f7' }}
-        >
+  return (
+    <div className="category-grid">
+      {categories.map(cat => (
+        <button
+          key={cat.keywordCategoryId}
+          className={`category-item ${Number(selectedCategoryId) === cat.keywordCategoryId ? 'active' : ''}`}
+          onClick={() => onCategoryClick(cat.keywordCategoryId)}
+          style={{ backgroundColor: categoryColors[cat.keywordCategoryName] || '#f7f7f7' }}
+        >
+          {/* 아이콘과 이름의 순서를 변경하고, 아이콘은 absolute로 띄우기 위해 CSS 클래스 활용 */}
           <img
-            src={getImagePath(cat.keywordCategoryName)}
-            alt={cat.keywordCategoryName}
-            className="category-icon"
-          />
-          <span className="category-name">{cat.keywordCategoryName}</span>
-        </button>
-      ))}
-    </div>
-  );
+            src={getImagePath(cat.keywordCategoryName)}
+            alt={cat.keywordCategoryName}
+            className="category-icon"
+          />
+          <span className="category-name">{cat.keywordCategoryName}</span>
+        </button>
+      ))}
+    </div>
+  );
 };
-
+a
 export default CategoryGrid;
