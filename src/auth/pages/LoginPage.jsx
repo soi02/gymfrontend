@@ -90,7 +90,7 @@ export default function LoginPage() {
                 </div>
 
                 <div className="signup-text">
-                    처음오셨소? <Link className="signup-link" to="/gymmadang/register">계정 생성</Link>
+                    처음오셨소? <Link className="signup-link" to="/register">계정 생성</Link>
                 </div>
             </div>
 

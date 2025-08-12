@@ -49,7 +49,7 @@ export default function BottomNavigation() {
         // 토큰과 userId 유효성 확인
         if (!userId || !token) {
             alert("로그인이 필요합니다.");
-            navigate('/gymmadang/login');
+            navigate('/login');
             return;
         }
 
@@ -64,17 +64,17 @@ export default function BottomNavigation() {
             const hasCompleted = JSON.parse(response.data);
 
             if (hasCompleted) {
-                navigate('/gymmadang/challenge/challengeHome');
+                navigate('/challenge/challengeHome');
             } else {
-                navigate('/gymmadang/challenge/challengeIntro');
+                navigate('/challenge/challengeIntro');
             }
         } catch (error) {
             console.error("성향 테스트 상태 확인 실패:", error);
             if (error.response && error.response.status === 401) {
                 alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-                navigate('/gymmadang/login');
+                navigate('/login');
             } else {
-                navigate('/gymmadang/challenge/challengeIntro');
+                navigate('/challenge/challengeIntro');
             }
         }
     };
@@ -87,7 +87,7 @@ export default function BottomNavigation() {
       // 로그인 상태 확인
       if (!userId || !token) {
           alert("로그인이 필요합니다.");
-          navigate('/gymmadang/login');
+          navigate('/login');
           return;
       }
   
@@ -105,20 +105,20 @@ export default function BottomNavigation() {
           
           if (isBuddy) {
               // is_buddy가 true일 경우 BuddyHome 페이지로 이동
-              navigate('/gymmadang/buddy/buddyHome');
+              navigate('/buddy/buddyHome');
           } else {
               // is_buddy가 false일 경우 버디 등록 페이지로 이동
-              navigate('/gymmadang/buddy');
+              navigate('/buddy');
           }
   
       } catch (error) {
           console.error("is_buddy 상태 확인 실패:", error);
           if (error.response && error.response.status === 401) {
               alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-              navigate('/gymmadang/login');
+              navigate('/login');
           } else {
               // 기타 오류 발생 시 기본 페이지로 이동
-              navigate('/gymmadang/buddy');
+              navigate('/buddy');
           }
       }
     };
@@ -143,39 +143,39 @@ export default function BottomNavigation() {
       }}
     >
       <BottomNavigationItem
-        link="/gymmadang/routine"
-        matchPrefix="/gymmadang/routine"
+        link="/routine"
+        matchPrefix="/routine"
         iconClass="ri-file-paper-2-fill"
         label="득근록"
-        onClick={() => navigate('/gymmadang/routine')}
+        onClick={() => navigate('/routine')}
       />
       <BottomNavigationItem
-        link="/gymmadang/challenge"
-        matchPrefix="/gymmadang/challenge"
+        link="/challenge"
+        matchPrefix="/challenge"
         iconClass="ri-award-fill"
         label="수련장"
         onClick={handleChallengeTabClick}
       />
       <BottomNavigationItem
-        link="/gymmadang/buddy"
-        matchPrefix="/gymmadang/buddy"
+        link="/buddy"
+        matchPrefix="/buddy"
         iconClass="ri-wechat-fill"
         label="벗"
         onClick={handleBuddyTabClick} // 새로 만든 핸들러 함수로 변경
       />
       <BottomNavigationItem
-        link="/gymmadang/market"
-        matchPrefix="/gymmadang/market"
+        link="/market"
+        matchPrefix="/market"
         iconClass="ri-store-3-fill"
         label="장터"
-        onClick={() => navigate('/gymmadang/market')}
+        onClick={() => navigate('/market')}
       />
       <BottomNavigationItem
-        link="/gymmadang/mypage"
-        matchPrefix="/gymmadang/mypage"
+        link="/mypage"
+        matchPrefix="/mypage"
         iconClass="ri-user-3-fill"
         label="나의 처소"
-        onClick={() => navigate('/gymmadang/mypage')}
+        onClick={() => navigate('/mypage')}
       />
     </div>
   );

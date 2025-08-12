@@ -46,9 +46,9 @@ export default function BuddyTopTabs() {
   backgroundColor: '#fff',
 }}>
 
-      <TabItem to="/gymmadang/buddy/buddyHome" label="벗 홈" />
-      <TabItem to="/gymmadang/buddy/buddyList" label="대화하기" />
-      <TabItem to="/gymmadang/buddy/buddyMy" label="나의 벗 기록" />
+      <TabItem to="/buddy/buddyHome" label="벗 홈" />
+      <TabItem to="/buddy/buddyList" label="대화하기" />
+      <TabItem to="/buddy/buddyMy" label="나의 벗 기록" />
     </div>
   );
 }
