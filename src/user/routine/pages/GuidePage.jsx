@@ -75,6 +75,28 @@ export default function GuidePage() {
   const [editedMemo, setEditedMemo] = useState(meta.memoContent);
 
 
+// 상단의 state들 아래에 추가
+const [videos, setVideos] = useState([]);
+
+// 운동명(meta.elementName) 세팅된 뒤 검색
+useEffect(() => {
+  const run = async () => {
+    if (!meta.elementName) return;
+    try {
+      const query = `${meta.elementName} 운동 방법`; // 예: 벤치 프레스 운동 방법
+      const list = await routineService.youtubeSearch(query);
+      setVideos((list || []).slice(0, 3)); // 3개만
+    } catch (e) {
+      console.error("유튜브 검색 실패", e);
+    }
+  };
+  run();
+}, [meta.elementName]);
+
+
+
+
+  
 
 
 
@@ -113,6 +135,32 @@ export default function GuidePage() {
         {formatSteps(parsed.breathing)}
       </div>
 
+      <h5 style={{ marginTop: "1rem" }}>∙ 운동 영상</h5>
+<div
+  className="youtube-grid"
+  style={{
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gap: '0.6rem',
+  }}
+>
+  {videos.map(v => (
+    <div key={v.videoId} className="youtube-item">
+      <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: 12, overflow: 'hidden' }}>
+        <iframe
+          title={v.title}
+          src={`https://www.youtube.com/embed/${v.videoId}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
+        />
+      </div>
+      <p style={{ margin: '0.3rem 0 0', fontSize: '0.9rem' }}>{v.title}</p>
+    </div>
+  ))}
+</div>
+
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem'}}>
         <h5 style={{ margin: 0 }}>∙ 내 메모</h5>
         <BiPencil
@@ -144,7 +192,7 @@ export default function GuidePage() {
               <button
                 className="memo-button"
                 onClick={() => {
-                  routineService.updateMemeo(id, editedMemo)
+                  routineService.updateMemo(id, editedMemo)
                   .then(() => {
                     setMeta({...meta, memoContent: editedMemo });
                     setIsEditing(false);
