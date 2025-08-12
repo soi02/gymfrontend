@@ -113,19 +113,27 @@ export default function ChallengeDetail() {
   const buttonText = userParticipating ? '도전 중' : (status === '모집 중' ? '도전하기' : status);
 
   const navigateToChat = () => navigate(`/challenge/groupchat/${challengeId}`);
-  const handlePaymentStart = async () => {
-    if (!userId) { alert("로그인 후 이용 가능합니다."); navigate('/login'); return; }
-    try {
-      const res = await apiClient.post(`/challenge/join/payment`, null, {
-        params: { userId, challengeId, redirectUrl: `${window.location.origin}/challenge/payment/success` },
-      });
-      if (res.data?.redirectUrl) window.location.href = res.data.redirectUrl;
-      else alert("결제 준비에 실패했습니다.");
-    } catch (err) {
-      console.error("결제 실패", err);
-      alert("결제 과정 중 오류가 발생했습니다: " + (err.response?.data || err.message));
+const handlePaymentStart = async () => {
+  if (!userId) { alert("로그인 후 이용 가능합니다."); navigate('/login'); return; }
+  try {
+    const res = await apiClient.post(`/challenge/join/payment`, null, {
+      params: { userId, challengeId, redirectUrl: `${window.location.origin}/challenge/payment/success` },
+    });
+    if (res.data?.redirectUrl) {
+      window.location.href = res.data.redirectUrl;
+      // 🌟 여기에 결제 성공 후 페이지를 새로고침하는 로직을 추가
+      // 결제 성공 후 리디렉션 로직은 백엔드에서 처리되므로,
+      // 백엔드가 프론트엔드로 다시 리다이렉션할 때, userParticipating을 업데이트하는 로직이 필요.
+      // 이 로직은 백엔드에서 결제 승인 후 성공 페이지로 리다이렉션할 때 함께 처리해야 합니다.
+
+    } else {
+      alert("결제 준비에 실패했습니다.");
     }
-  };
+  } catch (err) {
+    console.error("결제 실패", err);
+    alert("결제 과정 중 오류가 발생했습니다: " + (err.response?.data || err.message));
+  }
+};
 
   
 
