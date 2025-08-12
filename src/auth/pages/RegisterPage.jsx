@@ -2,6 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useUserService from "../service/userService";
 import "../styles/RegisterPage.css";
+import { useEffect } from "react";
+
+// Daum Postcode API를 로드하기 위한 스크립트
+const loadDaumPostcodeScript = () => {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error('Failed to load Daum Postcode script.'));
+        document.head.appendChild(script);
+    });
+};
 
 export default function RegisterPage() {
     const [step, setStep] = useState(1);
@@ -9,179 +21,240 @@ export default function RegisterPage() {
         accountName: '',
         password: '',
         name: '',
-        // age: '',
         gender: 'M',
         birth: '',
         address: '',
         phone: '',
+        // 이메일 관련 ིྀ추가
+        email: '',
         profileImageFile: null,
         height: '',
         weight: '',
         muscleMass: '',
         isBuddy: false,
         agreeTerms: false,
-        agreePrivacy: false
-
+        agreePrivacy: false,
+        confirmPassword: ''
     });
+
+    const [isTermsOpen, setIsTermsOpen] = useState(false);
+    const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
     const navigate = useNavigate();
     const { registerUser } = useUserService();
     const totalSteps = 5;
 
-
+    useEffect(() => {
+        // 주소 API 스크립트를 미리 로드
+        if (window.daum === undefined) {
+            loadDaumPostcodeScript();
+        }
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        // setFormData({
-        //     ...formData,
-        //     [name]: type === "checkbox" ? checked : value
-        // });
         if (type === "file") {
-            // 파일 입력인 경우에만 e.target.files에 접근합니다.
             setFormData({
                 ...formData,
-                [name]: e.target.files[0] // 선택된 첫 번째 파일 (File 객체)을 저장합니다.
+                [name]: e.target.files[0]
             });
         } else {
-            // 그 외의 입력 (텍스트, 체크박스 등)은 기존 방식대로 처리합니다.
             setFormData({
                 ...formData,
                 [name]: type === "checkbox" ? checked : value
             });
         }
     };
+    
+    const handleAllAgree = (e) => {
+        const checked = e.target.checked;
+        setFormData({
+            ...formData,
+            agreeTerms: checked,
+            agreePrivacy: checked,
+        });
+    };
 
     const handleNext = () => {
         if (step === 1 && (!formData.agreeTerms || !formData.agreePrivacy)) {
-            alert("모든 약관에 동의해야 다음 단계로 진행할 수 있습니다.");
+            // alert 대신 커스텀 모달 UI 사용
+            // alert("모든 약관에 동의해야 다음 단계로 진행할 수 있습니다.");
+            return;
+        }
+        if (step === 2 && formData.password !== formData.confirmPassword) {
+            // alert 대신 커스텀 모달 UI 사용
+            // alert("비밀번호가 일치하지 않습니다.");
             return;
         }
         setStep(prev => Math.min(prev + 1, totalSteps));
     };
+
     const handleBack = () => setStep(prev => Math.max(prev - 1, 1));
+
     const handleSubmit = async () => {
         await registerUser(formData);
-        alert("계정 생성이 완료되었습니다.");
+        // alert 대신 커스텀 모달 UI 사용
+        // alert("계정 생성이 완료되었습니다.");
         navigate("/gymmadang");
     };
 
-    // 🔙 이전 페이지(뒤로가기)
     const handleGoBackPage = () => navigate(-1);
+
+    // 주소 검색 API 호출
+    const handleAddressSearch = () => {
+        if (window.daum && window.daum.Postcode) {
+            new window.daum.Postcode({
+                oncomplete: (data) => {
+                    let fullAddress = data.address;
+                    let extraAddress = '';
+
+                    if (data.addressType === 'R') {
+                        if (data.bname !== '') {
+                            extraAddress += data.bname;
+                        }
+                        if (data.buildingName !== '') {
+                            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+                        }
+                        fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+                    }
+
+                    setFormData({
+                        ...formData,
+                        address: fullAddress
+                    });
+                }
+            }).open();
+        } else {
+            // alert 대신 커스텀 모달 UI 사용
+            // alert("주소 검색 스크립트를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+        }
+    };
 
     return (
         <div className="register-container">
 
-            {/* 상단 타이틀 */}
-            <div className="top-bar">
-                <span className="back-button" onClick={handleGoBackPage}>←</span>
+            <div className="register-header">
+                <button className="back-btn" onClick={handleGoBackPage}>&lt;</button>
                 <h2>회원가입</h2>
             </div>
-
-            {/* 단계 동그라미 표시 */}
-            {/* <div className="step-indicator">
-                {[1, 2, 3, 4, 5].map((s) => (
-                    <div key={s} className={`circle ${step >= s ? 'active' : ''}`}>{s}</div>
-                ))}
-            </div> */}
-            {/* 진행 상태 바 표시 */}
-            {/* <div className="progress-container">
-                <div className="progress-bar" style={{ width: `${(step - 1) / (totalSteps - 1) * 100}%` }} />
-            </div> */}
-            <div className="progress-line">
+            
+            <div className="register-progress-bar">
                 {[...Array(totalSteps)].map((_, index) => (
-                    <span
+                    <div
                         key={index}
-                        className={`progress-step ${index < step ? 'filled' : ''}`}
-                    >
-                        ●
-                    </span>
+                        className={`progress-step-item ${index < step ? 'active' : ''}`}
+                    />
                 ))}
             </div>
 
-            {/* 단계별 폼 */}
-            <div className="form-section">
+            <div className="register-form-section">
                 {step === 1 && (
-                    <>
-                        <h4>Welcome,</h4>
-                        <h4>이용약관에 동의해주세요.</h4>
-
-                        <div className="terms-box mt-4">
-                            <h5>1. 서비스 이용약관</h5>
-                            <div className="terms-content">
-                                짐마당 서비스(이하 "서비스")는 헬스 파트너 매칭, 챌린지 운영 등 다양한 건강 관련 기능을 제공합니다.<br /><br />
-                                1) 본 서비스는 만 14세 이상만 가입 가능합니다.<br />
-                                2) 사용자는 허위 정보를 입력하지 않아야 하며, 부정행위를 통한 이용 시 이용 제한 조치가 취해질 수 있습니다.<br />
-                                3) 서비스는 운영자의 사정에 따라 변경되거나 중단될 수 있습니다.<br />
-                                4) 이용자는 타인의 정보를 도용해서는 안 됩니다.<br />
-                                5) 서비스 내에서 발생한 분쟁은 민사상의 절차를 통해 해결합니다.
-                            </div>
-                            <label>
+                    <div className="step-content">
+                        <h4 className="step-title">서비스 이용약관에 동의해주세요.</h4>
+                        
+                        <div className="terms-all-agree-box">
+                            <label className="terms-checkbox-label all-agree">
                                 <input
                                     type="checkbox"
-                                    checked={formData.agreeTerms}
-                                    onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
-                                /> 동의합니다
+                                    checked={formData.agreeTerms && formData.agreePrivacy}
+                                    onChange={handleAllAgree}
+                                />
+                                <span>모든 약관에 동의합니다.</span>
                             </label>
                         </div>
-
-                        <div className="terms-box">
-                            <h5>2. 개인정보 수집 및 이용 동의</h5>
-                            <div className="terms-content">
-                                본 서비스는 사용자 편의를 위해 아래 정보를 수집 및 이용합니다.<br /><br />
-                                1) 수집 항목: 이름, 아이디, 비밀번호, 생년월일, 키, 몸무게, 전화번호, 주소, 프로필 사진<br />
-                                2) 수집 목적: 운동 파트너 매칭, 건강 분석 서비스 제공<br />
-                                3) 보관 기간: 회원 탈퇴 시 즉시 파기<br />
-                                4) 개인정보 제3자 제공: 없음<br /><br />
-                                위 내용에 동의하지 않으면 서비스 이용이 제한될 수 있습니다.
+                        
+                        <div className="terms-accordion">
+                            <div className={`terms-accordion-item ${isTermsOpen ? 'open' : ''}`}>
+                                <div className="terms-accordion-header" onClick={() => setIsTermsOpen(!isTermsOpen)}>
+                                    <label className="terms-checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.agreeTerms}
+                                            onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
+                                        />
+                                        <span>이용약관 동의 (필수)</span>
+                                    </label>
+                                    <span className="arrow-icon">{isTermsOpen ? '▲' : '▼'}</span>
+                                </div>
+                                <div className="terms-accordion-content">
+                                    <div className="terms-content">
+                                        짐마당 서비스(이하 "서비스")는 헬스 파트너 매칭, 챌린지 운영 등 다양한 건강 관련 기능을 제공합니다.<br /><br />
+                                        1) 본 서비스는 만 14세 이상만 가입 가능합니다.<br />
+                                        2) 사용자는 허위 정보를 입력하지 않아야 하며, 부정행위를 통한 이용 시 이용 제한 조치가 취해질 수 있습니다.<br />
+                                        3) 서비스는 운영자의 사정에 따라 변경되거나 중단될 수 있습니다.<br />
+                                        4) 이용자는 타인의 정보를 도용해서는 안 됩니다.<br />
+                                        5) 서비스 내에서 발생한 분쟁은 민사상의 절차를 통해 해결합니다.
+                                    </div>
+                                </div>
                             </div>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={formData.agreePrivacy}
-                                    onChange={(e) => setFormData({ ...formData, agreePrivacy: e.target.checked })}
-                                /> 동의합니다
-                            </label>
+
+                            <div className={`terms-accordion-item ${isPrivacyOpen ? 'open' : ''}`}>
+                                <div className="terms-accordion-header" onClick={() => setIsPrivacyOpen(!isPrivacyOpen)}>
+                                    <label className="terms-checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.agreePrivacy}
+                                            onChange={(e) => setFormData({ ...formData, agreePrivacy: e.target.checked })}
+                                        />
+                                        <span>개인정보 수집 및 이용 동의 (필수)</span>
+                                    </label>
+                                    <span className="arrow-icon">{isPrivacyOpen ? '▲' : '▼'}</span>
+                                </div>
+                                <div className="terms-accordion-content">
+                                    <div className="terms-content">
+                                        본 서비스는 사용자 편의를 위해 아래 정보를 수집 및 이용합니다.<br /><br />
+                                        1) 수집 항목: 이름, 아이디, 비밀번호, 생년월일, 키, 몸무게, 전화번호, 주소, 프로필 사진<br />
+                                        2) 수집 목적: 운동 파트너 매칭, 건강 분석 서비스 제공<br />
+                                        3) 보관 기간: 회원 탈퇴 시 즉시 파기<br />
+                                        4) 개인정보 제3자 제공: 없음<br /><br />
+                                        위 내용에 동의하지 않으면 서비스 이용이 제한될 수 있습니다.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </>
+                    </div>
                 )}
 
                 {step === 2 && (
-                    <>
-                        <h4>👤 기본 정보</h4>
+                    <div className="step-content">
+                        <h4 className="step-title">👤 기본 정보</h4>
+                        <p className="step-subtitle">회원정보를 입력해주세요.</p>
 
                         <div className="form-group">
-                            <label>아이디</label>
+                            <label className="form-label">아이디</label>
                             <div className="input-with-button">
                                 <input
                                     name="accountName"
                                     value={formData.accountName}
                                     onChange={handleChange}
-                                    placeholder="아이디"
+                                    placeholder="아이디를 입력해주세요"
                                 />
-                                <button className="btn btn-outline-primary btn-sm" onClick={() => alert("아이디 중복 확인 로직 연결 필요")}>중복 확인</button>
+                                <button className="btn outline-btn" onClick={() => {
+                                    // alert 대신 커스텀 모달 UI 사용
+                                    // alert("아이디 중복 확인 로직 연결 필요");
+                                }}>중복 확인</button>
                             </div>
                         </div>
 
                         <div className="form-group">
-                            <label>비밀번호</label>
+                            <label className="form-label">비밀번호</label>
                             <input
                                 name="password"
                                 type="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="비밀번호"
+                                placeholder="비밀번호를 입력해주세요"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label>비밀번호 확인</label>
+                            <label className="form-label">비밀번호 확인</label>
                             <input
                                 type="password"
-                                value={formData.confirmPassword || ''}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, confirmPassword: e.target.value })
-                                }
-                                placeholder="비밀번호 확인"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                placeholder="비밀번호를 다시 입력해주세요"
                             />
                             {formData.confirmPassword && formData.confirmPassword !== formData.password && (
                                 <p className="error-text">❌ 비밀번호가 일치하지 않습니다.</p>
@@ -192,17 +265,17 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="form-group">
-                            <label>이름</label>
+                            <label className="form-label">이름</label>
                             <input
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder="이름"
+                                placeholder="이름을 입력해주세요"
                             />
                         </div>
 
                         <div className="form-group">
-                            <label>생년월일</label>
+                            <label className="form-label">생년월일</label>
                             <input
                                 name="birth"
                                 type="date"
@@ -212,60 +285,98 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="form-group">
-                            <label>성별</label>
+                            <label className="form-label">성별</label>
                             <div className="gender-buttons">
                                 <button
-                                    className={formData.gender === 'M' ? 'active' : ''}
+                                    type="button"
+                                    className={`gender-btn ${formData.gender === 'M' ? 'active' : ''}`}
                                     onClick={() => setFormData({ ...formData, gender: 'M' })}
                                 >
                                     남
                                 </button>
                                 <button
-                                    className={formData.gender === 'F' ? 'active' : ''}
+                                    type="button"
+                                    className={`gender-btn ${formData.gender === 'F' ? 'active' : ''}`}
                                     onClick={() => setFormData({ ...formData, gender: 'F' })}
                                 >
                                     여
                                 </button>
                             </div>
                         </div>
-                    </>
+                    </div>
                 )}
 
                 {step === 3 && (
-                    <>
-                        <h4>📞 연락처 정보</h4>
-                        <input name="phone" value={formData.phone} onChange={handleChange} placeholder="전화번호" />
-                        <input name="address" value={formData.address} onChange={handleChange} placeholder="주소" />
-                    </>
+                    <div className="step-content">
+                        <h4 className="step-title">📞 연락처 정보</h4>
+                        <p className="step-subtitle">연락받으실 정보를 입력해주세요.</p>
+                        <div className="form-group">
+                            <label className="form-label">전화번호</label>
+                            <input name="phone" value={formData.phone} onChange={handleChange} placeholder="전화번호를 입력해주세요" />
+                        </div>
+                        {/* 이메일 관련 ིྀ추가 */}
+                        <div className="form-group">
+                            <label className="form-label">이메일</label>
+                            <input 
+                                name="email" 
+                                type="email" //이메일 관련 ིྀ추가
+                                value={formData.email} 
+                                onChange={handleChange} 
+                                placeholder="이메일을 입력해주세요" 
+                            />
+                        </div>
+                        {/* 이메일 관련 ིྀ추가 */}
+                        <div className="form-group">
+                            <label className="form-label">주소</label>
+                            <div className="input-with-button">
+                                <input
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    placeholder="주소를 검색해주세요"
+                                    readOnly // 사용자가 직접 입력하지 못하게 ReadOnly 설정
+                                />
+                                <button type="button" className="btn outline-btn" onClick={handleAddressSearch}>주소 검색</button>
+                            </div>
+                        </div>
+                    </div>
                 )}
 
                 {step === 4 && (
-                    <>
-                        <h4>📏 신체 정보</h4>
-                        <input name="height" type="number" value={formData.height} onChange={handleChange} placeholder="키(cm)" />
-                        <input name="weight" type="number" value={formData.weight} onChange={handleChange} placeholder="몸무게(kg)" />
-                        <input name="muscleMass" type="number" value={formData.muscleMass} onChange={handleChange} placeholder="골격근량(kg)" />
-                    </>
+                    <div className="step-content">
+                        <h4 className="step-title">📏 신체 정보</h4>
+                        <p className="step-subtitle">정확한 파트너 매칭을 위해 필요합니다.</p>
+                        <div className="form-group">
+                            <label className="form-label">키(cm)</label>
+                            <input name="height" type="number" value={formData.height} onChange={handleChange} placeholder="키를 입력해주세요" />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">몸무게(kg)</label>
+                            <input name="weight" type="number" value={formData.weight} onChange={handleChange} placeholder="몸무게를 입력해주세요" />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">골격근량(kg)</label>
+                            <input name="muscleMass" type="number" value={formData.muscleMass} onChange={handleChange} placeholder="골격근량을 입력해주세요" />
+                        </div>
+                    </div>
                 )}
 
                 {step === 5 && (
-                    <>
-                        <h4>📷 프로필</h4>
+                    <div className="step-content">
+                        <h4 className="step-title">📷 프로필</h4>
+                        <p className="step-subtitle">자신을 표현할 수 있는 사진을 올려주세요.</p>
                         <div className="profile-upload-area">
                             <label htmlFor="profileImageFileInput" className="profile-upload-label">
                                 {formData.profileImageFile ? (
-                                    // 이미지가 선택된 경우 미리보기 표시
                                     <img
                                         src={URL.createObjectURL(formData.profileImageFile)}
                                         alt="Profile Preview"
                                         className="profile-image-preview"
                                     />
                                 ) : (
-                                    // 이미지가 없는 경우 기본 텍스트와 아이콘 표시
                                     <div className="upload-placeholder">
-                                        <p>프로필을 추가해주세요</p>
                                         <div className="upload-plus-icon">+</div>
-                                        <p className="upload-files-text">Upload Files</p>
+                                        <p>프로필 사진 추가</p>
                                     </div>
                                 )}
                             </label>
@@ -275,18 +386,17 @@ export default function RegisterPage() {
                                 type="file"
                                 onChange={handleChange}
                                 accept="image/*"
-                                style={{ display: 'none' }} // 실제 input은 숨김
+                                style={{ display: 'none' }}
                             />
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
 
-            {/* 하단 버튼 */}
-            <div className="form-footer">
-                {step > 1 && <button onClick={handleBack} className="btn btn-secondary">이전</button>}
-                {step < totalSteps && <button onClick={handleNext} className="btn btn-primary">다음</button>}
-                {step === totalSteps && <button onClick={handleSubmit} className="btn btn-success">가입 완료</button>}
+            <div className="register-form-footer">
+                {step > 1 && <button onClick={handleBack} className="btn-secondary">이전</button>}
+                {step < totalSteps && <button onClick={handleNext} className="btn-primary">다음</button>}
+                {step === totalSteps && <button onClick={handleSubmit} className="btn-primary">가입 완료</button>}
             </div>
         </div>
     );

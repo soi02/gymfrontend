@@ -1,0 +1,108 @@
+/* VideoCall.css */
+.video-call-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+    color: white;
+}
+
+.main-video-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.main-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remote-video-container {
+    position: absolute;
+    bottom: 15vh; /* 통화 종료 버튼과 겹치지 않도록 */
+    right: 20px;
+    width: 120px;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.remote-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.waiting-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #000;
+}
+
+.waiting-screen.audio-only .audio-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.waiting-screen h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 15px;
+}
+
+.waiting-screen p {
+    font-size: 1rem;
+    color: #bbb;
+}
+
+.waiting-screen-small {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.end-call-button {
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ff3b30;
+    color: white;
+    border: none;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    cursor: pointer;
+}
+
+.end-call-button:hover {
+    background-color: #e5332a;
+}

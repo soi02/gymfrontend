@@ -61,6 +61,7 @@ import StartFreeWorkoutPage from './user/routine/pages/StartFreeWorkoutPage';
 import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 import SimpleWebSocketTest from './user/buddy/pages/SimpleWebSocketTest';
 import GroupChatRoom from './user/challenge/groupchat/pages/GroupChatRoom';
+import AutoJoinRoom from './user/buddy/pages/AutoJoinRoom';
 import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartPaymentSuccess';
 import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
 import MarketTopTabs from './user/market/commons/MarketTopTabs';
@@ -110,7 +111,7 @@ function AppContent() {
     '/gymmadang/challenge/challengeTest/result',
     '/gymmadang/challenge/challengeTest/recommend',
     // 이 부분을 추가하면 됩니다.
-    '/gymmadang/buddy/buddyChat'
+    '/gymmadang/buddy/buddyChat',
     // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
     
   ];
@@ -118,12 +119,14 @@ function AppContent() {
   // TopHeader 숨길 조건들
   const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
                         location.pathname.startsWith('/gymmadang/challenge/challengeTest') ||
-                        location.pathname.startsWith('/gymmadang/buddy/buddyChat/');
+                        location.pathname.startsWith('/gymmadang/buddy/buddyChat/')||
+                        location.pathname.startsWith('/gymmadang/buddy/videoCall');
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
   const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || 
                            location.pathname.startsWith('/gymmadang/challenge/challengeTest') ||
-                           location.pathname.startsWith('/gymmadang/buddy/buddyChat/');
+                           location.pathname.startsWith('/gymmadang/buddy/buddyChat/') ||
+                           location.pathname.startsWith('/gymmadang/buddy/videoCall');
 
   const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
   const isBuddySection = location.pathname.startsWith('/gymmadang/buddy');
@@ -187,8 +190,10 @@ function AppContent() {
         <Route path='/gymmadang/buddy/buddyList' element={<BuddyChat />} />
         {/* <Route path='/gymmadang/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
         <Route path='/gymmadang/buddy/buddyChat/:matchingId' element={<BuddyChatRoom />} />
+        <Route path="/gymmadang/buddy/videoCall/:roomNumber" element={<AutoJoinRoom />} />
         <Route path='/gymmadang/buddy/buddyMy' element={<BuddyNotification />} />
         <Route path='/test' element={<SimpleWebSocketTest />} />
+        {/* <Route path="/webrtc" element={<AutoJoinRoom />} /> */}
 
         {/* 수련장 */}
         <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
