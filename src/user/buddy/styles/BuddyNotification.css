@@ -21,7 +21,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 0;
-  border-bottom: 1px solid #eee;
+  /* 아래 border 없애기 */
+  border-bottom: none;
 }
 
 .buddy-info {
@@ -60,25 +61,44 @@
 }
 
 .btn-accept {
-  background-color: #4CAF50;
+  background-color: #228F4F; /* 진한 초록 */
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100px;
+  text-align: center;
+}
+
+.btn-accept:hover {
+  background-color: #34A853; /* 좀 더 밝은 초록 */
 }
 
 .btn-decline {
-  background-color: #f44336;
+  background-color: #C0392B; /* 진한 빨강 */
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100px;
+  text-align: center;
 }
 
+.btn-decline:hover {
+  background-color: #E74C3C; /* 좀 더 밝은 빨강 */
+}
+
+/* 취소, 바로채팅 버튼 스타일 */
 .btn-cancel, .btn-go-to-chat {
   background-color: transparent;
   color: #888;
@@ -87,4 +107,41 @@
   border-radius: 6px;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 120px;
+  text-align: center;
+}
+
+.btn-cancel:hover, .btn-go-to-chat:hover {
+  color: #228F4F;
+  border-color: #228F4F;
+}
+
+/* 토스트 전체 스타일 */
+.Toastify__toast {
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  min-height: unset !important;
+  text-align: center;
+  word-break: keep-all;
+  white-space: pre-wrap;
+}
+
+/* 진행바 */
+.Toastify__progress-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: #8ABFB5 !important;
+}
+
+/* 중앙 상단 위치 */
+.Toastify__toast-container {
+  top: 15px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto !important;
+  padding: 0 !important;
 }

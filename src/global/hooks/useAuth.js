@@ -16,14 +16,14 @@ export function useAuth() {
 
         dispatch(loginAction(payload));
         
-        navigate("/");
+        navigate("/home");
     };
 
     const logoutCustom = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userInfo");
         dispatch(logoutAction());
-        navigate("/gymmadang/login");
+        navigate("/login");
     };
 
     return { loginCustom, logoutCustom };

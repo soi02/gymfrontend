@@ -48,7 +48,6 @@ import { loginAction } from './redux/authSlice';
 import MarketWriteArticlePage from './user/market/pages/MarketWriteArticle';
 import MarketMyLikedProductsPage from './user/market/pages/MarketMyLikedProducts';
 import MainPage from './global/pages/MainPage';
-import MarketTopTabs from './user/market/commons/marketTopTabs';
 import BuddyChat from './user/buddy/pages/BuddyChat';
 import BuddyNotification from './user/buddy/pages/BuddyNotification';
 import ChallengeDetail from './user/challenge/detail/pages/ChallengeDetail';
@@ -62,8 +61,10 @@ import StartFreeWorkoutPage from './user/routine/pages/StartFreeWorkoutPage';
 import MyPageRoutineCalendar from './user/mypage/pages/MyPageRoutineCalendar';
 import SimpleWebSocketTest from './user/buddy/pages/SimpleWebSocketTest';
 import GroupChatRoom from './user/challenge/groupchat/pages/GroupChatRoom';
+import AutoJoinRoom from './user/buddy/pages/AutoJoinRoom';
 import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartPaymentSuccess';
 import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
+import MarketTopTabs from './user/market/commons/MarketTopTabs';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -101,35 +102,37 @@ function AppContent() {
   // TopHeader와 BottomNavigation을 숨길 경로들
   // 'challengeTest' 경로들도 모두 포함되도록 수정했습니다.
   const hideHeaderFooterRoutes = [
-    '/gymmadang',
-    '/gymmadang/login',
-    '/gymmadang/register',
-    '/gymmadang/challenge/challengeCreate',
-    '/gymmadang/challenge/challengeTest/intro',
-    // '/gymmadang/challenge/challengeTest/step/:stepId'와 같은 동적 경로는 startsWith로 처리
-    '/gymmadang/challenge/challengeTest/result',
-    '/gymmadang/challenge/challengeTest/recommend',
+    '/',
+    '/login',
+    '/register',
+    '/challenge/challengeCreate',
+    '/challenge/challengeTest/intro',
+    // '/challenge/challengeTest/step/:stepId'와 같은 동적 경로는 startsWith로 처리
+    '/challenge/challengeTest/result',
+    '/challenge/challengeTest/recommend',
     // 이 부분을 추가하면 됩니다.
-    '/gymmadang/buddy/buddyChat'
+    '/buddy/buddyChat',
     // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
     
   ];
 
   // TopHeader 숨길 조건들
   const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
-                        location.pathname.startsWith('/gymmadang/challenge/challengeTest') ||
-                        location.pathname.startsWith('/gymmadang/buddy/buddyChat/');
+                        location.pathname.startsWith('/challenge/challengeTest') ||
+                        location.pathname.startsWith('/buddy/buddyChat/')||
+                        location.pathname.startsWith('/buddy/videoCall');
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
   const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || 
-                           location.pathname.startsWith('/gymmadang/challenge/challengeTest') ||
-                           location.pathname.startsWith('/gymmadang/buddy/buddyChat/');
+                           location.pathname.startsWith('/challenge/challengeTest') ||
+                           location.pathname.startsWith('/buddy/buddyChat/') ||
+                           location.pathname.startsWith('/buddy/videoCall');
 
-  const isChallengeSection = location.pathname.startsWith('/gymmadang/challenge') && !location.pathname.includes('challengeTest');
-  const isBuddySection = location.pathname.startsWith('/gymmadang/buddy');
-  const isMarketSection = location.pathname.startsWith('/gymmadang/market');
+  const isChallengeSection = location.pathname.startsWith('/challenge') && !location.pathname.includes('challengeTest');
+  const isBuddySection = location.pathname.startsWith('/buddy');
+  const isMarketSection = location.pathname.startsWith('/market');
 
-  const isChallengeIntro = location.pathname === '/gymmadang/challenge/challengeIntro'; // 강제 조건
+  const isChallengeIntro = location.pathname === '/challenge/challengeIntro'; // 강제 조건
 
   return (
     <div >
@@ -158,60 +161,62 @@ function AppContent() {
       )}
 
       <Routes>
-        <Route path='/gymmadang' element={<WelcomePage />} />
-        <Route path='/gymmadang/register' element={<RegisterPage />} />
-        <Route path='/gymmadang/login' element={<LoginPage />} />
-        <Route path="/gymmadang/notifications" element={<NotificationPage />} />
-        <Route path="/gymmadang/mainpage" element={<MainPage />} />
-        <Route path="/gymmadang/mypage" element={<MyPage />} />
-        <Route path="/gymmadang/routineCalendar" element={<MyPageRoutineCalendar />} />
+        <Route path='/' element={<WelcomePage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path="/notifications" element={<NotificationPage />} />
+        <Route path="/home" element={<MainPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/routineCalendar" element={<MyPageRoutineCalendar />} />
 
         {/* 루틴 */}
-        <Route path='/gymmadang/routine' element={<RoutineHomePage />} />
-        <Route path='/gymmadang/routine/free' element={<RoutineFreePage />} />
-        <Route path='/gymmadang/routine/add' element={<RoutineAddPage />} />
-        <Route path='/gymmadang/routine/addDetail' element={<RoutineAddDetailPage />} />
-        {/* <Route path='/gymmadang/routine/myroutine' element={<MyRoutineListPage />} /> */}
-        <Route path='/gymmadang/routine/list/:routineId' element={<MyRoutineListPage />} />
-        <Route path='/gymmadang/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
-        <Route path='/gymmadang/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
-        <Route path='/gymmadang/routine/workout' element={<WorkoutPage />} />
-        <Route path='/gymmadang/routine/guide/:id' element={<GuidePage />} />
-        <Route path='/gymmadang/routine/summary' element={<SummaryPage />} />
-        <Route path='/gymmadang/routine/diary' element={<DiaryPage />} />
-        <Route path='/gymmadang/routine/result/:workoutId' element={<ResultPage />} />
+        <Route path='/routine' element={<RoutineHomePage />} />
+        <Route path='/routine/free' element={<RoutineFreePage />} />
+        <Route path='/routine/add' element={<RoutineAddPage />} />
+        <Route path='/routine/addDetail' element={<RoutineAddDetailPage />} />
+        {/* <Route path='/routine/myroutine' element={<MyRoutineListPage />} /> */}
+        <Route path='/routine/list/:routineId' element={<MyRoutineListPage />} />
+        <Route path='/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
+        <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
+        <Route path='/routine/workout' element={<WorkoutPage />} />
+        <Route path='/routine/guide/:id' element={<GuidePage />} />
+        <Route path='/routine/summary' element={<SummaryPage />} />
+        <Route path='/routine/diary' element={<DiaryPage />} />
+        <Route path='/routine/result/:workoutId' element={<ResultPage />} />
 
         {/* 벗 */}
-        <Route path='/gymmadang/buddy' element={<BuddyRegister />} />
-        <Route path='/gymmadang/buddy/buddyHome' element={<BuddyHome />} />
-        <Route path='/gymmadang/buddy/buddyList' element={<BuddyChat />} />
-        {/* <Route path='/gymmadang/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
-        <Route path='/gymmadang/buddy/buddyChat/:matchingId' element={<BuddyChatRoom />} />
-        <Route path='/gymmadang/buddy/buddyMy' element={<BuddyNotification />} />
+        <Route path='/buddy' element={<BuddyRegister />} />
+        <Route path='/buddy/buddyHome' element={<BuddyHome />} />
+        <Route path='/buddy/buddyList' element={<BuddyChat />} />
+        {/* <Route path='/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
+        <Route path='/buddy/buddyChat/:matchingId' element={<BuddyChatRoom />} />
+        <Route path="/buddy/videoCall/:roomNumber" element={<AutoJoinRoom />} />
+        <Route path='/buddy/buddyMy' element={<BuddyNotification />} />
         <Route path='/test' element={<SimpleWebSocketTest />} />
+        {/* <Route path="/webrtc" element={<AutoJoinRoom />} /> */}
 
         {/* 수련장 */}
-        <Route path="/gymmadang/challenge/challengeIntro" element={<ChallengeIntro />} />
-        <Route path="/gymmadang/challenge/challengeHome" element={<ChallengeHome />} />
-        <Route path="/gymmadang/challenge/challengeList" element={<ChallengeList />} />
-        <Route path="/gymmadang/challenge/challengeCreate" element={<ChallengeCreate />} />
-        <Route path="/gymmadang/challenge/challengeMy" element={<ChallengeMyRecordList />} />
-        <Route path="/gymmadang/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
-        <Route path="/gymmadang/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
+        <Route path="/challenge/challengeIntro" element={<ChallengeIntro />} />
+        <Route path="/challenge/challengeHome" element={<ChallengeHome />} />
+        <Route path="/challenge/challengeList" element={<ChallengeList />} />
+        <Route path="/challenge/challengeCreate" element={<ChallengeCreate />} />
+        <Route path="/challenge/challengeMy" element={<ChallengeMyRecordList />} />
+        <Route path="/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
+        <Route path="/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
 
-        <Route path="/gymmadang/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
-        <Route path="/gymmadang/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
-        <Route path="/gymmadang/challenge/challengeTest/result" element={<ChallengeTestResult />} />
-        <Route path="/gymmadang/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
-        <Route path="/gymmadang/challenge/detail/:challengeId" element={<ChallengeDetail />} />
-        <Route path="/gymmadang/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
+        <Route path="/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
+        <Route path="/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
+        <Route path="/challenge/challengeTest/result" element={<ChallengeTestResult />} />
+        <Route path="/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
+        <Route path="/challenge/detail/:challengeId" element={<ChallengeDetail />} />
+        <Route path="/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
 
-        <Route path="/gymmadang/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
-
-
+        <Route path="/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
 
 
-        {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `/gymmadang` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
+
+
+        {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
            혹시 필요하다면 다시 추가할 수 있습니다.
         */}
         {/*
@@ -222,11 +227,11 @@ function AppContent() {
         */}
         
         {/* 장터 관련 */}
-        <Route path="/gymmadang/market" element={<MarketBoardPage />} />
-        <Route path="/gymmadang/market/article/:id" element={<MarketArticlePage />} />
-        <Route path="/gymmadang/market/user/:id" element={<MarketUserPage />} />
-        <Route path="/gymmadang/market/writeArticle" element={<MarketWriteArticlePage />} />
-        <Route path="/gymmadang/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
+        <Route path="/market" element={<MarketBoardPage />} />
+        <Route path="/market/article/:id" element={<MarketArticlePage />} />
+        <Route path="/market/user/:id" element={<MarketUserPage />} />
+        <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
+        <Route path="/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

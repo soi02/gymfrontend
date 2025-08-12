@@ -1,57 +1,30 @@
-// import { Link } from "react-router-dom";
-// import "./css/WelcomePage.css"; // 추가된 스타일을 위한 CSS 파일 (선택사항)
-
-// export default function WelcomePage() {
-//   return (
-//     <div className="toss-welcome">
-//       <div className="toss-logo">GYM 마당</div>
-
-//       <h1 className="toss-title">운동, 오늘도<br />함께 가볼까요?</h1>
-//       <p className="toss-subtitle">당신만의 짐Buddy와 함께 시작해요</p>
-
-//       <div className="toss-buttons">
-//         <Link to="/register" className="toss-btn primary">시작하기</Link>
-//         <Link to="/login" className="toss-btn">로그인</Link>
-//       </div>
-//     </div>
-//   );
-// }
-
 import { Link } from "react-router-dom";
-import "../styles/WelcomePage.css";
+ import "../styles/WelcomePage.css";
+ import logoImg from "../../assets/img/gymmadang_logo_kr.svg";
+ import welcomeImg from "../../assets/img/welcome_logo.png"; // 추가된 이미지 경로
+ 
 
-export default function WelcomePage() {
-    return (
-        <div className="welcome-container">
-            <div className="logo">짐마당</div>
+ export default function WelcomePage() {
+     return (
+         <div className="welcome-container">
+             <div className="logo-container">
+                 <img src={logoImg} alt="짐마당 로고" className="logo-animated" />
+             </div>
+ 
 
-            <h1 className="title">
-                득근하러 오셨소? <span className="wave">👋</span>
-            </h1>
+             {/* 추가된 이미지 컨테이너 */}
+             <div className="welcome-image-container">
+                 <img src={welcomeImg} alt="환영 이미지" className="welcome-image" />
+             </div>
+ 
 
-            <p className="subtitle">
-                벗과 함께하는 오늘의 운동<br />
-                짐마당에서 시작하시오
-            </p>
+             <div className="button-group-bottom">
+                 <Link to="/register" className="btn primary">새롭게 가입하기</Link>
+                 <Link to="/login" className="btn secondary">이전에 들른적 있소</Link>
+             </div>
+ 
 
-            {/* <div className="highlight-box">
-        <p><strong>🏋️ 짐 버디 매칭:</strong> 혼자 하지 말고 함께 수련!</p>
-        <p><strong>🔥 챌린지:</strong> 나태한 자신과의 승부!</p>
-        <p><strong>🧘 짐마당:</strong> 마음과 몸을 다듬는 수련터</p>
-      </div> */}
-            <div className="highlight-box">
-                <p><strong>🏋️ 짐 버디 매칭:</strong> 혼자 하지 말고 함께 운동!</p>
-                <p><strong>🔥 챌린지:</strong> 같은 목표, 각자의 길!</p>
-                <p><strong>📒 루틴 일지:</strong> 나의 걸음, 나의 흔적</p>
-                <p><strong>🛒 장터:</strong> 운동기구를 나누거나 거래하는 장</p>
-            </div>
-
-            <div className="button-group">
-                <Link to="/gymmadang/register" className="btn primary">새롭게 가입하기</Link>
-                <Link to="/gymmadang/login" className="btn">이전에 들른적 있소</Link>
-            </div>
-
-            <p className="small-tip">진실로 귀한 것은, 꺾이지 않는 그대의 마음이오</p>
-        </div>
-    );
-}
+             <p className="small-tip-bottom">진실로 귀한 것은, 꺾이지 않는 그대의 마음이오</p>
+         </div>
+     );
+ }

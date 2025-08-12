@@ -155,7 +155,7 @@ export default function TopHeader() {
                 마음에 드는 수련을 시작해보시지요.
             </div>
             <Link
-                to="/gymmadang/login"
+                to="/login"
                 onClick={() => setShowPrompt(false)}
                 style={{
                 display: "inline-block",
@@ -208,7 +208,7 @@ export default function TopHeader() {
             >
             나의 처소에 들르겠소
             </Link>
-            <Link to="/gymmadang/login">
+            <Link to="/login">
             <button
             onClick={() => {
                 // handleLogout();

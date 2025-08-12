@@ -1,181 +1,206 @@
-
-
 .login-container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* 배경색을 흰색으로 통일 */
+    position: relative; /* 뒤로 가기 버튼을 absolute로 배치하기 위함 */
+}
 
+/* 새로운 헤더 컨테이너 스타일 */
+.login-header-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem; /* 상단 여백 추가 */
+}
+
+/* 새로운 뒤로가기 버튼 스타일 */
+.login-back-btn {
+    position: absolute;
+    left: 1rem;
+    font-size: 1.5rem;
+    background: none;
+    color: rgb(179, 179, 179);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
 }
 
 .login-box {
-  background-color: white;
-  padding: 40px 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 360px;
-  text-align: center;
+    background-color: white;
+    padding: 40px 30px;
+    /* border-radius: 15px; */
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 그림자 효과를 더 연하게 */
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
 }
 
 .login-title {
-  margin-bottom: 5px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #222;
+    margin-bottom: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #222;
 }
 
 .login-subtitle {
-  margin-bottom: 30px;
-  font-size: 14px;
-  color: #888;
+    margin-bottom: 60px;
+    font-size: 14px;
+    color: #888;
 }
 
 .login-input {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 14px;
+    width: 100%;
+    padding: 14px 15px; /* 입력 필드 패딩을 약간 늘려 여백 확보 */
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.login-input:focus {
+    border-color: #001439;
+    outline: none;
 }
 
 .forgot-password {
-  text-align: right;
-  font-size: 13px;
-  color: #888;
-  margin-bottom: 20px;
-  cursor: pointer;
+    text-align: right;
+    font-size: 13px;
+    color: #888;
+    margin: 10px 0 20px 0; /* 상단 여백 추가 */
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+    color: #001439;
 }
 
 .loginpage-btn {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: none;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+    width: 100%;
+    padding: 14px; /* 버튼 패딩 조정 */
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #001439;
+    color: white;
+    transition: background-color 0.2s ease;
 }
 
-.sign-in-btn {
-  background-color: #001439;
-  color: white;
-}
-/* 
-.google-btn {
-  background-color: white;
-  color: #444;
-  border: 1px solid #ccc;
-}
-
-.kakao-btn {
-  background-color: rgb(246, 226, 75);
-  color: #3C1E1E;
-  font-weight: bold;
-} */
-
-.signup-text {
-  font-size: 13px;
-  color: #888;
-}
-
-.signup-link {
-  color: #4e8cff;
-  cursor: pointer;
-  font-weight: 500;
+.loginpage-btn:hover {
+    background-color: #1f2937;
 }
 
 .divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 20px 0;
-  font-size: 14px;
-  color: #888;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0; /* 간격 늘리기 */
+    font-size: 14px;
+    color: #aaa;
 }
 
 .divider::before,
 .divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid #ddd;
-  margin: 0 10px;
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #f0f0f0; /* 선 색상 연하게 */
+    margin: 0 10px;
 }
 
 .social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin: 20px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 25px; /* 하단 여백 조정 */
 }
 
 .social-btn {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .social-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .social-btn img {
-  height: 22px;
-  width: auto;
-  object-fit: contain;
+    height: 22px;
+    width: auto;
+    object-fit: contain;
 }
 
+.signup-text {
+    font-size: 13px;
+    color: #888;
+}
+
+.signup-link {
+    color: #001439;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
 
 .loginpage-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
 }
 
 .loginpage-modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 300px; /* 👈 폭을 줄여서 작고 귀엽게 */
-  text-align: center;
-  font-size: 15px;
-  line-height: 1.6; /* 👈 줄 간격 늘리기 */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-
 .loginpage-modal-close-btn {
-  margin-top: 20px;
-  background-color: #001439;
-  color: white;
-  border: none;
-  padding: 10px 0;
-  border-radius: 8px;
-  width: 100%;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
+    margin-top: 20px;
+    background-color: #001439;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
 }
