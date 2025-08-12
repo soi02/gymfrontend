@@ -19,8 +19,8 @@ import { Link } from "react-router-dom";
  
 
              <div className="button-group-bottom">
-                 <Link to="/gymmadang/register" className="btn primary">새롭게 가입하기</Link>
-                 <Link to="/gymmadang/login" className="btn secondary">이전에 들른적 있소</Link>
+                 <Link to="/register" className="btn primary">새롭게 가입하기</Link>
+                 <Link to="/login" className="btn secondary">이전에 들른적 있소</Link>
              </div>
  
 
