@@ -86,7 +86,7 @@ export default function BuddyRegister() {
 
     const handleGoToBuddyHome = () => {
         setShowModal(false);
-        navigate('/gymmadang/buddyhome'); // buddyhome 경로로 이동합니다.
+        navigate('/buddyhome'); // buddyhome 경로로 이동합니다.
     };
 
     const renderPage = () => {

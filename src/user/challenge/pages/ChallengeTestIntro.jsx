@@ -16,9 +16,9 @@ export default function ChallengeTestIntro() {
   const handleChoiceClick = (choice) => {
     setSelectedChoice(choice);
     if (choice === 'testStart') {
-      navigate('/gymmadang/challenge/challengeTest/step/1');
+      navigate('/challenge/challengeTest/step/1');
     } else if (choice === 'testEnd') {
-      navigate('/gymmadang/challenge/challengeHome');
+      navigate('/challenge/challengeHome');
     }
   };
 

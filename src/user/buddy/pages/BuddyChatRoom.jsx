@@ -325,7 +325,7 @@ const BuddyChatRoom = () => {
 
   const handleVideoCall = () => {
 
-    navigate(`/gymmadang/buddy/videoCall/${matchingId}`, {
+    navigate(`/buddy/videoCall/${matchingId}`, {
 
       state: {
 

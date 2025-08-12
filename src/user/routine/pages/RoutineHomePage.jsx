@@ -110,7 +110,7 @@ export default function RoutineHomePage() {
                   <div
                     key={`${routine.routineId}-${idx}`}
                     className="routine-card"
-                    onClick={() => navigate(`/gymmadang/routine/list/${routine.routineId}`)}
+                    onClick={() => navigate(`/routine/list/${routine.routineId}`)}
                     style={{ cursor: 'pointer' }}
                   >
                     {routine.routineName}
@@ -124,8 +124,8 @@ export default function RoutineHomePage() {
 
                 {/* 하단 고정 버튼 영역 */}
                 <div className="routine-bottom-buttons">
-                  <button className="routine-free-btn" onClick={() => navigate('/gymmadang/routine/free')}>⚡ 자유운동</button>
-                  <button className="routine-add-btn" onClick={() => navigate('/gymmadang/routine/add')}>＋ 루틴생성</button>
+                  <button className="routine-free-btn" onClick={() => navigate('/routine/free')}>⚡ 자유운동</button>
+                  <button className="routine-add-btn" onClick={() => navigate('/routine/add')}>＋ 루틴생성</button>
                 </div>
 
 

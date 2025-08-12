@@ -59,7 +59,7 @@ const ChallengeMyRecordDetail = () => {
   useEffect(() => {
     if (!userId) {
       alert("로그인이 필요한 페이지입니다.");
-      navigate('/login', { state: { from: `/gymmadang/challenge/challengeMyRecordDetail/${challengeId}` } });
+      navigate('/login', { state: { from: `/challenge/challengeMyRecordDetail/${challengeId}` } });
       return;
     }
     

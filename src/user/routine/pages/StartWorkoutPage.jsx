@@ -71,7 +71,7 @@ export default function StartWorkoutPage() {
       const res = await saveActualWorkout(payload); // 백엔드에서 workout + detail + set + log까지 처리!
       console.log("응답: ", res);
       alert("운동 완료! 기록이 저장되었소.");
-      navigate(`/gymmadang/routine/result/${res.data.workoutId}`);
+      navigate(`/routine/result/${res.data.workoutId}`);
     } catch (err) {
       console.error(err);
       alert("저장을 실패하였소.");

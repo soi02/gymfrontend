@@ -26,10 +26,46 @@ export default function MarketWriteArticlePage() {
         
         const { name, value } = element.target;
         
-        setInsertMarketArticleElement({
-            ...insertMarketArticleElement,
-            [name] : value
-        });
+        const productCostRegex = /^[0-9]*$/;
+        
+        //
+        
+        if (name === "productCost") {
+        
+            if (productCostRegex.test(value)) {
+                
+                setInsertMarketArticleElement(insertMarketArticleElement => ({
+                    ...insertMarketArticleElement,
+                    [name] : value
+                }));
+            
+            } 
+            
+            else {
+                
+            }
+            
+            // ▲ solution 1
+            
+            //
+            
+            // const sanitizedValue = value.replace(/[^0-9]/g, '');
+            
+            // setInsertMarketArticleElement(insertMarketArticleElement => ({
+            //     ...insertMarketArticleElement,
+            //     [name] : sanitizedValue
+            // }));
+            
+            // ▲ solution 2
+            
+        } else {
+            
+            setInsertMarketArticleElement(insertMarketArticleElement => ({
+                ...insertMarketArticleElement,
+                [name] : value
+            }));
+            
+        }
         
     }
     
@@ -42,15 +78,15 @@ export default function MarketWriteArticlePage() {
             content : contentRef.current.value
         };
         
-        setInsertMarketArticleElement(submitArticleData)
+        setInsertMarketArticleElement(submitArticleData);
             
         try {
             
-            console.log("Code Reaching Test1");
             const constPostInsertMarketArticle = await marketAPI.postInsertMarketArticle(submitArticleData);
             console.log("Successed");
-            navigate(`/gymmadang/market`);
+            navigate(`/market`);
             console.log("Code Reaching Test2");
+
             
         } catch (error) {
             console.error("로드 실패:", error);
@@ -62,7 +98,7 @@ export default function MarketWriteArticlePage() {
         <>
         
             {/* <Routes>
-                <Route path = "/gymmadang/market" element = {<MarketBoardPage />}/>
+                <Route path = "/market" element = {<MarketBoardPage />}/>
             </Routes> */}
                             
                 <div className = "container-fluid">
@@ -149,7 +185,7 @@ export default function MarketWriteArticlePage() {
                                         </div>
                                         <div className = "row">
                                             <div className = "col">
-                                                <textarea className = "form-control writeArticleTextDivisionDefault" 
+                                                <textarea className = "form-control writeArticleTextDivisionDefault" rows = "4"
                                                 id = "content" name = "content" value = {insertMarketArticleElement.content}
                                                 onChange = {constApplyTextContent} ref = {contentRef}
                                                 style = {{fontSize : "1.75vh"}}/>

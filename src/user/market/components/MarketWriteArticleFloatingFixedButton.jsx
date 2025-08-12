@@ -4,7 +4,7 @@ function MarketWriteArticleFloatingFixedButton() {
   return (
     <>
       <Link
-        to="/gymmadang/market/writeArticle"
+        to="/market/writeArticle"
         style={{
           position: "absolute",
           bottom: "20px",

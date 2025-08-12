@@ -112,7 +112,7 @@ export default function BuddyNotification() {
     };
     
     const handleGoToChat = (matchingId) => {
-        navigate(`/gymmadang/buddy/buddyChat/${matchingId}`);
+        navigate(`/buddy/buddyChat/${matchingId}`);
     };
 
     return (

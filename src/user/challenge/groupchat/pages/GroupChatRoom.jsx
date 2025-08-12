@@ -29,7 +29,7 @@ export default function GroupChatRoom() {
             } catch (error) {
                 console.error("채팅 기록을 불러오는 데 실패했습니다:", error);
                 alert("채팅 기록을 불러올 수 없습니다. 다시 시도해 주세요.");
-                navigate(`/gymmadang/challenge/challengeDetail/${challengeId}`);
+                navigate(`/challenge/challengeDetail/${challengeId}`);
             }
         };
 
@@ -43,7 +43,7 @@ export default function GroupChatRoom() {
         if (!token) {
             console.error("인증 토큰이 없습니다. 로그인 상태를 확인하세요.");
             alert("세션이 만료되었거나 로그인 상태가 아닙니다.");
-            window.location.href = '/gymmadang/login';
+            window.location.href = '/login';
             return;
         }
         

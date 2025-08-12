@@ -46,9 +46,9 @@ export default function MarketTopTabs() {
     backgroundColor: '#fff',
 }}>
 
-      <TabItem to="/gymmadang/market" label="장터 홈" />
-      <TabItem to="/gymmadang/market/myLikedProducts" label="탐나는 물품" />
-      <TabItem to="/gymmadang/market/user/1004" label="나의 장터 정보함" />
+      <TabItem to="/market" label="장터 홈" />
+      <TabItem to="/market/myLikedProducts" label="탐나는 물품" />
+      <TabItem to="/market/user/1004" label="나의 장터 정보함" />
     </div>
   );
 }

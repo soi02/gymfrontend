@@ -15,7 +15,7 @@ function WorkoutElement({workoutList, onCheck, checked}) {
     const navigate = useNavigate();
 
     const goToDetail = () => {
-        navigate(`/gymmadang/routine/guide/${workoutList.elementId}`);
+        navigate(`/routine/guide/${workoutList.elementId}`);
     };
 
 
@@ -222,7 +222,7 @@ export default function RoutineAddPage() {
                             onClick={() => {
                                 if (selectedItems.size > 0) {
                                     const selectedWorkouts = workoutList.filter(item => selectedItems.has(item.elementId));
-                                    navigate('/gymmadang/routine/addDetail', {
+                                    navigate('/routine/addDetail', {
                                         state: { selectedWorkouts }
                                     });
                                 }

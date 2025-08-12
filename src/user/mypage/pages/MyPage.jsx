@@ -56,7 +56,7 @@ useEffect(() => {
   return (
     <div className="mypage-container">
       {/* 유저 정보 */}
-        <div className="profile-box" onClick={() => navigate("/gymmadang/editProfile")}>
+        <div className="profile-box" onClick={() => navigate("/editProfile")}>
         <div className="profile-info-wrapper">
             <div className="profile-info">
             <div className="profile-img" />
@@ -73,13 +73,13 @@ useEffect(() => {
 
       {/* 간단 기능 */}
       {/* <div className="quick-buttons">
-        <button onClick={() => navigate("/gymmadang/routineCalendar")}>운동 기록</button>
-        <button onClick={() => navigate("/gymmadang/routineList")}>내 루틴</button>
-        <button onClick={() => navigate("/gymmadang/market")}>중고거래</button>
+        <button onClick={() => navigate("/routineCalendar")}>운동 기록</button>
+        <button onClick={() => navigate("/routineList")}>내 루틴</button>
+        <button onClick={() => navigate("/market")}>중고거래</button>
       </div> */}
 
         <div className="each-box">
-        <div className="row-between" onClick={() => navigate("/gymmadang/routineCalendar")}>
+        <div className="row-between" onClick={() => navigate("/routineCalendar")}>
             <div>
             <div style={{ fontWeight: 500 }}>이번주 운동 기록</div>
                 <div className="week-preview">
@@ -145,7 +145,7 @@ useEffect(() => {
         </div>
 
         <div className="each-box">
-        <div className="row-between" onClick={() => navigate("/gymmadang/errorPage")}>
+        <div className="row-between" onClick={() => navigate("/errorPage")}>
             <div>
             <div style={{ fontWeight: 500 }}>수련장 출석</div>
 
@@ -157,7 +157,7 @@ useEffect(() => {
         </div>
 
         <div className="each-box">
-        <div className="row-between" onClick={() => navigate("/gymmadang/errorPage")}>
+        <div className="row-between" onClick={() => navigate("/errorPage")}>
             <div>
             <div style={{ fontWeight: 500 }}>장터</div>
 

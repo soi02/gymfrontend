@@ -38,7 +38,7 @@ export default function TopHeader() {
         }}
         >
             {/* 왼쪽 로고 */}
-            <Link to="/gymmadang/mainpage">
+            <Link to="/mainpage">
             <img src={logoImg} alt="로고" style={{ height: "28px", cursor: "pointer" }} />
             </Link>
 
@@ -193,7 +193,7 @@ export default function TopHeader() {
             무슨 일로 들르셨사옵니까?
             </div>
             <Link
-            to="/gymmadang/mypage"
+            to="/mypage"
             style={{
                 display: "block",
                 padding: "10px",
