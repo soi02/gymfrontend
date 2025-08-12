@@ -84,14 +84,19 @@ export default function useRoutineService() {
 
 
 
-    const updateMemeo = async (elementId, memoContent) => {
+    const updateMemo = async (elementId, memoContent) => {
         const payload = { elementId, memoContent };
         return await axios.post(`${BASE_URL}/updateMemo`, payload, {
             headers: { "Content-Type" : "application/json" }
         });
     };
 
+    const youtubeSearch = async (q) => {
+        const response = await axios.get(`${API_BASE_URL}/youtube/search`, { params: { q }  });
+        return response.data;
+        
+    }
 
 
-    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout, getWorkoutByDate, getWorkoutDatesBetween, updateMemeo};
+    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout, getWorkoutByDate, getWorkoutDatesBetween, updateMemo, youtubeSearch};
 }
