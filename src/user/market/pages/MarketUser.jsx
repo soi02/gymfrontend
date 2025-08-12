@@ -420,7 +420,11 @@ export default function MarketUserPage() {
                                                 constmarketuserSoldProductElementList : 
                                                 <>
                                             
-                                                    판매한 물품이 없다오.
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                            판매한 물품이 없다오.
+                                                        </div>
+                                                    </div>
                                             
                                                 </>
                                             }
@@ -460,7 +464,11 @@ export default function MarketUserPage() {
                                                 constmarketuserSoldProductElementList : 
                                                 <>
                                             
-                                                    판매한 물품이 없다오.
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                            판매한 물품이 없다오.
+                                                        </div>
+                                                    </div>
                                             
                                                 </>
                                             }
@@ -506,7 +514,11 @@ export default function MarketUserPage() {
                                                 constmarketuserBoughtProductElementList : 
                                                 <>
                                             
-                                                    구매한 물품이 없다오.
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                            구매한 물품이 없다오.
+                                                        </div>
+                                                    </div>
                                             
                                                 </>
                                             }
@@ -546,7 +558,11 @@ export default function MarketUserPage() {
                                                 constmarketuserBoughtProductElementList : 
                                                 <>
                                             
-                                                    구매한 물품이 없다오.
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                            구매한 물품이 없다오.
+                                                        </div>
+                                                    </div>
                                             
                                                 </>
                                             }
@@ -592,7 +608,11 @@ export default function MarketUserPage() {
                                                 constmarketuserRateElementList : 
                                                 <>
                                                 
-                                                    평가말이 없다오.
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                            남겨진 평가말이 없다오.
+                                                        </div>
+                                                    </div>
                                                 
                                                 </>
                                             }
@@ -632,7 +652,11 @@ export default function MarketUserPage() {
                                                 constmarketuserRateElementList : 
                                                 <>
                                                 
-                                                    평가말이 없다오.
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                            남겨진 평가말이 없다오.
+                                                        </div>
+                                                    </div>
                                                 
                                                 </>
                                             }
@@ -657,7 +681,7 @@ export default function MarketUserPage() {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{height : "80vh", overflowX : "hidden"}}>
+                    <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
                         
                         {
                             constMarketUserInfoElement.length  > 0 ? constMarketUserInfoElement : <></>

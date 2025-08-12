@@ -581,7 +581,7 @@ export default function MarketMyLikedProductsPage() {
                 <div className = "widthDefault">
                     <div className = "col">
                         <div className = "row">
-                            <div className = "col primaryDivisionDefault" style = {{height : "80vh", overflowX : "hidden"}}>
+                            <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
                                         <div className = "row">
@@ -606,8 +606,12 @@ export default function MarketMyLikedProductsPage() {
                                                             constmarketuserLikedProductElementList.length > 0 ? 
                                                             constmarketuserLikedProductElementList : 
                                                             <>
-                                                
-                                                                탐낸 물품이 없다오.
+                                                            
+                                                                <div className = "row">
+                                                                    <div className = "col" style = {{fontSize : "2vh"}}>
+                                                                        탐낸 물품이 없다오.
+                                                                    </div>
+                                                                </div>
                                                 
                                                             </>
                                                         }

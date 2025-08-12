@@ -68,7 +68,7 @@ export default function MarketWriteArticlePage() {
                 <div className = "container-fluid">
                     
                     <div className = "row">
-                        <div className = "col primaryDivisionDefault" style = {{ height : "80vh", overflowX : "hidden"}}>
+                        <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
                             
                                 <div className = "row">
                                     <div className = "col" style = {{marginBottom : "2.5vh"}}>
@@ -112,7 +112,6 @@ export default function MarketWriteArticlePage() {
                                                 id = "title" name = "title" value = {insertMarketArticleElement.title}
                                                 onChange = {constApplyTextContent} ref = {titleRef}
                                                 style = {{fontSize : "1.75vh"}}/>
-                                                {/* 입력된 내용 등록해야 됨 */}
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +130,11 @@ export default function MarketWriteArticlePage() {
                                                 id = "productCost" name = "productCost" value = {insertMarketArticleElement.productCost}
                                                 onChange = {constApplyTextContent} ref = {productCostRef}
                                                 style = {{fontSize : "1.75vh"}}/>
-                                                {/* 입력한 내용 등록해야 됨 */}
+                                            </div>
+                                        </div>
+                                        <div className = "row">
+                                            <div className = "col" style = {{fontSize : "1.5vh", marginTop : "0.75vh"}}>
+                                                <i className="ri-information-line"></i> 0원을 입력할 시 나눔 물품으로 표시됩니다.
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +153,6 @@ export default function MarketWriteArticlePage() {
                                                 id = "content" name = "content" value = {insertMarketArticleElement.content}
                                                 onChange = {constApplyTextContent} ref = {contentRef}
                                                 style = {{fontSize : "1.75vh"}}/>
-                                                {/* 입력한 내용 등록해야 됨 */}
                                             </div>
                                         </div>
                                     </div>

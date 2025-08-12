@@ -4,13 +4,17 @@ import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductImageOnArticle from "../components/test/example/MarketProductImageOnArticle";
 import '../styles/MarketCommonStyles.css';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 export default function MarketArticlePage() {
     
+    const {id : loadedId} = useParams();
+    console.log("First Params");
+    console.log(loadedId);
+    
     const checkUserStatus = 2;
-    const checkArticleId = 1;
+    const checkArticleId = loadedId;
     const defaultUserStatus = 1004;
     
     //
@@ -112,12 +116,15 @@ export default function MarketArticlePage() {
     const constmarketCommentElementListOnArticle = mergeMarketCommentListOnArticle
     .map(mergedElement => {
         
-        console.log("KeyTest");
+        console.log("CommentKeyTest");
         console.log(mergedElement.comment);
         console.log(mergedElement.comment.id);
         
         return(
-    <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>)});
+        <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>
+        )
+        
+    });
     
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
         {id : 1, articleId : 1, marketUserId : checkUserStatus, content : "My Dragon 1", 
@@ -158,6 +165,8 @@ export default function MarketArticlePage() {
                     userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                console.log("CommentTest");
+                console.log(mergeMarketCommentListOnArticle);
                 setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
                 
             } catch (error) {
@@ -229,6 +238,8 @@ export default function MarketArticlePage() {
                         userInfo : APIElem1.marketUserInfoDto,
                     }))
                     setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                    console.log("CommentTest");
+                    console.log(mergeMarketCommentListOnArticle);
                     setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
                     
                 } catch (error) {
@@ -783,7 +794,7 @@ export default function MarketArticlePage() {
                     <div className = "widthDefault">
                         <div className = "col">
                             <div className = "row">
-                                <div className = "col primaryDivisionDefault" style = {{height : "80vh", paddingLeft : "2vh", paddingRight : "2vh", overflowX : "hidden"}}>
+                                <div className = "col primaryDivisionDefault" style = {{height : "75vh", paddingLeft : "2vh", paddingRight : "2vh", overflowX : "hidden"}}>
                                     <div className = "row">
                                         <div className = "col gx-0" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
                                             
@@ -878,11 +889,17 @@ export default function MarketArticlePage() {
                                                             {
                                                                 constmarketCommentElementListOnArticle.length  > 0 ? 
                                                                 constmarketCommentElementListOnArticle : 
-                                                                <br>
+                                                                <>
+                                                                    
+                                                                    <div className = "row">
+                                                                        <div className = "col" style = {{fontSize : "2.75vh", paddingLeft : "3vh", paddingRight : "3vh",
+                                                                            marginBottom : "4vh"
+                                                                        }}>
+                                                                            게시글에 쓴 댓글이 없다오.
+                                                                        </div>
+                                                                    </div>
                                                                 
-                                                                    댓글이 없다오.
-                                                                
-                                                                </br>
+                                                                </>
                                                             }
                                                         </div>
                                                     </div>

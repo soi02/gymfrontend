@@ -163,7 +163,7 @@ export default function MarketBoardPage() {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "80vh", overflowX : "hidden"}}>
+                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "75vh", overflowX : "hidden"}}>
                         
                         <MarketSearchDivision />
                         
