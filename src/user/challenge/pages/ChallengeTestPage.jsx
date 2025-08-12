@@ -237,7 +237,7 @@ export default function ChallengeTestPage() {
             console.log("성향 테스트 결과 저장 성공");
 
             // 저장 성공 시, 결과 페이지로 이동합니다.
-            navigate('/gymmadang/challenge/challengeTest/result');
+            navigate('/challenge/challengeTest/result');
         } catch (err) {
             console.error('성향 테스트 결과 저장 실패', err);
             setToastMessage("성향 테스트 결과 저장에 실패했소. 다시 시도해 주시오.");
@@ -245,7 +245,7 @@ export default function ChallengeTestPage() {
             setTimeout(() => setToastVisible(false), 2000);
             
             // 실패 시 인트로 페이지로 돌아가기
-            navigate('/gymmadang/challenge/challengeTest/intro');
+            navigate('/challenge/challengeTest/intro');
         } finally {
             setIsSaving(false);
         }
@@ -285,16 +285,16 @@ export default function ChallengeTestPage() {
         }
         
         // step 1~7까지의 로직
-        navigate(`/gymmadang/challenge/challengeTest/step/${step + 1}`);
+        navigate(`/challenge/challengeTest/step/${step + 1}`);
     };
 
 
     // 뒤로 가기
     const handleBack = () => {
         if (step === 1) {
-            navigate('/gymmadang/challenge/challengeIntro'); // 테스트 인트로로 돌아가기
+            navigate('/challenge/challengeIntro'); // 테스트 인트로로 돌아가기
         } else {
-            navigate(`/gymmadang/challenge/challengeTest/step/${step - 1}`);
+            navigate(`/challenge/challengeTest/step/${step - 1}`);
         }
     };
 
@@ -303,7 +303,7 @@ export default function ChallengeTestPage() {
         dispatch(addScore({ type: option.type }));
         console.log("📌 dispatched:", option.type);
         setTimeout(() => {
-            navigate(`/gymmadang/challenge/challengeTest/step/${step + 1}`);
+            navigate(`/challenge/challengeTest/step/${step + 1}`);
             setSelectedOptionIndex(null); // 다음 페이지 이동 후 선택 상태 초기화
         }, 300); // 선택된 색상을 잠시 보여준 뒤 페이지 이동
     };

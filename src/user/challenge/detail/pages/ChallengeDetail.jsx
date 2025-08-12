@@ -21,7 +21,7 @@ export default function ChallengeDetail() {
   useEffect(() => {
     if (!challengeId) {
       alert("잘못된 접근입니다.");
-      navigate('/gymmadang/challenge/challengeHome');
+      navigate('/challenge/challengeHome');
       return;
     }
     (async () => {
@@ -33,7 +33,7 @@ export default function ChallengeDetail() {
       } catch (err) {
         console.error("챌린지 상세 실패", err);
         alert("챌린지를 불러올 수 없습니다.");
-        navigate('/gymmadang/challenge/challengeHome');
+        navigate('/challenge/challengeHome');
       }
     })();
   }, [challengeId, userId, navigate]);
@@ -112,12 +112,12 @@ export default function ChallengeDetail() {
   const isJoinable = status === '모집 중' && !userParticipating;
   const buttonText = userParticipating ? '도전 중' : (status === '모집 중' ? '도전하기' : status);
 
-  const navigateToChat = () => navigate(`/gymmadang/challenge/groupchat/${challengeId}`);
+  const navigateToChat = () => navigate(`/challenge/groupchat/${challengeId}`);
   const handlePaymentStart = async () => {
-    if (!userId) { alert("로그인 후 이용 가능합니다."); navigate('/gymmadang/login'); return; }
+    if (!userId) { alert("로그인 후 이용 가능합니다."); navigate('/login'); return; }
     try {
       const res = await apiClient.post(`/challenge/join/payment`, null, {
-        params: { userId, challengeId, redirectUrl: `${window.location.origin}/gymmadang/challenge/payment/success` },
+        params: { userId, challengeId, redirectUrl: `${window.location.origin}/challenge/payment/success` },
       });
       if (res.data?.redirectUrl) window.location.href = res.data.redirectUrl;
       else alert("결제 준비에 실패했습니다.");

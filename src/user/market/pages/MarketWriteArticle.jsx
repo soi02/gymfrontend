@@ -49,7 +49,7 @@ export default function MarketWriteArticlePage() {
             console.log("Code Reaching Test1");
             const constPostInsertMarketArticle = await marketAPI.postInsertMarketArticle(submitArticleData);
             console.log("Successed");
-            navigate(`/gymmadang/market`);
+            navigate(`/market`);
             console.log("Code Reaching Test2");
             
         } catch (error) {
@@ -62,7 +62,7 @@ export default function MarketWriteArticlePage() {
         <>
         
             {/* <Routes>
-                <Route path = "/gymmadang/market" element = {<MarketBoardPage />}/>
+                <Route path = "/market" element = {<MarketBoardPage />}/>
             </Routes> */}
                             
                 <div className = "container-fluid">

@@ -25,7 +25,7 @@ export default function ChallengeList() {
     // 카테고리 버튼 클릭 시, 새로운 페이지로 이동하는 함수
     const handleCategoryClick = (categoryId) => {
         // categoryId를 URL 파라미터로 넘겨주면서 이동
-        navigate(`/gymmadang/challenge/category/${categoryId}`);
+        navigate(`/challenge/category/${categoryId}`);
     };
 
     return (
@@ -43,14 +43,14 @@ export default function ChallengeList() {
                 />
 
                 {/* '전체' 버튼을 별도로 추가하고 싶다면 여기에 추가 */}
-                {/* <button className="filter-button" onClick={() => navigate('/gymmadang/challenge/list')}>
+                {/* <button className="filter-button" onClick={() => navigate('/challenge/list')}>
                     전체
                 </button> */}
             </div>
 
             <button
                 className="challenge-list-floating-button"
-                onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
+                onClick={() => navigate('/challenge/challengeCreate')}
             >
                 ＋
             </button>

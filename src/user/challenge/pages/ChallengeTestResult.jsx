@@ -62,7 +62,7 @@ export default function ChallengeTestResult() {
         </p>
         <button
           className="next-button"
-          onClick={() => navigate('/gymmadang/challenge/challengeTest/step/1')}
+          onClick={() => navigate('/challenge/challengeTest/step/1')}
         >
           테스트 하러가기
         </button>
@@ -157,7 +157,7 @@ console.log("📊 radarData", radarData);
   zIndex: 10,
 }}>
   <button
-    onClick={() => navigate('/gymmadang/challenge/challengeHome')}
+    onClick={() => navigate('/challenge/challengeHome')}
     style={{
       background: 'transparent',
       border: 'none',
@@ -265,7 +265,7 @@ console.log("📊 radarData", radarData);
                                         marginBottom: '10px',
                                         boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)',
                                     }}
-                                    onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+                                    onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
                                 >
                                     {challenge.challengeTitle}
                                 </li>
@@ -279,7 +279,7 @@ console.log("📊 radarData", radarData);
 {/* 버튼 영역 */}
 <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
   <button
-    onClick={() => navigate('/gymmadang/challenge/challengeTest/recommend')}
+    onClick={() => navigate('/challenge/challengeTest/recommend')}
     style={{
       display: 'flex',
       justifyContent: 'center',

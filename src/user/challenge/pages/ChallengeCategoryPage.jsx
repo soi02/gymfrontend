@@ -83,7 +83,7 @@ export default function ChallengeCategoryPage() {
             <ChallengeCard
               key={challenge.challengeId}
               challenge={challenge}
-              onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+              onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
             />
           ))
         ) : (
@@ -94,7 +94,7 @@ export default function ChallengeCategoryPage() {
       <button
         className="fab"
         aria-label="챌린지 만들기"
-        onClick={() => navigate('/gymmadang/challenge/challengeCreate')}
+        onClick={() => navigate('/challenge/challengeCreate')}
       >
         ＋
       </button>

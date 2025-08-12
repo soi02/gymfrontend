@@ -432,7 +432,7 @@ export default function MarketArticlePage() {
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
                                                                 <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                    <Link className = "linkDefault" to = {`/gymmadang/market/user/${userInfo.userId}`}>
+                                                                    <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
                                                                         {userInfo.nickname}
                                                                     </Link>
                                                                 </div>
@@ -640,7 +640,7 @@ export default function MarketArticlePage() {
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
                                                                 <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                    <Link className = "linkDefault" to = {`/gymmadang/market/user/${userInfo.userId}`}>
+                                                                    <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
                                                                         {userInfo.nickname}
                                                                     </Link>
                                                                 </div>
@@ -688,7 +688,7 @@ export default function MarketArticlePage() {
                         <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", fontSize : "2.25vh"}}>
                             <div className = "row">
                                 <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
-                                    <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/gymmadang/market/writeArticle`}>
+                                    <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/writeArticle`}>
                                         수정
                                     </Link>
                                 </div>

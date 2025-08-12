@@ -45,7 +45,7 @@ function BuddyChat() {
           <div
             key={index}
             className="chat-room-item"
-            onClick={() => navigate(`/gymmadang/buddy/buddyChat/${chat.matchingId}`)}
+            onClick={() => navigate(`/buddy/buddyChat/${chat.matchingId}`)}
             style={{ cursor: 'pointer' }}
           >
             <div className="avatar">

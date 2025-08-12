@@ -524,7 +524,7 @@ export default function MarketMyLikedProductsPage() {
                                                     
                                                 </div>
                                                 <div className = "col">
-                                                    <Link className = "linkDefault" to = {`/gymmadang/market/article/${article.id}`}>
+                                                    <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                         <div className = "row">
                                                             <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
                                                                 paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>

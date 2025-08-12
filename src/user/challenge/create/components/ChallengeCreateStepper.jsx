@@ -52,7 +52,7 @@ export default function ChallengeCreateStepper() {
 
     if (!userId) {
       alert("이곳은 짐마당의 백성들만 들어올 수 있소. 장부에 이름을 등록해주시오.");
-        navigate('/gymmadang/login', { state: { from: location.pathname } });
+        navigate('/login', { state: { from: location.pathname } });
     }
 
   }, [userId, navigate, location.pathname]);

@@ -16,7 +16,7 @@ export default function StepLayout({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClose = () => setIsModalOpen(true);
-  const handleConfirmExit = () => { setIsModalOpen(false); navigate('/gymmadang/challenge'); };
+  const handleConfirmExit = () => { setIsModalOpen(false); navigate('/challenge'); };
   const handleCancelExit = () => setIsModalOpen(false);
 
   return (

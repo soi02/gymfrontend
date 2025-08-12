@@ -9,7 +9,7 @@ function WorkoutElement({workoutList, onCheck, checked}) {
     const navigate = useNavigate();
 
     const goToDetail = () => {
-        navigate(`/gymmadang/routine/guide/${workoutList.elementId}`);
+        navigate(`/routine/guide/${workoutList.elementId}`);
     };
 
 
@@ -153,7 +153,7 @@ export default function RoutineFreePage() {
             return;
         }
 
-        navigate("/gymmadang/routine/startFreeWorkout", {
+        navigate("/routine/startFreeWorkout", {
             state: {
                 selectedIds: [...selectedItems]
             }

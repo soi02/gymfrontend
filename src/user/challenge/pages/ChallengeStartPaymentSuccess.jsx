@@ -24,14 +24,14 @@ export default function ChallengeStartPaymentSuccess() {
             
             // // 3초 후 자동 이동
             // setTimeout(() => {
-            //     navigate('/gymmadang/challenge/myRecordList');
+            //     navigate('/challenge/myRecordList');
             // }, 3000);
         } else {
             // status가 success가 아닌 경우 (예: fail)
             setIsSuccess(false);
             setMessage("결제에 실패했거나 잘못된 접근이오.");
             setTimeout(() => {
-                navigate('/gymmadang/challenge/challengeHome');
+                navigate('/challenge/challengeHome');
             }, 3000);
         }
     }, [navigate, location.search]);
@@ -59,7 +59,7 @@ export default function ChallengeStartPaymentSuccess() {
                 </p>
                 <button 
                     className="go-to-challenges-btn" 
-                    onClick={() => navigate('/gymmadang/challenge/challengeMy')}
+                    onClick={() => navigate('/challenge/challengeMy')}
                 >
                     나의 수련기록을 보러 가겠소
                 </button>

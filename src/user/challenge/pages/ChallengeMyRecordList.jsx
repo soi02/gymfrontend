@@ -23,7 +23,7 @@ const ChallengeMyRecordList = () => {
   if (!userId) {
     alert("이곳은 짐마당의 백성들만 들어올 수 있소. 장부에 이름을 등록해주시오.");
     // 로그인 후 현재 페이지로 돌아오도록 state에 현재 경로 저장
-    navigate('/gymmadang/login', { state: { from: location.pathname } }); 
+    navigate('/login', { state: { from: location.pathname } }); 
     return; // 리다이렉션 후 이펙트 실행 중단
   }
 
@@ -72,7 +72,7 @@ const ChallengeMyRecordList = () => {
           <MyChallengeCard
             key={challenge.challengeId} 
             challenge={challenge}
-            onClick={() => navigate(`/gymmadang/challenge/challengeMyRecordDetail/${challenge.challengeId}`)}
+            onClick={() => navigate(`/challenge/challengeMyRecordDetail/${challenge.challengeId}`)}
           />
         ))}
       </div>

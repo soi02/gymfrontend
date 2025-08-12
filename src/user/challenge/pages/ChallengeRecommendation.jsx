@@ -93,7 +93,7 @@ export default function ChallengeRecommendation() {
         </p>
         <button
           className="next-button"
-          onClick={() => navigate('/gymmadang/challenge/challengeTest/step/1')}
+          onClick={() => navigate('/challenge/challengeTest/step/1')}
         >
           테스트 하러가기
         </button>
@@ -124,7 +124,7 @@ export default function ChallengeRecommendation() {
                         fontSize: '15px',
                         cursor: 'pointer'
                     }}
-                    onClick={() => navigate(`/gymmadang/challenge/detail/${challenge.challengeId}`)}
+                    onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
                 >
                     {challenge.challengeTitle}
                 </li>
@@ -136,7 +136,7 @@ export default function ChallengeRecommendation() {
 
       <button
         className="next-button"
-        onClick={() => navigate('/gymmadang/challenge/challengeList')}
+        onClick={() => navigate('/challenge/challengeList')}
       >
         챌린지 전체 보러가기
       </button>

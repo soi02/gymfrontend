@@ -39,7 +39,7 @@ function MarketArticleElement({marketArticleElem1}) {
                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
-                                        <Link className = "linkDefault" to = {`/gymmadang/market/article/${article.id}`}>
+                                        <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                             <div className = "row">
                                                 <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
                                                     paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>

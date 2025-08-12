@@ -12,7 +12,7 @@ export default function StepDone() {
         await navigator.share({
           title: '수련에 초대하오!',
           text: '이 수련에 함께 참여해보시오 💪',
-          url: window.location.origin + '/gymmadang/challenge/challengeList',
+          url: window.location.origin + '/challenge/challengeList',
         });
       } catch (err) {
         console.error('공유 실패:', err);
@@ -23,7 +23,7 @@ export default function StepDone() {
   };
 
   const handleGoToList = () => {
-    navigate('/gymmadang/challenge/challengeList');
+    navigate('/challenge/challengeList');
   };
 
   return (

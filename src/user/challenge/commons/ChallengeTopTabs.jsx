@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 function TabItem({ to, label }) {
   const location = useLocation();
     // 경로가 'to'로 시작하면 true
-    // 예: /gymmadang/challenge/challengeMyRecordDetail/123 -> /gymmadang/challenge/challengeMy 로 시작
+    // 예: /challenge/challengeMyRecordDetail/123 -> /challenge/challengeMy 로 시작
     const isActive = location.pathname.startsWith(to);
 
   return (
@@ -48,9 +48,9 @@ export default function ChallengeTopTabs() {
   backgroundColor: '#fff',
 }}>
 
-      <TabItem to="/gymmadang/challenge/challengeHome" label="수련장 홈" />
-      <TabItem to="/gymmadang/challenge/challengeList" label="수련 목록" />
-      <TabItem to="/gymmadang/challenge/challengeMy" label="나의 수련기록" />
+      <TabItem to="/challenge/challengeHome" label="수련장 홈" />
+      <TabItem to="/challenge/challengeList" label="수련 목록" />
+      <TabItem to="/challenge/challengeMy" label="나의 수련기록" />
     </div>
   );
 }

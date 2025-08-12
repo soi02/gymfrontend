@@ -26,7 +26,7 @@ export default function ChallengeStartModal({ onClose, challengeId, challengeTit
             alert("도전을 시작했어요! 이제부터 챌린지 페이지에서 진행 상황을 확인할 수 있습니다.");
             onClose();
             // ★ 수정: 결제 완료 후 나의 수련 기록 목록 페이지로 이동
-            navigate('/gymmadang/challenge/myRecordList'); 
+            navigate('/challenge/myRecordList'); 
         } catch (err) {
             console.error("도전 시작 실패", err);
             if (err.response && err.response.status === 409) {

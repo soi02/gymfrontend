@@ -66,7 +66,7 @@ export default function MyRoutineListPage() {
 
       <div>
         {/* <button>수정하기</button> */}
-        <button className='do-this-routine-btn' onClick={() => navigate(`/gymmadang/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
+        <button className='do-this-routine-btn' onClick={() => navigate(`/routine/startWorkout/${routineId}`)}>이 루틴으로 운동하기</button>
       </div>
     </div>
     </div>
