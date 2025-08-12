@@ -79,6 +79,49 @@ export default function BottomNavigation() {
         }
     };
 
+    // '벗' 탭을 위한 새로운 핸들러 함수
+    const handleBuddyTabClick = async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+  
+      // 로그인 상태 확인
+      if (!userId || !token) {
+          alert("로그인이 필요합니다.");
+          navigate('/gymmadang/login');
+          return;
+      }
+  
+      try {
+          // 백엔드에서 만든 API 엔드포인트 호출
+          const response = await axios.get(`/api/buddy/is-buddy`, {
+              params: { userId: userId },
+              headers: {
+                  'Authorization': `Bearer ${token}`
+              }
+          });
+  
+          // 응답 데이터에서 is_buddy 상태를 추출
+          const isBuddy = response.data.is_buddy;
+          
+          if (isBuddy) {
+              // is_buddy가 true일 경우 BuddyHome 페이지로 이동
+              navigate('/gymmadang/buddy/buddyHome');
+          } else {
+              // is_buddy가 false일 경우 버디 등록 페이지로 이동
+              navigate('/gymmadang/buddy');
+          }
+  
+      } catch (error) {
+          console.error("is_buddy 상태 확인 실패:", error);
+          if (error.response && error.response.status === 401) {
+              alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+              navigate('/gymmadang/login');
+          } else {
+              // 기타 오류 발생 시 기본 페이지로 이동
+              navigate('/gymmadang/buddy');
+          }
+      }
+    };
 
 
   return (
@@ -118,7 +161,7 @@ export default function BottomNavigation() {
         matchPrefix="/gymmadang/buddy"
         iconClass="ri-wechat-fill"
         label="벗"
-        onClick={() => navigate('/gymmadang/buddy')}
+        onClick={handleBuddyTabClick} // 새로 만든 핸들러 함수로 변경
       />
       <BottomNavigationItem
         link="/gymmadang/market"

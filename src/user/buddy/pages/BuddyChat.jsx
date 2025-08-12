@@ -23,7 +23,7 @@ function BuddyChat() {
       return;
     }
 
-    axios.get(`https://172.30.1.74:8443/api/buddy/rooms/${buddyId}`, {
+    axios.get(`http://localhost:8080/api/buddy/rooms/${buddyId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -34,7 +34,7 @@ function BuddyChat() {
 
   const getFullImageUrl = (filename) => {
     return filename
-      ? `https://172.30.1.74:8443/uploadFiles/${filename}`
+      ? `http://localhost:8080/uploadFiles/${filename}`
       : 'https://placehold.co/100x100?text=No+Image'; // 기본 이미지
   };
 

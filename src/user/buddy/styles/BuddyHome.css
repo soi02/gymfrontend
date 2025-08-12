@@ -1,104 +1,119 @@
 .buddy-home-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #f0f2f5;
-  min-height: 100vh; /* 최소 높이를 뷰포트 전체 높이로 설정하여 내용이 적어도 꽉 차게 */
-  /* 스크롤 가능한 컨테이너 */
-  overflow-y: auto; /* 내용이 넘칠 때만 수직 스크롤바 표시 */
-  -webkit-overflow-scrolling: touch; /* iOS Safari에서 부드러운 스크롤 */
-
-  /* 하단 고정 바의 높이만큼 padding-bottom 추가 */
-  /* 예시: 바텀바 높이가 60px이라고 가정합니다. */
-  padding-bottom: 80px; /* 바텀바 높이 + 여유 공간 */
-}
-
-.buddy-home-title {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.buddy-home-description {
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.buddy-card-wrapper {
-  perspective: 1000px;
-  width: 350px;
-  height: 400px;
-  display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px; /* 카드와 다음 요소(또는 하단바) 사이의 간격 */
+  background: linear-gradient(135deg, #f9f9f9, #f0f4ff);
+  min-height: 70vh;
+  padding: 10px;
 }
 
+/* 카드 */
 .buddy-card {
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   position: relative;
-  transition: transform 0.5s ease-in-out;
+  width: 350px;
+  height: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .buddy-card-image {
   width: 100%;
-  height: 70%;
+  height: 100%;
   object-fit: cover;
-  border-bottom: 1px solid #eee;
 }
 
-.buddy-card-info {
-  padding: 15px;
-  text-align: center;
-  flex-grow: 1;
+.buddy-card-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+  height: 100%;
 }
 
-.buddy-card-info h2 {
-  margin: 0 0 5px;
-  color: #333;
-  font-size: 1.5em;
+.buddy-info {
+  color: white;
+  margin-bottom: 20px;
 }
 
-.buddy-card-info p {
+.buddy-info h2 {
   margin: 0;
-  color: #777;
-  font-size: 1em;
+  font-size: 1.5rem;
 }
 
-.buddy-card-actions {
+.buddy-info p {
+  margin-top: 5px;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+/* 액션 버튼 */
+.buddy-actions {
   display: flex;
-  justify-content: space-around;
-  /* padding: 15px; */
-  border-top: 1px solid #eee;
+  justify-content: center;
+  gap: 20px;
 }
 
-.like-button, .dislike-button {
-  background: none;
+.like-btn,
+.dislike-btn {
+  background: white;
   border: none;
-  font-size: 3em;
+  font-size: 1.4rem; /* 아이콘 크기 줄임 */
+  width: 55px;       /* 버튼 너비 줄임 */
+  height: 55px;      /* 버튼 높이 줄임 */
+  border-radius: 50%; /* 완전 원형 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  padding: 0 10px;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.like-button:hover, .dislike-button:hover {
+.like-btn {
+  color: #ff4f81;
+}
+
+.dislike-btn {
+  color: #888;
+}
+
+.like-btn:hover {
+  background: #ff4f81;
+  color: white;
   transform: scale(1.1);
 }
 
-.like-button {
-  color: #e91e63;
+.dislike-btn:hover {
+  background: #888;
+  color: white;
+  transform: scale(1.1);
 }
 
-.dislike-button {
-  color: #9e9e9e;
+/* 토스트 전체 스타일 */
+.Toastify__toast {
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  min-height: unset !important;
+  text-align: center;
+  word-break: keep-all; /* 긴 단어 줄바꿈 */
+  white-space: pre-wrap; /* 줄바꿈 허용 */
+}
+
+/* 진행바 스타일 */
+.Toastify__progress-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: #8ABFB5 !important; /* 연두색 대신 지정한 색 */
+}
+
+/* 중앙 상단 위치 */
+.Toastify__toast-container {
+  top: 15px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto !important;
+  padding: 0 !important;
 }
