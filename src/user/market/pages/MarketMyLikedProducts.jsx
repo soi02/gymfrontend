@@ -577,54 +577,57 @@ export default function MarketMyLikedProductsPage() {
     return(
         <>
         
-            <div className = "row">
-                <div className = "widthDefault">
-                    <div className = "col">
-                        <div className = "row">
-                            <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
-                                        <div className = "row">
-                                            <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh"}}>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "1.875vh"}}>
-                                                        내가 탐낸 물품 개수
+            <div className = "container-fluid">
+        
+                <div className = "row">
+                    <div className = "widthDefault">
+                        <div className = "col">
+                            <div className = "row">
+                                <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                                            <div className = "row">
+                                                <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                                            내가 탐낸 물품 개수
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                                        4 개
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                                            4 개
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className = "row gx-0">
-                                            <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", marginBottom : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                                <div className = "row">
-                                                    <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                                        {
-                                                            constmarketuserLikedProductElementList.length > 0 ? 
-                                                            constmarketuserLikedProductElementList : 
-                                                            <>
-                                                            
-                                                                <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "2vh"}}>
-                                                                        탐낸 물품이 없다오.
+                                            <div className = "row gx-0">
+                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", marginBottom : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                            {
+                                                                constmarketuserLikedProductElementList.length > 0 ? 
+                                                                constmarketuserLikedProductElementList : 
+                                                                <>
+                                                                
+                                                                    <div className = "row">
+                                                                        <div className = "col" style = {{fontSize : "2vh"}}>
+                                                                            탐낸 물품이 없다오.
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                
-                                                            </>
-                                                        }
-                                                        {/*
-                                                            * 해당 const 리스트의 제일 왼쪽에 하트 활성화, 비활성화로 물품의 탐냄 상태를 반영함. (새로고침 시 하트를 비활성화한 물품 상세 글은, 내가 탐낸 물품 목록에서 사라짐)
-                                                        */}
+                                                    
+                                                                </>
+                                                            }
+                                                            {/*
+                                                                * 해당 const 리스트의 제일 왼쪽에 하트 활성화, 비활성화로 물품의 탐냄 상태를 반영함. (새로고침 시 하트를 비활성화한 물품 상세 글은, 내가 탐낸 물품 목록에서 사라짐)
+                                                            */}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className = "row">
-                                            <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있다오.
+                                            <div className = "row">
+                                                <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                    <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있다오.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -633,6 +636,7 @@ export default function MarketMyLikedProductsPage() {
                         </div>
                     </div>
                 </div>
+                
             </div>
 
         </>
