@@ -152,27 +152,30 @@ const getImagePath = (categoryName) => {
 
 const CategoryGrid = ({ categories, onCategoryClick, selectedCategoryId }) => {
   return (
-    <div className="category-grid">
-      {categories.map(cat => (
-        <button
-          key={cat.keywordCategoryId}
-          className={`category-item ${Number(selectedCategoryId) === cat.keywordCategoryId ? 'active' : ''}`}
-          onClick={() => onCategoryClick(cat.keywordCategoryId)}
-          style={{ backgroundColor: categoryColors[cat.keywordCategoryName] || '#f7f7f7' }}
-        >
-          <img
-            src={getImagePath(cat.keywordCategoryName)}
-            alt={cat.keywordCategoryName}
-            className="category-icon"
-          />
-          <div className="category-text-container">
-            <span className="category-name">{cat.keywordCategoryName}</span>
-            {/* 🌟 설명 p 태그를 추가했습니다. */}
-            <p className="category-description">{categoryDescriptions[cat.keywordCategoryName]}</p>
-          </div>
-        </button>
-      ))}
-    </div>
+  <div className="category-grid-wrapper">
+      <div className="category-grid">
+        {categories.map(cat => (
+          <button
+            key={cat.keywordCategoryId}
+            className={`category-item ${Number(selectedCategoryId) === cat.keywordCategoryId ? 'active' : ''}`}
+            onClick={() => onCategoryClick(cat.keywordCategoryId)}
+            style={{ backgroundColor: categoryColors[cat.keywordCategoryName] || '#f7f7f7' }}
+          >
+            <img
+              src={getImagePath(cat.keywordCategoryName)}
+              alt={cat.keywordCategoryName}
+              className="category-icon"
+            />
+            <div className="category-text-container">
+              <span className="category-name">{cat.keywordCategoryName}</span>
+              {/* 🌟 설명 p 태그를 추가했습니다. */}
+              <p className="category-description">{categoryDescriptions[cat.keywordCategoryName]}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+  </div>
   );
 };
 
