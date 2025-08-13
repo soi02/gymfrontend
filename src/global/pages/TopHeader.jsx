@@ -31,7 +31,7 @@ export default function TopHeader() {
         className="d-flex justify-content-between align-items-center"
         style={{
             padding: "15px 18px",
-            height: "40px",
+            height: "28px",
             marginTop: "0.8rem",
             marginBottom: "0.45rem"
             // backgroundColor: 'rgba(245, 245, 245, 0.54)'
