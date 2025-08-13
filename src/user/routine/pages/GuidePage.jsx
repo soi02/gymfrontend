@@ -135,30 +135,7 @@ useEffect(() => {
         {formatSteps(parsed.breathing)}
       </div>
 
-      <h5 style={{ marginTop: "1rem" }}>∙ 운동 영상</h5>
-<div
-  className="youtube-grid"
-  style={{
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gap: '0.6rem',
-  }}
->
-  {videos.map(v => (
-    <div key={v.videoId} className="youtube-item">
-      <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: 12, overflow: 'hidden' }}>
-        <iframe
-          title={v.title}
-          src={`https://www.youtube.com/embed/${v.videoId}`}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
-        />
-      </div>
-      <p style={{ margin: '0.3rem 0 0', fontSize: '0.9rem' }}>{v.title}</p>
-    </div>
-  ))}
-</div>
+
 
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem'}}>
@@ -216,7 +193,30 @@ useEffect(() => {
         )}
       </div>
 
-
+      <h5 style={{ marginTop: "1rem" }}>∙ 운동 영상</h5>
+        <div
+          className="youtube-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '0.6rem',
+          }}
+        >
+          {videos.map(v => (
+            <div key={v.videoId} className="youtube-item">
+              <div style={{ position: 'relative', paddingTop: '56.25%', borderRadius: 12, overflow: 'hidden' }}>
+                <iframe
+                  title={v.title}
+                  src={`https://www.youtube.com/embed/${v.videoId}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
+                />
+              </div>
+              <p style={{ margin: '0.3rem 0 0', fontSize: '0.9rem' }}>{v.title}</p>
+            </div>
+          ))}
+        </div>
 
     </div>
 
