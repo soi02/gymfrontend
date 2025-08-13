@@ -25,6 +25,19 @@ const categoryColors = {
 //   '분위기': '#001439',
 // };
 
+// 🌟 각 카테고리에 대한 설명을 추가했습니다.
+const categoryDescriptions = {
+  '루틴': '규칙적인 생활',
+  '회복': '휴식과 재충전',
+  '소통': '대화와 공감',
+  '정보': '유용한 팁들',
+  '습관': '꾸준한 실천',
+  '동기부여': '열정과 목표',
+  '자기관리': '나를 돌보기',
+  '분위기': '내가 원하는 분위기',
+};
+
+
 const getImagePath = (categoryName) => {
   const nameMapping = {
     '루틴': 'ct_routine',
@@ -64,13 +77,16 @@ const CategoryGrid = ({ categories, onCategoryClick, selectedCategoryId }) => {
           onClick={() => onCategoryClick(cat.keywordCategoryId)}
           style={{ backgroundColor: categoryColors[cat.keywordCategoryName] || '#f7f7f7' }}
         >
-          {/* 아이콘과 이름의 순서를 변경하고, 아이콘은 absolute로 띄우기 위해 CSS 클래스 활용 */}
-          <img
+          <img
             src={getImagePath(cat.keywordCategoryName)}
             alt={cat.keywordCategoryName}
             className="category-icon"
           />
-          <span className="category-name">{cat.keywordCategoryName}</span>
+          <div className="category-text-container">
+            <span className="category-name">{cat.keywordCategoryName}</span>
+            {/* 🌟 설명 p 태그를 추가했습니다. */}
+            <p className="category-description">{categoryDescriptions[cat.keywordCategoryName]}</p>
+          </div>
         </button>
       ))}
     </div>

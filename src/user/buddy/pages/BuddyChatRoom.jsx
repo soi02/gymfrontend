@@ -112,7 +112,8 @@ const BuddyChatRoom = () => {
     }
 
     stompClient.current = new Client({
-      brokerURL: `wss://172.30.1.74:8443/ws/chat`,
+      brokerURL: `ws://localhost:8080/ws/chat`,
+      // brokerURL: `wss://gymmadangapi.null-pointer-exception.com/ws/chat`,
       connectHeaders: {
         Authorization: `Bearer ${token}`
       },

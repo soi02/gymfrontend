@@ -133,6 +133,7 @@ function AppContent() {
   const isMarketSection = location.pathname.startsWith('/market');
 
   const isChallengeIntro = location.pathname === '/challenge/challengeIntro'; // 강제 조건
+  const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건
 
   return (
     <div >
@@ -147,7 +148,8 @@ function AppContent() {
       )}
 
       {/* 버디 탭 메뉴 (상단 카테고리처럼) */}
-      {isBuddySection && !shouldHideTop && (
+  {/* const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건 */}
+      {isBuddySection && !shouldHideTop && !isBuddyIntro && (
         <div style={{ borderBottom: '1px solid #eee' }}>
           <BuddyTopTabs />
         </div>
