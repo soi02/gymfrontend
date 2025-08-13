@@ -9,6 +9,7 @@
   background-color: #fff;
   color: #333;
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
 /* 헤더 부분 스타일 */
