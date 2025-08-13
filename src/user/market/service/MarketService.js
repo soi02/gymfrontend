@@ -80,13 +80,19 @@ export default function useMarketAPI() {
         return response.data;
     }
     
-    const getSelectMarketCommentOnArticle = async(articleId) =>{
+    const getSelectMarketCommentOnArticle = async(articleId) => {
         const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketCommentOnArticle`, {
             params : {articleId}
         });
         return response.data;
     }
-    
+    const getSelectCountMarketCommentOnArticle = async(articleId) => {
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectCountMarketCommentOnArticle`, {
+            params : {articleId}
+        });
+        return response.data;
+    }
+        
     const postUpdateMarketCommentOnArticle = async(payload) => {
         const id = payload.id;
         const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketCommentOnArticle/${id}`,
@@ -147,6 +153,12 @@ export default function useMarketAPI() {
     
     const getSelectMarketProductInterestedLogWhenArticleInfo = async(specificArticleId) =>{
         const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketProductInterestedLogWhenArticleInfo`, {
+            params : {specificArticleId}
+        });
+        return response.data;
+    }
+    const getSelectCountMarketProductInterestedLogWhenArticleInfo = async(specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectCountMarketProductInterestedLogWhenArticleInfo`, {
             params : {specificArticleId}
         });
         return response.data;
@@ -228,11 +240,12 @@ export default function useMarketAPI() {
     }
     
     return {
-        getSelectMarketUserInfo, postInsertMarketArticle, getSelectMarketArticle, getSelectSpecificMarketArticle, getSelectSpecificMarketArticleInfo, postUpdateMarketArticle, postDeleteMarketArticle, 
-        postInsertMarketCommentOnArticle, getSelectMarketCommentOnArticle, postUpdateMarketCommentOnArticle, postDeleteMarketCommentOnArticle, 
+        getSelectMarketUserInfo, postInsertMarketArticle, getSelectMarketArticle, getSelectSpecificMarketArticle, getSelectSpecificMarketArticleInfo, 
+        postUpdateMarketArticle, postDeleteMarketArticle, postInsertMarketCommentOnArticle, 
+        getSelectMarketCommentOnArticle, getSelectCountMarketCommentOnArticle, postUpdateMarketCommentOnArticle, postDeleteMarketCommentOnArticle, 
         postInsertMarketProductInterestedLog, postDeleteMarketProductInterestedLog, 
-        getSelectMarketProductInterestedLogWhenUserInfo, getSelectMarketProductInterestedLogWhenArticleInfo, getSelectMarketProductInterestedLogWhenUserAndArticleInfo,
-        postInsertMarketDealedLog, getSelectMarketDealedLogWhenBuyer, getSelectMarketDealedLogWhenSeller, 
+        getSelectMarketProductInterestedLogWhenUserInfo, getSelectMarketProductInterestedLogWhenArticleInfo, getSelectCountMarketProductInterestedLogWhenArticleInfo,
+        getSelectMarketProductInterestedLogWhenUserAndArticleInfo, postInsertMarketDealedLog, getSelectMarketDealedLogWhenBuyer, getSelectMarketDealedLogWhenSeller, 
         postInsertMarketReviewToUser, getSelectMarketReviewToUser, postUpdateMarketReviewToUser, postDeleteMarketReviewToUser
     };
     

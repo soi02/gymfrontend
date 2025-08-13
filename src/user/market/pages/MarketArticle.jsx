@@ -10,12 +10,13 @@ import useMarketAPI from "../service/MarketService";
 export default function MarketArticlePage() {
     
     const {id : loadedId} = useParams();
-    console.log("First Params");
     console.log(loadedId);
     
     const checkUserStatus = 2;
     const checkArticleId = loadedId;
     const defaultUserStatus = 1004;
+    
+    const [countOfCommentOnArticle, setCountOfCommentOnArticle] = useState(0);
     
     const contentRef = useRef(null);
     
@@ -67,7 +68,7 @@ export default function MarketArticlePage() {
     ])
     
     const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
-        {id : 1, marketUserId : 2, specificArticleId : 1, createdAt : new Date("1970-01-01T00:00:03")}
+        {id : 1, marketUserId : checkUserStatus, specificArticleId : checkArticleId, createdAt : new Date("1970-01-01T00:00:03")}
     )
     
     const constMarketProductInterestedLogElement = marketProductInterestedLogOnArticle
@@ -129,7 +130,7 @@ export default function MarketArticlePage() {
     });
     
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
-        {id : 1, articleId : 1, marketUserId : checkUserStatus, content : "My Dragon 1", 
+        {id : 1, articleId : loadedId, marketUserId : checkUserStatus, content : "My Dragon 1", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
     )
     
@@ -143,11 +144,12 @@ export default function MarketArticlePage() {
                 
                 console.log("Loading Test Start")
                 
-                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
+                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketCommentOnArticle,
                     constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
                     marketAPI.getSelectMarketUserInfo(checkUserStatus),
                     marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
+                    marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                 ]) 
                 
@@ -167,6 +169,7 @@ export default function MarketArticlePage() {
                     userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
                 console.log("CommentTest");
                 console.log(mergeMarketCommentListOnArticle);
                 setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
@@ -219,30 +222,37 @@ export default function MarketArticlePage() {
             
                 try {
                     
-                    console.log("Reloading Test Start")
-                    
-                    const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle,
-                        constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
-                        marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
-                        marketAPI.getSelectMarketUserInfo(checkUserStatus),
-                        marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
-                        marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
-                    ]) 
-                    
-                    console.log("APITest2")
-                    console.log(constGetSelectMarketCommentOnArticle);
-                    console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo);
-                    
-                    setMarketArticle([constGetSelectSpecificMarketArticleInfo]);
-                    setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
-                    const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
-                        comment : APIElem1.marketCommentOnArticleDto,
-                        userInfo : APIElem1.marketUserInfoDto,
-                    }))
-                    setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
-                    console.log("CommentTest");
-                    console.log(mergeMarketCommentListOnArticle);
-                    setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
+                console.log("Reloading Test Start") // Reload 안의 코드는 load 시의 코드와 같음
+                
+                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketCommentOnArticle,
+                    constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
+                    marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
+                    marketAPI.getSelectMarketUserInfo(checkUserStatus),
+                    marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
+                    marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
+                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
+                ]) 
+                
+                console.log("APITest2")
+                console.log(constGetSelectSpecificMarketArticleInfo)
+                console.log(constGetSelectMarketCommentOnArticle)
+                const constGetSelectSpecificMarketArticleInfoAndDistincted = {
+                    article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
+                    userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
+                }
+                // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
+                setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
+                setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
+                setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
+                const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
+                    comment : APIElem1.marketCommentOnArticleDto,
+                    userInfo : APIElem1.marketUserInfoDto
+                }))
+                setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
+                console.log("CommentTest");
+                console.log(mergeMarketCommentListOnArticle);
+                setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
                     
                 } catch (error) {
                     
@@ -387,11 +397,41 @@ export default function MarketArticlePage() {
             
             if (sellEnded == 1) {
                 
-                return "완료";
+                return (
+                    <>
+                        완료
+                    </>
+                );
                 
-            } else if (sellEnded == 0) {
+            } else {
                 
-                return "미완료";
+                return (
+                    <>
+                        미완료
+                    </>
+                );
+                
+            }
+            
+        }
+        
+        function funcFreeShare(productCost) {
+            
+            if (productCost == 0) {
+                
+                return (
+                    <>
+                        나눔 ( ￦ {productCost} ) 
+                    </>
+                );
+                
+            } else {
+                
+                return (
+                    <>
+                        ￦ {productCost}
+                    </>
+                );
                 
             }
             
@@ -423,7 +463,7 @@ export default function MarketArticlePage() {
                                         <div className = "col" style = {{marginBottom : "2vh"}}>
                                             <div className = "row h-100">
                                                 <div className = "col-auto" style = {{fontSize : "2.5vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                    ￦ {article.productCost}
+                                                    {funcFreeShare(article.productCost)}
                                                 </div>
                                                 <div className = "col">
                                                     
@@ -873,7 +913,7 @@ export default function MarketArticlePage() {
                                         <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
                                             <div className = "row">
                                                 <div className = "col" style = {{fontSize : "2.625vh", fontWeight : "bold"}}>
-                                                    댓글 5개
+                                                    댓글 {countOfCommentOnArticle}개
                                                 </div>
                                             </div>
                                             <div className = "row">
