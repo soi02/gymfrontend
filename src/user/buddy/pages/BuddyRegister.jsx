@@ -79,7 +79,7 @@ export default function BuddyRegister() {
             case 1:
                 return (
                     <div className="page page2">
-                        <h2 className="title">선호하는 성별</h2>
+                        <h2 className="title">선호하는 성별은<br />무엇이오?</h2>
                         <div className="gender-options">
                             {['남성', '여성', '성별무관'].map((g) => (
                                 <button
@@ -103,7 +103,7 @@ export default function BuddyRegister() {
             case 2:
                 return (
                     <div className="page page3">
-                        <h2 className="title">선호 연령대</h2>
+                        <h2 className="title">선호하는 연령대는<br />무엇이오?</h2>
                         <div className="age-grid">
                             {ageOptions.map(({ label, id }) => (
                                 <button
@@ -126,7 +126,7 @@ export default function BuddyRegister() {
             case 3:
                 return (
                     <div className="page page4">
-                        <h2 className="title">자기소개 한 줄</h2>
+                        <h2 className="title">자기소개를<br />해보시오!</h2>
                         <textarea
                             className="intro-textarea"
                             placeholder="예: 아침에 함께 뛰실 분 구해요!"
