@@ -1,6 +1,16 @@
-.test{
-  /* 깃허브에 올리는 용도로 그냥 채워둠 */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 전체 화면 높이 */
 }
-/* body {
-  font-family: 'Pretendard', sans-serif;
-} */
+
+.app-content {
+  flex: 1; /* 헤더·푸터 사이 영역을 전부 차지 */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 96px;
+}
+
+/* 임시 디버그 */
+.app-content { outline: 2px solid red; }
+.bottom-nav-debug { outline: 2px dashed green; }

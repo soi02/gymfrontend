@@ -126,12 +126,13 @@ export default function BottomNavigation() {
 
   return (
     <div
-      className="row fixed-bottom py-2 shadow-sm"
+      className="row py-2 shadow-sm bottom-nav-debug"
       style={{
         position: 'fixed',
         bottom: 0,
-        left: '50%',
-        transform: 'translateX(-46.9%)',
+        left: 0,
+        right: 0, // 화면 하단에 고정
+        margin: '0 auto',
         width: '100%',
         maxWidth: '425px',
         borderTopLeftRadius: '1.1rem',

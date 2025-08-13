@@ -139,109 +139,114 @@ function AppContent() {
   const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건
 
   return (
-    <div >
+    <div className='app-shell'>
       {/* 탑헤더 조건 */}
       {!shouldHideTop && <TopHeader />}
 
-      {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}
-      {isChallengeSection && !shouldHideTop && !isChallengeIntro && (
-        <div style={{ borderBottom: '1px solid #eee' }}>
-          <ChallengeTopTabs />
-        </div>
-      )}
-
-      {/* 버디 탭 메뉴 (상단 카테고리처럼) */}
-  {/* const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건 */}
-      {isBuddySection && !shouldHideTop && !isBuddyIntro && (
-        <div style={{ borderBottom: '1px solid #eee' }}>
-          <BuddyTopTabs />
-        </div>
-      )}
-
-      {/* 장터 탭 메뉴 (상단 카테고리처럼) */}
-      {isMarketSection && !shouldHideTop && (
-        <div style={{ borderBottom: '1px solid #eee' }}>
-          <MarketTopTabs />
-        </div>
-      )}
-
-      <Routes>
-        <Route path='/' element={<WelcomePage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path="/notifications" element={<NotificationPage />} />
-        <Route path="/home" element={<MainPage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/routineCalendar" element={<MyPageRoutineCalendar />} />
-
-        {/* 루틴 */}
-        <Route path='/routine' element={<RoutineHomePage />} />
-        <Route path='/routine/free' element={<RoutineFreePage />} />
-        <Route path='/routine/add' element={<RoutineAddPage />} />
-        <Route path='/routine/addDetail' element={<RoutineAddDetailPage />} />
-        {/* <Route path='/routine/myroutine' element={<MyRoutineListPage />} /> */}
-        <Route path='/routine/list/:routineId' element={<MyRoutineListPage />} />
-        <Route path='/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
-        <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
-        <Route path='/routine/workout' element={<WorkoutPage />} />
-        <Route path='/routine/guide/:id' element={<GuidePage />} />
-        <Route path='/routine/summary' element={<SummaryPage />} />
-        <Route path='/routine/diary' element={<DiaryPage />} />
-        <Route path='/routine/result/:workoutId' element={<ResultPage />} />
-
-        {/* 벗 */}
-        <Route path="/buddy" element={<BuddyStart />} />
-        <Route path='/buddy/register' element={<BuddyRegister />} />
-        <Route path='/buddy/buddyHome' element={<BuddyHome />} />
-        <Route path='/buddy/buddyList' element={<BuddyChat />} />
-        {/* <Route path='/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
-        <Route path='/buddy/buddyChat/:matchingId' element={<BuddyChatRoom />} />
-        <Route path="/buddy/videoCall/:roomNumber" element={<AutoJoinRoom />} />
-        <Route path='/buddy/buddyMy' element={<BuddyNotification />} />
-        <Route path='/test' element={<SimpleWebSocketTest />} />
-        {/* <Route path="/webrtc" element={<AutoJoinRoom />} /> */}
-
-        {/* 수련장 */}
-        <Route path="/challenge/challengeIntro" element={<ChallengeIntro />} />
-        <Route path="/challenge/challengeHome" element={<ChallengeHome />} />
-        <Route path="/challenge/challengeList" element={<ChallengeList />} />
-        <Route path="/challenge/challengeCreate" element={<ChallengeCreate />} />
-        <Route path="/challenge/challengeMy" element={<ChallengeMyRecordList />} />
-        <Route path="/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
-        <Route path="/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
-
-        <Route path="/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
-        <Route path="/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
-        <Route path="/challenge/challengeTest/result" element={<ChallengeTestResult />} />
-        <Route path="/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
-        <Route path="/challenge/detail/:challengeId" element={<ChallengeDetail />} />
-        <Route path="/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
-
-        <Route path="/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
+        {/* ✅ 메인 컨텐츠 flex로 확장 */}
+        <main className="app-content">
 
 
+          {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}
+          {isChallengeSection && !shouldHideTop && !isChallengeIntro && (
+            <div style={{ borderBottom: '1px solid #eee' }}>
+              <ChallengeTopTabs />
+            </div>
+          )}
+
+          {/* 버디 탭 메뉴 (상단 카테고리처럼) */}
+          {/* const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건 */}
+          {isBuddySection && !shouldHideTop && !isBuddyIntro && (
+            <div style={{ borderBottom: '1px solid #eee' }}>
+              <BuddyTopTabs />
+            </div>
+          )}
+
+          {/* 장터 탭 메뉴 (상단 카테고리처럼) */}
+          {isMarketSection && !shouldHideTop && (
+            <div style={{ borderBottom: '1px solid #eee' }}>
+              <MarketTopTabs />
+            </div>
+          )}
+
+          <Routes>
+            <Route path='/' element={<WelcomePage />} />
+            <Route path='/register' element={<RegisterPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path="/notifications" element={<NotificationPage />} />
+            <Route path="/home" element={<MainPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/routineCalendar" element={<MyPageRoutineCalendar />} />
+
+            {/* 루틴 */}
+            <Route path='/routine' element={<RoutineHomePage />} />
+            <Route path='/routine/free' element={<RoutineFreePage />} />
+            <Route path='/routine/add' element={<RoutineAddPage />} />
+            <Route path='/routine/addDetail' element={<RoutineAddDetailPage />} />
+            {/* <Route path='/routine/myroutine' element={<MyRoutineListPage />} /> */}
+            <Route path='/routine/list/:routineId' element={<MyRoutineListPage />} />
+            <Route path='/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
+            <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
+            <Route path='/routine/workout' element={<WorkoutPage />} />
+            <Route path='/routine/guide/:id' element={<GuidePage />} />
+            <Route path='/routine/summary' element={<SummaryPage />} />
+            <Route path='/routine/diary' element={<DiaryPage />} />
+            <Route path='/routine/result/:workoutId' element={<ResultPage />} />
+
+            {/* 벗 */}
+            <Route path="/buddy" element={<BuddyStart />} />
+            <Route path='/buddy/register' element={<BuddyRegister />} />
+            <Route path='/buddy/buddyHome' element={<BuddyHome />} />
+            <Route path='/buddy/buddyList' element={<BuddyChat />} />
+            {/* <Route path='/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
+            <Route path='/buddy/buddyChat/:matchingId' element={<BuddyChatRoom />} />
+            <Route path="/buddy/videoCall/:roomNumber" element={<AutoJoinRoom />} />
+            <Route path='/buddy/buddyMy' element={<BuddyNotification />} />
+            <Route path='/test' element={<SimpleWebSocketTest />} />
+            {/* <Route path="/webrtc" element={<AutoJoinRoom />} /> */}
+
+            {/* 수련장 */}
+            <Route path="/challenge/challengeIntro" element={<ChallengeIntro />} />
+            <Route path="/challenge/challengeHome" element={<ChallengeHome />} />
+            <Route path="/challenge/challengeList" element={<ChallengeList />} />
+            <Route path="/challenge/challengeCreate" element={<ChallengeCreate />} />
+            <Route path="/challenge/challengeMy" element={<ChallengeMyRecordList />} />
+            <Route path="/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
+            <Route path="/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
+
+            <Route path="/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
+            <Route path="/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
+            <Route path="/challenge/challengeTest/result" element={<ChallengeTestResult />} />
+            <Route path="/challenge/challengeTest/recommend" element={<ChallengeRecommendation />} />
+            <Route path="/challenge/detail/:challengeId" element={<ChallengeDetail />} />
+            <Route path="/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
+
+            <Route path="/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
 
 
-        {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
-           혹시 필요하다면 다시 추가할 수 있습니다.
-        */}
-        {/*
-        <Route path="/challenge" element={<ChallengeIntro />} />
-        <Route path="/challengeHome" element={<ChallengeHome />} />
-        <Route path="/challengeList" element={<ChallengeList />} />
-        <Route path="/challengeMy" element={<ChallengeMy />} />
-        */}
-        
-        {/* 장터 관련 */}
-        <Route path="/market" element={<MarketBoardPage />} />
-        <Route path="/market/article/:id" element={<MarketArticlePage />} />
-        <Route path="/market/user/:id" element={<MarketUserPage />} />
-        <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
-        <Route path="/market/updateArticle/:id" element={<MarketUpdateArticlePage />} />
-        <Route path="/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
 
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+
+            {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
+              혹시 필요하다면 다시 추가할 수 있습니다.
+            */}
+            {/*
+            <Route path="/challenge" element={<ChallengeIntro />} />
+            <Route path="/challengeHome" element={<ChallengeHome />} />
+            <Route path="/challengeList" element={<ChallengeList />} />
+            <Route path="/challengeMy" element={<ChallengeMy />} />
+            */}
+            
+            {/* 장터 관련 */}
+            <Route path="/market" element={<MarketBoardPage />} />
+            <Route path="/market/article/:id" element={<MarketArticlePage />} />
+            <Route path="/market/user/:id" element={<MarketUserPage />} />
+            <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
+            <Route path="/market/updateArticle/:id" element={<MarketUpdateArticlePage />} />
+            <Route path="/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
+
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </main>
 
       {/* 바텀 네비게이션은 항상 표시 (단, 숨겨야 할 조건 제외) */}
       {/* 이제 BuddyBottomNavigation, ChallengeBottomNavigation 대신 공통 BottomNavigation만 사용합니다. */}
