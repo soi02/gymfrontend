@@ -154,11 +154,11 @@ export default function MarketArticlePage() {
                 console.log("APITest")
                 console.log(constGetSelectSpecificMarketArticleInfo)
                 console.log(constGetSelectMarketCommentOnArticle)
-                
                 const constGetSelectSpecificMarketArticleInfoAndDistincted = {
                     article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
                     userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
                 }
+                // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
                 setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
                 setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
