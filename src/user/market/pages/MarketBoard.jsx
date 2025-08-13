@@ -14,15 +14,45 @@ function MarketArticleElement({marketArticleElem1}) {
         
         if (sellEnded == 1) {
             
-            return "완료";
+            return (
+                <>
+                    완료
+                </>
+            );
             
-        } else if (sellEnded == 0) {
+        } else {
             
-            return "미완료";
+            return (
+                <>
+                    미완료
+                </>
+            );
             
         }
         
     }
+    
+        function funcFreeShare(productCost) {
+            
+            if (productCost == 0) {
+                
+                return (
+                    <>
+                        나눔
+                    </>
+                );
+                
+            } else {
+                
+                return (
+                    <>
+                        ￦ {productCost}
+                    </>
+                );
+                
+            }
+            
+        }
     
     return ( 
         <>
@@ -68,7 +98,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                     </div>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                            ￦ {article.productCost}
+                                                            {funcFreeShare(article.productCost)}
                                                         </div>
                                                     </div>
                                                 </div>
