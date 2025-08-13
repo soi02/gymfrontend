@@ -16,6 +16,7 @@ export default function MarketArticlePage() {
     const checkArticleId = loadedId;
     const defaultUserStatus = 1004;
     
+    const [countOfInterestedLogsOnArticle, setCountOfInterestedLogsOnArticle] = useState(0);
     const [countOfCommentOnArticle, setCountOfCommentOnArticle] = useState(0);
     
     const contentRef = useRef(null);
@@ -57,10 +58,10 @@ export default function MarketArticlePage() {
     const constMarketArticleElement = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
     
-    const constMarketArticleUpdateOrDeleteDivisionPageLayout = mergedListOnArticle.map(mergedElement => (
+    const constMarketArticleUpdateOrDeleteDivisionPageLayout = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleUpdateOrDeleteDivisionPageLayout key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
     
-    const constMarketArticleLikeButtonPageLayout = mergedListOnArticle.map(mergedElement => (
+    const constMarketArticleLikeButtonPageLayout = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleLikeButtonPageLayout key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
     
     const [marketProductInterestedLogOnArticle, setMarketProductInterestedLogOnArticle] = useState([
@@ -130,7 +131,7 @@ export default function MarketArticlePage() {
     });
     
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
-        {id : 1, articleId : loadedId, marketUserId : checkUserStatus, content : "My Dragon 1", 
+        {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "My Dragon 1", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
     )
     
@@ -144,11 +145,12 @@ export default function MarketArticlePage() {
                 
                 console.log("Loading Test Start")
                 
-                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketCommentOnArticle,
-                    constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
+                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
+                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
                     marketAPI.getSelectMarketUserInfo(checkUserStatus),
                     marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
+                    marketAPI.getSelectCountMarketProductInterestedLogWhenArticleInfo(checkArticleId),
                     marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                 ]) 
@@ -169,6 +171,7 @@ export default function MarketArticlePage() {
                     userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                setCountOfInterestedLogsOnArticle(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                 setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
                 console.log("CommentTest");
                 console.log(mergeMarketCommentListOnArticle);
@@ -224,16 +227,17 @@ export default function MarketArticlePage() {
                     
                 console.log("Reloading Test Start") // Reload 안의 코드는 load 시의 코드와 같음
                 
-                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketCommentOnArticle,
-                    constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
+                const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
+                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
                     marketAPI.getSelectMarketUserInfo(checkUserStatus),
                     marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
+                    marketAPI.getSelectCountMarketProductInterestedLogWhenArticleInfo(checkArticleId),
                     marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                 ]) 
                 
-                console.log("APITest2")
+                console.log("APITest")
                 console.log(constGetSelectSpecificMarketArticleInfo)
                 console.log(constGetSelectMarketCommentOnArticle)
                 const constGetSelectSpecificMarketArticleInfoAndDistincted = {
@@ -249,6 +253,7 @@ export default function MarketArticlePage() {
                     userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                setCountOfInterestedLogsOnArticle(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                 setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
                 console.log("CommentTest");
                 console.log(mergeMarketCommentListOnArticle);
@@ -392,6 +397,10 @@ export default function MarketArticlePage() {
     function MarketArticleElement({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
+            
+        console.log("ArticleElementTest")
+        console.log(checkUserStatus);
+        console.log(article.marketUserId);
         
         function funcSellEnded(sellEnded) {
             
@@ -738,6 +747,10 @@ export default function MarketArticlePage() {
     function MarketArticleUpdateOrDeleteDivisionPageLayout({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
+            
+        console.log("UpdateDeleteDivisionTest")
+        console.log(checkUserStatus);
+        console.log(article.marketUserId);
         
         if (checkUserStatus == article.marketUserId) {
             
@@ -790,9 +803,13 @@ export default function MarketArticlePage() {
     function MarketArticleLikeButtonPageLayout({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
+        
+        console.log("LikeButtonTest")
+        console.log(checkUserStatus);
+        console.log(article.marketUserId);
                                 
-            if (constMarketProductInterestedLogElement.length > 0) {} else {}
-            <></>
+        if (constMarketProductInterestedLogElement.length > 0) {} else {}
+        <></>
         
         if (checkUserStatus == article.marketUserId) {
             
@@ -885,7 +902,7 @@ export default function MarketArticlePage() {
                                         <div className = "col" style = {{marginBottom : "1.75vh", paddingLeft : "3vh", paddingRight : "3vh"}}>
                                             <div className = "row">
                                                 <div className = "col" style = {{fontSize : "2.625vh", fontWeight : "bold", marginBottom : "1vh"}}>
-                                                    탐냄 1개
+                                                    탐냄 {countOfInterestedLogsOnArticle}개
                                                 </div>
                                             </div>
                                             
