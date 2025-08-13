@@ -1,121 +1,137 @@
-:root{
-  --card-width: 248px;
+/* ChallengeCard.css */
 
-  /* 토스톤(라이트) */
-  --cc-bg: #fff;
-  --cc-surface: #fff;
-  --cc-text: #111827;
-  --cc-sub: #6b7280;
-  --cc-line: #e5e7eb;
-
-  --cc-open: #16a34a;     /* 사용 안하지만 유지 */
-  --cc-upcoming: #2563eb;
-  --cc-closed: #ef4444;
-
-  --cc-radius: 16px;
-  --cc-shadow: 0 4px 16px rgba(17,24,39,0.06);
-
-  /* 고정 섹션 높이 */
-  --title-lines: 2;
-  --title-line-height: 1.25;
-  --date-height: 18px;
-  --tags-rows: 2;
-  --tag-row-height: 10px;
-  --tag-row-gap: 6px;
-}
-
-/* 카드 */
-.challenge-card.redesigned.clean{
-  background: var(--cc-bg);
-  border: 1px solid var(--cc-line);
-  border-radius: var(--cc-radius);
-  color: var(--cc-text);
-  width: var(--card-width);
-  box-shadow: var(--cc-shadow);
-  transition: transform .15s ease, box-shadow .15s ease;
+.challenge-card.list-style {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
   cursor: pointer;
-
-  flex: 0 0 var(--card-width);
-  scroll-snap-align: start;
+  padding: 0.5rem;
+  gap: 0.5rem; /* gap을 0.5rem으로 늘려 여백 확보 */
+  width: 100%;
+  box-sizing: border-box;
 }
-.challenge-card.redesigned.clean:hover{
+
+.challenge-card.list-style:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(17,24,39,0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
-/* 썸네일 */
-.cc-thumb{ position: relative; width:100%; aspect-ratio:16/9; background:#f3f4f6; overflow:hidden; }
-.cc-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-
-/* 배지들 */
-.cc-badge{
-  position:absolute; left:10px; top:10px;
-  font-weight:700; font-size:12px;
-  padding:6px 10px; border-radius:999px;
-  background:#111827; color:#fff; border:1px solid rgba(0,0,0,0.05);
-}
-.badge-upcoming{ background:#e0ecff; color:#1e40af; border-color:#bfdbfe; }
-.badge-closed{ background:#fee2e2; color:#991b1b; border-color:#fecaca; }
-/* D-Day 전용 */
-.badge-dday{ background:#ecfdf5; color:#065f46; border-color:#bbf7d0; }
-
-/* 우상단 진행기간 칩 */
-.cc-pill{
-  position:absolute; right:10px; top:10px;
-  font-size:11px; padding:6px 10px; border-radius:999px;
-  background:#ffffffcc; color:#111827; border:1px solid var(--cc-line);
-  backdrop-filter:saturate(130%) blur(4px);
+/* 이미지 래퍼 */
+.card-image-wrapper {
+  position: relative;
+  flex-shrink: 0;
 }
 
-/* 본문 */
-.cc-body{ padding:12px 14px 14px; background:var(--cc-surface); }
-
-/* 제목: 더 큼, 굵게(토스 느낌) */
-.cc-title{
-  font-size: 18px;             /* ↑ 키움 */
-  line-height: var(--title-line-height);
-  font-weight: 800;
-  margin: 2px 0 6px 0;
-  letter-spacing: -0.2px;
-
-  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:var(--title-lines);
-  overflow:hidden;
-  min-height: calc(var(--title-lines) * var(--title-line-height) * 1em);
-  max-height: calc(var(--title-lines) * var(--title-line-height) * 1em);
+/* 썸네일 이미지 */
+.card-thumbnail {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
 }
 
-/* 날짜(한 줄 고정) */
-.cc-dates{
-  display:flex; align-items:center; gap:6px;
-  min-height:var(--date-height); max-height:var(--date-height);
-  margin-bottom:8px;
+/* 상태 배지 */
+.status-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #ffffff;
+  z-index: 10;
 }
-.cc-date{ font-size:12px; color:var(--cc-sub); }
 
-/* 키워드(2줄 고정) */
-.cc-tags{
-  display:flex; flex-wrap:wrap; gap:var(--tag-row-gap);
-  overflow:hidden;
-  height: calc(var(--tags-rows) * var(--tag-row-height) + (var(--tags-rows) - 1) * var(--tag-row-gap));
-  margin-bottom: 12px;
+.status-badge.in-progress {
+  background-color: #4CAF50;
 }
-.cc-tag{
-  display:inline-flex; align-items:center;
-  font-size:12px; line-height:1.1; white-space:nowrap;
-  padding: 2px 8px; border-radius:999px;
-  color:#374151; background:#f3f4f6; border:1px solid #e5e7eb;
-}
-.cc-tag.more{ color:#6b7280; background:#f9fafb; }
 
-/* 하단 메타 */
-.cc-meta{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; }
-.cc-progress{
-  width:100%; height:8px; border-radius:999px; overflow:hidden;
-  background:#f3f4f6; border:1px solid #e5e7eb;
+.status-badge.upcoming {
+  background-color: #FF9800;
 }
-.cc-progress-bar{
-  height:100%; width:0%; border-radius:999px;
-  background:#111827;            /* 단색(토스톤) */
-  transition: width .35s ease;
+
+.status-badge.closed {
+  background-color: #9E9E9E;
 }
-.cc-count{ font-size:12px; color:var(--cc-sub); white-space:nowrap; }
+
+/* 카드 정보 섹션 */
+.card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 카드 컨텐츠가 부모를 넘치지 않도록 너비 제한 */
+  min-width: 0;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* 버튼과 제목이 한 줄에 있지 않을 경우를 대비 */
+  margin-bottom: 8px;
+  flex-wrap: wrap; /* 내용이 길면 줄바꿈 허용 */
+}
+
+.card-title.long-title-fix {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.4;
+  white-space: normal;
+  word-break: break-word; /* 긴 단어의 줄바꿈을 허용 */
+  flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+  margin-right: 8px; /* 버튼과의 간격 확보 */
+}
+
+/* book-now-button 스타일 수정 */
+.book-now-button {
+  background-color: #7c1d0d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.book-now-button:hover {
+  filter: brightness(1.1);
+}
+
+/* 메타 정보 */
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #666;
+}
+
+.meta-label {
+  font-weight: bold;
+  color: #999;
+  margin-right: 8px;
+  /* min-width 속성을 삭제하여 내용에 맞게 너비가 조절되도록 함 */
+}
+
+.meta-value {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}

@@ -15,20 +15,7 @@
   box-sizing: border-box;
 }
 
-/* --- 페이지 헤더 및 제목 --- */
-.filter-header-section h2 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-left: 0.5rem;
-}
 
-.filter-header-section p {
-  color: #555;
-  font-size: 0.8rem;
-  margin-bottom: 12px;
-  margin-left: 0.5rem;
-}
 
 /* --- 카테고리 그리드 (CategoryGrid.jsx) 스타일 --- */
 .category-grid {
@@ -47,7 +34,8 @@
   align-items: flex-start;
   padding: 0.7rem;
   border-radius: 10px;
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
+  border: none;
   cursor: pointer;
   transition: all 0.3s ease;
   min-height: 90px;
@@ -87,13 +75,13 @@
 .category-name {
   font-size: 0.9rem;
   font-weight: bold;
-  color: rgb(97, 97, 97);
+  color: #333;
   margin: 0;
 }
 
 .category-description {
   font-size: 0.8rem;
-  color: rgb(175, 175, 175);
+  color: #333;
   margin-top: 0.15rem;
   /* margin-left: 0.1rem; */
   margin-bottom: 0;
@@ -131,11 +119,26 @@
   display:flex; flex-direction:column; height:100vh; background:#fff;
 }
 
-/* 헤더 */
-.page-header{ position:sticky; top:0; z-index:5; background:#fff; padding:16px 16px 8px; border-bottom:1px solid #f3f4f6; }
-.page-title{
-  font-size:22px; font-weight:900; letter-spacing:-0.3px; color:#111827; margin:0;
+/* --- 페이지 헤더 및 제목 --- */
+.filter-header-section {
+  padding: 0.4rem;
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 0;
 }
+
+.filter-header-section h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.filter-header-section p {
+  color: #555;
+  font-size: 0.8rem;
+  margin-bottom: 0;
+}
+
 
 /* 키워드 칩 바 */
 .keyword-chips{
@@ -168,19 +171,15 @@
 }
 
 /* 카드 리스트 컨테이너 */
-.cards-rail {
+.card-list-container {
   display: flex;
-  gap: 14px;
-  overflow-x: auto;
+  flex-direction: column;
+  gap: 16px; /* 카드 사이 간격 */
+  padding: 0 16px 80px; /* 좌우 패딩 및 하단 여백 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
   -webkit-overflow-scrolling: touch;
-  padding: 14px 16px 90px;
+}
 
-  scroll-snap-type: x mandatory; /* ← 스냅 활성화 */
-  scroll-padding: 0 50%; /* 중앙 기준 스냅을 위해 좌우 여백 */
-}
-.cards-rail::-webkit-scrollbar {
-  display: none;
-}
 
 .empty-text{ color:#6b7280; padding:16px; }
 

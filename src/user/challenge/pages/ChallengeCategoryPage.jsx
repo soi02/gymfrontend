@@ -1,3 +1,4 @@
+// ChallengeCategoryPage.js 파일
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../../../global/api/apiClient';
@@ -58,9 +59,13 @@ export default function ChallengeCategoryPage() {
 
   return (
     <div className="challenge-list-wrapper clean">
-      <header className="page-header">
-        <h1 className="page-title">{categoryName}</h1>
-        {/* 고정 위치 키워드 필터(토스 톤: 플랫 칩) */}
+      {/* 🌟 여기에 challenge-list-container 추가 🌟 */}
+      <div className="challenge-list-container">
+        <div className="filter-header-section">
+          <h2>{categoryName}</h2>
+          <p>선택한 카테고리의 챌린지를 확인해보세요</p>
+        </div>
+
         {selectedCategory && (
           <div className="keyword-chips">
             {(selectedCategory?.keywords || []).map(kw => (
@@ -74,22 +79,22 @@ export default function ChallengeCategoryPage() {
             ))}
           </div>
         )}
-      </header>
 
-      {/* 가로 스크롤 카드 리스트 */}
-      <section className="cards-rail">
-        {challengesAfterKeywordFilter.length > 0 ? (
-          challengesAfterKeywordFilter.map((challenge) => (
-            <ChallengeCard
-              key={challenge.challengeId}
-              challenge={challenge}
-              onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
-            />
-          ))
-        ) : (
-          <p className="empty-text">등록된 챌린지가 없습니다.</p>
-        )}
-      </section>
+        {/* 세로 스크롤 카드 리스트 컨테이너로 변경 */}
+        <section className="card-list-container">
+          {challengesAfterKeywordFilter.length > 0 ? (
+            challengesAfterKeywordFilter.map((challenge) => (
+              <ChallengeCard
+                key={challenge.challengeId}
+                challenge={challenge}
+                onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
+              />
+            ))
+          ) : (
+            <p className="empty-text">등록된 챌린지가 없습니다.</p>
+          )}
+        </section>
+      </div>
 
       <button
         className="fab"
