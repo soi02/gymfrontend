@@ -11,6 +11,3 @@
   padding-bottom: 96px;
 }
 
-/* 임시 디버그 */
-.app-content { outline: 2px solid red; }
-.bottom-nav-debug { outline: 2px dashed green; }
