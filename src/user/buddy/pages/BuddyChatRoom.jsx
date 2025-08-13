@@ -134,34 +134,32 @@ const BuddyChatRoom = () => {
       subscriptionRef.current = stompClient.current.subscribe(`/topic/${matchingId}`, (message) => {
         const receivedChat = JSON.parse(message.body);
 
-        if (receivedChat.sendBuddyId === loggedInUserId) {
+        // 메시지를 받는 시점에 `setChats`를 호출하여 상태를 업데이트합니다.
+        // 내가 보낸 메시지(옵티미스틱 업데이트)와 상대방이 보낸 메시지를 모두 처리합니다.
+        setChats(prevChats => {
+          // 서버에서 받은 메시지가 이미 임시 메시지로 목록에 있는지 확인
+          const isOptimisticUpdate = prevChats.some(
+            (chat) =>
+              chat.isOptimistic &&
+              chat.message === receivedChat.message &&
+              chat.sendBuddyId === receivedChat.sendBuddyId
+          );
 
-          setChats(prevChats => {
-
-            const updatedChats = prevChats.map(chat => {
-
-              if (chat.isOptimistic && chat.message === receivedChat.message) {
-
-                return { ...receivedChat, isOptimistic: false };
-
-              }
-
-              return chat;
-
-            });
-
-            return updatedChats.some(chat => chat.id === receivedChat.id) ? updatedChats : [...updatedChats, receivedChat];
-
-          });
-
-        } else {
-
-          setChats(prevChats => [...prevChats, receivedChat]);
-
-        }
+          if (isOptimisticUpdate) {
+            // 내가 보낸 메시지일 경우, 임시 메시지를 실제 메시지로 교체
+            // (서버에서 받은 메시지에 id, read 상태 등이 포함되어 있음)
+            return prevChats.map(chat =>
+              (chat.isOptimistic && chat.message === receivedChat.message)
+                ? { ...receivedChat, isOptimistic: false }
+                : chat
+            );
+          } else {
+            // 상대방이 보낸 새로운 메시지일 경우, 배열에 추가
+            return [...prevChats, receivedChat];
+          }
+        });
 
       });
-
     };
 
 
