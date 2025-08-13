@@ -1,11 +1,17 @@
 .buddy-home-container {
-  display: grid;
-  justify-content: center;
+  display: flex;
+  /* Flexbox 사용 */
+  flex-direction: column;
+  /* 세로 방향으로 정렬 */
+  justify-content: flex-start;
+  /* 맨 위로 정렬 */
   align-items: center;
-  place-items: center; 
-  background: linear-gradient(135deg, #f9f9f9, #f0f4ff);
+  /* 가로 중앙 정렬 */
   min-height: 100vh;
   padding: 10px;
+  box-sizing: border-box;
+  /* 스크롤 방지를 위해 추가 */
+  background: linear-gradient(135deg, #f9f9f9, #f0f4ff);
 }
 
 /* 카드 */
@@ -63,10 +69,14 @@
 .dislike-btn {
   background: white;
   border: none;
-  font-size: 1.4rem; /* 아이콘 크기 줄임 */
-  width: 55px;       /* 버튼 너비 줄임 */
-  height: 55px;      /* 버튼 높이 줄임 */
-  border-radius: 50%; /* 완전 원형 */
+  font-size: 1.4rem;
+  /* 아이콘 크기 줄임 */
+  width: 55px;
+  /* 버튼 너비 줄임 */
+  height: 55px;
+  /* 버튼 높이 줄임 */
+  border-radius: 50%;
+  /* 완전 원형 */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
@@ -99,15 +109,18 @@
   border-radius: 20px;
   min-height: unset !important;
   text-align: center;
-  word-break: keep-all; /* 긴 단어 줄바꿈 */
-  white-space: pre-wrap; /* 줄바꿈 허용 */
+  word-break: keep-all;
+  /* 긴 단어 줄바꿈 */
+  white-space: pre-wrap;
+  /* 줄바꿈 허용 */
 }
 
 /* 진행바 스타일 */
 .Toastify__progress-bar {
   height: 4px;
   border-radius: 2px;
-  background: #8ABFB5 !important; /* 연두색 대신 지정한 색 */
+  background: #8ABFB5 !important;
+  /* 연두색 대신 지정한 색 */
 }
 
 /* 중앙 상단 위치 */
