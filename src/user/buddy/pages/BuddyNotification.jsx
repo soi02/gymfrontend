@@ -43,8 +43,8 @@ export default function BuddyNotification() {
                     receiverBuddyId: item.receiver_buddy_id,
                 };
             });
-            // console.log("처리된 알림 리스트:", processed);  // 여기에 로그 추가
-            // processed.forEach(noti => console.log("알림 id:", noti.id, "status:", noti.status, "type:", noti.type));
+            console.log("처리된 알림 리스트:", processed);  // 여기에 로그 추가
+            processed.forEach(noti => console.log("알림 id:", noti.id, "status:", noti.status, "type:", noti.type));
             const filteredNotifications = processed.filter(noti => noti.status !== '취소');
             setNotifications(filteredNotifications);
 
