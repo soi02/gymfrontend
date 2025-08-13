@@ -40,20 +40,62 @@ const categoryColors = {
 //   '회복': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Top Games
 //   '소통': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Social Networking
 //   '정보': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Photo & Video
-//   '습관': 'linear-gradient(135deg, #B4C4D9, #9ba7be)', // Productivity
-//   '동기부여': 'linear-gradient(135deg, #7f9600, #637700)', // Action Games
-//   '자기관리': 'linear-gradient(135deg, #FFB300, #e6a200)', // Role Playing Games
-//   '분위기': 'linear-gradient(135deg, #001439, #000c25)', // Lifestyle
+//   '습관': 'linear-gradient(135deg,  #7C1D0D, #62170a)', // Productivity
+//   '동기부여': 'linear-gradient(135deg,  #7C1D0D, #62170a)', // Action Games
+//   '자기관리': 'linear-gradient(135deg,  #7C1D0D, #62170a)', // Role Playing Games
+//   '분위기': 'linear-gradient(135deg,  #7C1D0D, #62170a)', // Lifestyle
 // };
 // const categoryGradients = {
-//   '루틴': 'linear-gradient(135deg, #5d69e4, #7983ee)', // Top Apps
-//   '회복': 'linear-gradient(135deg, #f4817a, #f3928e)', // Top Games
-//   '소통': 'linear-gradient(135deg, #9079f4, #c0a6f8)', // Social Networking
+//   '루틴': 'linear-gradient(135deg, #87cffcff, #bbe5ffff)', // Top Apps
+//   '회복': 'linear-gradient(135deg, #a0d880ff, rgba(205, 221, 196, 1))', // Top Games
+//   '소통': 'linear-gradient(135deg, #cac0f5ff, #baaaffff)', // Social Networking
 //   '정보': 'linear-gradient(135deg, #f9c268, #f8de95)', // Photo & Video
-//   '습관': 'linear-gradient(135deg, #60c4ff, #92d6ff)', // Productivity
+//   '습관': 'linear-gradient(135deg, #ffc5caff, #fd8690ff)', // Productivity
 //   '동기부여': 'linear-gradient(135deg, #fd8b45, #fdc074)', // Action Games
-//   '자기관리': 'linear-gradient(135deg, #a3a3a3, #c8c8c8)', // Role Playing Games
+//   '자기관리': 'linear-gradient(135deg, #c8c8c8, #dbdbdbff)', // Role Playing Games
+//   '분위기': 'linear-gradient(135deg, #7e7e7eff, rgba(202, 202, 202, 1))', // Lifestyle
+// };
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #34b1ffff, #aedffdff)', // Top Apps
+//   '회복': 'linear-gradient(135deg, #ff5b53ff, #f3928e)', // Top Games
+//   '소통': 'linear-gradient(135deg, #8970faff, #baaaffff)', // Social Networking
+//   '정보': 'linear-gradient(135deg, #f9c268, #f8de95)', // Photo & Video
+//   '습관': 'linear-gradient(135deg, #ffc5caff, #fd8690ff)', // Productivity
+//   '동기부여': 'linear-gradient(135deg, #fd8b45, #fdc074)', // Action Games
+//   '자기관리': 'linear-gradient(135deg, #c8c8c8, #dbdbdbff)', // Role Playing Games
 //   '분위기': 'linear-gradient(135deg, #f0646c, #f19a9e)', // Lifestyle
+// };
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #FFC0CB, #FFB6C1)', // 벚꽃 핑크
+//   '회복': 'linear-gradient(135deg, #FFDAB9, #FFCDBA)', // 밝은 피치
+//   '소통': 'linear-gradient(135deg, #B0E0E6, #A2D0D6)', // 청량한 파우더 블루
+//   '정보': 'linear-gradient(135deg, #ADD8E6, #9BB6C6)', // 하늘색
+//   '습관': 'linear-gradient(135deg, #98FB98, #8DE28D)', // 연한 민트 그린
+//   '동기부여': 'linear-gradient(135deg, #FFDEAD, #FFC89C)', // 밝은 오렌지
+//   '자기관리': 'linear-gradient(135deg, #E6E6FA, #D8D8E6)', // 연한 라벤더
+//   '분위기': 'linear-gradient(135deg, #F08080, #E47474)', // 밝은 코랄 레드
+// };
+
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #A8C0FF, #91A8E0)', // 부드러운 파란색
+//   '회복': 'linear-gradient(135deg, #B5B9D0, #A1A5BF)', // 차분한 회색
+//   '소통': 'linear-gradient(135deg, #A1B9CC, #90A3BF)', // 청회색
+//   '정보': 'linear-gradient(135deg, #D4B9D2, #C2A3C0)', // 은은한 보라색
+//   '습관': 'linear-gradient(135deg, #B6D1E7, #A0C0D7)', // 하늘색
+//   '동기부여': 'linear-gradient(135deg, #C2C8D6, #B1B8C9)', // 연한 잿빛
+//   '자기관리': 'linear-gradient(135deg, #B2A4C2, #A093B3)', // 라벤더 그레이
+//   '분위기': 'linear-gradient(135deg, #A2BFCF, #90A9BE)', // 짙은 하늘색
+// };
+
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #FFD460, #FFC045)', // 밝은 노랑
+//   '회복': 'linear-gradient(135deg, #FAD689, #E6B54E)', // 톤다운된 노랑
+//   '소통': 'linear-gradient(135deg, #90A06D, #7E8C5E)', // 차분한 녹색
+//   '정보': 'linear-gradient(135deg, #CC8874, #B87664)', // 부드러운 살구색
+//   '습관': 'linear-gradient(135deg, #E6B351, #D9A03A)', // 머스타드
+//   '동기부여': 'linear-gradient(135deg, #BF8B5C, #AD7A53)', // 따뜻한 브라운
+//   '자기관리': 'linear-gradient(135deg, #C2A570, #B19364)', // 베이지 
+//   '분위기': 'linear-gradient(135deg, #E0A77D, #CD976F)', // 코랄
 // };
 
 // const categoryGradients = {

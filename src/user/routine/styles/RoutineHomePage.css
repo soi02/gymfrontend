@@ -2,10 +2,10 @@
 .routine-homepage-body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100dvh;   /* 모바일 주소창 이슈까지 커버하려면 100vh 대신 100dvh */
+  height: auto;
   overflow: hidden;
   background-color: #ffffff;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -14,15 +14,22 @@
 
 .routine-homepage-container {
   width: 100%;
-  height: 100vh;  
+  height: auto;
   padding: 10px;
   padding-top: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  padding-bottom: 120px; /* 버튼 고정 영역 고려해서 공간 확보 */
+  overflow-y: visible;
+  /* padding-bottom: 120px; 버튼 고정 영역 고려해서 공간 확보 */
 }
+
+/* 이 페이지 범위 한정으로 .row 마진 0 처리 */
+.routine-homepage-container .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 
 .routine-homepage-content {
   width: 100%;
@@ -30,6 +37,8 @@
   /* margin-top: 0; */
   /* padding-top: 14px; */
   box-sizing: border-box;
+    padding-bottom: 110px; /* 버튼 높이보다 조금 더 */
+
 }
 
 .divider-line {

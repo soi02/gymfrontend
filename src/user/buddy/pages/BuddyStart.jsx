@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import buddyImage from "../../../assets/img/buddy/buddy3.png";
-import '../styles/BuddyRegister.css';
+import '../styles/BuddyStart.css';
 
 export default function BuddyStart() {
     const navigate = useNavigate();
