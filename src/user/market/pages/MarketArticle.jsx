@@ -575,21 +575,70 @@ export default function MarketArticlePage() {
         
         const { comment, userInfo } = marketCommentElem1;
         
+        const [ commentEditModeChecked, setCommentEditModeChecked ] = useState(false);
+        
         function MarketCommentUpdateOrDeleteDivisionOnArticlePageLayout() {
+            
+            function FuncCommentEditModeChecked({commentEditModeCheckedInFunc1}) {
+                
+                if (commentEditModeCheckedInFunc1) {
+                    
+                    return (
+                        <>
+                        
+                            <div className = "col-auto" onClick = {() => clickPossibleWhenCommentEditModeChecked({commentEditModeCheckedInFunc1 : commentEditModeCheckedInFunc1})} style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                취소
+                            </div>
+                            
+                        </>
+                    )
+                    
+                } else {
+                    
+                    return (
+                        <>
+                        
+                            <div className = "col-auto" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                수정
+                            </div>
+                            
+                        </>
+                    )
+                    
+                }
+                
+            }
+            
+            function clickPossibleWhenCommentEditModeChecked() {
+                
+                console.log("bool Test1");
+                setCommentEditModeChecked(false);
+                
+            }
+            
+            function clickPossibleWhenCommentEditModeUnchecked() {
+                
+                console.log("bool Test2");
+                setCommentEditModeChecked(true);
+                
+            }
             
             if (checkUserStatus == comment.marketUserId) {
                 
                 if (checkUserStatus == checkArticleWriteUser) {
+                        
+                    {console.log("Main Bool Test");
+                    console.log(commentEditModeChecked);}
                 
                     return(
                         <>
-                        
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.75vh"}}>
                                     <div className = "row">
-                                        <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
-                                            수정
-                                        </div>
+                                        {console.log("Code Progress test")}
+                                        {console.log(commentEditModeChecked)}
+                                        <FuncCommentEditModeChecked commentEditModeCheckedInFunc1 = {commentEditModeChecked}/>
+                                        {console.log("Code After Function test")}
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
@@ -606,15 +655,19 @@ export default function MarketArticlePage() {
                     
                 } else {
                     
+                    {console.log("Main Bool Test");
+                    console.log(commentEditModeChecked);}
+                    
                     return(
                         <>
                         
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.75vh"}}>
                                     <div className = "row">
-                                        <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
-                                            수정
-                                        </div>
+                                        {console.log("Code Progress test")}
+                                        {console.log(commentEditModeChecked)}
+                                        <FuncCommentEditModeChecked commentEditModeCheckedInFunc1 = {commentEditModeChecked}/>
+                                        {console.log("Code After Function test")}
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
