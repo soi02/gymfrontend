@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
 import errorImg from "../../assets/img/error_img.png";
+import { height } from "@fortawesome/free-solid-svg-icons/fa0";
 
 export default function ErrorPage() {
+
+
+
   return (
     <div
       style={{
-        textAlign: "center",
-        padding: "60px 20px",
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center", // 세로 중앙
+        alignItems: "center",     // 가로 중앙
+        padding: "20px",
         maxWidth: "375px",
         margin: "0 auto",
+        textAlign: "center"
       }}
     >
       <img
@@ -17,17 +26,17 @@ export default function ErrorPage() {
         style={{ width: "60%", marginBottom: "24px" }}
       />
 
-      <div style={{ fontWeight: "bold", fontSize: "17px", marginBottom: "8px" }}>
+      <div style={{ fontWeight: "bold", fontSize: "17px", marginBottom: "8px", placeItems: "center" }}>
         불편을 드려 송구하옵니다
       </div>
 
-      <div style={{ fontSize: "13px", color: "#666", marginBottom: "32px" }}>
+      <div style={{ fontSize: "13px", color: "#666", marginBottom: "32px",textAlign: "center" }}>
         예기치 못한 오류가 발생하였으나<br />
         속히 해결해 드리겠나이다
       </div>
 
       <Link
-        to="/mainpage"
+        to="/home"
         style={{
           display: "inline-block",
           padding: "10px 24px",

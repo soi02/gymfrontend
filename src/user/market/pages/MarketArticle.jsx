@@ -4,20 +4,23 @@ import MarketTopFixed from "../commons/test/example/MarketTopFixed";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductImageOnArticle from "../components/test/example/MarketProductImageOnArticle";
 import '../styles/MarketCommonStyles.css';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 export default function MarketArticlePage() {
     
     const {id : loadedId} = useParams();
+    console.log("loadedId");
     console.log(loadedId);
     
     const checkUserStatus = 2;
     const checkArticleId = loadedId;
     const defaultUserStatus = 1004;
     
-    const [countOfInterestedLogsOnArticle, setCountOfInterestedLogsOnArticle] = useState(0);
-    const [countOfCommentOnArticle, setCountOfCommentOnArticle] = useState(0);
+    const [countOfInterestedLogsOnArticle, setCountOfInterestedLogsOnArticle] = useState(-1);
+    const [countOfCommentOnArticle, setCountOfCommentOnArticle] = useState(-1);
+    
+    const navigate = useNavigate();
     
     const contentRef = useRef(null);
     
@@ -131,7 +134,7 @@ export default function MarketArticlePage() {
     });
     
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
-        {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "My Dragon 1", 
+        {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
     )
     
@@ -343,11 +346,11 @@ export default function MarketArticlePage() {
         
     }
     
-    const constDivisionToDeleteMarketArticle = async () => {
+    const constDivisionToDeleteMarketArticle = async ({articleId}) => {
         
         try {
-            const constPostDeleteMarketArticle = await marketAPI.postDeleteMarketArticle(insertMarketProductInterestedLog);
-            console.log(constPostDeleteMarketArticle);
+            const constPostDeleteMarketArticle = await marketAPI.postDeleteMarketArticle(articleId);
+            navigate(`/market`);
         } catch (error) {
             console.error("로드 실패:", error);
         }
@@ -763,14 +766,15 @@ export default function MarketArticlePage() {
                         <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", fontSize : "2.25vh"}}>
                             <div className = "row">
                                 <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
-                                    <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/writeArticle`}>
+                                    <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/updateArticle/${article.id}`}>
                                         수정
                                     </Link>
                                 </div>
                                 <div className = "col-auto px-0">
                                     ｜
                                 </div>
-                                <div className = "col-auto divisionOnclickStyleDefault" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}} onClick = {constDivisionToDeleteMarketArticle}>
+                                <div className = "col-auto divisionOnclickStyleDefault" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}} 
+                                onClick = {() => constDivisionToDeleteMarketArticle({articleId : article.id})}>
                                     삭제
                                 </div>
                             </div>

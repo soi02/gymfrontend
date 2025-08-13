@@ -48,7 +48,7 @@ export default function MarketTopTabs() {
 
       <TabItem to="/market" label="장터 홈" />
       <TabItem to="/market/myLikedProducts" label="탐나는 물품" />
-      <TabItem to="/market/user/1004" label="나의 장터 정보함" />
+      <TabItem to="/market/user/1" label="나의 장터 정보함" />
     </div>
   );
 }
