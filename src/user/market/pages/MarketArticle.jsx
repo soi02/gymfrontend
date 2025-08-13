@@ -380,11 +380,11 @@ export default function MarketArticlePage() {
         
     }
     
-    const constDivisionToDeleteMarketCommentOnArticle = async () => {
+    const constDivisionToDeleteMarketCommentOnArticle = async ({commentId}) => {
         
         try {
             
-            const constPostDeleteMarkeCommentOnArticle = await marketAPI.postDeleteMarketCommentOnArticle(3);
+            const constPostDeleteMarkeCommentOnArticle = await marketAPI.postDeleteMarketCommentOnArticle(commentId);
             setCommentOnArticleReloading(true);
             setCommentOnArticleLoading(true);
             
@@ -590,7 +590,8 @@ export default function MarketArticlePage() {
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
-                                        <div className = "col-auto" onClick = {constDivisionToDeleteMarketCommentOnArticle} style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment.id})}
+                                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                             삭제
                                         </div>
                                     </div>
@@ -614,7 +615,8 @@ export default function MarketArticlePage() {
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
-                                        <div className = "col-auto" onClick = {constDivisionToDeleteMarketCommentOnArticle} style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment.id})}
+                                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                             삭제
                                         </div>
                                     </div>

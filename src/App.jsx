@@ -66,6 +66,7 @@ import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartP
 import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
 import MarketTopTabs from './user/market/commons/MarketTopTabs';
 import BuddyStart from './user/buddy/pages/BuddyStart';
+import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -236,6 +237,7 @@ function AppContent() {
         <Route path="/market/article/:id" element={<MarketArticlePage />} />
         <Route path="/market/user/:id" element={<MarketUserPage />} />
         <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
+        <Route path="/market/updateArticle/:id" element={<MarketUpdateArticlePage />} />
         <Route path="/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
 
         <Route path="*" element={<ErrorPage />} />
