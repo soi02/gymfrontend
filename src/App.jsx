@@ -65,6 +65,8 @@ import AutoJoinRoom from './user/buddy/pages/AutoJoinRoom';
 import ChallengeStartPaymentSuccess from './user/challenge/pages/ChallengeStartPaymentSuccess';
 import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage';
 import MarketTopTabs from './user/market/commons/MarketTopTabs';
+import BuddyStart from './user/buddy/pages/BuddyStart';
+import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -112,6 +114,7 @@ function AppContent() {
     '/challenge/challengeTest/recommend',
     // 이 부분을 추가하면 됩니다.
     '/buddy/buddyChat',
+    '/buddy/register',
     // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
     
   ];
@@ -187,7 +190,8 @@ function AppContent() {
         <Route path='/routine/result/:workoutId' element={<ResultPage />} />
 
         {/* 벗 */}
-        <Route path='/buddy' element={<BuddyRegister />} />
+        <Route path="/buddy" element={<BuddyStart />} />
+        <Route path='/buddy/register' element={<BuddyRegister />} />
         <Route path='/buddy/buddyHome' element={<BuddyHome />} />
         <Route path='/buddy/buddyList' element={<BuddyChat />} />
         {/* <Route path='/buddy/buddyChat' element={<BuddyChatRoom />} /> */}
@@ -233,6 +237,7 @@ function AppContent() {
         <Route path="/market/article/:id" element={<MarketArticlePage />} />
         <Route path="/market/user/:id" element={<MarketUserPage />} />
         <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
+        <Route path="/market/updateArticle/:id" element={<MarketUpdateArticlePage />} />
         <Route path="/market/myLikedProducts" element={<MarketMyLikedProductsPage />} />
 
         <Route path="*" element={<ErrorPage />} />

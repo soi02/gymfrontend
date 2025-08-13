@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import '../styles/BuddyRegister.css';
-import buddyImage from "../../../assets/img/buddy/buddy3.png";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import buddyImage from "../../../assets/img/buddy/buddy3.png";
+import '../styles/BuddyRegister.css';
 
 export default function BuddyRegister() {
     const [step, setStep] = useState(1);
@@ -25,11 +25,8 @@ export default function BuddyRegister() {
     ];
 
     const handleAgeToggle = (id) => {
-        if (ages.includes(id)) {
-            setAges(ages.filter(a => a !== id));
-        } else {
-            setAges([...ages, id]);
-        }
+        // 기존의 다중 선택 로직을 단일 선택 로직으로 변경
+        setAges([id]);
     };
 
     const convertGenderToEnum = (g) => {
@@ -38,28 +35,9 @@ export default function BuddyRegister() {
         return 'ANY';
     };
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         const buddyAgeList = ages.map(id => ({ id }));
-
-    //         const data = {
-    //             preferredGender: convertGenderToEnum(gender),
-    //             intro: intro,
-    //             buddyAgeList: buddyAgeList,
-    //         };
-
-    //         const res = await axios.post('http://localhost:8080/api/buddy/register', data);
-    //         console.log('보내는 데이터:', data);
-    //         setShowModal(true);
-
-    //     } catch (error) {
-    //         console.error('등록 실패:', error);
-    //         alert('등록 중 오류가 발생했습니다.');
-    //     }
-    // };
     const handleSubmit = async () => {
         try {
-            const token = localStorage.getItem('token');  // 로그인 때 저장된 토큰 꺼내기
+            const token = localStorage.getItem('token');
             const buddyAgeList = ages.map(id => ({ id }));
 
             const data = {
@@ -68,7 +46,6 @@ export default function BuddyRegister() {
                 buddyAgeList: buddyAgeList,
             };
 
-            // axios 요청 보낼 때 headers에 Authorization: Bearer 토큰 추가
             const res = await axios.post('http://localhost:8080/api/buddy/register', data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -86,28 +63,23 @@ export default function BuddyRegister() {
 
     const handleGoToBuddyHome = () => {
         setShowModal(false);
-        navigate('/buddyhome'); // buddyhome 경로로 이동합니다.
+        navigate('/buddyhome');
+    };
+
+    const handleGoBack = () => {
+        if (step > 1) {
+            setStep(step - 1);
+        } else if (step === 1) {
+            navigate('/buddy/start');
+        }
     };
 
     const renderPage = () => {
         switch (step) {
             case 1:
                 return (
-                    <div className="page page1">
-                        <h2 className="title">운동벗을<br />찾으시겠습니까?</h2>
-                        <img
-                            src={buddyImage}
-                            alt="챌린지 이미지"
-                            style={{ width: "100px", height: "100px", margin: "20px auto" }}
-                        />
-                        <button className="button" onClick={() => setStep(2)}>네, 원해요</button>
-                    </div>
-                );
-
-            case 2:
-                return (
                     <div className="page page2">
-                        <h2 className="title">선호하는 성별</h2>
+                        <h2 className="title">선호하는 성별은<br />무엇이오?</h2>
                         <div className="gender-options">
                             {['남성', '여성', '성별무관'].map((g) => (
                                 <button
@@ -122,16 +94,16 @@ export default function BuddyRegister() {
                             ))}
                         </div>
                         <div className="navigation">
-                            <button className="button-outline" onClick={() => setStep(1)}>이전</button>
-                            <button className="button" onClick={() => setStep(3)}>다음</button>
+                            <button className="button-outline" onClick={handleGoBack}>이전</button>
+                            <button className="button" onClick={() => setStep(2)}>다음</button>
                         </div>
                     </div>
                 );
 
-            case 3:
+            case 2:
                 return (
                     <div className="page page3">
-                        <h2 className="title">선호 연령대</h2>
+                        <h2 className="title">선호하는 연령대는<br />무엇이오?</h2>
                         <div className="age-grid">
                             {ageOptions.map(({ label, id }) => (
                                 <button
@@ -143,18 +115,18 @@ export default function BuddyRegister() {
                                 </button>
                             ))}
                         </div>
-                        <p className="subtext">중복 선택 가능합니다.</p>
+                        <p className="subtext">하나만 선택 가능합니다.</p>
                         <div className="navigation">
-                            <button className="button-outline" onClick={() => setStep(2)}>이전</button>
-                            <button className="button" onClick={() => setStep(4)}>다음</button>
+                            <button className="button-outline" onClick={handleGoBack}>이전</button>
+                            <button className="button" onClick={() => setStep(3)}>다음</button>
                         </div>
                     </div>
                 );
 
-            case 4:
+            case 3:
                 return (
                     <div className="page page4">
-                        <h2 className="title">자기소개 한 줄</h2>
+                        <h2 className="title">자기소개를<br />해보시오!</h2>
                         <textarea
                             className="intro-textarea"
                             placeholder="예: 아침에 함께 뛰실 분 구해요!"
@@ -162,7 +134,7 @@ export default function BuddyRegister() {
                             onChange={(e) => setIntro(e.target.value)}
                         />
                         <div className="navigation">
-                            <button className="button-outline" onClick={() => setStep(3)}>이전</button>
+                            <button className="button-outline" onClick={handleGoBack}>이전</button>
                             <button className="button" onClick={handleSubmit}>완료</button>
                         </div>
                     </div>
