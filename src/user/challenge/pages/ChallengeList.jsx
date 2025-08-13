@@ -52,7 +52,7 @@ export default function ChallengeList() {
 
                 {/* '전체' 버튼을 별도로 추가하고 싶다면 여기에 추가 */}
                 {/* <button className="filter-button" onClick={() => navigate('/challenge/list')}>
-                    전체
+                    전체 
                 </button> */}
             </div>
 

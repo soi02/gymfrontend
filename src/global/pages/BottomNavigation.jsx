@@ -133,7 +133,6 @@ export default function BottomNavigation() {
         left: 0,
         right: 0, // 화면 하단에 고정
         margin: '0 auto',
-        width: '100%',
         maxWidth: '425px',
         borderTopLeftRadius: '1.1rem',
         borderTopRightRadius: '1.1rem',

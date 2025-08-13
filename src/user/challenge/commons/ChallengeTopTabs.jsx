@@ -51,6 +51,7 @@ export default function ChallengeTopTabs() {
       <TabItem to="/challenge/challengeHome" label="수련장 홈" />
       <TabItem to="/challenge/challengeList" label="수련 목록" />
       <TabItem to="/challenge/challengeMy" label="나의 수련기록" />
+      <TabItem to="/challenge/그룹채팅리스트페이지 넣기" label="그룹채팅" />
     </div>
   );
 }
