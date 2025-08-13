@@ -20,6 +20,14 @@ export default function ChallengeList() {
 
     useEffect(() => {
         fetchKeywordTree();
+
+        // 🌟 이 페이지에 진입했을 때 body 스크롤을 막습니다.
+        document.body.style.overflow = 'hidden';
+
+        // 🌟 컴포넌트가 언마운트될 때(페이지를 벗어날 때) body 스크롤을 다시 허용합니다.
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
     }, []);
 
     // 카테고리 버튼 클릭 시, 새로운 페이지로 이동하는 함수
