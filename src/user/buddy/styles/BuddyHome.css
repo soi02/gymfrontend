@@ -1,9 +1,10 @@
 .buddy-home-container {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
+  place-items: center; 
   background: linear-gradient(135deg, #f9f9f9, #f0f4ff);
-  min-height: 70vh;
+  min-height: 100vh;
   padding: 10px;
 }
 
