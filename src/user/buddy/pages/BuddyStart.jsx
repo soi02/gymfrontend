@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import buddyImage from "../../../assets/img/buddy/buddy3.png";
 import '../styles/BuddyStart.css';
@@ -27,16 +27,14 @@ export default function BuddyStart() {
     }, [buddyFullText]);
 
     const handleStart = () => {
-        // 등록 페이지로 이동합니다.
         navigate('/buddy/register');
     };
 
     return (
-        <div className="buddy-register-container">
-            <div className="page page-start">
-                <h2 className="title">운동 벗 찾기</h2>
+        <div className="buddy-start-container">
+            <div className="buddy-start-page">
+                <h2 className="buddy-start-title">운동 벗 찾기</h2>
 
-                {/* 캐릭터와 말풍선을 세로로 배치하는 새로운 컨테이너 */}
                 <div className="buddy-character-and-bubble-container">
                     <img
                         src={buddyImage}

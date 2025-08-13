@@ -1,87 +1,194 @@
 .buddy-register-container {
-  min-height: 100vh;  
-  text-align: center;
-  padding: 20px;
-}
-
-/* .title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-
-.button, .button-outline {
-  padding: 12px 24px;
-  border-radius: 25px;
-  margin: 10px;
-  font-size: 16px;
-}
-
-.button {
-  background-color: #db6f6f;
-  color: white;
-  border: none;
-}
-
-.button-outline {
-  background: none;
-  border: 2px solid #db6f6f;
-  color: #db6f6f;
-} */
-
-.circle-button {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid #db6f6f;
-  margin: 10px;
-  font-size: 14px;
-  line-height: 1.4;
-  background-color: white;
-}
-
-.circle-button.selected {
-  background-color: #db6f6f;
-  color: white;
-}
-
-/* .age-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.pill-button {
-  border: 2px solid #db6f6f;
-  background-color: white;
-  padding: 10px 20px;
-  margin: 8px;
-  border-radius: 25px;
-  font-size: 16px;
-}
-
-.pill-button.selected {
-  background-color: #db6f6f;
-  color: white;
-}
-
-.subtext {
-  font-size: 12px;
-  color: #888;
-  margin-top: 10px;
-} */
-
-
-/* buddy-register-container 기존 스타일 위에 추가 */
-.buddy-register-container {
-    padding-bottom: 120px; /* 버튼과의 겹침 방지 */
-}
-
-/* 챌린지 캐릭터와 말풍선을 세로로 배치하는 컨테이너 */
-.buddy-character-and-bubble-container {
+    min-height: 100vh;
     display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    align-items: center; /* 가운데 정렬 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
+.buddy-register-progress-bar-container {
+    width: 100%;
+    max-width: 400px;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.buddy-register-progress-bar-fill {
+    height: 100%;
+    background-color: #7c1d0d;
+    transition: width 0.3s ease-in-out;
+    border-radius: 4px;
+}
+
+.buddy-register-page-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.buddy-register-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.buddy-register-subtext {
+    color: #666;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.buddy-register-gender-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.buddy-register-circle-button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buddy-register-circle-button.selected {
+    background-color: #7c1d0d;
+    color: #fff;
+    border-color: #7c1d0d;
+}
+
+.buddy-register-age-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 2rem;
+}
+
+.buddy-register-pill-button {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #ddd;
+    border-radius: 2rem;
+    background-color: #fff;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buddy-register-pill-button.selected {
+    background-color: #7c1d0d;
+    color: #fff;
+    border-color: #7c1d0d;
+}
+
+.buddy-register-intro-textarea {
+    width: 100%;
+    max-width: 400px;
+    height: 150px;
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
+    resize: none;
+    box-sizing: border-box;
+    margin-top: 2rem;
+}
+
+.buddy-register-navigation {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.buddy-register-button, 
+.buddy-register-button-outline {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.buddy-register-button {
+    background-color: #7c1d0d;
+    color: #fff;
+    border: 2px solid #7c1d0d;
+}
+
+.buddy-register-button-outline {
+    background-color: #fff;
+    color: #7c1d0d;
+    border: 2px solid #7c1d0d;
+}
+
+.buddy-register-button:hover {
+    background-color: #5f180a;
+}
+
+.buddy-register-button-outline:hover {
+    background-color: #f7f7f7;
+}
+
+.buddy-register-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+}
+
+.buddy-register-modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 10001;
+    color: #000;
+}
+
+.buddy-register-modal-content h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.buddy-register-modal-content p {
+    margin-bottom: 2rem;
+}
