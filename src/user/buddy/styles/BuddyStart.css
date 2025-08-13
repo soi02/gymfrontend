@@ -1,0 +1,82 @@
+/* 캐릭터 이미지 스타일 */
+.buddy-intro-character-img {
+    width: 38%; /* 이미지 크기 조정 */
+    margin-top: 15px;
+    margin-bottom: 12px; /* 말풍선과의 간격 조정 */
+}
+
+/* 말풍선 스타일 */
+.buddy-speech-bubble {
+    position: relative;
+    background: #f1f1f1;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px; /* 말풍선 너비 조정 */
+    margin: 0 auto;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* 말풍선 꼬리 (아래쪽 중앙으로) */
+.buddy-speech-arrow {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #f1f1f1;
+}
+
+/* 안내 문구 스타일 */
+.buddy-helper-text-container {
+    position: fixed;
+    bottom: 195px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 425px;
+    text-align: center;
+    z-index: 99;
+}
+
+.buddy-helper-text {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}
+
+/* 버튼 컨테이너 스타일 */
+.buddy-bottom-buttons {
+    position: fixed;
+    bottom: 85px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 425px;
+    padding: 0 14px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 99;
+}
+
+/* 버튼 스타일 */
+.buddy-choice-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #7c1d0d;
+    color: white;
+    border: 2px solid #7c1d0d;
+    text-align: center;
+    line-height: 1.4;
+}
