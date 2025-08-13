@@ -26,7 +26,7 @@
 .filter-header-section p {
   color: #555;
   font-size: 0.8rem;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   margin-left: 0.5rem;
 }
 
@@ -34,7 +34,7 @@
 .category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 배치 */
-  gap: 12px;
+  gap: 0.9rem;
   margin-bottom: 15px;
   margin-top: 10px;
 }
@@ -45,14 +45,17 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 0.7rem;
+  border-radius: 10px;
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-height: 120px;
+  min-height: 90px;
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.025);
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.05); */
+  z-index: 1;
+  background: none;
 }
 
 .category-item:hover {
@@ -61,23 +64,39 @@
 
 .category-item.active {
   border-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .category-icon {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 60px;
-  height: 60px;
+  bottom: 1.5rem;
+  right: 0.5rem;
+  /* top: 12px;
+  right: 12px; */
+  width: 56px;
+  height: 56px;
+  z-index: -1;
+  /* opacity: 0.1; */
+}
+
+.category-text-container {
+  text-align: left; /* 텍스트 정렬을 왼쪽으로 지정합니다. */
+  margin: 0;
 }
 
 .category-name {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  text-align: left;
-  color: white;
+  color: rgb(97, 97, 97);
   margin: 0;
+}
+
+.category-description {
+  font-size: 0.8rem;
+  color: rgb(175, 175, 175);
+  margin-top: 0.15rem;
+  /* margin-left: 0.1rem; */
+  margin-bottom: 0;
 }
 
 /* --- 키워드 필터 --- */
@@ -171,3 +190,5 @@
   border-radius:50%; border:1px solid #e5e7eb; background:#111827; color:#fff;
   font-size:24px; line-height:56px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
+
+

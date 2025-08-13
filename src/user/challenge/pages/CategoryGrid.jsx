@@ -5,26 +5,67 @@ const categoryImages = import.meta.glob('/src/assets/img/challenge/categoryIcon/
 
 // 카테고리 이름에 따른 색상 매핑
 const categoryColors = {
-  '루틴': '#8ABFB5',
-  '회복': '#8ABFB5',
-  '소통': '#8ABFB5',
-  '정보': '#8ABFB5',
-  '습관': '#8ABFB5',
-  '동기부여': '#8ABFB5',
-  '자기관리': '#8ABFB5',
-  '분위기': '#8ABFB5',
+  '루틴': '#fff9e3',
+  '회복': '#fff9e3',
+  '소통': '#fff9e3',
+  '정보': '#fff9e3',
+  '습관': '#fff9e3',
+  '동기부여': '#fff9e3',
+  '자기관리': '#fff9e3',
+  '분위기': '#fff9e3',
 };
+// const categoryColors = {
+//   '루틴': '#8ABFB5',
+//   '회복': '#F2A766',
+//   '소통': '#F2AEB4',
+//   '정보': '#216effff',
+//   '습관': '#7C1D0D',
+//   '동기부여': '#FFB300',
+//   '자기관리': '#7f9600ff',
+//   '분위기': '#001439',
+// };
 // const categoryColors = {
 //   '루틴': '#8ABFB5',
 //   '회복': '#F2A766',
 //   '소통': '#F2AEB4',
 //   '정보': '#B4C4D9',
 //   '습관': '#7C1D0D',
-//   '동기부여': '#FFB300',
-//   '자기관리': '#22BF4F',
+//   '동기부여': '#7f9600ff',
+//   '자기관리': '#FFB300',
 //   '분위기': '#001439',
 // };
 
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Top Apps
+//   '회복': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Top Games
+//   '소통': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Social Networking
+//   '정보': 'linear-gradient(135deg, #7C1D0D, #62170a)', // Photo & Video
+//   '습관': 'linear-gradient(135deg, #B4C4D9, #9ba7be)', // Productivity
+//   '동기부여': 'linear-gradient(135deg, #7f9600, #637700)', // Action Games
+//   '자기관리': 'linear-gradient(135deg, #FFB300, #e6a200)', // Role Playing Games
+//   '분위기': 'linear-gradient(135deg, #001439, #000c25)', // Lifestyle
+// };
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #5d69e4, #7983ee)', // Top Apps
+//   '회복': 'linear-gradient(135deg, #f4817a, #f3928e)', // Top Games
+//   '소통': 'linear-gradient(135deg, #9079f4, #c0a6f8)', // Social Networking
+//   '정보': 'linear-gradient(135deg, #f9c268, #f8de95)', // Photo & Video
+//   '습관': 'linear-gradient(135deg, #60c4ff, #92d6ff)', // Productivity
+//   '동기부여': 'linear-gradient(135deg, #fd8b45, #fdc074)', // Action Games
+//   '자기관리': 'linear-gradient(135deg, #a3a3a3, #c8c8c8)', // Role Playing Games
+//   '분위기': 'linear-gradient(135deg, #f0646c, #f19a9e)', // Lifestyle
+// };
+
+// const categoryGradients = {
+//   '루틴': 'linear-gradient(135deg, #8ABFB5, #6a9b93)',
+//   '회복': 'linear-gradient(135deg, #F2A766, #e08c4e)',
+//   '소통': 'linear-gradient(135deg, #F2AEB4, #e29097)',
+//   '정보': 'linear-gradient(135deg, #B4C4D9, #9ba7be)',
+//   '습관': 'linear-gradient(135deg, #7C1D0D, #62170a)',
+//   '동기부여': 'linear-gradient(135deg, #7f9600, #637700)',
+//   '자기관리': 'linear-gradient(135deg, #FFB300, #e6a200)',
+//   '분위기': 'linear-gradient(135deg, #001439, #000c25)',
+// };
 // 🌟 각 카테고리에 대한 설명을 추가했습니다.
 const categoryDescriptions = {
   '루틴': '규칙적인 생활',
