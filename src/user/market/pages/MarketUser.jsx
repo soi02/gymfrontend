@@ -5,227 +5,21 @@ import MarketUserInfosOnUserPage from "../commons/test/example/MarketUserInfosOn
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
-
-function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
-    
-    const { article, userInfo } = marketUserSoldProductElem1;
-    
-    function funcSellEnded(sellEnded) {
-        
-        if (sellEnded == 1) {
-            
-            return "완료";
-            
-        } else if (sellEnded == 0) {
-            
-            return "미완료";
-            
-        }
-        
-    }
-    
-    return (
-        <>
-        
-            <div className = "row">
-                <div className = "widthDefault">
-                    <div className = "col">
-                        {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
-                        {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
-                        {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
-                        
-                        { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
-                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
-                                        <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
-                                            <div className = "row">
-                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                    paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                    <MarketProductMainImage />
-                                                </div>
-                                                <div className = "col" style = {{position : "relative"}}>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {funcSellEnded(article.sellEnded)}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                                            {article.title}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {article.createdAt.toLocaleString()}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                            {userInfo.nickname}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                            ￦ {article.productCost}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        </>
-    )
-    
-}
-
-function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
-    
-    const { article, userInfo } = marketUserBoughtProductElem1;
-    
-    function funcSellEnded(sellEnded) {
-        
-        if (sellEnded == 1) {
-            
-            return "완료";
-            
-        } else if (sellEnded == 0) {
-            
-            return "미완료";
-            
-        }
-        
-    }
-    
-    return (
-        <>
-        
-            <div className = "row">
-                <div className = "widthDefault">
-                    <div className = "col">
-                        {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
-                        {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
-                        {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
-                        
-                        { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
-                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
-                                        <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
-                                            <div className = "row">
-                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                    paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                    <MarketProductMainImage />
-                                                </div>
-                                                <div className = "col" style = {{position : "relative"}}>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {funcSellEnded(article.sellEnded)}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                                            {article.title}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {article.createdAt.toLocaleString()}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                            {userInfo.nickname}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                            ￦ {article.productCost}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        </>
-    )
-    
-}
-
-function MarketUserRateElement({marketUserRateElem1}) {
-    
-    return (
-        <>
-
-            <div className = "row">
-                <div className = "widthDefault">
-                    <div className = "col">
-                        {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
-                        {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
-                        {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
-                        
-                        { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{marginBottom : "2vh"}}>
-                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
-                                        <div className = "row">
-                                            <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.625vh"}}>
-                                                <div className = "row h-100">
-                                                    <div className = "col-auto" style = {{width : "4.5vh", height : "4.5vh", overflow : "hidden", position : "relative",
-                                                        paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                        <MarketAnonymousUserMiniProfileImage />
-                                                    </div>
-                                                    <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
-                                                        <div className = "row h-100">
-                                                            <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                익명
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className = "row">
-                                            <div className = "col" style = {{paddingLeft : "0vh", paddingRight : "0vh", fontSize : "1.75vh"}}>
-                                                {marketUserRateElem1.content}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </>
-    )
-    
-}
 
 export default function MarketUserPage() {
     
+    const {id : loadedId} = useParams();
+    console.log("idParam");
+    console.log(loadedId);
+    
     const checkUserStatus = 2;
+    const checkUserId = loadedId;
     const defaultUserStatus = 1004;
+    
+    const [countOfSoldLogsOnUser, setCountOfSoldLogsOnUser] = useState(-1);
+    const [countOfBoughtLogsOnUser, setCountOfBoughtLogsOnUser] = useState(-1);
     
     const [checkLoadEnded, setCheckLoadEnded] = useState(true);
     
@@ -345,10 +139,13 @@ export default function MarketUserPage() {
             
             try {
                 
-                const [ constGetSelectMarketUserInfo, constGetSelectMarketDealedLogWhenSeller, constGetSelectMarketDealedLogWhenBuyer,  ] = await Promise.all ([
-                    marketAPI.getSelectMarketUserInfo(checkUserStatus),
-                    marketAPI.getSelectMarketDealedLogWhenSeller(checkUserStatus),
-                    marketAPI.getSelectMarketDealedLogWhenBuyer(checkUserStatus)
+                const [ constGetSelectMarketUserInfo, constGetSelectMarketDealedLogWhenSeller, constGetSelectCountMarketDealedLogWhenSeller, 
+                    constGetSelectMarketDealedLogWhenBuyer, constGetSelectCountMarketDealedLogWhenBuyer ] = await Promise.all ([
+                    marketAPI.getSelectMarketUserInfo(checkUserId),
+                    marketAPI.getSelectMarketDealedLogWhenSeller(checkUserId),
+                    marketAPI.getSelectCountMarketDealedLogWhenSeller(checkUserId),
+                    marketAPI.getSelectMarketDealedLogWhenBuyer(checkUserId),
+                    marketAPI.getSelectCountMarketDealedLogWhenBuyer(checkUserId)
                 ])
                 setMarketUserInfo([constGetSelectMarketUserInfo]);
                 const constSoldProductElementsFromAPI = constGetSelectMarketDealedLogWhenSeller.map(APIElem1 => ({
@@ -357,12 +154,14 @@ export default function MarketUserPage() {
                     soldLog : APIElem1.marketDealedLogDto
                 }))
                 setMergeMarketUserSoldProduct(constSoldProductElementsFromAPI);
+                setCountOfSoldLogsOnUser(constGetSelectCountMarketDealedLogWhenSeller);
                 const constBoughtProductElementsFromAPI = constGetSelectMarketDealedLogWhenBuyer.map(APIElem1 => ({
                     article : APIElem1.marketArticleDto,
                     userInfo : APIElem1.marketUserInfoDto,
                     boughtLog : APIElem1.marketDealedLogDto
                 }))
                 setMergeMarketUserBoughtProduct(constBoughtProductElementsFromAPI);
+                setCountOfBoughtLogsOnUser(constGetSelectCountMarketDealedLogWhenBuyer);
                 
             } catch (error) {
                 
@@ -392,6 +191,220 @@ export default function MarketUserPage() {
         
     }, [checkLoadEnded])
     
+    function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
+        
+        const { article, userInfo } = marketUserSoldProductElem1;
+        
+        function funcSellEnded(sellEnded) {
+            
+            if (sellEnded == 1) {
+                
+                return "완료";
+                
+            } else if (sellEnded == 0) {
+                
+                return "미완료";
+                
+            }
+            
+        }
+        
+        return (
+            <>
+            
+                <div className = "row">
+                    <div className = "widthDefault">
+                        <div className = "col">
+                            {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
+                            {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
+                            {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
+                            
+                            { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
+                            <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
+                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
+                                            <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
+                                                <div className = "row">
+                                                    <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                        paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                        <MarketProductMainImage />
+                                                    </div>
+                                                    <div className = "col" style = {{position : "relative"}}>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                {funcSellEnded(article.sellEnded)}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                                {article.title}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                {article.createdAt.toLocaleString()}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                                {userInfo.nickname}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                                ￦ {article.productCost}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </>
+        )
+        
+    }
+
+    function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
+        
+        const { article, userInfo } = marketUserBoughtProductElem1;
+        
+        function funcSellEnded(sellEnded) {
+            
+            if (sellEnded == 1) {
+                
+                return "완료";
+                
+            } else if (sellEnded == 0) {
+                
+                return "미완료";
+                
+            }
+            
+        }
+        
+        return (
+            <>
+            
+                <div className = "row">
+                    <div className = "widthDefault">
+                        <div className = "col">
+                            {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
+                            {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
+                            {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
+                            
+                            { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
+                            <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
+                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
+                                            <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
+                                                <div className = "row">
+                                                    <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                        paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                        <MarketProductMainImage />
+                                                    </div>
+                                                    <div className = "col" style = {{position : "relative"}}>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                {funcSellEnded(article.sellEnded)}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                                {article.title}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                {article.createdAt.toLocaleString()}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                                {userInfo.nickname}
+                                                            </div>
+                                                        </div>
+                                                        <div className = "row">
+                                                            <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                                ￦ {article.productCost}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </>
+        )
+        
+    }
+
+    function MarketUserRateElement({marketUserRateElem1}) {
+        
+        return (
+            <>
+
+                <div className = "row">
+                    <div className = "widthDefault">
+                        <div className = "col">
+                            {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
+                            {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
+                            {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
+                            
+                            { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
+                            <div className = "row" style = {{marginBottom : "2vh"}}>
+                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
+                                            <div className = "row">
+                                                <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.625vh"}}>
+                                                    <div className = "row h-100">
+                                                        <div className = "col-auto" style = {{width : "4.5vh", height : "4.5vh", overflow : "hidden", position : "relative",
+                                                            paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                            <MarketAnonymousUserMiniProfileImage />
+                                                        </div>
+                                                        <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
+                                                            <div className = "row h-100">
+                                                                <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                    익명
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className = "row">
+                                                <div className = "col" style = {{paddingLeft : "0vh", paddingRight : "0vh", fontSize : "1.75vh"}}>
+                                                    {marketUserRateElem1.content}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </>
+        )
+        
+    }
+    
     function MarketUserBoughtProductPageLayout() {
         
         if (checkUserStatus == defaultUserStatus) {
@@ -408,7 +421,7 @@ export default function MarketUserPage() {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                    4 개
+                                    {countOfSoldLogsOnUser} 개
                                 </div>
                             </div>
                             <div className = "row">
@@ -452,7 +465,7 @@ export default function MarketUserPage() {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                    4 개
+                                    {countOfSoldLogsOnUser} 개
                                 </div>
                             </div>
                             <div className = "row">
@@ -502,7 +515,7 @@ export default function MarketUserPage() {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                    4 개
+                                    {countOfBoughtLogsOnUser} 개
                                 </div>
                             </div>
                             <div className = "row">
@@ -546,7 +559,7 @@ export default function MarketUserPage() {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                    4 개
+                                    {countOfBoughtLogsOnUser} 개
                                 </div>
                             </div>
                             <div className = "row">

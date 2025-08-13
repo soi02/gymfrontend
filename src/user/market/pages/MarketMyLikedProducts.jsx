@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 export default function MarketMyLikedProductsPage() {
     
     const checkUserStatus = 2;
     const defaultUserStatus = 1004;
+    
+    const [countOfInterestedLogsOnUser, setCountOfInterestedLogsOnUser] = useState(-1);
     
     const [checkLoadEnded, setCheckLoadEnded] = useState(true);
     const [reloadProcessing, setReloadProcessing] = useState(false);
@@ -63,18 +65,19 @@ export default function MarketMyLikedProductsPage() {
             
             try {
                 
-                const [ constGetSelectMarketProductInterestedLogWhenUserInfo ] = await Promise.all([
-                    MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(checkUserStatus)
+                const [ constGetSelectMarketProductInterestedLogWhenUserInfo, constGetSelectCountMarketProductInterestedLogWhenArticleInfo ] = await Promise.all([
+                    MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(checkUserStatus),
+                    MarketAPI.getSelectCountMarketProductInterestedLogWhenUserInfo(checkUserStatus)
                 ])
-                console.log(constGetSelectMarketProductInterestedLogWhenUserInfo)
                 
                 const constMarketUserLikedProductElemtnsFromAPI = constGetSelectMarketProductInterestedLogWhenUserInfo.map(APIElem1 => ({
                     interestedLog : APIElem1.marketProductInterestedLogDto,
                     userInfo : APIElem1.marketUserInfoDto,
                     article : APIElem1.marketArticleDto
                 }))
-                console.log(constMarketUserLikedProductElemtnsFromAPI);
+                
                 setMergeMarketUserLikedProduct(constMarketUserLikedProductElemtnsFromAPI);
+                setCountOfInterestedLogsOnUser(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                 
             } catch (error) {
                 
@@ -100,19 +103,21 @@ export default function MarketMyLikedProductsPage() {
              
                 try {
                     
-                    const [ constGetSelectMarketProductInterestedLogWhenUserInfo ] = await Promise.all([
-                        MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(checkUserStatus)
+                console.log("Reloading Test Start") // Reload 안의 코드는 load 시의 코드와 같음
+                    
+                    const [ constGetSelectMarketProductInterestedLogWhenUserInfo, constGetSelectCountMarketProductInterestedLogWhenArticleInfo ] = await Promise.all([
+                        MarketAPI.getSelectMarketProductInterestedLogWhenUserInfo(checkUserStatus),
+                        MarketAPI.getSelectCountMarketProductInterestedLogWhenUserInfo(checkUserStatus)
                     ])
-                    console.log(constGetSelectMarketProductInterestedLogWhenUserInfo)
                     
                     const constMarketUserLikedProductElemtnsFromAPI = constGetSelectMarketProductInterestedLogWhenUserInfo.map(APIElem1 => ({
                         interestedLog : APIElem1.marketProductInterestedLogDto,
                         userInfo : APIElem1.marketUserInfoDto,
                         article : APIElem1.marketArticleDto
                     }))
-                    console.log("Test2");
-                    console.log(constMarketUserLikedProductElemtnsFromAPI);
+                    
                     setMergeMarketUserLikedProduct(constMarketUserLikedProductElemtnsFromAPI);
+                    setCountOfInterestedLogsOnUser(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                     
                 } catch (error) {
                     
@@ -595,7 +600,7 @@ export default function MarketMyLikedProductsPage() {
                                                     </div>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                                            4 개
+                                                            {countOfInterestedLogsOnUser} 개
                                                         </div>
                                                     </div>
                                                 </div>
