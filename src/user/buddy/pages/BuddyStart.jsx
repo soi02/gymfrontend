@@ -48,7 +48,8 @@ export default function BuddyStart() {
                 </div>
 
                 <div className="buddy-helper-text-container">
-                    <p className="buddy-helper-text">운동벗을 찾으려면 아래 버튼을 선택해보시오</p>
+                    {/* <p className="buddy-helper-text">운동벗을 찾으려면 아래 버튼을 선택해보시오</p> */}
+                    <p className="buddy-helper-text">운동벗을 시작하시면 자신의 프로필이 자동으로 등록됩니다. 참고해주세요</p>
                 </div>
             </div>
 

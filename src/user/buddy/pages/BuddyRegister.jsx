@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import buddyImage from "../../../assets/img/buddy/bgender.png"; // 이미지 import
+import buddyIntroImage from "../../../assets/img/buddy/bintro.png";
 import '../styles/BuddyRegister.css';
 
 export default function BuddyRegister() {
@@ -60,7 +62,7 @@ export default function BuddyRegister() {
 
     const handleGoToBuddyHome = () => {
         setShowModal(false);
-        navigate('/buddyhome');
+        navigate('/buddy/buddyHome');
     };
 
     const handleGoBack = () => {
@@ -78,19 +80,25 @@ export default function BuddyRegister() {
             case 1:
                 return (
                     <div className="buddy-register-page-content">
+                        {/* 요청하신 이미지 태그 형식으로 변경 */}
+                        <img
+                            src={buddyImage}
+                            alt="운동 벗 이미지"
+                            className="buddy-intro-character-img"
+                        />
                         <div className="buddy-register-page-text">
-                            <h2 className="buddy-register-title">선호하는 성별은<br />무엇이오?</h2>
+                            <h2 className="buddy-register-title">선호하는 벗의 성별은<br />무엇이오?</h2>
                         </div>
                         <div className="buddy-register-gender-options">
-                            {['남성', '여성', '성별무관'].map((g) => (
+                            {['남성', '여성', '무관'].map((g) => (
                                 <button
                                     key={g}
-                                    className={`buddy-register-circle-button ${gender === g ? 'selected' : ''}`}
+                                    className={`buddy-register-gender-button ${gender === g ? 'selected' : ''}`}
                                     onClick={() => setGender(g)}
                                 >
                                     {g === '남성' && '♂'}
                                     {g === '여성' && '♀'}
-                                    {g === '성별무관' && '⚧'}<br />{g}
+                                    {g === '무관' && '⚧'}<br />{g}
                                 </button>
                             ))}
                         </div>
@@ -121,6 +129,11 @@ export default function BuddyRegister() {
             case 3:
                 return (
                     <div className="buddy-register-page-content">
+                         <img
+                            src={buddyIntroImage}
+                            alt="운동 벗 이미지"
+                            className="buddy-intro-character-img"
+                        />
                         <div className="buddy-register-page-text">
                             <h2 className="buddy-register-title">자기소개를<br />해보시오!</h2>
                         </div>
