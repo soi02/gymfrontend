@@ -6,24 +6,34 @@
 }
 
 .challenge-list-container {
-  max-width: 400px; /* 모바일 UI에 맞게 너비 제한 */
-  margin: 0;
-  padding: 16px;
-  flex-grow: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  box-sizing: border-box;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--cat-gap); /* ← 모든 방향에 동일한 간격 적용 */
+    padding-top: 16px; /* 필요에 따라 상단 패딩은 따로 설정 */
+    flex-grow: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
 }
 
-
-
-/* --- 카테고리 그리드 (CategoryGrid.jsx) 스타일 --- */
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 배치 */
-  gap: 0.9rem;
-  margin-bottom: 15px;
-  margin-top: 10px;
+/* 2) 그리드 총 너비를 '정확히' 지정 + 가운데 */
+:root{
+  --cat-item: 180px;
+  --cat-gap: 0.9rem;
+}
+.category-grid-wrapper{
+  /* display:flex; */
+  /* justify-content:center;   래퍼에서 중앙 정렬 */
+  padding: 0; /* 래퍼의 불필요한 패딩 제거 */
+}
+.category-grid{
+  display:grid;
+  grid-template-columns: repeat(2, var(--cat-item)); /* 아이템 크기 고정 */
+  column-gap: var(--cat-gap);
+  row-gap: var(--cat-gap);
+  /* width: calc(2 * var(--cat-item) + var(--cat-gap)); ← 총 너비를 명시 */
+  margin: 10px auto 15px;   /* 그리드 자체도 중앙 */
 }
 
 .category-item {
