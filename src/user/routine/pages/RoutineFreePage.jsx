@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import useRoutineService from "../service/routineService";
 import "../styles/RoutineFreePage.css"
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ function WorkoutElement({workoutList, onCheck, checked}) {
                     ⓘ
                 </span>
             </div> */}
-            <div className="col-3" style={{paddingLeft: '1.4rem', marginRight: '1.5rem'}}>
+            <div className="col-3" style={{paddingLeft: '1.3rem', marginRight: '1.5rem'}}>
                 <img
                     onClick={goToDetail}
                     src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`} // or 이미지 서버 주소
@@ -164,15 +164,13 @@ export default function RoutineFreePage() {
 
     return (
         <>
-        <div>
-
-
-
+        <div className="rfp-page">
+            
 
 
                 <div className="row">
-                    <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
-                        <h3>자유운동</h3>
+                    <div className="description">
+                        <h4>자유운동</h4>
                         <p>
                             오늘 하고싶은 운동을 자유롭게 선택해 보시오.
                             <br />
@@ -181,7 +179,11 @@ export default function RoutineFreePage() {
                     </div>
                 </div>
 
-                <div style={{ flex: 1, overflowY: "auto", padding: "1rem", paddingTop: "0.3rem", paddingBottom: "1rem"}}>
+
+                <div className="rfp-scroll">
+
+
+
                     <input
                         type="text"
                         className="form-control"
