@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import useRoutineService from "../service/routineService";
 import { useSwipeable } from "react-swipeable";
 import "../styles/StartFreeWorkoutPage.css";
+import clock from "../../../assets/img/routine/clock.png";
 
 export default function StartFreeWorkoutPage() {
   const location = useLocation();
@@ -225,13 +226,20 @@ const handleCompleteAll = () => {
       
         <div className="swp-header">
         <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-        <h3 className='swp-header-title'>운동 기록중</h3>
+        <h3 className='swp-header-title'>자유운동: 기록중</h3>
         <button
             className="swp-timer-btn"
             aria-label="휴식 타이머 설정"
             onClick={() => setShowTimerMenu(v => !v)}
         >
-          <i className="bi bi-gear"></i>
+        <img
+          src={clock}
+          alt="휴식 타이머"
+          style={{ width: "22px", height: "22px"}}
+        >
+        </img>
+
+
 
         </button>
         {showTimerMenu && (
@@ -271,7 +279,7 @@ const handleCompleteAll = () => {
             </div>
 
             <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
-              닫기
+              설정 완료
             </button>
           </div>
         )}
@@ -487,12 +495,12 @@ const handleCompleteAll = () => {
                 {showTimerModal && (
                   <div className="routine-timer-modal">
                     <div className="routine-timer-modal-content">
-                      <p>⏳ 휴식시간: {countdown}초</p>
+                      <h4>휴식</h4><br />
+                      <h1>{countdown}초</h1>
                       {/* <div className="digital-timer">
                         {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
                       </div> */}
-
-
+                      <p>휴식 타이머는 우측 상단에서 조정할 수 있소.</p>
 
                       <button
                         className="swo-btn"

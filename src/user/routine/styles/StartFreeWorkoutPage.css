@@ -11,10 +11,12 @@
 .start-workout-container{
   /* height: 100vh;  <-- 삭제 */
   /* overflow-y: auto;  <-- 아래로 교체 */
+  margin-top: 0;
   flex: 1 1 auto;
   overflow: auto;           /* ← 내부만 스크롤 */
   padding: 1rem;
   /* 고정 버튼 + 탭바만큼 바닥 여유 */
+  padding-top: 0;
   padding-bottom: calc(14rem + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
@@ -27,7 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -1rem;
+  margin-top: 0rem;
   padding-top: 0;
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
@@ -220,6 +222,7 @@
   border: 1px solid #7a666343;
   border-radius: 12px;
   padding: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .routine-set-row {
@@ -329,9 +332,11 @@
 
 /* 공통 버튼 */
 .sfwp-btn-2{
+  display: flex;
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 16px 33px;
   border-radius: 12px;
@@ -629,6 +634,8 @@ input:checked + .routine-slider::before {
   display:flex;
   gap:12px;
   justify-content:center;
+    align-items: center;          /* ← 추가 */
+
 }
 
 .sfwp-fixed-actions .sfwp-btn-2{
