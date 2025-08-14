@@ -124,10 +124,8 @@ const navigate = useNavigate();
 
     return (
         <>
-              <div className="radp-header">
-                <button className="radp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
-              </div>
+        <div className="divider-line" />{/* ← 동일한 상단 라인 */}
+
             <div className="routine-main-content">
                 <div className="row">
                     <div className="col" style={{ paddingTop: "0rem", paddingLeft: "1rem" }}>
