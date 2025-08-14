@@ -78,14 +78,20 @@ export default function LoginPage() {
                 </div>
 
                 <div className="social-buttons">
+                    <button className="social-btn" 
+                            onClick={() => {
+                                const state = location.state?.from || "/home";
+                                window.location.href = `http://localhost:8080/api/user/oauth2/kakao/login?state=${encodeURIComponent(state)}`;
+                        
+                            }}
+                        >
+                        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" alt="Kakao" />
+                    </button>
                     <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png" alt="Google" />
                     </button>
                     <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png" alt="Apple" />
-                    </button>
-                    <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
-                        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" alt="Kakao" />
                     </button>
                 </div>
 

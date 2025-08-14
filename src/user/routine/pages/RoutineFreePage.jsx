@@ -164,21 +164,14 @@ export default function RoutineFreePage() {
 
     return (
         <>
-        <div className="main-content-free">
+        <div>
 
 
-              <div className="rfp-header">
-                <button className="rfp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
-              </div>
-            <div
-                className="main-content"
-                style={{ height: "100vh", display: "flex", flexDirection: "column" }}
-            >
+
 
 
                 <div className="row">
-                    <div className="col" style={{ paddingTop: "0rem", paddingLeft: "2rem" }}>
+                    <div className="col" style={{ paddingTop: "1rem", paddingLeft: "2rem" }}>
                         <h3>자유운동</h3>
                         <p>
                             오늘 하고싶은 운동을 자유롭게 선택해 보시오.
@@ -188,7 +181,7 @@ export default function RoutineFreePage() {
                     </div>
                 </div>
 
-                <div style={{ flex: 1, overflowY: "auto", padding: "1rem", paddingTop: "0.3rem", paddingBottom: "7rem"}}>
+                <div style={{ flex: 1, overflowY: "auto", padding: "1rem", paddingTop: "0.3rem", paddingBottom: "1rem"}}>
                     <input
                         type="text"
                         className="form-control"
@@ -204,7 +197,7 @@ export default function RoutineFreePage() {
                             whiteSpace: "nowrap",
                             marginTop: "0.5rem",
                             paddingBottom: "0.5rem",
-                            marginBottom: "1rem",
+                            // marginBottom: "1rem",
                             maxWidth: "100%",
                         }}
                     >
@@ -259,7 +252,6 @@ export default function RoutineFreePage() {
                 </div>
             </div>
         
-                </div>
         </>
     );
 
