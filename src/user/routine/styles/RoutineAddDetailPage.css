@@ -1,8 +1,19 @@
-.routine-main-content {
-    /* height: 100vh; */
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 12.5rem;
+/* 페이지 래퍼: 높이 고정 + 내부 스크롤 */
+.routine-detail-main-content{
+  height: 100dvh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10rem;
+  overflow-y: hidden;              /* 바깥쪽 이중 스크롤 방지 */
+}
+/* 스크롤 영역: 버튼·탭바 만큼 바닥 여유 확보 */
+.routine-scroll-area{
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+  padding-bottom: calc(80px + 12px + 56px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
 }
 
 .radp-header {
@@ -56,6 +67,11 @@
     margin-bottom: 1rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 
+}
+
+/* 마지막 카드의 아래 여백 제거(미세 튀는 공간 방지) */
+.routine-workout-box:last-child{
+  margin-bottom: 0;
 }
 
 .routine-workout-header {
@@ -164,25 +180,28 @@
   color: #7c1d0d;
 }
 
-.routine-sticky-save-btn {
-    text-align: center;
-
+/* 스티키 버튼: 탭바 위에 딱 붙도록 */
+.routine-sticky-save-btn{
+  position: sticky;
+  /* bottom: calc(80px + 12px + env(safe-area-inset-bottom)); */
+  z-index: 2002;   /* 탭바보다 위 */
+  padding: 0 16px;
+  text-align: center;
 }
 
-.routine-sticky-save-btn button {
-    background-color: #7c1d0d;
-    color: #fff;
-    padding: 0.9rem 2rem;
-    margin-bottom: 0;
-    margin: 1rem 0 0 0; /* 위만 여백 */
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+.routine-sticky-save-btn button{
+  width: 100%;
+  height: 56px;
+  margin: 0;
+  background: #7c1d0d;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,.1);
+  cursor: pointer;
 }
-
 .routine-modal-overlay {
   position: fixed;
   top: 0;

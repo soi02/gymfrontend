@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../styles/BuddyChat.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import bgogo from "../../../assets/img/buddy/bgogo.png";
 
 function BuddyChat() {
   const [chatList, setChatList] = useState([]);
@@ -40,6 +41,18 @@ function BuddyChat() {
 
   return (
     <div className="chat-list-container">
+       {chatList.length === 0 ? (
+        <div className="no-chat-container">
+          <img src={bgogo} alt="운동벗 이미지" className="no-chat-image" />
+          <p className="no-chat-text">아직 운동 벗이 없어요.<br />새로운 운동 벗을 찾아보세요!</p>
+          <button 
+            className="find-buddy-button" 
+            onClick={() => navigate('/buddy/buddyHome')}
+          >
+            운동 벗 찾으러 가기
+          </button>
+        </div>
+      ) : (
       <div className="chat-rooms">
         {chatList.map((chat, index) => (
           <div
@@ -72,8 +85,9 @@ function BuddyChat() {
           </div>
         ))}
       </div>
+      )}
     </div>
-  );
+      );
 }
 
 export default BuddyChat;

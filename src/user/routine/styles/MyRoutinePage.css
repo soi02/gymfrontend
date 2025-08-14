@@ -1,0 +1,238 @@
+/* 페이지 레이아웃: 바깥 스크롤 OFF, 내부만 스크롤 */
+.mrp-page {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* 상단 */
+.mrp-header {
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+.mrp-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.mrp-sub {
+  margin: 6px 0 0;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* 스크롤 영역 */
+.mrp-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: calc(80px + 86px + 22px + env(safe-area-inset-bottom)); /* 바텀바 + 버튼 + 간격 */
+  scroll-padding-bottom: calc(80px + 66px + 12px + env(safe-area-inset-bottom));
+}
+
+/* 루틴 목록 */
+.mrp-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.mrp-item {
+  position: relative;
+  background: #e9e9e9;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  padding: 14px 48px 14px 16px; /* 우측은 케밥 공간 */
+  margin-bottom: 10px;
+}
+.mrp-item-body { cursor: pointer; }
+.mrp-item-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #111;
+}
+.mrp-item-meta {
+  margin-top: 4px;
+  font-size: .86rem;
+  color: #777;
+}
+
+/* 케밥 버튼 */
+.mrp-kebab {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  line-height: 32px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.mrp-kebab:hover { background: rgba(0,0,0,0.05); }
+
+/* 드롭다운 메뉴 */
+.mrp-menu {
+  position: absolute;
+  right: 8px;
+  top: 42px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 10;
+  overflow: hidden;
+}
+.mrp-menu-item {
+  text-align: left;
+  padding: 12px 14px;
+  border: 0;
+  background: #fff;
+  cursor: pointer;
+  font-size: .95rem;
+}
+.mrp-menu-item:hover { background: #f6f6f6; }
+.mrp-menu-item.danger { color: #b00020; }
+
+/* 하단 고정 + 버튼 */
+.mrp-add-fixed{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(80px + 5px + env(safe-area-inset-bottom));
+  width: 100%;
+  max-width: 425px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.mrp-add-btn {
+  width: 100%;
+  height: 56px;
+  border: 0;
+  border-radius: 12px;
+  background: #7c1d0d;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  cursor: pointer;
+}
+.mrp-empty {
+  margin-top: 16px;
+  padding: 16px;
+  text-align: center;
+  color: #666;
+  background: #fafafa;
+  border-radius: 12px;
+}
+
+/* 기존 .mrp-page, .mrp-scroll 등은 그대로 두고 밑에 추가 */
+
+.mrp-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.mrp-item.cardish {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  min-height: 120px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* 파스텔 틴트 (각 카드마다 바뀜) */
+.mrp-bg { position:absolute; inset:0; }
+.tint-0 { background: linear-gradient(135deg, #FFE0B3, #FFD1A3); } /* 살구 */
+.tint-1 { background: linear-gradient(135deg, #E2D4FF, #D9C6FF); } /* 라벤더 */
+.tint-2 { background: linear-gradient(135deg, #CDEBFF, #BDE2FF); } /* 하늘 */
+.tint-3 { background: linear-gradient(135deg, #D6F6DC, #C4F0CF); } /* 민트 */
+.tint-4 { background: linear-gradient(135deg, #FFD6E8, #FFC7DF); } /* 핑크 */
+.tint-5 { background: linear-gradient(135deg, #FFF7C2, #FFF0A6); } /* 레몬 */
+
+/* 좌측 텍스트 영역 */
+.mrp-card-content{
+  position: relative;
+  z-index: 1;
+  padding: 16px;
+  padding-right: 130px; /* 우측 이미지 공간 확보 */
+}
+
+.mrp-tag{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #5b5b5b;
+  background: rgba(255,255,255,0.6);
+  border-radius: 999px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.mrp-card-title{
+  margin: 0 0 10px;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #111;
+  font-weight: 800;
+}
+
+/* 칩들 */
+.mrp-chips{ display: flex; gap: 8px; flex-wrap: wrap; }
+.chip{
+  font-size: 13px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 999px;
+  padding: 6px 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* 우측 커버 이미지 */
+.mrp-cover{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 45%;
+  max-width: 180px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  mix-blend-mode: multiply;        /* 배경과 자연스럽게 섞이도록 */
+  opacity: .95;
+  pointer-events: none;
+}
+
+/* 케밥/메뉴 (기존과 유사, 카드 위에 오도록 z-index) */
+.mrp-kebab{
+  position: absolute;
+  right: 8px; top: 8px;
+  z-index: 2;
+  width: 32px; height: 32px;
+  border: 0; background: rgba(255,255,255,0.75);
+  border-radius: 50%; font-size: 22px; line-height: 32px;
+  cursor: pointer;
+}
+.mrp-kebab:hover{ background: rgba(255,255,255,0.9); }
+
+.mrp-menu{
+  position: absolute;
+  right: 8px; top: 44px;
+  z-index: 3;
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.12);
+  display: flex; flex-direction: column; overflow: hidden;
+  min-width: 180px;
+}
+.mrp-menu-item{ text-align:left; padding:12px 14px; border:0; background:#fff; cursor:pointer; font-size:.95rem; }
+.mrp-menu-item:hover{ background:#f6f6f6; }
+.mrp-menu-item.danger{ color:#b00020; }

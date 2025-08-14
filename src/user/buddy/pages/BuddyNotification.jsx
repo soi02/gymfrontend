@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/BuddyNotification.css';
-// import '../styles/ToastCustom.css'; // 토스트 CSS 따로 분리
+// 알림이 없을 때 표시할 이미지를 가져옵니다.
+import noNotificationImage from '../../../assets/img/buddy/balone.png';
 
 export default function BuddyNotification() {
     const [notifications, setNotifications] = useState([]);
@@ -21,17 +22,11 @@ export default function BuddyNotification() {
             );
 
             const processed = res.data.map(item => {
-                // 로그인한 사용자가 요청을 보낸 사람인지 확인
                 const isSender = item.send_buddy_id === auth.id;
-                // 로그인한 사용자가 요청을 받은 사람인지 확인
-                const isReceiver = item.receiver_buddy_id === auth.id;
-
-                // 만약 로그인한 사용자가 보낸 사람이라면 'sent', 받은 사람이라면 'received'
                 const type = isSender ? 'sent' : 'received';
 
                 return {
                     id: item.matching_id,
-                    // 이름과 소개글도 type에 따라 올바르게 설정
                     name: type === 'sent' ? item.receiver_name : item.sender_name,
                     intro: type === 'sent' ? item.receiver_intro : item.sender_intro,
                     profileImage: type === 'sent'
@@ -43,8 +38,6 @@ export default function BuddyNotification() {
                     receiverBuddyId: item.receiver_buddy_id,
                 };
             });
-            console.log("처리된 알림 리스트:", processed);  // 여기에 로그 추가
-            processed.forEach(noti => console.log("알림 id:", noti.id, "status:", noti.status, "type:", noti.type));
             const filteredNotifications = processed.filter(noti => noti.status !== '취소');
             setNotifications(filteredNotifications);
 
@@ -125,50 +118,60 @@ export default function BuddyNotification() {
 
     return (
         <div className="buddy-container">
-            <h4 className="buddy-title">버디 알림</h4>
-            <ul className="buddy-list">
-                {notifications.length === 0 && <li>알림이 없습니다.</li>}
-                {notifications.map((noti) => (
-                    <li key={noti.id} className="buddy-item">
-                        <div className="buddy-info">
-                            <img src={noti.profileImage} alt="프로필" className="buddy-profile-img" />
-                            <div className="buddy-text">
-                                <div className="buddy-name">{noti.name}</div>
-                                <div className="buddy-intro">{noti.intro}</div>
+            {/* <h4 className="buddy-title">버디 알림</h4> */}
+            {notifications.length === 0 ? (
+                <div className="no-notification-container">
+                    <img src={noNotificationImage} alt="운동벗 이미지" className="no-notification-image" />
+                    <p className="no-notification-text">아직 운동 벗이 없어요.<br />새로운 운동 벗을 찾으세요!</p>
+                    <button 
+                        className="find-buddy-button" 
+                        onClick={() => navigate('/buddy/buddyHome')}
+                    >
+                        운동 벗 찾으러 가기
+                    </button>
+                </div>
+            ) : (
+                <ul className="buddy-list">
+                    {notifications.map((noti) => (
+                        <li key={noti.id} className="buddy-item">
+                            <div className="buddy-info">
+                                <img src={noti.profileImage} alt="프로필" className="buddy-profile-img" />
+                                <div className="buddy-text">
+                                    <div className="buddy-name">{noti.name}</div>
+                                    <div className="buddy-intro">{noti.intro}</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="buddy-buttons">
-                            {noti.type === 'received' ? ( // 내가 받은 요청인 경우
-                                <>
-                                    {noti.status === '대기중' ? (
-                                        <>
-                                            <button className="btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
-                                            <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
-                                        </>
-                                    ) : noti.status === '수락' ? (
-                                        <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
-                                    ) : noti.status === '거절' ? (
-                                        // 거절된 알림에 대한 UI를 추가
-                                        <span className="rejected-status">거절됨</span>
-                                    ) : null}
-                                </>
-                            ) : ( // 내가 보낸 요청인 경우
-                                <>
-                                    {noti.status === '대기중' ? (
-                                        <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청 취소</button>
-                                    ) : noti.status === '수락' ? (
-                                        <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
-                                    ) : noti.status === '거절' ? (
-                                        // 거절된 알림에 대한 UI를 추가
-                                        <span className="rejected-status">거절됨</span>
-                                    ) : null}
-                                </>
-                            )}
-                        </div>
-                    </li>
-                ))}
-            </ul>
+                            <div className="buddy-buttons">
+                                {noti.type === 'received' ? (
+                                    <>
+                                        {noti.status === '대기중' ? (
+                                            <>
+                                                <button className="btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
+                                                <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
+                                            </>
+                                        ) : noti.status === '수락' ? (
+                                            <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
+                                        ) : noti.status === '거절' ? (
+                                            <span className="rejected-status">거절됨</span>
+                                        ) : null}
+                                    </>
+                                ) : (
+                                    <>
+                                        {noti.status === '대기중' ? (
+                                            <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청 취소</button>
+                                        ) : noti.status === '수락' ? (
+                                            <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
+                                        ) : noti.status === '거절' ? (
+                                            <span className="rejected-status">거절됨</span>
+                                        ) : null}
+                                    </>
+                                )}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
             <ToastContainer />
         </div>
     );

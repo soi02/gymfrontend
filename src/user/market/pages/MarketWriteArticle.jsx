@@ -205,7 +205,6 @@ export default function MarketWriteArticlePage() {
                                                 <div className = "row">
                                                     <div className = "col-auto">
                                                         <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketArticle}
-                                                        // onClick = {constButtonToInsertMarketArticle} 
                                                         style = {{fontSize : "1.875vh", fontWeight : "bold"}}>게시</button>
                                                     </div>
                                                 </div>

@@ -1,246 +1,173 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import useRoutineService from "../service/routineService";
-import "../styles/RoutineAddPage.css"
+import "../styles/RoutineAddPage.css";          // 기존 파일
+import "../styles/RoutineFreePage.css";         // ← 자유운동과 동일 스타일 재사용
 import { useNavigate } from "react-router-dom";
 
+// 자식 컴포넌트 (동일)
+function WorkoutElement({ workoutList, onCheck, checked }) {
+  const navigate = useNavigate();
+  const goToDetail = () => {
+    navigate(`/routine/guide/${workoutList.elementId}`);
+  };
 
-// 부모 컴포넌트: RoutineAddPage. 이 안에서 WorkoutElement라는 컴포넌트를 여러 개 만들고 있음.
-// 자식 컴포넌트: WorkoutElement. 별도로 정의된 함수. 부모가 내부에서 사용함.
+  return (
+    <div className="row align-items-center my-1">
+      <div className="col-3" style={{ paddingLeft: "1.4rem", marginRight: "1.5rem" }}>
+        <img
+          onClick={goToDetail}
+          src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`}
+          alt={workoutList.elementName}
+          style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "8px" }}
+        />
+      </div>
 
+      <div className="col-6">
+        <span onClick={goToDetail}>{workoutList.elementName}</span>
+      </div>
 
-
-
-// 부모한테 props(데이터나 함수)를 받아서 화면에 보여주는 역할
-function WorkoutElement({workoutList, onCheck, checked}) {
-    const navigate = useNavigate();
-
-    const goToDetail = () => {
-        navigate(`/routine/guide/${workoutList.elementId}`);
-    };
-
-
-    return (
-        <div className="row align-items-center my-1">
-
-            <div className="col-3" style={{paddingLeft: '1.4rem', marginRight: '1.5rem'}}>
-                <img
-                    onClick={goToDetail}
-                    src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`} // or 이미지 서버 주소
-                    alt={workoutList.elementName}
-                    style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "8px" }}
-                />
-            </div>
-
-            <div className="col-6">
-                <span
-                    onClick={goToDetail}
-                >
-                    {workoutList.elementName}
-                </span>
-
-            </div>
-
-
-            <div className="col-2">
-            <input 
-                type="checkbox"
-                checked={checked}
-                onChange={() => onCheck(workoutList.elementId)}
-                style={{
-                    width: "17px",      
-                    height: "17px",
-                    transform: "scale(1.4)",
-                    cursor: "pointer",  
-                    accentColor: "#000000"
-            }}
-            />
-
-            </div>
-        </div>
-    )
+      <div className="col-2">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => onCheck(workoutList.elementId)}
+          style={{
+            width: "17px",
+            height: "17px",
+            transform: "scale(1.4)",
+            cursor: "pointer",
+            accentColor: "#000000",
+          }}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default function RoutineAddPage() {
+  const [workoutList, setWorkoutList] = useState([]);
+  const routineService = useRoutineService();
 
-    const [workoutList, setWorkoutList] = useState([]); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const categories = ["전체", "가슴", "등", "어깨", "팔", "하체"];
 
-    const routineService = useRoutineService();
+  const [selectedItems, setSelectedItems] = useState(new Set());
+  const navigate = useNavigate();
 
-    // 검색어 상태
-    const [searchTerm, setSearchTerm] = useState("");
-    // 카테고리 필터 상태
-    const [selectedCategory, setSelectedCategory] = useState("전체");
+  const handleChange = (id) => {
+    setSelectedItems((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
 
-    const categories =  ["전체", "가슴", "등", "어깨", "팔", "하체"];
-
-    const [selectedItems, setSelectedItems] = useState(new Set());
-    const navigate = useNavigate();
-
-
-
-
-    // 여기는 부모 컴포넌트(RoutineAddPage) 안에 정의된 함수
-    // 체크박스를 눌렀을 때 id가 선택된 항목이면 체크해제, id가 없으면 추가.
-    const handleChange = (id) => {
-        // prev는 이전 상태(Set)값
-        setSelectedItems(prev => {
-            const newSet = new Set(prev);
-            if (newSet.has(id)) {
-                newSet.delete(id); // ❌ 체크 해제
-            } else {
-                newSet.add(id); // ✅ 체크 추가
-            }
-            return newSet;
-        })
-    }
-
-
-
-    // 필터링 로직
-    const filteredList = workoutList.filter(item => {
+  const filteredList = workoutList.filter((item) => {
     const matchSearch = item.elementName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchCategory = selectedCategory === "전체" || item.categoryName === selectedCategory;
     return matchSearch && matchCategory;
-    });
+  });
 
+  useEffect(() => {
+    const getWorkouts = async () => {
+      try {
+        const json = await routineService.getWorkoutList();
+        setWorkoutList(json);
+        console.table(json);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getWorkouts();
+  }, []);
 
-    
-
-    useEffect(() => {
-        console.log("RoutineAddPage 컴포넌트가 마운트 되었습니다.");
-
-        const getWorkouts = async () => {
-            try {
-                const json = await routineService.getWorkoutList();
-                setWorkoutList(json);
-                console.table(json);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        getWorkouts();
-    }, []);
-
-
-    // filteredList는 검색어 + 카테고리 필터에 따라 걸러진 운동들. .map()은 배열을 하나씩 순회하면서 컴포넌트로 변환.
-    const routineListElement = filteredList.map(item => (
-        // 운동항목 하나하나를 보여주는 컴포넌트 - 반복생성
+  const routineListElement = filteredList.map((item) => (
     <WorkoutElement
-        // 각 컴포넌트를 구분하기 위한 고유 값. 리스트 랜더링할 때 필수로 넣음.
-        key={item.elementId}
-        workoutList={item} // 운동데이터
-        onCheck={handleChange} // 체크 이벤트 함수
-        checked={selectedItems.has(item.elementId)} // 체크 여부
+      key={item.elementId}
+      workoutList={item}
+      onCheck={handleChange}
+      checked={selectedItems.has(item.elementId)}
     />
-    ));
-    
+  ));
 
+  return (
+    <>
+      <div className="rfp-page">{/* ← 자유운동과 동일 wrapper */}
+        <div className="divider-line" />{/* ← 동일한 상단 라인 */}
 
+        <div className="row">
+          <div className="description">{/* ← 동일한 타이틀/설명 블록 */}
+            <h4>루틴생성</h4>
+            <p>
+              루틴으로 저장하고 싶은 운동들을 선택해 보시오.
+              <br />
+              사진을 누르면 운동 방법을 확인할 수 있소.
+            </p>
+          </div>
+        </div>
 
+        <div className="rfp-scroll">{/* ← 스크롤 영역 컨테이너도 동일 */}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="찾는 운동을 적어보시오"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
-    return (
-        <>
-            <div
-                className="main-content"
-                style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+          <div
+            className="routine-hide-scrollbar"
+            style={{
+              overflowX: "auto",
+              whiteSpace: "nowrap",
+              marginTop: "0.5rem",
+              paddingBottom: "0.5rem",
+              maxWidth: "100%",
+            }}
+          >
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={`btn btn-sm me-1 ${
+                  selectedCategory === cat ? "btn-secondary" : "btn-outline-secondary"
+                }`}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  display: "inline-block",
+                  width: "60px",
+                  fontSize: "0.85rem",
+                  padding: "0.3rem 0.8rem",
+                  marginTop: "0.3rem",
+                  borderRadius: "999px",
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {routineListElement}
+
+          {/* 하단 고정 버튼 컨테이너/버튼 클래스도 자유운동과 동일 */}
+          <div className="routine-my-routine-add-container">
+            <button
+              className={`routine-my-routine-add-btn ${selectedItems.size === 0 ? "disabled" : ""}`}
+              disabled={selectedItems.size === 0}
+              onClick={() => {
+                if (selectedItems.size > 0) {
+                  const selectedWorkouts = workoutList.filter((i) => selectedItems.has(i.elementId));
+                  navigate("/routine/addDetail", { state: { selectedWorkouts } });
+                }
+              }}
             >
-
-              <div className="rap-header">
-                <button className="rap-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
-              </div>
-
-                <div className="row">
-                    <div className="col" style={{ paddingTop: "0rem", paddingLeft: "2rem" }}>
-                        <h3>루틴생성</h3>
-                        <p>
-                            루틴으로 저장하고 싶은 운동들을 선택해 보시오.
-                            <br />
-                            사진을 누르면 운동 방법을 확인할 수 있소.
-                        </p>
-                    </div>
-                </div>
-
-                <div style={{ flex: 1, overflowY: "auto", padding: "1rem", paddingTop: "0.3rem"}}>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="찾는 운동을 적어보시오"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-
-                    <div
-                        className="routine-hide-scrollbar"
-                        style={{
-                            overflowX: "auto",
-                            whiteSpace: "nowrap",
-                            marginTop: "0.5rem",
-                            paddingBottom: "0.5rem",
-                            marginBottom: "1rem",
-                            maxWidth: "100%",
-                        }}
-                    >
-                        
-                        {categories.map((cat) => (
-                            <button
-                                key={cat}
-                                className={`btn btn-sm me-1 ${
-                                    selectedCategory === cat
-                                        ? "btn-secondary"
-                                        : "btn-outline-secondary"
-                                }`}
-                                onClick={() => setSelectedCategory(cat)}
-                                style={{
-                                    display: "inline-block",
-                                    width: "60px",
-                                    fontSize: "0.85rem",
-                                    padding: "0.3rem 0.8rem",
-                                    marginTop: "0.3rem",
-                                    borderRadius: "999px",
-                                    
-                                }}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
-
-
-                    {routineListElement}
-                    {/* <p>선택한 운동: {selectedItems.size}개</p> */}
-
-                    {/* <div className="routine-my-routine-add-container">
-                        <button className="routine-my-routine-add-btn">{selectedItems.size}개의 운동 바로 시작하겠소</button>
-                    </div> */}
-
-                    <div className="routine-my-routine-add-container">
-                        <button
-                            className={`routine-my-routine-add-btn ${selectedItems.size === 0 ? 'disabled' : ''}`}
-                            disabled={selectedItems.size === 0}
-                            onClick={() => {
-                                if (selectedItems.size > 0) {
-                                    const selectedWorkouts = workoutList.filter(item => selectedItems.has(item.elementId));
-                                    navigate('/routine/addDetail', {
-                                        state: { selectedWorkouts }
-                                    });
-                                }
-                            }}
-                        >
-                            {selectedItems.size === 0
-                                ? '루틴에 포함할 운동을 선택해주시오'
-                                : selectedItems.size + "개의 운동으로 새로운 루틴을 만들겠소"
-                            }
-
-                        </button>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </>
-    );
-
+              {selectedItems.size === 0
+                ? "루틴에 포함할 운동을 선택해주시오"
+                : `${selectedItems.size}개의 운동으로 새로운 루틴을 만들겠소`}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

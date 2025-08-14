@@ -7,7 +7,9 @@ import '../styles/MarketCommonStyles.css';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
-export default function MarketArticlePage() {
+// 여기에서 댓글 포커스 아웃 오류 패치 (자식 쪽에서는 값만 수정하고, 모든 수정 반영을 부모 쪽에서 해야 됨)
+
+export default function MarketArticlePageTest() {
     
     const {id : loadedId} = useParams();
     console.log("loadedId");

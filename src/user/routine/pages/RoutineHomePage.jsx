@@ -60,24 +60,6 @@ export default function RoutineHomePage() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const prevOverflow = document.body.style.overflow;
-    const prevHeight = document.body.style.height;
-    const prevHtmlOverflow = document.documentElement.style.overflow;
-    const prevHtmlHeight = document.documentElement.style.height;
-
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100dvh';
-    document.documentElement.style.overflow = 'hidden';
-    document.documentElement.style.height = '100dvh';
-
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      document.body.style.height = prevHeight;
-      document.documentElement.style.overflow = prevHtmlOverflow;
-      document.documentElement.style.height = prevHtmlHeight;
-    };
-  }, []);
 
 
 

@@ -4,13 +4,14 @@ import { logoutAction } from "../../redux/authSlice";
 import logoImg from "../../assets/img/gymmadang_logo_kr.svg";
 import profileImg from "../../assets/img/default_profile_img.svg";
 import birdImg from "../../assets/img/bird.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 export default function TopHeader() {
     const authInfo = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    
+    const MODAL_Z = 6000; // 충분히 큰 값
+ 
     // 로그아웃 커스텀 훅 사용 전 코드
     //   const handleLogout = () => {
     //     dispatch(logoutAction());
@@ -23,7 +24,15 @@ export default function TopHeader() {
     const [showPrompt, setShowPrompt] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
 
-
+  // 모달 열릴 때 바디 스크롤 잠금
+  useEffect(() => {
+    const open = showPrompt || showMenu;
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [showPrompt, showMenu]);
 
   return (
     <>
@@ -125,7 +134,7 @@ export default function TopHeader() {
             width: "100vw",
             height: "100vh",
             backgroundColor: "rgba(0, 0, 0, 0.4)",
-            zIndex: 998, // 모달보다 아래에 위치
+            zIndex: MODAL_Z, // 모달보다 아래에 위치
             }}
         />
         )}
@@ -146,7 +155,7 @@ export default function TopHeader() {
                 width: "90%",
                 maxWidth: "360px",
                 textAlign: "center",
-                zIndex: 999,
+                zIndex: MODAL_Z + 1,
             }}
             >
             <div style={{ fontSize: "24px", marginBottom: "8px" }}>👏👏</div>
@@ -186,7 +195,7 @@ export default function TopHeader() {
             width: "90%",
             maxWidth: "320px",
             textAlign: "center",
-            zIndex: 999,
+            zIndex: MODAL_Z + 1,
             }}
         >
             <div style={{ fontWeight: "bold", fontSize: "15px", marginBottom: "14px" }}>
