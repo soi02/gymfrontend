@@ -64,8 +64,10 @@ export default function MyRoutinePage() {
   };
 
   return (
+    <>
+    
+    <div className="divider-line"></div>
     <div className="mrp-page">
-        <div className="divider-line"></div>
 
       {/* 헤더/설명 */}
       <div className="mrp-header">
@@ -175,5 +177,6 @@ export default function MyRoutinePage() {
         </button>
       </div>
     </div>
+</>
   );
 }
