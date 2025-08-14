@@ -166,6 +166,7 @@ export default function RoutineFreePage() {
         <>
         <div className="rfp-page">
             
+              <div className="divider-line"></div>
 
 
                 <div className="row">

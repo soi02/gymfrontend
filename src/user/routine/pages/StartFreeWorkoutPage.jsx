@@ -207,6 +207,7 @@ const handleCompleteAll = () => {
 
   return (
     <div className="main-content">
+      
         <div className="swp-header">
         <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
         <h3 className='swp-header-title'>운동 기록중</h3>
@@ -218,47 +219,47 @@ const handleCompleteAll = () => {
           <i className="bi bi-gear"></i>
 
         </button>
-{showTimerMenu && (
-  <div ref={timerMenuRef} className="swp-timer-popover">
-    <div className="swp-timer-popover-row">
-      <span>휴식 타이머</span>
-      <label className="routine-switch" style={{ marginLeft: "auto" }}>
-        <input
-          type="checkbox"
-          checked={useRestTimer}
-          onChange={(e) => setUseRestTimer(e.target.checked)}
-        />
-        <span className="routine-slider" />
-      </label>
-    </div>
+        {showTimerMenu && (
+          <div ref={timerMenuRef} className="swp-timer-popover">
+            <div className="swp-timer-popover-row">
+              <span>휴식 타이머</span>
+              <label className="routine-switch" style={{ marginLeft: "auto" }}>
+                <input
+                  type="checkbox"
+                  checked={useRestTimer}
+                  onChange={(e) => setUseRestTimer(e.target.checked)}
+                />
+                <span className="routine-slider" />
+              </label>
+            </div>
 
-    <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
-      <button
-        type="button"
-        className="rest-step"
-        onClick={decRest}
-        disabled={restDuration <= MIN}
-        aria-label="휴식시간 10초 감소"
-      >
-        −
-      </button>
-      <span className="rest-value">{restDuration}초</span>
-      <button
-        type="button"
-        className="rest-step"
-        onClick={incRest}
-        disabled={restDuration >= MAX}
-        aria-label="휴식시간 10초 증가"
-      >
-        ＋
-      </button>
-    </div>
+            <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
+              <button
+                type="button"
+                className="rest-step"
+                onClick={decRest}
+                disabled={restDuration <= MIN}
+                aria-label="휴식시간 10초 감소"
+              >
+                −
+              </button>
+              <span className="rest-value">{restDuration}초</span>
+              <button
+                type="button"
+                className="rest-step"
+                onClick={incRest}
+                disabled={restDuration >= MAX}
+                aria-label="휴식시간 10초 증가"
+              >
+                ＋
+              </button>
+            </div>
 
-    <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
-      닫기
-    </button>
-  </div>
-)}
+            <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
+              닫기
+            </button>
+          </div>
+        )}
 
         
         </div>
