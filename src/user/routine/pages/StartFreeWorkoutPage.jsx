@@ -133,6 +133,21 @@ const handleAddSet = () => {
 };
 
 
+// 전체 완료 체크 상태: 현재 운동의 세트가 모두 done 인지
+const allChecked = currentSets.length > 0 && currentSets.every(s => !!s.done);
+
+// 전체 완료 토글: 현재 운동의 세트만 일괄 on/off
+const toggleAllSets = () => {
+  const next = !allChecked;
+  setRoutineSets(prev =>
+    prev.map(s =>
+      s.elementId === currentExercise.elementId
+        ? { ...s, done: next }
+        : s
+    )
+  );
+};
+
 
   // 세트 삭제 (마지막 세트만 삭제)
 const handleRemoveSet = () => {
@@ -206,7 +221,8 @@ const handleCompleteAll = () => {
 
 
   return (
-    <div className="main-content">
+    <div className="swp-main-content">
+      
         <div className="swp-header">
         <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
         <h3 className='swp-header-title'>운동 기록중</h3>
@@ -218,47 +234,47 @@ const handleCompleteAll = () => {
           <i className="bi bi-gear"></i>
 
         </button>
-{showTimerMenu && (
-  <div ref={timerMenuRef} className="swp-timer-popover">
-    <div className="swp-timer-popover-row">
-      <span>휴식 타이머</span>
-      <label className="routine-switch" style={{ marginLeft: "auto" }}>
-        <input
-          type="checkbox"
-          checked={useRestTimer}
-          onChange={(e) => setUseRestTimer(e.target.checked)}
-        />
-        <span className="routine-slider" />
-      </label>
-    </div>
+        {showTimerMenu && (
+          <div ref={timerMenuRef} className="swp-timer-popover">
+            <div className="swp-timer-popover-row">
+              <span>휴식 타이머</span>
+              <label className="routine-switch" style={{ marginLeft: "auto" }}>
+                <input
+                  type="checkbox"
+                  checked={useRestTimer}
+                  onChange={(e) => setUseRestTimer(e.target.checked)}
+                />
+                <span className="routine-slider" />
+              </label>
+            </div>
 
-    <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
-      <button
-        type="button"
-        className="rest-step"
-        onClick={decRest}
-        disabled={restDuration <= MIN}
-        aria-label="휴식시간 10초 감소"
-      >
-        −
-      </button>
-      <span className="rest-value">{restDuration}초</span>
-      <button
-        type="button"
-        className="rest-step"
-        onClick={incRest}
-        disabled={restDuration >= MAX}
-        aria-label="휴식시간 10초 증가"
-      >
-        ＋
-      </button>
-    </div>
+            <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
+              <button
+                type="button"
+                className="rest-step"
+                onClick={decRest}
+                disabled={restDuration <= MIN}
+                aria-label="휴식시간 10초 감소"
+              >
+                −
+              </button>
+              <span className="rest-value">{restDuration}초</span>
+              <button
+                type="button"
+                className="rest-step"
+                onClick={incRest}
+                disabled={restDuration >= MAX}
+                aria-label="휴식시간 10초 증가"
+              >
+                ＋
+              </button>
+            </div>
 
-    <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
-      닫기
-    </button>
-  </div>
-)}
+            <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
+              닫기
+            </button>
+          </div>
+        )}
 
         
         </div>
@@ -277,10 +293,6 @@ const handleCompleteAll = () => {
                         />
                         ))}
                     </div>
-
-
-
-
 
                 </div>
 
@@ -316,6 +328,9 @@ const handleCompleteAll = () => {
 
 
                     <div className="routine-set-table">
+                  
+
+
                         {currentSets.map((set, i) => (
                           <div key={i} className="routine-set-row">
                             <span>{i + 1}세트</span>
@@ -399,24 +414,57 @@ const handleCompleteAll = () => {
 
                           </div>
                         ))}
+                        
+                        <div className="sfwp-button-row">
+                          <button
+                            type="button"
+                            className="sfwp-btn sfwp-btn-add"
+                            onClick={handleAddSet}
+                            aria-label="세트 추가"
+                          >
+                            <span className="icon" aria-hidden>＋</span>
+                            세트추가
+                          </button>
+
+                          <button
+                            type="button"
+                            className="sfwp-btn sfwp-btn-del"
+                            onClick={handleRemoveSet}
+                            disabled={currentSets.length <= 1}  // 1세트 이하일 땐 삭제 비활성화
+                            aria-label="세트 삭제"
+                          >
+                            <span className="icon" aria-hidden>−</span>
+                            세트삭제
+                          </button>
+                        </div>
+
+
                     </div>
           </>
         )}
 
-                <div className="routine-action-buttons">
+                {/* 고정 하단 액션 */}
+                <div className="sfwp-fixed-actions">
                   <div className="sfwp-button-row">
-                    <button onClick={handleAddSet}>➕ 세트추가</button>
-                    <button onClick={handleRemoveSet}>➖ 세트삭제</button>
-                    {/* <button onClick={goToNextExercise}>➡ 다음운동</button> */}
-                  </div>
-                  <div className="sfwp-button-row">
-                    <button onClick={handleCompleteAll}>☑️ 모든 세트완료</button>
-                  {/* <button onClick={handleComplete}> */}
-                  <button onClick={() => setShowConfirmModal(true)}>
-                    🛎️ 오늘은 이만 하기
-                  </button>
+                    <button
+                      type="button"
+                      className="sfwp-btn-2 sfwp-btn-done"
+                      onClick={handleCompleteAll}
+                    >
+                      현재 운동 완료
+                    </button>
+
+                    <button
+                      type="button"
+                      className="sfwp-btn-2 sfwp-btn-finish"
+                      onClick={() => setShowConfirmModal(true)}
+                    >
+                      모든 운동 완료
+                    </button>
                   </div>
                 </div>
+
+
 
 
 

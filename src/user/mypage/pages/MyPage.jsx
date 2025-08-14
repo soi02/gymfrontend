@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import "../styles/MyPage.css"; // ✨ 여기서 예쁜 스타일링
 import { useNavigate } from "react-router-dom";
 import useRoutineService from "../../routine/service/routineService";
+import fireIcon2 from "../../../assets/img/routine/3d-fire.png"; // 🔥 아이콘
 
 
 export default function MyPage() {
@@ -52,6 +53,50 @@ useEffect(() => {
   fetch();
 }, []);
 
+// 공통 아이템 컴포넌트
+const WeekItem = ({ day, color, isWorkout }) => (
+  <div
+    style={{
+      position: 'relative',
+      width: '2.2rem',
+      height: '2.2rem',   // ← height: 'rem' 버그 수정
+      display: 'inline-block',
+      verticalAlign: 'middle'
+    }}
+  >
+    {isWorkout && (
+      <img
+        src={fireIcon2}
+        alt=""
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: 20,
+          height: 22,
+          transform: 'translate(-50%, -50%)',
+          opacity: 0.8,
+          pointerEvents: 'none'
+        }}
+      />
+    )}
+    <span
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: '0.85rem',
+        fontWeight: isWorkout ? 700 : 400,
+        color
+      }}
+    >
+      {day}
+    </span>
+  </div>
+);
+
+
 
   return (
     <div className="mypage-container">
@@ -85,53 +130,21 @@ useEffect(() => {
                 <div className="week-preview">
 
 
-                {getWeekRange().weekDates.map((dateStr, i) => {
-                const date = new Date(dateStr);
-                const day = date.getDate();
-                const dayOfWeek = date.getDay();
-                const isWorkout = thisWeekWorkoutDates.includes(dateStr);
+        {getWeekRange().weekDates.map((dateStr, i) => {
+          const date = new Date(dateStr);
+          const day = date.getDate();
+          const dayOfWeek = date.getDay();
+          const isWorkout = thisWeekWorkoutDates.includes(dateStr);
 
-                let color = "#000";
-                if (dayOfWeek === 0) color = "#d04343"; // 일요일
-                else if (dayOfWeek === 6) color = "#5630ff"; // 토요일
+          let color = "#000";
+          if (dayOfWeek === 0) color = "#d04343";
+          else if (dayOfWeek === 6) color = "#5630ff";
 
-                return (
-                    <div
-                    key={i}
-                    style={{
-                        display: 'inline-block',
-                        width: '2.2rem',
-                        textAlign: 'center',
-                        fontSize: '0.85rem',
-                        color,
-                        fontWeight: isWorkout ? 'bold' : 'normal',
-                    }}
-                    >
-                    {isWorkout ? (
-                        <div style={{ position: 'relative', height: '2rem' }}>
-                        <span style={{ fontSize: '2rem', opacity: '0.8' }}>🔥</span>
-                    <span
-                    style={{
-                        position: 'absolute',
-                        top: '1.4rem', 
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        fontSize: '0.8rem',
-                        fontWeight: 'bold',
-                        color,
-                        pointerEvents: 'none',
-                    }}
-                    >
-                    {day}
-                    </span>
+          return (
+            <WeekItem key={i} day={day} color={color} isWorkout={isWorkout} />
+          );
+        })}
 
-                        </div>
-                    ) : (
-                        <div style={{ marginTop: '1.3rem' }}>{day}</div> // 🔥 없는 경우만 숫자
-                    )}
-                    </div>
-                );
-                })}
 
 
 

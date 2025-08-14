@@ -183,7 +183,7 @@ function AppContent() {
             <Route path='/routine/free' element={<RoutineFreePage />} />
             <Route path='/routine/add' element={<RoutineAddPage />} />
             <Route path='/routine/addDetail' element={<RoutineAddDetailPage />} />
-            {/* <Route path='/routine/myroutine' element={<MyRoutineListPage />} /> */}
+            <Route path='/routine/myroutines' element={<MyRoutinePage />} />
             <Route path='/routine/list/:routineId' element={<MyRoutineListPage />} />
             <Route path='/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
             <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />

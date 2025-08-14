@@ -46,38 +46,17 @@ export default function BottomNavigation() {
         const token = localStorage.getItem('token');
         console.log("handleChallengeTabClick 함수 실행 시점의 토큰:", token);
 
-        // 토큰과 userId 유효성 확인
-        if (!userId || !token) {
-            alert("로그인이 필요합니다.");
-            navigate('/login');
-            return;
-        }
 
-        try {
-            const response = await axios.get(`/api/challenge/tendency-test/status`, {
-                params: { userId: userId },
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+        // 로그인 상태 확인
+        if (!userId || !token) {
+            alert("로그인이 필요합니다.");
+            navigate('/login');
+            return;
+        }
 
-            const hasCompleted = JSON.parse(response.data);
-
-            if (hasCompleted) {
-                navigate('/challenge/challengeHome');
-            } else {
-                navigate('/challenge/challengeIntro');
-            }
-        } catch (error) {
-            console.error("성향 테스트 상태 확인 실패:", error);
-            if (error.response && error.response.status === 401) {
-                alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-                navigate('/login');
-            } else {
-                navigate('/challenge/challengeIntro');
-            }
-        }
-    };
+        // 항상 challengeIntro 페이지로 이동하도록 수정
+        navigate('/challenge/challengeIntro');
+    };
 
     // '벗' 탭을 위한 새로운 핸들러 함수
     const handleBuddyTabClick = async (e) => {
@@ -146,7 +125,7 @@ export default function BottomNavigation() {
         link="/routine"
         matchPrefix="/routine"
         iconClass="ri-file-paper-2-fill"
-        label="득근록"
+        label="훈련기록"
         onClick={() => navigate('/routine')}
       />
       <BottomNavigationItem

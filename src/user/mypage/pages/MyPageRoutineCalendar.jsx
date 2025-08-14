@@ -3,7 +3,8 @@ import Calendar from "react-calendar";
 import { useSelector } from "react-redux"
 import "../styles/MyPageRoutineCalendar.css"; // ✨ 여기서 예쁜 스타일링
 import useRoutineService from "../../routine/service/routineService";
-
+import fireIcon from "../../../assets/img/routine/fire.png"; // 🔥 아이콘
+import fireIcon2 from "../../../assets/img/routine/3d-fire.png"; // 🔥 아이콘
 
 export default function MyPageRoutineCalendar() {
 
@@ -42,53 +43,63 @@ export default function MyPageRoutineCalendar() {
         }, [value, id]);
 
 
-    const titleContent = ({ date, view, activeStartDate }) => {
-const dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
-                    .toISOString().split("T")[0];
-    const isWorkout = workoutDates.includes(dateString);
+        const titleContent = ({ date, view, activeStartDate }) => {
+        const dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+            .toISOString().split("T")[0];
+        const isWorkout = workoutDates.includes(dateString);
 
-    // 표시 중인 달과 일치하는지 비교
-    const isCurrentMonth = date.getMonth() === activeStartDate.getMonth() &&
-                            date.getFullYear() === activeStartDate.getFullYear();
+        const isCurrentMonth =
+            date.getMonth() === activeStartDate.getMonth() &&
+            date.getFullYear() === activeStartDate.getFullYear();
 
-    return (
-        <div className={`day-wrapper ${!isCurrentMonth ? "neighboring" : ""}`}>
-        <span>{date.getDate()}</span>
-        {isWorkout && <span className="fire-icon">🔥</span>}
-        </div>
-    );
-    };
+        return (
+            <div className={`day-wrapper ${!isCurrentMonth ? "neighboring" : ""}`}>
+            {/* 숫자 */}
+            <span>{date.getDate()}</span>
+
+            {/* 불 아이콘 (겹치기) */}
+            {isWorkout && (
+                <img
+                src={fireIcon2}
+                alt="운동했음"
+                className="fire-icon"   // ← 절대배치 스타일은 CSS로!
+                />
+            )}
+            </div>
+        );
+        };
+
 
     const [workoutSummary, setWorkoutSummary] = useState(null);
 
 
-useEffect(() => {
-const fetchWorkout = async () => {
-  const selectedDate = new Date(value.getTime() - (value.getTimezoneOffset() * 60000))
-                      .toISOString().split("T")[0];
+    useEffect(() => {
+    const fetchWorkout = async () => {
+    const selectedDate = new Date(value.getTime() - (value.getTimezoneOffset() * 60000))
+                        .toISOString().split("T")[0];
 
-  console.log("💡 Fetching workout with:", id, selectedDate); // 🔍 로그 확인
+    console.log("💡 Fetching workout with:", id, selectedDate); // 🔍 로그 확인
 
-  try {
-    const response = await routineService.getWorkoutByDate(id, selectedDate);
-    console.log("🔥 Got response:", response.data);
+    try {
+        const response = await routineService.getWorkoutByDate(id, selectedDate);
+        console.log("🔥 Got response:", response.data);
 
-    // 요약 저장!
-setWorkoutSummary(response.data.length > 0 ? response.data[0] : null);
+        // 요약 저장!
+    setWorkoutSummary(response.data.length > 0 ? response.data[0] : null);
 
-  } catch (err) {
-    console.error("🔥 날짜 불러오기 실패", err);
-  }
-};
-
-
-  fetchWorkout();
-}, [value]);
+    } catch (err) {
+        console.error("🔥 날짜 불러오기 실패", err);
+    }
+    };
 
 
+    fetchWorkout();
+    }, [value]);
 
-console.log("🕒 클라이언트 현재 시간:", new Date());
-console.log("🕒 타임존 오프셋 (분):", new Date().getTimezoneOffset());
+
+
+    console.log("🕒 클라이언트 현재 시간:", new Date());
+    console.log("🕒 타임존 오프셋 (분):", new Date().getTimezoneOffset());
 
 
 

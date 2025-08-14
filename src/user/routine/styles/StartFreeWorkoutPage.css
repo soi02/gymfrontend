@@ -1,8 +1,21 @@
-.start-workout-container {
-  height: 100vh;
-  overflow-y: auto;
+.swp-main-content{
+  height: 100dvh;           /* 모바일 브라우저 주소창 높이 이슈 대비 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;         /* ← 바깥 스크롤 차단 */
+}
+
+/* 2) 헤더는 그대로 콘텐츠 위에 고정되지 않으므로 auto */
+.swp-header{ flex: 0 0 auto; }
+
+.start-workout-container{
+  /* height: 100vh;  <-- 삭제 */
+  /* overflow-y: auto;  <-- 아래로 교체 */
+  flex: 1 1 auto;
+  overflow: auto;           /* ← 내부만 스크롤 */
   padding: 1rem;
-  padding-bottom: 12rem;
+  /* 고정 버튼 + 탭바만큼 바닥 여유 */
+  padding-bottom: calc(14rem + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -273,26 +286,109 @@
   font-size: 0.9rem;
   color: #666;
 }
-.routine-action-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem 0;
-}
+
+
 
 .sfwp-button-row {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 0.7rem;
+  gap: 12px;
+  justify-content: center; /* 가운데 정렬 */
+  margin: 12px 0 4px;
+  flex-wrap: wrap; /* 버튼이 너무 길면 다음 줄로 */
 }
 
-.sfwp-button-row button {
-  background: none;
-  border: none;
-  font-size: 0.95rem;
-  font-weight: bold;
-  cursor: pointer;
+/* 모바일에서도 가로 유지 */
+@media (max-width: 420px){
+  .routine-action-buttons .sfwp-button-row{
+    flex-direction: row; /* column → row */
+  }
+  .routine-action-buttons .sfwp-button-row .sfwp-btn{
+    width: auto; /* 100% 채우던 거 해제 */
+  }
 }
+
+
+/* 공통 버튼 */
+.sfwp-btn{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  /* background: #fff; */
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: transform .08s ease, box-shadow .2s ease,
+              background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+/* 공통 버튼 */
+.sfwp-btn-2{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 33px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  /* background: #fff; */
+  /* box-shadow: 0 4px 12px rgba(0,0,0,.08); */
+  transition: transform .08s ease, box-shadow .2s ease,
+              background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+/* 동그란 아이콘 뱃지 */
+.sfwp-btn .icon{
+  width: 20px; height: 20px;
+  display: inline-grid; place-items: center;
+  background: #fff;
+  border-radius: 999px;
+  font-size: 16px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+}
+
+/* 프라이머리: 세트추가 */
+.sfwp-btn-add{
+  background: #ffffff;   /* 진한 빨강 */
+  color: #424141;
+  
+  border-color: #e5d0cb;
+}
+.sfwp-btn-add:hover{
+  filter: brightness(1.05);
+  box-shadow: 0 6px 16px rgba(124,29,13,.25);
+}
+.sfwp-btn-add:active{ transform: translateY(1px); }
+
+/* 위험/아웃라인: 세트삭제 */
+.sfwp-btn-del{
+  background: #ffffff;
+  color: #7c1d0d;
+  border-color: #e5d0cb;
+}
+.sfwp-btn-del:hover{
+  background: #fce7e4;
+  border-color: #caa39c;
+}
+.sfwp-btn-del:active{ transform: translateY(1px); }
+
+/* 비활성화 공통 */
+.sfwp-btn:disabled{
+  opacity: .45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 
 .routine-timer-modal {
   position: fixed;
@@ -427,4 +523,120 @@ input:checked + .routine-slider::before {
   transition: all 0.2s;
   background-color: #3a5546; 
   color: white;
+}
+
+/* 공통 버튼은 이미 sfwp-btn, .icon 존재 — 그대로 재사용 */
+
+/* 이 운동 완료: 은은한 성공(아웃라인) */
+.sfwp-btn-done{
+  background: #fff;
+  color: #7c1d0d;
+  border-color: #cccccc;
+}
+.sfwp-btn-done:hover{
+  background: #d0bdba;
+  border-color: #cccccc;
+  box-shadow: 0 6px 16px rgba(47,99,63,.15);
+}
+.sfwp-btn-done:active{ transform: translateY(1px); }
+
+/* 모든 운동 완료: 프라이머리(딥 레드) */
+.sfwp-btn-finish{
+  background: #7c1d0d;
+  color: #fff;
+  border-color: transparent;
+}
+.sfwp-btn-finish:hover{
+  filter: brightness(1.05);
+  box-shadow: 0 8px 18px rgba(124,29,13,.28);
+}
+.sfwp-btn-finish:active{ transform: translateY(1px); }
+
+
+
+/* (옵션) 모달 버튼도 통일감 주기 */
+.sfwp-cancel-btn{
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  font-weight: 700;
+}
+.sfwp-cancel-btn:hover{ background:#f7f7f7; }
+
+.sfwp-confirm-end-btn{
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #7c1d0d;
+  color:#fff;
+  font-weight: 700;
+}
+.sfwp-confirm-end-btn:hover{
+  filter: brightness(1.05);
+}
+
+.set-header{
+  display:flex;
+  justify-content:flex-end;   /* 오른쪽 배치; 왼쪽이면 flex-start */
+  margin-bottom:.6rem;
+  margin-right: 0;
+}
+
+.set-header-check{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  font-weight:600;
+  color:#444;
+  cursor:pointer;
+}
+
+.set-header-check input[type="checkbox"]{
+  width:16px; height:16px;
+  transform:scale(1.3);
+  accent-color:#000;
+}
+
+
+.sfwp-fixed-actions{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(72px + env(safe-area-inset-bottom)); /* 탭바 높이에 맞춰 주세요 */
+  width: 100%;
+  max-width: 425px;
+  padding: 10px 16px 12px;
+  z-index: 1200;
+}
+
+
+
+
+/* 상단 페이드: 스크롤 영역과 자연스럽게 연결 */
+.sfwp-fixed-actions::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:100%;
+  height: 4px;
+  pointer-events:none;
+
+
+}
+
+/* 버튼 가로 정렬 유지 */
+.sfwp-fixed-actions .sfwp-button-row{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+
+.sfwp-fixed-actions .sfwp-btn-2{
+  flex:1;
+  min-width:0;
+}
+
+/* 콘텐츠가 고정바 뒤로 숨지지 않게 바닥 패딩 넉넉히 */
+.start-workout-container{
+  padding-bottom: calc(14rem + env(safe-area-inset-bottom));
 }

@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import useRoutineService from "../service/routineService";
 import "../styles/RoutineFreePage.css"
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ function WorkoutElement({workoutList, onCheck, checked}) {
                     ⓘ
                 </span>
             </div> */}
-            <div className="col-3" style={{paddingLeft: '1.4rem', marginRight: '1.5rem'}}>
+            <div className="col-3" style={{paddingLeft: '1.3rem', marginRight: '1.5rem'}}>
                 <img
                     onClick={goToDetail}
                     src={`http://localhost:8080/uploadFiles/${workoutList.elementPicture}`} // or 이미지 서버 주소
@@ -164,22 +164,14 @@ export default function RoutineFreePage() {
 
     return (
         <>
-        <div className="main-content-free">
-
-
-              <div className="rfp-header">
-                <button className="rfp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
-              </div>
-            <div
-                className="main-content"
-                style={{ height: "100vh", display: "flex", flexDirection: "column" }}
-            >
+        <div className="rfp-page">
+            
+              <div className="divider-line"></div>
 
 
                 <div className="row">
-                    <div className="col" style={{ paddingTop: "0rem", paddingLeft: "2rem" }}>
-                        <h3>자유운동</h3>
+                    <div className="description">
+                        <h4>자유운동</h4>
                         <p>
                             오늘 하고싶은 운동을 자유롭게 선택해 보시오.
                             <br />
@@ -188,7 +180,11 @@ export default function RoutineFreePage() {
                     </div>
                 </div>
 
-                <div style={{ flex: 1, overflowY: "auto", padding: "1rem", paddingTop: "0.3rem", paddingBottom: "7rem"}}>
+
+                <div className="rfp-scroll">
+
+
+
                     <input
                         type="text"
                         className="form-control"
@@ -204,7 +200,7 @@ export default function RoutineFreePage() {
                             whiteSpace: "nowrap",
                             marginTop: "0.5rem",
                             paddingBottom: "0.5rem",
-                            marginBottom: "1rem",
+                            // marginBottom: "1rem",
                             maxWidth: "100%",
                         }}
                     >
@@ -259,7 +255,6 @@ export default function RoutineFreePage() {
                 </div>
             </div>
         
-                </div>
         </>
     );
 

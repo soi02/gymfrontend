@@ -11,3 +11,22 @@
   padding-bottom: calc(72px + env(safe-area-inset-bottom));
 }
 
+/* 이 페이지가 DOM에 있을 때, 바깥(문서) 스크롤 OFF */
+html:has(.rfp-page),
+body:has(.rfp-page) {
+  overflow: hidden !important;
+  height: 100dvh;           /* 뷰포트 고정 */
+}
+
+/* 앱 루트/랩퍼가 추가 스크롤을 만들지 않게 */
+#root:has(.rfp-page),
+.main-content:has(.rfp-page) {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* iOS 사파리 떨림/바운스 최소화 (선택) */
+html, body {
+  overscroll-behavior: none;
+  height: -webkit-fill-available;
+}

@@ -18,9 +18,9 @@ useEffect(() => {
 
   const fetchResult = async () => {
     try {
-      const { data } = await getActualWorkout(workoutId); // 이거 호출 전에 workoutId가 undefined면 500 떠!
+      const { data } = await getActualWorkout(workoutId); 
       console.log("🎯 결과 데이터:", data);
-      console.log("✅ 타입:", Array.isArray(data)); // true 나와야 해!
+      console.log("✅ 타입:", Array.isArray(data));
 
       setWorkoutList(data);
     } catch (err) {

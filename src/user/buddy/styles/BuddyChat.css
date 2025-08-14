@@ -126,3 +126,46 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 */
+
+
+/* src/styles/BuddyChat.css 파일에 추가 */
+
+.no-chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* 화면 높이에 맞게 중앙 정렬 */
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.no-chat-image {
+    width: 310px;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.no-chat-text {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.find-buddy-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #7c1d0d; /* 기존 버튼 색상과 동일 */
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.find-buddy-button:hover {
+    background-color: #5f180a;
+}
