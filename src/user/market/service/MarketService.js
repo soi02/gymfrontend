@@ -43,8 +43,7 @@ export default function useMarketAPI() {
     }
     
     const postUpdateMarketArticle = async(payload) => {
-        const id = payload.id;
-        const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketArticle/${id}`,
+        const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketArticle`,
             payload,
             {
                 headers : {
@@ -94,8 +93,7 @@ export default function useMarketAPI() {
     }
         
     const postUpdateMarketCommentOnArticle = async(payload) => {
-        const id = payload.id;
-        const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketCommentOnArticle/${id}`,
+        const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketCommentOnArticle`,
             payload,
             {
                 headers : {
