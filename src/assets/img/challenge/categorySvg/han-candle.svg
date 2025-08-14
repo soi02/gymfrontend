@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <!-- 고리 + 짧은 줄 -->
+  <circle cx="48" cy="10" r="4" fill="none" stroke="black" stroke-width="3"></circle>
+  <line x1="48" y1="14" x2="48" y2="20" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+
+  <!-- 지붕(처마) -->
+  <line x1="24" y1="22" x2="72" y2="22" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+  <line x1="28" y1="26" x2="68" y2="26" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+
+  <!-- 본체(사각 초롱 틀) -->
+  <rect x="26" y="28" width="44" height="40" rx="4" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"></rect>
+
+  <!-- 창살(격자) -->
+  <line x1="48" y1="28" x2="48" y2="68" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+  <line x1="36" y1="28" x2="36" y2="68" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+  <line x1="60" y1="28" x2="60" y2="68" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+  <line x1="26" y1="48" x2="70" y2="48" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+
+  <!-- 하단 얇은 턱(받침대 아님) -->
+  <line x1="30" y1="72" x2="66" y2="72" stroke="black" stroke-width="3" stroke-linecap="round"></line>
+</svg>

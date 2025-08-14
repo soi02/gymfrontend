@@ -1,0 +1,317 @@
+:root {
+  --key: #7c1d0d;
+  --ink: #111;            /* 본문을 살짝 더 진하게 */
+  --sub: #666;
+  --line: rgba(0,0,0,.10);
+  --surface: #ffffff;
+
+  --pattern-opacity-dark: .85;   /* 어두운 카드용 문양 투명도 */
+  --pattern-opacity-light: .75;  /* 밝은 카드용 문양 투명도 */
+  --pattern-size: 60px;         /* 문양 크기 (필요시 100~128px 조절) */
+}
+
+/* ===== 그리드 3열 ===== */
+.category-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:15.5px;
+  max-width:420px;
+  margin:10px auto 15px;
+}
+
+/* ====== 카드: 진한 배경(그라데이션 약하게) ====== */
+.category-item {
+  position: relative;
+    z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  column-gap: 10px;
+
+  width: 100%;
+  box-sizing: border-box;
+  aspect-ratio: 2.8 / 1;     /* ★ 더 납작(가로 길게) */
+  min-height: 69px;
+  border-radius: 0.48rem;
+  padding: 12px 14px;
+  border: none;
+
+  /* 👉 기본값(습관/키컬러와 비슷한 톤) — 카테고리별로 아래에서 override */
+  --bg: #7c1d0d;           /* 상단색 */
+  --bg-d: #5e140a;         /* 하단색(조금 더 어둡게) */
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));   /* 패턴 색(밝은 카드면 아래에서 어둡게 바꿈) */
+
+  background:
+    linear-gradient(180deg, var(--bg), var(--bg-d));
+  /* border: 1px solid rgba(0,0,0,.12); */
+  /* box-shadow: 0 1px 6px rgba(0,0,0,.10); */
+  color: #fff;             /* 진한 배경이므로 기본은 흰색 텍스트 */
+
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  overflow: hidden;
+}
+
+/* ✅ 기본: background-image로 확실히 보이게 */
+.category-item::after {
+  content: "";
+  position: absolute;
+
+  /* 👉 모든 카드의 기준점을 동일하게(오른쪽·아래) */
+  right: 5px;
+  bottom: 20px;
+
+  width: var(--pattern-size, 60px);
+  height: var(--pattern-size, 60px);
+  z-index: 0;
+
+  /* 미세 위치 보정 (카드/카테고리별로 변수로만 조절) */
+  transform: translate(var(--pattern-dx, 0px), var(--pattern-dy, 0px));
+  will-change: transform;
+
+  background-image: var(--pattern-url);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: var(--pattern-opacity, 1);
+  filter: grayscale(1) contrast(1.1);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+/* WebKit 마스크 */
+@supports (-webkit-mask-image: url("")) {
+  .category-item::after {
+    background-image: none;
+    background-color: var(--pattern-tint, rgba(255, 255, 255, 0.75));
+    -webkit-mask-image: var(--pattern-url);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+  }
+}
+
+/* 표준 마스크 */
+@supports (mask-image: url("")) {
+  .category-item::after {
+    background-image: none;
+    background-color: var(--pattern-tint, rgba(255, 255, 255, 0.75));
+    mask-image: var(--pattern-url);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+}
+
+
+
+
+
+
+/* hover/active 살짝 강조 (색은 유지) */
+.category-item:hover { box-shadow: 0 6px 20px rgba(0,0,0,.18); transform: translateY(-1px); }
+.category-item:active { transform: translateY(0); filter: saturate(1.05); }
+
+/* 텍스트(좌하단) */
+.category-text-container { display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start; min-width:0; height:100%; text-align:left; }
+.category-name { font-size:15px; font-weight:800; letter-spacing:-.2px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow: 0 1px 0 rgba(0,0,0,.35);}
+.category-description { margin:4px 0 0 0; font-size:12px; line-height:1.25; color: rgba(255,255,255,.85); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow: 0 1px 0 rgba(0,0,0,.25);}
+
+/* 체브론: 카드 오른쪽 하단 고정 */
+.cat-chevron {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  font-size: 18px;
+  color: rgba(255,255,255,.85);
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+}
+
+/* 접근성 포커스 */
+.category-item:focus-visible { outline:none; box-shadow: 0 0 0 3px rgba(255,255,255,.35); }
+
+/* ====== 카테고리별 컬러(진하게) ====== */
+/* ───── 루틴 (민트) ───── */
+.category-item[data-cat="루틴"] {
+  --bg: #6ea79c;  /* darkened #8ABFB5 */
+  --bg-d: #5b9489;
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='1.5'>\
+<rect x='12' y='12' width='72' height='72' rx='12'/>\
+<path d='M24 48h48M48 24v48'/>\
+</svg>");
+}
+
+/* ───── 회복 (소프트 블루) ───── */
+.category-item[data-cat="회복"] {
+  --bg: #8fa4c1;  /* darkened #B4C4D9 */
+  --bg-d: #7890b0;
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));
+  /* 원내 격자(안정/회복) */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+<circle cx='48' cy='48' r='34'/>\
+<path d='M20 48h56M48 20v56M30 30l36 36M66 30L30 66'/>\
+</svg>");
+}
+
+/* ───── 소통 (로즈) ───── */
+.category-item[data-cat="소통"] {
+  --bg: #d77e88;  /* darkened #F2AEB4 */
+  --bg-d: #c36b76;
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));
+  /* 연속 파도/당초문 느낌 */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+  <path d='M8 64c8-12 24-12 32 0s24 12 32 0 24-12 32 0' transform='translate(-8,-8)'/>\
+  <path d='M8 80c8-12 24-12 32 0s24 12 32 0 24-12 32 0' transform='translate(-8,-8)'/>\
+  </svg>");
+}
+
+/* ───── 정보 (뉴트럴) ───── */
+.category-item[data-cat="정보"] {
+  --bg: #f2a766;  /* neutral gray */
+  --bg-d: rgb(172, 99, 36);
+--pattern-tint: rgba(255,255,255,0.32);
+--pattern-size: 77px;
+  /* 크기와 위치를 변수로만 세팅 */
+  --pattern-dx: 9px;   /* +면 오른쪽, -면 왼쪽으로 미세 이동 */
+  --pattern-dy: 10px;  /* +면 아래, -면 위로 미세 이동 */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+<rect x='16' y='16' width='64' height='64'/>\
+<path d='M16 32h64M16 48h64M16 64h64'/>\
+</svg>");
+}
+/* .category-item[data-cat="정보"] .category-name,
+.category-item[data-cat="정보"] .category-description,
+.category-item[data-cat="정보"] .cat-chevron { color:#111; text-shadow:none; } */
+
+
+/* ───── 습관 (키컬러) ───── */
+.category-item[data-cat="습관"] {
+  --bg: #7c1d0d;
+  --bg-d: #5e140a;
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));
+  /* 만자문 변형(연속 회전 느낌) */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+<path d='M24 24h24v24H24zM48 48h24v24H48zM48 24h24v12H60v12H48zM24 60h12V48h12v-12'/>\
+</svg>");
+}
+
+/* ───── 동기부여 (앰버) ───── */
+.category-item[data-cat="동기부여"] {
+  --bg: #d89a00;  /* darkened #FFB300 */
+  --bg-d: #bb8600;
+  --pattern-tint: rgba(255,255,255,0.32);
+  /* 방사형 문양(활력) */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+<circle cx='48' cy='48' r='8'/><circle cx='48' cy='48' r='28'/>\
+<path d='M48 8v16M48 72v16M8 48h16M72 48h16M20 20l12 12M64 64l12 12M76 20L64 32M32 64L20 76'/>\
+</svg>");
+}
+/* .category-item[data-cat="동기부여"] .category-name,
+.category-item[data-cat="동기부여"] .category-description,
+.category-item[data-cat="동기부여"] .cat-chevron { color:#111; text-shadow:none; } */
+
+/* ───── 자기관리 (그린) ───── */
+.category-item[data-cat="자기관리"] {
+  --bg: #7c7e1f;  /* darkened #228F4F */
+  --bg-d: #52530e;
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));
+  /* 팔각 연꽃/연화문 단순화 */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+<path d='M48 12 72 24 84 48 72 72 48 84 24 72 12 48 24 24Z'/>\
+<circle cx='48' cy='48' r='10'/><path d='M48 24v12M48 60v12M24 48h12M60 48h12'/>\
+</svg>");
+}
+
+/* ───── 분위기 (네이비) ───── */
+.category-item[data-cat="분위기"] {
+  --bg: #001439;
+  --bg-d: #00102e;
+  --pattern-tint: rgba(255,255,255,var(--pattern-opacity-dark));
+  /* 기하학 테셀레이션(문살/기와 느낌) */
+  --han-pattern: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
+<path d='M16 16h64v64H16zM32 16v64M64 16v64M16 32h64M16 64h64'/>\
+</svg>");
+}
+
+
+/* 전체 보기 카드(중립 그레이 톤, 문양은 연회색) */
+.category-item[data-cat="전체"] {
+  --bg: #a9adb3;
+  --bg-d: #8e9399;
+  --pattern-tint: rgba(255,255,255,0.32);
+}
+
+/* ====== '전체' 카드 ====== */
+/* .all-card {
+  --bg: #e0e0e0;
+  --bg-d: #c7c7c7;
+  background: linear-gradient(180deg, var(--bg), var(--bg-d));
+  color: #333;
+  
+}
+.all-card .category-name,
+.all-card .category-description,
+.all-card .cat-chevron {
+  color: #333;
+  text-shadow: none;
+}
+.all-card.active {
+  --bg: #7c1d0d;
+  --bg-d: #5e140a;
+  background: linear-gradient(180deg, var(--bg), var(--bg-d));
+  color: #fff;
+}
+.all-card.active .category-name,
+.all-card.active .category-description,
+.all-card.active .cat-chevron {
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
+} */
+
+
+
+
+/* ===== Create 카드 (마지막 칸) ===== */
+.create-card {
+  --bg: #f8f8f8;
+  --bg-d: #efefef;
+  background: linear-gradient(180deg, var(--bg), var(--bg-d));
+  border: 1px dashed rgba(0,0,0,.20);
+  color: #7c1d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.create-card::after { content: none; } /* 문양 없음 */
+
+.create-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.create-plus {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 600;
+}
+.create-text {
+  font-size: 12px;
+  opacity: .9;
+}
+
+/* Hover/Active */
+.create-card:hover {
+  background: linear-gradient(180deg, #f3f3f3, #e9e9e9);
+  border-color: rgba(0,0,0,.28);
+}
+.create-card:active { transform: translateY(0); filter: none; }

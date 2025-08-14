@@ -1,0 +1,7 @@
+<!-- /public/assets/patterns/han-grid.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <g fill="none" stroke="black" stroke-width="5">
+    <rect x="14" y="14" width="68" height="68"></rect>
+    <path d="M14 34h68M14 48h68M14 62h68M34 14v68M48 14v68M62 14v68"></path>
+  </g>
+</svg>
