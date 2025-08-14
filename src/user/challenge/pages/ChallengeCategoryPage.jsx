@@ -96,13 +96,13 @@ export default function ChallengeCategoryPage() {
         </section>
       </div>
 
-      <button
+      {/* <button
         className="fab"
         aria-label="챌린지 만들기"
         onClick={() => navigate('/challenge/challengeCreate')}
       >
         ＋
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -176,7 +176,7 @@
 --pattern-size: 77px;
   /* 크기와 위치를 변수로만 세팅 */
   --pattern-dx: 9px;   /* +면 오른쪽, -면 왼쪽으로 미세 이동 */
-  --pattern-dy: 10px;  /* +면 아래, -면 위로 미세 이동 */
+  --pattern-dy: 20px;  /* +면 아래, -면 위로 미세 이동 */
   --han-pattern: url("data:image/svg+xml;utf8,\
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' fill='none' stroke='black' stroke-width='4'>\
 <rect x='16' y='16' width='64' height='64'/>\
