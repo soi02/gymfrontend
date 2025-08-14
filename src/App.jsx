@@ -67,6 +67,7 @@ import ChallengeCategoryPage from './user/challenge/pages/ChallengeCategoryPage'
 import MarketTopTabs from './user/market/commons/MarketTopTabs';
 import BuddyStart from './user/buddy/pages/BuddyStart';
 import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
+import ChallengeAllList from './user/challenge/pages/ChallengeAllList';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -208,9 +209,10 @@ function AppContent() {
             {/* 수련장 */}
             <Route path="/challenge/challengeIntro" element={<ChallengeIntro />} />
             <Route path="/challenge/challengeHome" element={<ChallengeHome />} />
-            <Route path="/challenge/challengeList" element={<ChallengeList />} />
             <Route path="/challenge/challengeCreate" element={<ChallengeCreate />} />
             <Route path="/challenge/challengeMy" element={<ChallengeMyRecordList />} />
+            <Route path="/challenge/challengeList" element={<ChallengeList />} />
+            <Route path="/challenge/challengeAllList" element={<ChallengeAllList />} />
             <Route path="/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
             <Route path="/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
 
@@ -226,15 +228,6 @@ function AppContent() {
 
 
 
-            {/* **기존에 중복되었던 수련장 관련 경로들은 제거했습니다.** `` 접두사를 사용하는 경로들로 통일하여 관리하는 것이 좋습니다.
-              혹시 필요하다면 다시 추가할 수 있습니다.
-            */}
-            {/*
-            <Route path="/challenge" element={<ChallengeIntro />} />
-            <Route path="/challengeHome" element={<ChallengeHome />} />
-            <Route path="/challengeList" element={<ChallengeList />} />
-            <Route path="/challengeMy" element={<ChallengeMy />} />
-            */}
             
             {/* 장터 관련 */}
             <Route path="/market" element={<MarketBoardPage />} />

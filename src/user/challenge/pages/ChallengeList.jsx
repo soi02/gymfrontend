@@ -34,7 +34,7 @@ export default function ChallengeList() {
   const handleCategoryClick = (categoryId) => {
     if (categoryId === null) {
       // '전체' 버튼을 눌렀을 때, 챌린지 목록 페이지로 이동 (필터 없이)
-      navigate(`/challenge/list`);
+      navigate(`/challenge/challengeAllList`);
     } else {
       // 카테고리를 눌렀을 때, 해당 카테고리 페이지로 이동
       navigate(`/challenge/category/${categoryId}`);
