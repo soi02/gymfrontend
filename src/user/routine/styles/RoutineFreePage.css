@@ -47,7 +47,11 @@
 .routine-my-routine-add-btn.disabled{
   background:#ccc; color:#666; cursor:not-allowed;
 }
-
+.divider-line {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+  margin: 8px 0;
+}
 
 /* 스크롤 영역: 바텀바+버튼만큼 바닥 여유 확보 */
 .rfp-scroll{
