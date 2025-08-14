@@ -146,7 +146,7 @@ export default function BottomNavigation() {
         link="/routine"
         matchPrefix="/routine"
         iconClass="ri-file-paper-2-fill"
-        label="득근록"
+        label="훈련기록"
         onClick={() => navigate('/routine')}
       />
       <BottomNavigationItem
