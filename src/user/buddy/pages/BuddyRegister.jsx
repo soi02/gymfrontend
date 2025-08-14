@@ -171,13 +171,13 @@ export default function BuddyRegister() {
             {showModal && (
                 <div className="buddy-register-modal-backdrop">
                     <div className="buddy-register-modal-content">
-                        <h2>등록이 완료되었습니다!</h2>
-                        <p>운동 벗을 찾아보세요 💪</p>
+                        <h2>등록이 완료되었습니다.</h2>
+                        <p>운동 벗을 찾아보시오 💪</p>
                         <button
                             className="buddy-register-button"
                             onClick={handleGoToBuddyHome}
                         >
-                            벗 구하러 가기
+                            운동 벗 구하러 가기
                         </button>
                     </div>
                 </div>
