@@ -146,3 +146,48 @@
   width: auto !important;
   padding: 0 !important;
 }
+
+/* src/styles/BuddyNotification.css 파일에 추가 */
+
+.no-notification-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* 컨테이너 높이 설정 */
+    text-align: center;
+    padding: 20px;
+    margin-top: 100px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.no-notification-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.no-notification-text {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+/* 기존 버튼과 동일한 스타일을 사용합니다. */
+.find-buddy-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #7c1d0d;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.find-buddy-button:hover {
+    background-color: #5f180a;
+}
