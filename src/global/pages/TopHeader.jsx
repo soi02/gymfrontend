@@ -11,7 +11,7 @@ export default function TopHeader() {
     const authInfo = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const MODAL_Z = 6000; // 충분히 큰 값
-
+ 
     // 로그아웃 커스텀 훅 사용 전 코드
     //   const handleLogout = () => {
     //     dispatch(logoutAction());

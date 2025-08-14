@@ -93,11 +93,13 @@ margin-top: 1rem;
   cursor: pointer;
 }
 
-
-.week-preview {
+/* 기존 letter-spacing은 지우고 gap으로 간격 주세요 */
+.week-preview{
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
   margin-top: 0.3rem;
   padding-left: 1rem;
   font-size: 1.2rem;
   color: #7c7c7c;
-  letter-spacing: 0.3rem;
 }

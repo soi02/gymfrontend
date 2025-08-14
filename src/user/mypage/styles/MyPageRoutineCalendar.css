@@ -84,37 +84,39 @@
   background: hsl(47, 100%, 82%);
 }
 
-/* 🔥 포함된 날짜 wrapper */
-.day-wrapper {
+/* 날짜 칸 안 래퍼 */
+.day-wrapper{
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* 숫자 스타일 */
-.day-wrapper span:first-child {
+/* 숫자(위로) */
+.day-wrapper span:first-child{
   position: relative;
   z-index: 2;
-  /* font-weight: bold; */
-  color: rgb(109, 109, 109);
-  /* text-shadow: 0 0 2px #000, 0 0 4px #000; 테두리 효과 */
+  color: rgb(109,109,109);
 }
-.day-wrapper.neighboring span:first-child {
-  color: #aaa9a9;        /* 아주 흐린 회색 */
-  opacity: 0.4;          /* 더 흐리게 보여! */
+
+/* 이웃달 숫자 흐리게 */
+.day-wrapper.neighboring span:first-child{
+  color:#aaa9a9;
+  opacity:.4;
   font-weight: normal;
 }
 
-/* 🔥 아이콘 스타일 */
-.fire-icon {
+/* 불 아이콘(아래로, 중앙) */
+.fire-icon{
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
+  width: 28px;
+  height: 28px;
   transform: translate(-50%, -50%);
-  font-size: 1.8rem;
-  z-index: 1;  /* 숫자보다 뒤로! */
-  opacity: 0.8;  /* 배경처럼 */
+  z-index: 1;         /* 숫자보다 뒤 */
+  opacity: .80;       /* 살짝 배경처럼 */
+  pointer-events: none;
 }
 
 
