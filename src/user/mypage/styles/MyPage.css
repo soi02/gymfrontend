@@ -9,7 +9,7 @@
   background: rgb(255, 255, 255);
   border-radius: 1rem;
   border: #88888837 1px solid;
-margin-top: 1rem;
+  margin-top: 1rem;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   margin-bottom: 1rem;
@@ -79,27 +79,35 @@ margin-top: 1rem;
   background: white;
   border-radius: 1rem;
   border: #88888837 1px solid;
-  padding: 1rem;
+  /* padding: 1rem; */
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   margin-bottom: 1rem;
 }
 
-.row-between {
+.box-header {
+  background-color: #efefef; /* 밝은 회색 */
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: rem;
-  font-weight: 500;
-  cursor: pointer;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
-/* 기존 letter-spacing은 지우고 gap으로 간격 주세요 */
+.box-body {
+  padding: 0.8rem 1rem;
+}
+
+
+
+
 .week-preview{
   display: flex;
   align-items: center;
   gap: 0.1rem;
   margin-top: 0.3rem;
-  padding-left: 1rem;
+  padding-left: 0.5rem;
   font-size: 1.2rem;
   color: #7c7c7c;
 }

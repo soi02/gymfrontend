@@ -125,5 +125,175 @@
 }
 
 .workout-result {
-    padding: 1rem;;
+  color: #ccc;
+  font-size: 1rem;
+  border: #d2d2d2 1px solid;
+  border-radius: 9rem;
+  padding: 0.2rem 0.8rem;
+}
+
+/* 부모: 한 줄 3등분, 동일 너비 */
+.summary-section{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:0;                 /* 아이템 간격은 안 벌어지게 */
+  padding:12px 0;
+}
+.selected-date {
+  text-align: left;  /* 왼쪽 정렬 */
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2b3a67;    /* 원하는 색상 */
+}
+
+
+.summary-item{
+  flex:1 1 33.333%;      /* 3등분 고정 */
+  display:flex;
+  flex-direction:column; /* 아이콘 위 / 텍스트 아래 */
+  align-items:center;
+  text-align:center;
+  min-width:0;           /* 긴 텍스트 줄바꿈 허용 */
+  color:#868686;
+}
+
+/* 아이콘 영역 높이를 동일하게 고정 -> 세 아이템 수직 정렬 깔끔 */
+.summary-item .icon{
+  height:20px;           /* 아이콘 박스 고정 높이 */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* 아이콘 크기 반응형(모바일에서 커지고 과하게는 안 커지게) */
+.summary-item i{
+  font-size:clamp(22px, 6vw, 34px);
+  line-height:1;
+}
+
+/* 텍스트도 반응형 + 줄바꿈 방지(필요 시만) */
+.summary-item .value{
+  margin-top:6px;
+  font-size:clamp(12px, 3.2vw, 16px);
+  white-space:nowrap;    /* 줄바꿈 싫으면 유지, 넘치면 min-width:0 덕에 줄여짐 */
+}
+
+/* 회색 안내문 */
+.no-record{
+  text-align:center;
+  color:#9aa0a6;
+  padding:12px 0;
+}
+.workout-result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; /* 간격 동일 배분 */
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  padding: 10px 14px;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* 아이콘과 텍스트 간격 */
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.result-item.date {
+  font-weight: bold;
+  color: #2b3a67;
+}
+
+.result-item i {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+
+.workout-result {
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  padding: 14px 10px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.selected-date {
+  font-size: 1.4rem;  /* 날짜 크게 */
+  font-weight: bold;
+  color: #2b3a67;
+  margin-bottom: 10px;
+}
+
+.summary-section {
+  display: flex;
+  justify-content: space-around;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column; /* 아이콘 위, 텍스트 아래 */
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.summary-item i {
+  font-size: 1.6rem; /* 아이콘 크게 */
+  margin-bottom: 4px;
+  color: #888;
+}
+.workout-row{
+  display:grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 1fr; 
+  align-items:center;
+  border:1px solid #d8d8d8;
+  border-radius:28px;
+  padding:12px 14px;
+  background:#fff;
+  column-gap:8px;
+}
+
+.workout-row .col{ min-width:0; }
+
+/* 날짜 셀 */
+.date-col{
+  padding-right:12px;
+  margin-right: 0.1rem;
+  /* border-right:1px solid #e6e6e6; 날짜 | 나머지 구분 */
+}
+.date-chip{
+  display:inline-block;
+  padding:15px 10px;
+  border-radius:100px;
+  background:#b8c8ed;   /* 날짜만 배경색 */
+  color:#223a74;        /* 날짜만 폰트색 */
+  font-weight:700;
+  font-size:clamp(16px, 4.5vw, 20px); /* 날짜 크게 */
+}
+
+/* KPI 3개: 아이콘 위 / 텍스트 아래 */
+.kpi-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  color:#5e6369;
+  text-align:center;
+}
+.kpi-col i{
+  font-size:clamp(20px, 5vw, 26px);
+  color:#272d34;
+  line-height:1;
+}
+.kpi-col span{
+  font-size:clamp(12px, 3.2vw, 15px);
+  white-space:nowrap;
+}
+.arrow-col {
+  margin-left: 10px;
 }
