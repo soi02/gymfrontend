@@ -42,6 +42,8 @@ const BuddyChatRoom = () => {
           Authorization: `Bearer ${token}`
         }
       });
+      // 여기! 👇
+      console.log('서버에서 받은 전체 채팅 기록:', res.data);
 
       console.log('기존 채팅 기록:', res.data);
 
