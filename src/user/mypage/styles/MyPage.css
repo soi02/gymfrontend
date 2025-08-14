@@ -53,25 +53,7 @@
   color: #888;
 }
 
-.quick-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin: 1rem 0;
-}
 
-.quick-buttons button {
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 0.8rem;
-  padding: 0.7rem 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.quick-buttons button:hover {
-  background-color: #ffebee;
-}
 
 
 
