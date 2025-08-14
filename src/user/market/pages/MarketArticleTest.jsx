@@ -26,27 +26,6 @@ export default function MarketArticlePageTest() {
     
     const contentRef = useRef(null);
     
-    //
-    
-    const [marketArticle, setMarketArticle] = useState([
-        {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
-        title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-        viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
-    ]) 
-    
-    const [marketUserInfoOnArticle, setMarketUserInfoOnArticle] = useState([
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
-    ])
-    
-    const checkArticleWriteUserBefore = marketUserInfoOnArticle.map(article => article.userId)[0];
-    
-    const mergedListOnArticle = marketArticle.map(article => {
-        const userInfo = marketUserInfoOnArticle.find(user => user.userId === article.marketUserId);
-        return { article, userInfo };
-    });
-    
-    //
-    
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
         {
             
@@ -108,11 +87,6 @@ export default function MarketArticlePageTest() {
         {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
     ]
     
-    // const mergedListOnCommentOnArticle = marketCommentListOnArticle.map(comment => {
-    //     const userInfo = marketUserInfoListOnCommentOnArticle.find(user => user.userId === comment.marketUserId);
-    //     return { comment, userInfo };
-    // });
-    
     const [reloadingProductInterestedLogWhenUserAndArticleInfo, setReloadingProductInterestedLogWhenUserAndArticleInfo] = useState(false);
     const [commentOnArticleLoading, setCommentOnArticleLoading] = useState(true);
     const [commentOnArticleReloading, setCommentOnArticleReloading] = useState(false);
@@ -125,10 +99,6 @@ export default function MarketArticlePageTest() {
     const constmarketCommentElementListOnArticle = mergeMarketCommentListOnArticle
     .map(mergedElement => {
         
-        console.log("CommentKeyTest");
-        console.log(mergedElement.comment);
-        console.log(mergedElement.comment.id);
-        
         return(
         <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>
         )
@@ -138,7 +108,69 @@ export default function MarketArticlePageTest() {
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
         {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
-    )
+    );
+    
+    const [mergeMarketCommentEditElementListOnArticle, setMergeMarketCommentEditElementListOnArticle] = useState([
+        {
+            
+            comment : {id : 0, articleId : 0, marketUserId : 0, content : "ERROR", createdAt : new Date("1970-01-01T00:00:03"),  updatedAt : new Date("1970-01-01T00:00:04")},
+            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            
+        }
+    ]);
+    
+    const constApplyTextContentOnComment = (targetId, newContent) => {
+        
+        setMergeMarketCommentEditElementListOnArticle(currentList => 
+            
+            currentList.map(element => {
+                
+                if (element.comment.id !== targetId) {
+                    
+                    return element;
+                    
+                } else {
+                    
+                    return {
+                        
+                        ...element,
+                        comment : {
+                            
+                            ...element.comment,
+                            content : newContent
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            })
+            
+        );
+        
+    }
+    
+    const constButtonToUpdateMarketCommentOnArticle = async (element1) => {
+        
+        const submitCommentOnArticleData = {
+            ...mergeMarketCommentEditElementListOnArticle,
+            content : updateCommentRef.current.value
+        }
+        
+        setMergeMarketCommentEditElementListOnArticle(submitCommentOnArticleData);
+        
+        try {
+            
+            const constPostUpdateMarketCommentOnArticle = await marketAPI.postUpdateMarketCommentOnArticle(mergeMarketCommentEditElementListOnArticle);
+            
+        } catch (error) {
+            console.error("로드 실패:", error);
+        }
+        
+        setCommentEditModeChecked(false); // 자식 요소에 직접 접근해서 바꿔야 됨
+        
+    }
     
     const marketAPI = useMarketAPI();
     
@@ -176,6 +208,7 @@ export default function MarketArticlePageTest() {
                     userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
+                setMergeMarketCommentEditElementListOnArticle(constCommentOnArticleElementsFromAPI);
                 setCountOfInterestedLogsOnArticle(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                 setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
                 console.log("CommentTest");
@@ -293,20 +326,13 @@ export default function MarketArticlePageTest() {
                 
             } else {
                 
-                // const mergedListOnCommentOnArticle = marketCommentListOnArticle.map(comment => {
-                //     const userInfo = marketUserInfoListOnCommentOnArticle.find(user => user.userId === comment.marketUserId);
-                //     return { comment, userInfo };
-                // });
                 
                 const constmarketCommentElementListOnArticle = mergeMarketCommentListOnArticle
                 .map(mergedElement => {
                     
-                    console.log("KeyTest2");
-                    console.log(mergedElement.comment);
-                    console.log(mergedElement.comment.id);
-                    
                     return(
-                <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>)});
+                    <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement}/>
+                    )});
                 
             }
             
@@ -402,10 +428,6 @@ export default function MarketArticlePageTest() {
     function MarketArticleElement({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
-            
-        console.log("ArticleElementTest")
-        console.log(checkUserStatus);
-        console.log(article.marketUserId);
         
         function funcSellEnded(sellEnded) {
             
@@ -573,231 +595,190 @@ export default function MarketArticlePageTest() {
 
     function MarketCommentElementOnArticle({marketCommentElem1}) {
         
-        console.log(marketCommentElem1);
-        
         const { comment, userInfo } = marketCommentElem1;
         
-        const updateCommentRef = useRef(null);
+        const updateCommentRef = useRef(null); // ok
         
-        const [ updateMarketCommentElementOnArticle, setUpdateMarketCommentElementOnArticle ] = useState(
-        {id : comment.id, articleId : comment.articleId, marketUserId : comment.marketUserId, content : comment.content, 
-        createdAt : comment.createdAt, updatedAt : new Date("1970-01-01T00:00:04")}
-        )
+        // const [ updateMarketCommentElementOnArticle, setUpdateMarketCommentElementOnArticle ] = useState(
+        // {id : comment.id, articleId : comment.articleId, marketUserId : comment.marketUserId, content : comment.content, 
+        // createdAt : comment.createdAt, updatedAt : new Date("1970-01-01T00:00:04")}
+        // )
         
-        const commentIdOfComment = comment.id;
-        console.log("commentIdOfComment");
-        console.log(commentIdOfComment);
+        // const commentIdOfComment = comment.id;
         
-        const constApplyTextContentOnComment = (element1) => {
+        // const constApplyTextContentOnComment = (element1) => {
             
-            const { name, value } = element1.target;
+        //     const { name, value } = element1.target;
             
-            setUpdateMarketCommentElementOnArticle(updateMarketCommentElementOnArticle => ({
+        //     setUpdateMarketCommentElementOnArticle(updateMarketCommentElementOnArticle => ({
                 
-                ...updateMarketCommentElementOnArticle,
-                [name] : value
+        //         ...updateMarketCommentElementOnArticle,
+        //         [name] : value
                 
-            }));
+        //     }));
             
-            console.log("Edit Process Error?");
-            console.log(commentEditModeChecked);
-            console.log(updateMarketCommentElementOnArticle);
-            
-        }
+        // }
         
-        const constButtonToUpdateMarketCommentOnArticle = async (element1) => {
+        // const constButtonToUpdateMarketCommentOnArticle = async (element1) => {
             
-            const submitCommentOnArticleData = {
-                ...updateMarketCommentElementOnArticle,
-                content : updateCommentRef.current.value
-            }
+        //     const submitCommentOnArticleData = {
+        //         ...updateMarketCommentElementOnArticle,
+        //         content : updateCommentRef.current.value
+        //     }
             
-            setUpdateMarketCommentElementOnArticle(submitCommentOnArticleData);
+        //     setUpdateMarketCommentElementOnArticle(submitCommentOnArticleData);
             
-            try {
+        //     try {
                 
-                const constPostUpdateMarketCommentOnArticle = await marketAPI.postUpdateMarketCommentOnArticle(updateMarketCommentElementOnArticle);
+        //         const constPostUpdateMarketCommentOnArticle = await marketAPI.postUpdateMarketCommentOnArticle(updateMarketCommentElementOnArticle);
                 
-            } catch (error) {
-            console.error("로드 실패:", error);
-            }
+        //     } catch (error) {
+        //         console.error("로드 실패:", error);
+        //     }
             
-            setCommentEditModeChecked(false);
+        //     setCommentEditModeChecked(false);
             
-        }
+        // }
         
         const [ commentEditModeChecked, setCommentEditModeChecked ] = useState(false);
         
-        const constMarketCommentOnArticlePageLayout = ({comment, commentIdOfComment, commentEditModeChecked, layoutValue}) => {
-            console.log("commentIdOfComment Test")
-            console.log(commentIdOfComment)
-            return (<FuncCommentEditModeChecked key = {commentIdOfComment} commentEditModeCheckedInFunc1 = {commentEditModeChecked} layoutType = {layoutValue}/>);
-        }
+        const [ editingContent, setEditingContent ] = useState(comment.content);
         
-        function FuncCommentEditModeChecked({commentEditModeCheckedInFunc1, layoutType}) {
-            
-            
+        // const constMarketCommentOnArticlePageLayout = ({comment, commentIdOfComment, commentEditModeChecked, layoutValue}) => {
+        //     return (<FuncCommentEditModeChecked key = {commentIdOfComment} commentEditModeCheckedInFunc1 = {commentEditModeChecked} layoutType = {layoutValue}/>);
+        // }
         
-            //
-            
-            useEffect(() => {
-                // 컴포넌트가 처음 화면에 나타날 때(Mount) 이 코드가 실행됩니다.
-                console.log(`[${commentEditModeCheckedInFunc1.id}] 컴포넌트 마운트됨! (Mounted!)`);
-
-                return () => {
-                    // 컴포넌트가 화면에서 사라지기 직전(Unmount)에 이 코드가 실행됩니다.
-                    console.error(`[${commentEditModeCheckedInFunc1.id}] 💥 컴포넌트 언마운트됨! (UNMOUNTED!)`);
-                };
-            }, []);
-            
-            useEffect(() => {
-                console.log(`[${commentEditModeCheckedInFunc1?.id ?? "no-id"}] Mounted`);
-                return () => console.error(`[${commentEditModeCheckedInFunc1?.id ?? "no-id"}] UNMOUNTED`);
-            }, []);
-
-            useEffect(() => {
-                console.log('props changed', { layoutType, commentEditModeCheckedInFunc1 });
-            }, []);
-            
-            useEffect(() => {
-                console.log('testtest22', { layoutType, commentEditModeCheckedInFunc1 });
-            }, [commentEditModeChecked]); // test
-            
-            //
+        // function FuncCommentEditModeChecked({commentEditModeCheckedInFunc1, layoutType}) {
                 
-            let letFuncCommentEditModeChecked;
+        //     let letFuncCommentEditModeChecked;
             
-            if (commentEditModeCheckedInFunc1) {
+        //     if (commentEditModeCheckedInFunc1) {
                 
-                if (layoutType == 1) {
+        //         if (layoutType == 1) {
                     
-                    letFuncCommentEditModeChecked =
+        //             letFuncCommentEditModeChecked =
                     
-                    (
-                        <>
+        //             (
+        //                 <>
                         
-                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
-                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
-                                취소
-                            </div>
+                            // <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
+                            // style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                            //     취소
+                            // </div>
                             
-                        </>
-                    )
+        //                 </>
+        //             )
                     
-                } else if (layoutType == 2) {
+        //         } else if (layoutType == 2) {
                     
-                    letFuncCommentEditModeChecked =
+        //             letFuncCommentEditModeChecked =
                     
-                    (
-                        <>
+        //             (
+        //                 <>
                         
-                            <div className = "row">
-                                <div className = "col" style = {{marginBottom : "1vh"}}>
-                                    <div className = "row h-100">
-                                        <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
-                                            paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh"}}>
-                                            <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
+        //                     <div className = "row">
+        //                         <div className = "col" style = {{marginBottom : "1vh"}}>
+        //                             <div className = "row h-100">
+        //                                 <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
+        //                                     paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh"}}>
+        //                                     <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
                                             
-                                            id = "content" name = "content" 
-                                            value = {updateMarketCommentElementOnArticle.content}
-                                            onChange = {constApplyTextContentOnComment} 
-                                            ref = {updateCommentRef}
+        //                                     id = "content" name = "content" 
+        //                                     value = {editingContent}
+        //                                     onChange = {constApplyTextContentOnComment} 
+        //                                     ref = {updateCommentRef}
                                             
-                                            style = {{fontSize : "1.75vh"}}/>
-                                        </div>
-                                        <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1vh"}}>
-                                            <div className = "row h-100 gx-0">
-                                                <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
-                                                    <button className = "btn buttonDefault" 
-                                                    onClick = {constButtonToUpdateMarketCommentOnArticle} 
-                                                    style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        //                                     style = {{fontSize : "1.75vh"}}/>
+        //                                 </div>
+        //                                 <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1vh"}}>
+        //                                     <div className = "row h-100 gx-0">
+        //                                         <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
+        //                                             <button className = "btn buttonDefault" 
+        //                                             onClick = {constButtonToUpdateMarketCommentOnArticle} 
+        //                                             style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
+        //                                         </div>
+        //                                     </div>
+        //                                 </div>
+        //                             </div>
+        //                         </div>
+        //                     </div>
                         
 
                         
-                        </>
-                    )
+        //                 </>
+        //             )
                     
-                } else {
+        //         } else {
                     
-                    letFuncCommentEditModeChecked =
+        //             letFuncCommentEditModeChecked =
                     
-                    (
-                        <>
+        //             (
+        //                 <>
                         
-                        </>
-                    )
+        //                 </>
+        //             )
                     
-                }
+        //         }
                 
-            } else {
+        //     } else {
                 
-                if (layoutType == 1) {
+        //         if (layoutType == 1) {
                     
-                    letFuncCommentEditModeChecked =
+        //             letFuncCommentEditModeChecked =
                 
-                    (
-                        <>
+        //             (
+        //                 <>
                         
-                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
-                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
-                                수정
-                            </div>
+                            // <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
+                            // style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                            //     수정
+                            // </div>
                             
-                        </>
-                    )
+        //                 </>
+        //             )
                     
-                } else if (layoutType == 2) {
+        //         } else if (layoutType == 2) {
                     
-                    letFuncCommentEditModeChecked =
+        //             letFuncCommentEditModeChecked =
                     
-                    (
-                        <>
+        //             (
+        //                 <>
                         
-                            <div className = "row">
-                                <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh", marginBottom : "1vh"}}>
-                                    {updateMarketCommentElementOnArticle.content}
-                                </div>
-                            </div>
+        //                     <div className = "row">
+        //                         <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh", marginBottom : "1vh"}}>
+        //                             {editingContent}
+        //                         </div>
+        //                     </div>
                         
-                        </>
-                    )
+        //                 </>
+        //             )
                     
-                } else {
+        //         } else {
                     
-                    letFuncCommentEditModeChecked =
+        //             letFuncCommentEditModeChecked =
                     
-                    (
-                        <>
+        //             (
+        //                 <>
                         
-                        </>
-                    )
+        //                 </>
+        //             )
                     
-                }
+        //         }
                 
-            }
+        //     }
             
-            console.log("letFunctionTest");
-            console.log(letFuncCommentEditModeChecked);
-            return (letFuncCommentEditModeChecked);
+        //     return (letFuncCommentEditModeChecked);
             
-        }
+        // }
             
         function clickPossibleWhenCommentEditModeChecked() {
             
-            console.log("bool Test1");
             setCommentEditModeChecked(false);
             
         }
         
         function clickPossibleWhenCommentEditModeUnchecked() {
             
-            console.log("bool Test2");
             setCommentEditModeChecked(true);
             
         }
@@ -818,7 +799,32 @@ export default function MarketArticlePageTest() {
                                 <div className = "col" style = {{fontSize : "1.75vh"}}>
                                     <div className = "row">
                                         {/* <FuncCommentEditModeChecked key = {comment.id} commentEditModeCheckedInFunc1 = {commentEditModeChecked} layoutType = {1}/> */}
-                                        {constMarketCommentOnArticlePageLayout({comment : comment, commentIdOfComment : commentIdOfComment, commentEditModeChecked : commentEditModeChecked, layoutValue : 1})}
+                                        {/* {constMarketCommentOnArticlePageLayout({comment : comment, commentIdOfComment : commentIdOfComment, commentEditModeChecked : commentEditModeChecked, layoutValue : 1})} */}
+                                        
+                                        {
+                                            commentEditModeChecked ?
+                                            (
+                                                <>
+                                                
+                                                    <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
+                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                                        취소
+                                                    </div>
+                                                    
+                                                </>
+                                            ) :
+                                            (
+                                                <>
+                                                
+                                                    <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
+                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                                        수정
+                                                    </div>
+                                                
+                                                </>
+                                            )
+                                        }
+                                        
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
@@ -844,7 +850,32 @@ export default function MarketArticlePageTest() {
                                 <div className = "col" style = {{fontSize : "1.75vh"}}>
                                     <div className = "row">
                                         {/* <FuncCommentEditModeChecked key = {comment.id} commentEditModeCheckedInFunc1 = {commentEditModeChecked} layoutType = {1}/> */}
-                                        {constMarketCommentOnArticlePageLayout({comment : comment, commentIdOfComment : commentIdOfComment, commentEditModeChecked : commentEditModeChecked, layoutValue : 1})}
+                                        {/* {constMarketCommentOnArticlePageLayout({comment : comment, commentIdOfComment : commentIdOfComment, commentEditModeChecked : commentEditModeChecked, layoutValue : 1})} */}
+                                        
+                                        {
+                                            commentEditModeChecked ?
+                                            (
+                                                <>
+                                                
+                                                    <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
+                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                                        취소
+                                                    </div>
+                                                    
+                                                </>
+                                            ) :
+                                            (
+                                                <>
+                                                
+                                                    <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
+                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                                        수정
+                                                    </div>
+                                                
+                                                </>
+                                            )
+                                        }
+                                        
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
@@ -965,7 +996,54 @@ export default function MarketArticlePageTest() {
                                                 </div>
                                             </div>
                                             {/* <FuncCommentEditModeChecked key = {comment.id} commentEditModeCheckedInFunc1 = {commentEditModeChecked} layoutType = {2}/> */}
-                                            {constMarketCommentOnArticlePageLayout({comment : comment, commentIdOfComment : commentIdOfComment, commentEditModeChecked : commentEditModeChecked, layoutValue : 2})}
+                                            {/* {constMarketCommentOnArticlePageLayout({comment : comment, commentIdOfComment : commentIdOfComment, commentEditModeChecked : commentEditModeChecked, layoutValue : 2})} */}
+                                            
+                                            {commentEditModeChecked ? 
+                                            (
+                                                <>
+                                                
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{marginBottom : "1vh"}}>
+                                                            <div className = "row h-100">
+                                                                <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
+                                                                    paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh"}}>
+                                                                    <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
+                                                                    
+                                                                    id = "content" name = "content" 
+                                                                    value = {editingContent}
+                                                                    onChange = {constApplyTextContentOnComment} 
+                                                                    ref = {updateCommentRef}
+                                                                    
+                                                                    style = {{fontSize : "1.75vh"}}/>
+                                                                </div>
+                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1vh"}}>
+                                                                    <div className = "row h-100 gx-0">
+                                                                        <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
+                                                                            <button className = "btn buttonDefault" 
+                                                                            onClick = {constButtonToUpdateMarketCommentOnArticle} 
+                                                                            style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </>
+                                            ) :
+                                            (
+                                                <>
+                                                
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh", marginBottom : "1vh"}}>
+                                                            {comment}
+                                                        </div>
+                                                    </div>
+                                                
+                                                </>
+                                            )
+                                            }
+                                            
                                             <div className = "row">
                                                 <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "1.5vh", marginBottom : "0.25vh"}}>
                                                     작성 {comment.createdAt.toLocaleString()}
@@ -991,10 +1069,6 @@ export default function MarketArticlePageTest() {
     function MarketArticleUpdateOrDeleteDivisionPageLayout({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
-            
-        console.log("UpdateDeleteDivisionTest")
-        console.log(checkUserStatus);
-        console.log(article.marketUserId);
         
         let MarketArticleUpdateOrDeleteDivisionPageLayout;
         
@@ -1056,10 +1130,6 @@ export default function MarketArticlePageTest() {
     function MarketArticleLikeButtonPageLayout({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
-        
-        console.log("LikeButtonTest")
-        console.log(checkUserStatus);
-        console.log(article.marketUserId);
                                 
         if (constMarketProductInterestedLogElement.length > 0) {} else {}
         <></>
