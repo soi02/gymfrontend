@@ -25,7 +25,7 @@
 .apple-thumb{
   display: block;
   width: 100%;
-  aspect-ratio: 27 / 9;             /* 깔끔한 비율 */
+  aspect-ratio: 6 / 2;             /* 깔끔한 비율 */
   object-fit: cover;
   object-position: center;
   background: #f2f3f5;
@@ -33,17 +33,29 @@
 
 /* 본문 타이포 */
 .apple-body{
-  padding: 10px 16px 18px;          /* 이미지 아래 바로 이어짐 */
+  padding: 7px 16px 13px;          /* 이미지 아래 바로 이어짐 */
 }
 
-/* .apple-eyebrow{
+/* 해시태그 칩 */
+.apple-keywords { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 8px 0; }
+.apple-keyword {
+  background:#ffffff; color:#333; border:1px solid rgba(0,0,0,.06);
+  border-radius:999px; padding:4px 10px; font-size:0.7rem; font-weight:500; white-space:nowrap;
+}
+
+.apple-keyword:hover {
+  background-color: #e0e0e0;
+}
+
+
+.apple-eyebrow{
   margin: 0 0 6px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .2px;
   color: #6e6e73;          
   text-transform: none;
-} */
+}
 
 .apple-title{
   margin: 0 0 6px;
@@ -81,8 +93,78 @@
   background: rgba(0,0,0,0.7);
   color: #fff;
   font-size: 12px;
-  font-weight: 600;
-  border-radius: 14px;
+  /* font-weight: 600; */
+  border-radius: 0.48rem;
+  letter-spacing: 0.2px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.apple-body-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.apple-text {
+  flex: 1;
+}
+
+.apple-chevron {
+  font-size: 18px; /* iOS 느낌 크기 */
+  color: #c7c7cc;  /* iOS 시스템 회색 */
+  flex-shrink: 0;
+  margin-left: 8px;
+  transition: color 0.2s ease;
+}
+
+.apple-card:hover .apple-chevron {
+  color: #8e8e93; /* 호버 시 진해짐 */
+  transform: translateX(2px);
+}
+
+
+
+
+/* 옵션: 은은한 패턴을 정말 살짝만 (원하면 .with-pattern 추가) */
+.color-skin.with-pattern::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--han-pattern, none);
+  background-repeat: no-repeat;
+  background-position: right -8px top -8px;
+  background-size: 120px;
+  opacity: 0.06; /* 진하면 0.08~0.12 */
+}
+
+
+
+
+
+
+/* 메타 정보 (아이콘 + 텍스트) */
+.meta-row { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; margin-top:6px; }
+.meta-item { display:flex; align-items:center; gap:6px; }
+.meta-ic { font-size:16px; color:#8e8e93; }
+.meta-txt { font-size:12px; color:#6a778a; }
+
+
+
+
+
+
+.duration-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 12px;
+  /* font-weight: 600; */
+  border-radius: 0.48rem;
   letter-spacing: 0.2px;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
