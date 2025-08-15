@@ -239,3 +239,88 @@
   box-shadow: 0 10px 24px #1d52695a;
 }
 .pf-btn:active{ transform: translateY(1px); }
+
+/* 1:1 정사각형 카드 */
+.pf-card-media{
+  position:relative;
+  width:100%;
+  max-width:520px;
+  aspect-ratio:1 / 1;      /* ✅ 정사각형 */
+  border-radius:26px;
+  overflow:hidden;
+  background:#bad8ff;      /* 기본 배경 (사진 없을 때) */
+}
+
+/* 사진 배경 */
+.pf-card-media.has-photo{
+  background-image:var(--pf-bg);
+  background-size:cover;
+  background-position:center center;
+}
+
+/* 가독성 오버레이(좌측을 더 어둡게 해서 왼쪽 텍스트가 잘 보이게) */
+.pf-media-overlay{
+  position:absolute; inset:0;
+  background: radial-gradient(120% 100% at 0% 70%, rgba(0,0,0,.45) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.10) 70%, rgba(0,0,0,.0) 100%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* 상단 헤더: 좌 로고 / 우 날짜 */
+.pf-share-header{
+  position:absolute; top:14px; left:14px; right:14px;
+  display:flex; align-items:center; justify-content:space-between;
+  z-index:1;
+}
+.pf-share-logo{ height:28px; width:auto; filter:drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
+.pf-share-date{
+  color:#ffffff; font-weight:1000; letter-spacing:.2px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.45);
+}
+
+
+
+.pf-sticker{
+  position:absolute; right:18px; bottom:18px;
+  width:min(34%, 60px); height:auto;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,.35));
+  z-index:1;
+}
+
+/* 사진 없을 때 읽기 좋은 컬러 */
+.pf-card-media:not(.has-photo) .pf-share-date{ color:#0f172a; }
+.pf-card-media:not(.has-photo) .pf-stat{
+  background:#e8eef7; color:#0f172a; box-shadow:none;
+}
+
+/* 좌하단 통합 박스 */
+.pf-stats-box{
+  position:absolute; left:16px; bottom:16px;
+  width:min(62%, 130px);
+  font-size: 0.9rem;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255, 255, 255, 0.137);
+  backdrop-filter:blur(3px);
+  color:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  z-index:1;
+}
+
+/* 사진이 없을 때 가독성 색상 */
+.pf-card-media:not(.has-photo) .pf-stats-box{
+  background:#e8eef7;
+  color:#0f172a;
+  box-shadow:none;
+}
+
+/* 행(아이콘/라벨/값) */
+.pf-stat-row{
+  display:flex; align-items:center; gap:1px;
+  padding:0;
+  font-weight:800;
+}
+
+.pf-stat-ico{ font-size:0.9rem; flex:0 0 auto; filter:drop-shadow(0 1px 6px rgba(0,0,0,.25)); }
+.pf-stat-name{ min-width:18px; opacity:.95; }
+.pf-stat-value{ margin-left:1rem; }
