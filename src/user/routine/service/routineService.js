@@ -1,102 +1,123 @@
-import axios from "axios"
-import { useSelector } from "react-redux";
-
+// useRoutineService.js
+import axios from "axios";
+import { useCallback, useMemo } from "react";
 
 const API_BASE_URL = "http://localhost:8080/api/routine";
 
-
 export default function useRoutineService() {
+  // 1) axios 인스턴스 고정
+  const api = useMemo(() => {
+    return axios.create({ baseURL: API_BASE_URL });
+  }, []);
 
-    const BASE_URL = "http://localhost:8080/api/routine";
+  // 토큰 헤더 합치기 유틸 (필요한 곳에서만 씀)
+  const withAuth = useCallback((cfg = {}) => {
+    const token = localStorage.getItem("token");
+    return token
+      ? { ...cfg, headers: { ...(cfg.headers || {}), Authorization: `Bearer ${token}` } }
+      : cfg;
+  }, []);
 
-    const userId = useSelector(state => state.auth.id);
+  // 2) API 함수들을 useCallback으로 고정
+  const getWorkoutList = useCallback(async () => {
+    const res = await api.get(`/getArticleList`);
+    return res.data;
+  }, [api]);
 
-    
+  const getWorkoutGuide = useCallback(async (id) => {
+    const res = await api.get(`/getWorkoutGuide/${id}`);
+    return res.data;
+  }, [api]);
 
-    const getWorkoutList = async() => {
-        const response = await axios.get(`${BASE_URL}/getArticleList`);
-        return response.data;
-    }
-
-    const getWorkoutGuide = async(id) => {
-        const response = await axios.get(`${BASE_URL}/getWorkoutGuide/${id}`);
-        return response.data;
-    }
-
-    const saveRoutine = async(payload) => {
-        const response = await axios.post(
-            `${BASE_URL}/saveRoutine`,
-            payload,
-            {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
-        
-        );
-        return response.data;
-    }
-
-    const getRoutinesByUserId = async (userId) => {
-        const token = localStorage.getItem("token");
-
-        const response = await axios.get(`${BASE_URL}/getRoutinesByUserId/${userId}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        });
-
-        return response.data;
-    };
-
-      const getRoutineDetail = async (routineId) => {
-        const response = await axios.get(`${BASE_URL}/list/${routineId}`);
-        return response.data;
-    };
-
-    const getFullRoutineDetail = async (routineId) => {
-        const response = await axios.get(`${BASE_URL}/routineSets/${routineId}`);
-        return response.data;
-    };
-
-    const saveActualWorkout = async (data) => {
-        return await axios.post(`${BASE_URL}/saveActualWorkout`, data);
-    };
-
-    const getActualWorkout = async(workoutId) => {
-        return await axios.get(`${BASE_URL}/result/${workoutId}`);
-    }
-
-    const getWorkoutByDate = async (id, selectedDate) => {
-    return await axios.get(`${BASE_URL}/getWorkoutByDate`, {
-        params: {
-        userId: userId,
-        date: selectedDate
-        }
+  const saveRoutine = useCallback(async (payload) => {
+    const res = await api.post(`/saveRoutine`, payload, {
+      headers: { "Content-Type": "application/json" },
     });
-    };
+    return res.data;
+  }, [api]);
 
-    const getWorkoutDatesBetween = (userId, startDate, endDate) => {
-        return axios.get(`${BASE_URL}/getWorkoutDatesBetween`,{
-            params: { userId, startDate, endDate },
-        });
-    }
+  const getRoutinesByUserId = useCallback(async (userId) => {
+    const res = await api.get(`/getRoutinesByUserId/${userId}`, withAuth());
+    return res.data;
+  }, [api, withAuth]);
 
+  const getRoutineDetail = useCallback(async (routineId) => {
+    const res = await api.get(`/list/${routineId}`);
+    return res.data;
+  }, [api]);
 
+  const getFullRoutineDetail = useCallback(async (routineId) => {
+    const res = await api.get(`/routineSets/${routineId}`);
+    return res.data;
+  }, [api]);
 
-    const updateMemo = async (elementId, memoContent) => {
-        const payload = { elementId, memoContent };
-        return await axios.post(`${BASE_URL}/updateMemo`, payload, {
-            headers: { "Content-Type" : "application/json" }
-        });
-    };
+  const saveActualWorkout = useCallback(async (data) => {
+    // auth 필요한 엔드포인트면 withAuth() 추가
+    return await api.post(`/saveActualWorkout`, data, withAuth());
+  }, [api, withAuth]);
 
-    const youtubeSearch = async (q) => {
-        const response = await axios.get(`${API_BASE_URL}/youtube/search`, { params: { q }  });
-        return response.data;
-        
-    }
+  const getActualWorkout = useCallback(async (workoutId, cfg = {}) => {
+    // 👇 컴포넌트 useEffect 의존성에 넣어도 이제 레퍼런스 고정됨
+    return await api.get(`/result/${workoutId}`, withAuth(cfg));
+  }, [api, withAuth]);
 
+  // 3) 버그 수정: 인자로 받은 userId를 실제로 사용
+  const getWorkoutByDate = useCallback(async (userId, selectedDate) => {
+    return await api.get(`/getWorkoutByDate`, {
+      params: { userId, date: selectedDate },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
 
-    return {getWorkoutList, getWorkoutGuide, saveRoutine, getRoutinesByUserId, getRoutineDetail, getFullRoutineDetail, saveActualWorkout, getActualWorkout, getWorkoutByDate, getWorkoutDatesBetween, updateMemo, youtubeSearch};
+  const getWorkoutDatesBetween = useCallback((userId, startDate, endDate) => {
+    return api.get(`/getWorkoutDatesBetween`, {
+      params: { userId, startDate, endDate },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  const updateMemo = useCallback(async (elementId, memoContent) => {
+    const payload = { elementId, memoContent };
+    return await api.post(`/updateMemo`, payload, {
+      headers: { "Content-Type": "application/json" },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  const youtubeSearch = useCallback(async (q) => {
+    const res = await api.get(`/youtube/search`, { params: { q } });
+    return res.data;
+  }, [api]);
+
+  // (선택) 반환 객체도 고정하고 싶다면 useMemo로 감싸기
+  return useMemo(
+    () => ({
+      getWorkoutList,
+      getWorkoutGuide,
+      saveRoutine,
+      getRoutinesByUserId,
+      getRoutineDetail,
+      getFullRoutineDetail,
+      saveActualWorkout,
+      getActualWorkout,
+      getWorkoutByDate,
+      getWorkoutDatesBetween,
+      updateMemo,
+      youtubeSearch,
+    }),
+    [
+      getWorkoutList,
+      getWorkoutGuide,
+      saveRoutine,
+      getRoutinesByUserId,
+      getRoutineDetail,
+      getFullRoutineDetail,
+      saveActualWorkout,
+      getActualWorkout,
+      getWorkoutByDate,
+      getWorkoutDatesBetween,
+      updateMemo,
+      youtubeSearch,
+    ]
+  );
 }
