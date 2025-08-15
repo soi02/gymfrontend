@@ -85,6 +85,12 @@ export default function MarketArticlePageTest() {
         return { comment, userInfo };
     });
     
+    const handleEditMode = (targetId) => {
+        
+        
+        
+    } 
+    
     const handleUpdateComment = async (targetId, newContent) => {
         
         const targetElement = mergeMarketCommentEditElementListOnArticle.find(
@@ -241,7 +247,8 @@ export default function MarketArticlePageTest() {
                 setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
-                    userInfo : APIElem1.marketUserInfoDto
+                    userInfo : APIElem1.marketUserInfoDto,
+                    // editCondition : false
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
                 setMergeMarketCommentEditElementListOnArticle(constCommentOnArticleElementsFromAPI);
