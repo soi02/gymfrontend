@@ -126,6 +126,19 @@ export default function MarketWriteArticlePage() {
         
     }
     
+    const constRemoveImageLink = () => {
+        
+        if (previewURL) {
+            
+            URL.revokeObjectURL(previewURL);
+            
+        }
+        
+        setInsertImageLink(null);
+        setPreviewURL("")
+        
+    }
+    
     const constApplyTextContent = (element) => {
         
         const { name, value } = element.target;
@@ -241,8 +254,8 @@ export default function MarketWriteArticlePage() {
                                                             </div>
                                                     </div>
                                                     <div className = "col" style = {{padding : "0vh", marginLeft : "2vh", marginRight : "2vh", 
-                                                    border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh", overflow : "hidden"
-                                                    }}>
+                                                    border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh", overflow : "hidden"}}> 
+                                                    {/* ui 추후 보완 (어차피 갈아엎어야 되고 기능 구현이 우선. ui 정렬 어떻게 하는지 방법 알고 있음) */}
                                                         <div className = "row gx-0 flex-nowrap">
                                                             <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden",
                                                                 display: "flex", justifyContent: "center", padding : "0vh", alignItems: "center", marginBottom : "2.5vh", 
@@ -280,7 +293,21 @@ export default function MarketWriteArticlePage() {
                                                 가져온 사진 목록 2 <br />
                                                 가져온 사진 목록 3 <br />
                                                 가져온 사진 목록 4 <br /> */}
-                                                {insertImageLink.name}
+                                                {
+                                                    insertImageLink ?
+                                                    <div className = "row">
+                                                        <div className = "col">
+                                                            {
+                                                            insertImageLink.name}
+                                                        </div>
+                                                        <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                        onClick = {constRemoveImageLink}>
+                                                            ×
+                                                        </div>
+                                                    </div>
+                                                    :
+                                                    <></>
+                                                }
                                             </div>
                                         </div>
                                         <div className = "row">
