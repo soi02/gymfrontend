@@ -1,31 +1,40 @@
 import { Link, useLocation } from "react-router-dom";
 
 function TabItem({ to, label }) {
-  const location = useLocation();
-    // 경로가 'to'로 시작하면 true
-    // 예: /challenge/challengeMyRecordDetail/123 -> /challenge/challengeMy 로 시작
-    const isActive = location.pathname.startsWith(to);
+    const location = useLocation();
 
-  return (
-<Link
-  to={to}
-  style={{
-    display: 'inline-block',
-    fontSize: '14px',
-    fontWeight: isActive ? '700' : '500',
-    color: isActive ? '#000' : '#aaa',
-    borderBottom: isActive ? '2px solid #000' : 'none',
-    padding: '10px 12px 8px',
-    textDecoration: 'none',
-    whiteSpace: 'nowrap',
-    lineHeight: '1',
-    verticalAlign: 'bottom',
-  }}
->
-  {label}
-</Link>
+    // ✅ 경로에 따라 isActive를 다르게 처리하는 로직 추가
+    let isActive = false;
+    
+    if (to === "/challenge/challengeList") {
+        // '수련 목록' 탭은 '/challenge/challengeList', '/challenge/category', '/challenge/detail' 경로에서 모두 활성화
+        isActive = location.pathname.startsWith("/challenge/challengeList") 
+            || location.pathname.startsWith("/challenge/category") 
+            || location.pathname.startsWith("/challenge/detail");
+    } else {
+        // 나머지 탭은 기존 로직대로 정확한 경로에서만 활성화
+        isActive = location.pathname.startsWith(to);
+    }
 
-  );
+    return (
+        <Link
+            to={to}
+            style={{
+                display: 'inline-block',
+                fontSize: '14px',
+                fontWeight: isActive ? '700' : '500',
+                color: isActive ? '#000' : '#aaa',
+                borderBottom: isActive ? '2px solid #000' : 'none',
+                padding: '10px 12px 8px',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+                lineHeight: '1',
+                verticalAlign: 'bottom',
+            }}
+        >
+            {label}
+        </Link>
+    );
 }
 
 export default function ChallengeTopTabs() {
