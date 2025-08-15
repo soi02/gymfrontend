@@ -91,6 +91,12 @@ export default function useMarketAPI() {
         });
         return response.data;
     }
+    const getSelectSpecificMarketCommentOnArticle = async(id) => {
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketCommentOnArticle`, {
+            params : {id}
+        });
+        return response.data;
+    }
         
     const postUpdateMarketCommentOnArticle = async(payload) => {
         const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketCommentOnArticle`,
@@ -258,7 +264,8 @@ export default function useMarketAPI() {
     return {
         getSelectMarketUserInfo, postInsertMarketArticle, getSelectMarketArticle, getSelectSpecificMarketArticle, getSelectSpecificMarketArticleInfo, 
         postUpdateMarketArticle, postDeleteMarketArticle, postInsertMarketCommentOnArticle, 
-        getSelectMarketCommentOnArticle, getSelectCountMarketCommentOnArticle, postUpdateMarketCommentOnArticle, postDeleteMarketCommentOnArticle, 
+        getSelectMarketCommentOnArticle, getSelectCountMarketCommentOnArticle, getSelectSpecificMarketCommentOnArticle, 
+        postUpdateMarketCommentOnArticle, postDeleteMarketCommentOnArticle, 
         postInsertMarketProductInterestedLog, postDeleteMarketProductInterestedLog, 
         getSelectMarketProductInterestedLogWhenUserInfo, getSelectCountMarketProductInterestedLogWhenUserInfo, 
         getSelectMarketProductInterestedLogWhenArticleInfo, getSelectCountMarketProductInterestedLogWhenArticleInfo,

@@ -58,15 +58,6 @@ export default function MarketArticlePageTest() {
     .filter(element => element.specificArticleId === 1 && element.marketUserId === 2)
     .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element.id} elem1 = {element}/>)
     
-    const [marketCommentListOnArticle, setMarketCommentListOnArticle] = useState([
-        {id : 0, articleId : 0, marketUserId : 0, comment : "ERROR", 
-        createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null},
-    ]) 
-    
-    const [marketUserInfoListOnCommentOnArticle, setMarketUserInfoListOnCommentOnArticle] = useState([
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
-    ])
-    
     const [mergeMarketCommentListOnArticle, setMergeMarketCommentListOnArticle] = useState([
         {
             
@@ -111,7 +102,33 @@ export default function MarketArticlePageTest() {
         
         try {
             
+            // const [ constPostUpdateSpecificMarketCommentOnArticle, constGetSelectSpecificMarketCommentOnArticle ] = await Promise.all([
+            //     marketAPI.postUpdateMarketCommentOnArticle(submitUpdateCommentData),
+            //     marketAPI.getSelectSpecificMarketCommentOnArticle(submitUpdateCommentData.id)
+            // ])
+            
             const constPostUpdateSpecificMarketCommentOnArticle = await marketAPI.postUpdateMarketCommentOnArticle(submitUpdateCommentData);
+            const constGetSelectSpecificMarketCommentOnArticle = await marketAPI.getSelectSpecificMarketCommentOnArticle(submitUpdateCommentData.id);
+            
+            const constGetSelectSpecificMarketCommentElementOnArticle = {
+                comment : constGetSelectSpecificMarketCommentOnArticle.marketCommentOnArticleDto,
+                userInfo : constGetSelectSpecificMarketCommentOnArticle.marketUserInfoDto
+            }
+            
+            setMergeMarketCommentListOnArticle(currentList =>
+                currentList.map(element => {
+                    
+                    if (element.comment.id === submitUpdateCommentData.id) {
+                        
+                        return constGetSelectSpecificMarketCommentElementOnArticle; 
+                    }
+                    
+                    return element;
+                })
+            );
+            
+            console.log("constGetSelectSpecificMarketCommentElementOnArticle");
+            console.log(constGetSelectSpecificMarketCommentElementOnArticle);
             
         } catch (error) {
             console.error("로드 실패:", error);
@@ -215,9 +232,6 @@ export default function MarketArticlePageTest() {
                     marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                 ]) 
                 
-                console.log("APITest")
-                console.log(constGetSelectSpecificMarketArticleInfo)
-                console.log(constGetSelectMarketCommentOnArticle)
                 const constGetSelectSpecificMarketArticleInfoAndDistincted = {
                     article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
                     userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
@@ -297,16 +311,12 @@ export default function MarketArticlePageTest() {
                     marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
                 ]) 
                 
-                console.log("APITest")
-                console.log(constGetSelectSpecificMarketArticleInfo)
-                console.log(constGetSelectMarketCommentOnArticle)
                 const constGetSelectSpecificMarketArticleInfoAndDistincted = {
                     article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
                     userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
                 }
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
-                setMarketUserInfoOnArticle([constGetSelectMarketUserInfo]);
                 setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
@@ -632,26 +642,6 @@ export default function MarketArticlePageTest() {
         }
         
         const handleSubmit = () => {
-            
-            // const submitCommentOnArticleData = {
-            //     ...mergeMarketCommentEditElementListOnArticle,
-            //     comment : {
-            //         ...mergeMarketCommentEditElementListOnArticle.comment,
-            //         content : updateCommentRef.current.value
-            //     }
-            // }
-            
-            // console.log("api error test");
-            // console.log(submitCommentOnArticleData);
-            // console.log(editingContent);
-            
-            // try {
-                
-            //     const constPostUpdateMarketCommentOnArticle = await marketAPI.postUpdateMarketCommentOnArticle(submitCommentOnArticleData);
-                
-            // } catch (error) {
-            //     console.error("로드 실패:", error);
-            // }
             
             onUpdateConfirm(comment.id, editingContent);
             
