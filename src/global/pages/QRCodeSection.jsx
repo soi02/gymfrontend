@@ -7,8 +7,8 @@ const QRCodeSection = () => {
   return (
     <div className="qr-code-container">
       <div className="qr-code-box">
-        <h4>모바일에서 접속</h4>
-        <p>QR 코드를 스캔하여 모바일 기기에서 최적화된 화면으로 FLOg을 경험해보세요.</p>
+        {/* <h4>모바일에서 접속</h4> */}
+        <p>지금 바로 스마트폰으로 QR 코드를 스캔하고, 어디서든 짐마당의 모든 기능을 만나보세요.</p>
         <div className="qr-code-image-wrapper">
           {/* QR 코드 이미지를 여기에 넣습니다. */}
           <img src={qrImage} alt="모바일 접속 QR 코드" />

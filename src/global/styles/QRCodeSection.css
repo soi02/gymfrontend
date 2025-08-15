@@ -1,23 +1,23 @@
 /* src/components/QRCodeSection.css */
 
 .qr-code-container {
-    /* 너비를 명확하게 고정 */
-    width: 3000px; 
     padding: 20px;
-    margin-left: 20px;
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     text-align: center;
+    /* 기본적으로 모바일에서는 보이지 않도록 설정 */
+    display: none;
 }
 
-.qr-code-box {
-    /* flexbox 사용 시 내부 정렬을 위해 남겨둠 */
-}
-
-.qr-code-box h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+/* 1024px 이상 화면에서만 보이도록 설정 */
+@media (min-width: 1024px) {
+    .qr-code-container {
+        display: block; /* PC일 때 보이게 함 */
+        width: 300px; /* 고정된 너비 */
+        margin-left: 20px;
+        min-height: 500px; /* 최소 높이 지정 */
+    }
 }
 
 .qr-code-box p {
@@ -27,14 +27,12 @@
 }
 
 .qr-code-image-wrapper {
-    /* 이미지 래퍼의 크기 지정 */
     width: 150px;
     height: 150px;
     margin: 0 auto 15px;
 }
 
 .qr-code-image-wrapper img {
-    /* 이미지 크기를 부모에 맞춤 */
     width: 100%;
     height: 100%;
 }
