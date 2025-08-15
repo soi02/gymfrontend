@@ -10,7 +10,7 @@
   transition: transform .18s ease, box-shadow .18s ease;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
-  margin-top: 1.3rem;
+  /* margin-top: 1.3rem; */
   margin-bottom: 1.3rem;
 }
 .challenge-card.apple-card:hover{
