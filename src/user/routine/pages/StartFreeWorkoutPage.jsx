@@ -482,11 +482,11 @@ export default function StartFreeWorkoutPage() {
             <div className="routine-timer-modal-content">
               <h4>휴식</h4>
               <br />
-              <h1>{countdown}초</h1>
+              <h1>⏱️{countdown}초</h1>
               {/* <div className="digital-timer">
                         {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
                       </div> */}
-              <p>휴식 타이머는 우측 상단에서 조정할 수 있소.</p>
+              <p>휴식 타이머는 <br></br> 우측 상단에서 조정할 수 있소.</p>
 
               <button
                 className="swo-btn"

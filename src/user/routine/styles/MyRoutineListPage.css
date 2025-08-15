@@ -122,3 +122,57 @@
   margin: 0.4rem 0; /* 위아래 간격 균등하게 조정 */
   text-align: center;
 }
+
+
+/* 카드/행 */
+.routine-exercise-block {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.routine-exercise-row {
+  width: 100%;
+  display: flex; align-items: center; gap: 12px;
+  background: transparent; border: 0; padding: 12px 8px;
+  cursor: pointer; text-align: left;
+}
+
+.routine-exercise-img {
+  width: 56px; height: 56px; object-fit: cover; border-radius: 8px;
+}
+
+.routine-exercise-info .exercise-category {
+  font-size: .8rem; color: #888;
+}
+.routine-exercise-info .exercise-name {
+  font-size: 1rem; font-weight: 600;
+}
+
+/* > 아이콘 회전 */
+.chevron {
+  margin-left: auto;
+  transition: transform .18s ease;
+  font-size: 1.1rem;
+}
+.chevron.open {
+  transform: rotate(90deg);
+}
+
+/* 펼쳐진 세트 영역 */
+.exercise-sets {
+  padding: 6px 8px 12px 40px; /* 썸네일 라인 맞춤 */
+  background-color: rgb(238, 238, 238);
+  border-radius: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.set-table {
+  width: 100%; border-collapse: collapse; font-size: .95rem;
+}
+.set-table th, .set-table td {
+  padding: 8px 6px; border-bottom: 1px dashed rgba(0,0,0,.06);
+}
+.set-table th { text-align: left; color: #666; font-weight: 500; }
+
+.set-empty {
+  color: #888; font-size: .9rem; padding: 8px 2px;
+}

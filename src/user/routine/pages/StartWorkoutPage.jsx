@@ -21,6 +21,10 @@ export default function StartWorkoutPage() {
   const navigate = useNavigate();
   const timerMenuRef = useRef(null);
 
+
+// ✅ 기본 60초 — deps에서 쓰이므로 여기(위쪽)에 선언해야 함
+const [restDuration, setRestDuration] = useState(60);
+
   useEffect(() => {
     setStartTime(new Date());
   }, []);
@@ -139,36 +143,26 @@ export default function StartWorkoutPage() {
   const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
-    if (showTimerModal && countdown > 0) {
-      const timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else if (countdown === 0) {
-      setShowTimerModal(false);
-      setCountdown(60);
-    }
-  }, [showTimerModal, countdown]);
+  if (showTimerModal && countdown > 0) {
+    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    return () => clearTimeout(timer);
+  } else if (countdown === 0) {
+    setShowTimerModal(false);
+    setCountdown(restDuration); // 0초 끝나면 닫고 기본값으로
+    if (navigator.vibrate) navigator.vibrate(200); // 선택: 진동 알림
+  }
+}, [showTimerModal, countdown, restDuration]);
+
 
   const [useRestTimer, setUseRestTimer] = useState(true);
 
-  const [timeLeft, setTimeLeft] = useState(60);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
 
   const [showMenu, setShowMenu] = useState(false); // ✅ 이거 추가!
   const [showTimerMenu, setShowTimerMenu] = useState(false);
 
   // 기본 60초
-  const [restDuration, setRestDuration] = useState(60);
 
   // 10초 단위 증감 + 최소/최대 클램프
   const STEP = 10;
@@ -195,6 +189,9 @@ export default function StartWorkoutPage() {
     if (showTimerMenu) document.addEventListener("mousedown", onClickOutsie);
     return () => document.removeEventListener("mousedown", onClickOutsie);
   }, [showTimerMenu]);
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
 
   return (
     <div className="swp-main-content">
@@ -390,11 +387,13 @@ export default function StartWorkoutPage() {
                         setRoutineSets(newRoutineSets);
                       }
 
+                      // ✅ 설정한 휴식시간으로 타이머 시작
                       if (e.target.checked && useRestTimer) {
                         setShowTimerModal(true);
-                        setCountdown(60);
+                        setCountdown(restDuration); // ← 여기!
                       }
                     }}
+
                   />
                 </div>
               ))}
@@ -449,6 +448,63 @@ export default function StartWorkoutPage() {
             </button>
           </div>
         </div>
+
+        {showTimerModal && (
+          <div className="routine-timer-modal">
+            <div className="routine-timer-modal-content">
+              <h4>휴식</h4>
+              <br />
+              <h1>⏱️{countdown}초</h1>
+              {/* <div className="digital-timer">
+                        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+                      </div> */}
+              <p>휴식 타이머는 <br></br> 우측 상단에서 조정할 수 있소.</p>
+
+              <button
+                className="swo-btn"
+                onClick={() => {
+                  setShowTimerModal(false);
+                  setCountdown(restDuration);
+                }}
+              >
+                닫기
+              </button>
+            </div>
+          </div>
+        )}
+
+        {showConfirmModal && (
+          <div className="routine-timer-modal">
+            <div className="routine-timer-modal-content">
+              <h5>운동 종료</h5>
+              <p>체크 표시한 운동만 기록됩니다.</p>
+              <p>정말 종료하시겠습니까?</p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "1rem",
+                  marginTop: "1.5rem",
+                }}
+              >
+                <button
+                  className="sfwp-cancel-btn"
+                  onClick={() => setShowConfirmModal(false)}
+                >
+                  취소
+                </button>
+                <button
+                  className="sfwp-confirm-end-btn"
+                  onClick={handleComplete}
+                >
+                  종료
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+
       </div>
     </div>
   );
