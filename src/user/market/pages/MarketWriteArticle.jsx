@@ -1,18 +1,103 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MarketFetchMyPhotoOnWriteArticle from "../components/MarketFecthMyPhotoOnWriteArticle";
 import useMarketAPI from "../service/MarketService";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import MarketBoardPage from "./MarketBoard";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "../../../redux/authSlice";
+import axios from "axios";
 
 export default function MarketWriteArticlePage() {
+    
+    const dispatch = useDispatch();
+    
+    //
+    
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
+      
+        const checkAuth = async () => {
+            
+            console.log("checkAuth is running");
+            
+            const tokenOnCheckAuth =  localStorage.getItem("token");
+            
+            if (!tokenOnCheckAuth) {
+                
+                return;
+                
+            }
+            
+            try {
+                
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
+                
+                if (resOnCheckAuth.data.success) {
+                    
+                    dispatch(loginAction(resOnCheckAuth.data))
+                    
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    
+                }
+                
+            } catch (error) {
+                
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
+                
+            }
+            
+        }
+        
+        checkAuth();
+        
+    }, [])
+    
+    //
     
     const checkUserStatus = 2;
     
     const navigate = useNavigate();
     
+    const imageLinkRef = useRef(null);
     const titleRef = useRef(null);
     const productCostRef = useRef(null);
     const contentRef = useRef(null);
+    
+    const [insertImageLink, setInsertImageLink] = useState(null);
+    const [previewURL, setPreviewURL] = useState('');
     
     const [insertMarketArticleElement, setInsertMarketArticleElement] = useState(
         {id : 1, marketUserId : checkUserStatus, imageLink : null, mainImageId : 0, title : "", content : "", productCostOption : 0, productCost : 0,
@@ -21,6 +106,25 @@ export default function MarketWriteArticlePage() {
     )
     
     const marketAPI = useMarketAPI();
+    
+    const handleDivisionClick = () => {
+        
+        imageLinkRef.current.click();
+        
+    }
+    
+    const constApplyImageLink = (element) => {
+        
+        const constFile = element.target.files[0];
+        
+        if (constFile && constFile.type.startsWith('image/')) {
+            
+            const constInsertImageLink = setInsertImageLink(constFile);
+            setPreviewURL(URL.createObjectURL(constFile));
+            
+        }
+        
+    }
     
     const constApplyTextContent = (element) => {
         
@@ -92,6 +196,19 @@ export default function MarketWriteArticlePage() {
         
     }
     
+    useEffect(() => {
+        
+        if (insertImageLink && previewURL) {
+            
+            console.log("insertImageLink : ", insertImageLink);
+            console.log("previewURL : ", previewURL);
+            
+        }
+        
+    }, [insertImageLink, previewURL])
+    
+    // ▲ 이미지 미리보기 용도
+    
     return(
         <>
         
@@ -114,20 +231,61 @@ export default function MarketWriteArticlePage() {
                                         <div className = "row">
                                             <div className = "col" style = {{marginBottom : "2vh"}}>
                                                 <div className = "row gx-0">
-                                                    <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                    <div className = "col-auto" style = {{width : "15vh", height : "15vh", overflow : "hidden", position : "relative",
                                                     paddingLeft : "0vh", paddingRight : "0vh", border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
-                                                        <MarketFetchMyPhotoOnWriteArticle />
+                                                        <input type = "file" style = {{display : "none"}} accept = "image*" onChange = {constApplyImageLink} ref = {imageLinkRef} />
+                                                            <div className = "row">
+                                                                <div className = "col basicDivisionOnClickStyle" onClick = {handleDivisionClick}>
+                                                                    <MarketFetchMyPhotoOnWriteArticle />
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div className = "col" style = {{padding : "0vh", marginLeft : "2vh", marginRight : "2vh", 
+                                                    border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh", overflow : "hidden"
+                                                    }}>
+                                                        <div className = "row gx-0 flex-nowrap">
+                                                            <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden",
+                                                                display: "flex", justifyContent: "center", padding : "0vh", alignItems: "center", marginBottom : "2.5vh", 
+                                                                border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
+                                                                <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                            </div>
+                                                            <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                                <div className = "row">
+                                                                    <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
+                                                                    </div>
+                                                                    <div className = "col" style = {{flexGrow : "8", padding : "0vh"}}>
+                                                                        대표 사진으로 
+                                                                        <br />
+                                                                        표시됩니다.
+                                                                    </div>
+                                                                    <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        {/* <div className = "row">
+                                            <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden",
+                                                display: "flex", justifyContent: "center", alignItems: "center", marginBottom : "2.5vh"}}>
+                                                <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                            </div>
+                                        </div> */}
                                         <div className = "row gx-0">
                                             <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", 
                                             marginBottom : "1vh", height : "9.5vh", overflowY : "auto"}}>
-                                                가져온 사진 목록 1 <br />
+                                                {/* 가져온 사진 목록 1 <br />
                                                 가져온 사진 목록 2 <br />
                                                 가져온 사진 목록 3 <br />
-                                                가져온 사진 목록 4 <br />
+                                                가져온 사진 목록 4 <br /> */}
+                                                {insertImageLink.name}
+                                            </div>
+                                        </div>
+                                        <div className = "row">
+                                            <div className = "col" style = {{fontSize : "1.5vh", marginTop : "0.75vh"}}>
+                                                <i className="ri-information-line"></i> 선택한 사진이 대표 사진으로 표시됩니다.
                                             </div>
                                         </div>
                                     </div>
