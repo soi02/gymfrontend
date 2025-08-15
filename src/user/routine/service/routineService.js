@@ -89,7 +89,21 @@ export default function useRoutineService() {
     return res.data;
   }, [api]);
 
-  // (선택) 반환 객체도 고정하고 싶다면 useMemo로 감싸기
+    // 🔥 사진+메모 업서트 (multipart)
+const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => {
+  const form = new FormData();
+  if (memo !== undefined) form.append("memo", memo);
+  if (file) form.append("file", file, file.name);
+  // ❌ headers에 Content-Type 직접 지정하지 않기
+  return api.post(`/workoutLog/${workoutId}/extras`, form, withAuth());
+}, [api, withAuth]);
+
+
+  // 🔥 workout_log 조회
+  const getWorkoutLog = useCallback(async (workoutId) => {
+    return await api.get(`/workoutLog/${workoutId}`, withAuth());
+  }, [api, withAuth]);
+
   return useMemo(
     () => ({
       getWorkoutList,
@@ -104,6 +118,9 @@ export default function useRoutineService() {
       getWorkoutDatesBetween,
       updateMemo,
       youtubeSearch,
+      upsertWorkoutLogExtras,
+      getWorkoutLog
+
     }),
     [
       getWorkoutList,
@@ -118,6 +135,13 @@ export default function useRoutineService() {
       getWorkoutDatesBetween,
       updateMemo,
       youtubeSearch,
+      upsertWorkoutLogExtras,
+      getWorkoutLog,
+
     ]
   );
+
+
+
+
 }

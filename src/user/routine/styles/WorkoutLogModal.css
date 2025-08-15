@@ -1,0 +1,18 @@
+/* modal */
+.wlm-backdrop{
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display:flex; align-items:center; justify-content:center; z-index: 1000;
+}
+.wlm-modal{
+  width: min(520px, 92vw); background:#fff; border-radius:16px; padding:16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+.wlm-file input{ width:100%; }
+.wlm-preview{ width:50%; height:auto; border-radius:12px; margin:10px 0; }
+.wlm-textarea{
+  width:100%; border:1px solid #e5e7eb; border-radius:12px; padding:10px; resize:vertical;
+}
+.wlm-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+.wlm-btn{ padding:10px 14px; border-radius:10px; border:0; font-weight:800; }
+.wlm-btn.primary{ background:#542717; color:#fff; }
+.wlm-btn.cancel{ background:#e5e7eb; color:#111827; }

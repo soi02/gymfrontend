@@ -3,12 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../styles/ResultPage.css";
 import useRoutineService from "../service/routineService";
 import gold from "../../../assets/img/challenge/norigae/gold.png";
+import WorkoutShareCard from "./WorkoutShareCard.jsx";
+import WorkoutLogModal from "./WorkoutLogModal.jsx";
 
 
 export default function ResultPage() {
-  const { getActualWorkout } = useRoutineService();
+  const { getActualWorkout, upsertWorkoutLogExtras, getWorkoutLog } = useRoutineService();
   const { workoutId } = useParams();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [logExtras, setLogExtras] = useState({ memo: "", pictureUrl: "" });
 
   const [workoutList, setWorkoutList] = useState([]);
   const [summary, setSummary] = useState({
@@ -18,6 +22,24 @@ export default function ResultPage() {
     totalCalories: 0,
     totalMinutes: 0,
   });
+
+const photoUrl = useMemo(() => {
+  const raw = (logExtras.pictureUrl || "").trim();
+  if (!raw) return "";
+
+  // 이미 절대 URL이면 그대로 사용
+  if (/^https?:\/\//i.test(raw)) return raw;
+
+  // 앞 슬래시 강제
+  const withSlash = raw.startsWith("/") ? raw : `/${raw}`;
+
+  // /uploadFiles 프리픽스 강제
+  const normalized = withSlash.startsWith("/uploadFiles/")
+    ? withSlash
+    : `/uploadFiles${withSlash}`;
+
+  return `http://localhost:8080${normalized}`;
+}, [logExtras.pictureUrl]);
 
   // 데이터 로드 (너가 쓰던 방식 유지)
   useEffect(() => {
@@ -39,6 +61,28 @@ export default function ResultPage() {
 
     return () => controller.abort();
   }, [workoutId, getActualWorkout]);
+
+    async function handleSaveExtras({ memo, file }) {
+    try {
+      const { data } = await upsertWorkoutLogExtras(workoutId, { memo, file });
+      setLogExtras({ memo: data.memo || "", pictureUrl: data.pictureUrl || "" });
+      setShowModal(false);
+    } catch (e) {
+      console.error(e);
+      alert("업로드에 실패했소.");
+    }
+  }
+
+
+  useEffect(() => {
+    if (!workoutId) return;
+    (async () => {
+      try {
+        const { data } = await getWorkoutLog(workoutId);
+        if (data) setLogExtras({ memo: data.memo || "", pictureUrl: data.pictureUrl || "" });
+      } catch (_) {}
+    })();
+  }, [workoutId, getWorkoutLog]);
 
   // 요약 계산 (첫 행에서 minutes/calories 읽기)
   useEffect(() => {
@@ -94,7 +138,9 @@ const exerciseCount = useMemo(() => {
   return keys.size;
 }, [workoutList]);
 
-
+useEffect(() => {
+  console.log("photoUrl:", photoUrl);
+}, [photoUrl]);
   return (
     <>
     <div className="divider-line"></div>
@@ -107,8 +153,11 @@ const exerciseCount = useMemo(() => {
       </div>
 
       {/* 메인 카드 */}
-      <div className="pf-card">
-        <div className="pf-date-pill">{datePill}</div>
+  <div
+    className={`pf-card-media ${photoUrl ? "has-photo" : ""}`}
+    style={photoUrl ? { ["--pf-bg"]: `url("${photoUrl}")` } : undefined}
+  >
+          <div className="pf-date-pill">{datePill}</div>
 
         <div className="pf-subtitle">오늘 들어올린 무게</div>
 
@@ -122,9 +171,9 @@ const exerciseCount = useMemo(() => {
 
 
         {/* 이미지 영역 — 너가 넣을 자리 */}
-        <div className="pf-illustration">
+        {/* <div className="pf-illustration">
           <img src= {gold} alt="" className="pf-img" />
-        </div>
+        </div> */}
 
         <div className="pf-metrics">
           <div className="pf-metric">
@@ -147,13 +196,48 @@ const exerciseCount = useMemo(() => {
       {/* <div className="pf-brand">짐마당</div> */}
 
       <div className="pf-actions">
-        <button className="pf-btn" onClick={() => navigate("/home")}>
-        사진추가
-        </button>
-        <button className="pf-btn" onClick={() => navigate("/home")}>
-          나의 기록을 보러가겠소
-        </button>
+        <button className="pf-btn" onClick={() => setShowModal(true)}>기념 사진을 추가하겠소</button>
+        <button className="pf-btn" onClick={() => navigate("/home")}>나의 기록을 보러가겠소</button>
       </div>
+
+
+      {/* 아래 표시 영역 */}
+      {/* <div className="pf-card" style={{ marginTop: 12, textAlign:"left" }}>
+        <h4 style={{marginTop:0}}>오늘의 기록</h4>
+        {(!logExtras.pictureUrl && !logExtras.memo) ? (
+          <div className="rp-empty">아직 사진/메모가 없어요.</div>
+        ) : (
+          <div className="extras-row">
+            {logExtras.pictureUrl && (
+              <img
+                alt="workout"
+                className="extras-thumb"
+                src={logExtras.pictureUrl.startsWith("http")
+                      ? logExtras.pictureUrl
+                      : `http://localhost:8080${logExtras.pictureUrl}`}
+              />
+            )}
+            {logExtras.memo && <p className="extras-memo">{logExtras.memo}</p>}
+          </div>
+        )}
+      </div> */}
+
+      {/* 모달 */}
+      <WorkoutLogModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onSave={handleSaveExtras}
+        initialMemo={logExtras.memo}
+        initialPreview={
+          logExtras.pictureUrl
+            ? (logExtras.pictureUrl.startsWith("http")
+                ? logExtras.pictureUrl
+                : `http://localhost:8080${logExtras.pictureUrl}`)
+            : ""
+        }
+      />
+
+
     </div>
     </>
 
