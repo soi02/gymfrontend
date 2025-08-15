@@ -1,203 +1,252 @@
-/* 기본 레이아웃 및 스크롤 설정 */
+/* ChallengeList.css */
+
+/* 전체 컨테이너 */
 .challenge-list-wrapper {
+  padding: 20px;
+  max-width: 425px; /* 아이폰 SE 기준 너비에 맞춤 */
+  margin: 0 auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 헤더 섹션 */
+.filter-header-section {
+  text-align: left;
+  margin-bottom: 17px;
+  margin-left: 0.3rem;
+}
+
+.filter-header-section h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1c1c1e;
+  margin-bottom: 7px;
+}
+
+.filter-header-section p {
+  font-size: 12px;
+  color: #8e8e93;
+  margin: 0;
+}
+
+/* 카테고리 그리드 */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4x2 격자 레이아웃 */
+  gap: 20px 10px; /* 세로 간격 20px, 가로 간격 10px */
+  margin-bottom: 20px;
+}
+
+/* 카테고리 버튼 */
+.category-button {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-}
-
-.challenge-list-container {
-    max-width: 400px;
-    width: 100%;
-    margin: 0 auto;
-    padding: var(--cat-gap); /* ← 모든 방향에 동일한 간격 적용 */
-    padding-top: 16px; /* 필요에 따라 상단 패딩은 따로 설정 */
-    flex-grow: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    box-sizing: border-box;
-}
-
-/* 2) 그리드 총 너비를 '정확히' 지정 + 가운데 */
-:root{
-  --cat-item: 180px;
-  --cat-gap: 0.9rem;
-}
-.category-grid-wrapper{
-  /* display:flex; */
-  /* justify-content:center;   래퍼에서 중앙 정렬 */
-  padding: 0; /* 래퍼의 불필요한 패딩 제거 */
-}
-.category-grid{
-  display:grid;
-  grid-template-columns: repeat(2, var(--cat-item)); /* 아이템 크기 고정 */
-  column-gap: var(--cat-gap);
-  row-gap: var(--cat-gap);
-  /* width: calc(2 * var(--cat-item) + var(--cat-gap)); ← 총 너비를 명시 */
-  margin: 10px auto 15px;   /* 그리드 자체도 중앙 */
-}
-
-.category-item {
-  position: relative; 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 0.7rem;
-  border-radius: 10px;
-  /* border: 2px solid transparent; */
-  border: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  min-height: 90px;
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.025);
-  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.05); */
-  z-index: 1;
-  background: none;
+  padding: 8px 0;
+  transition: transform 0.2s ease-in-out;
 }
 
-.category-item:hover {
-  filter: brightness(0.95);
+/* 버튼 눌렀을 때 효과 */
+.category-button:active {
+  transform: scale(0.95);
+  opacity: 0.7;
 }
 
-.category-item.active {
-  border-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-}
-
-.category-icon {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 0.5rem;
-  /* top: 12px;
-  right: 12px; */
+/* 아이콘 */
+.category-button .icon-circle {
   width: 56px;
   height: 56px;
-  z-index: -1;
-  /* opacity: 0.1; */
+  border-radius: 50%; /* 원형 아이콘 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(124, 29, 13, 0.05); /* 키 컬러의 연한 배경 */
+  margin-bottom: 8px;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.category-text-container {
-  text-align: left; /* 텍스트 정렬을 왼쪽으로 지정합니다. */
-  margin: 0;
+.category-button:hover .icon-circle {
+  background-color: rgba(124, 29, 13, 0.15); /* 호버 시 색상 강조 */
 }
 
-.category-name {
-  font-size: 0.9rem;
+.category-button img {
+  width: 28px;
+  height: 28px;
+  opacity: 0.7; /* 기본 투명도 */
+  transition: opacity 0.3s ease-in-out;
+}
+
+.category-button.selected .icon-circle {
+  background-color: rgba(124, 29, 13, 0.9); /* 선택 시 진한 키 컬러 */
+}
+
+.category-button.selected img {
+  filter: brightness(0) invert(1); /* 선택 시 아이콘 색상을 흰색으로 반전 */
+  opacity: 1; /* 선택 시 투명도 제거 */
+}
+
+/* 카테고리 이름 */
+.category-button span {
+  font-size: 12px;
+  color: #333;
+}
+
+.category-button.selected span {
   font-weight: bold;
-  color: #333;
-  margin: 0;
+  color: #7c1d0d;
 }
 
-.category-description {
-  font-size: 0.8rem;
-  color: #333;
-  margin-top: 0.15rem;
-  /* margin-left: 0.1rem; */
-  margin-bottom: 0;
+/* 플로팅 버튼 */
+.challenge-list-floating-button {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background-color: #7c1d0d;
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 32px;
+  line-height: 56px;
+  text-align: center;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  z-index: 99;
 }
 
-/* --- 키워드 필터 --- */
-.keyword-filters {
-  margin-top: 8px;
+.challenge-list-floating-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.keyword-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 20px;
 }
 
-.filter-button {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  background-color: #f8f8f8;
-  cursor: pointer;
-  border-radius: 20px;
-  font-size: 14px;
-  transition: all 0.3s;
+
+
+/* ChallengeList.css 파일 내의 키워드 칩 관련 스타일 수정 */
+
+/* -------------------- 플로팅 버튼 관련 스타일 -------------------- */
+.fab-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 100;
 }
 
-.filter-button.active {
-  background-color: #007bff;
+.fab-hash {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #7c1d0d;
   color: white;
-  border-color: #007bff;
-}
-
-/* --- 챌린지 카드 목록 --- */
-/* --- 챌린지 카드 목록 (가로 슬라이더) --- */
-/* 페이지 래퍼 */
-.challenge-list-wrapper.clean{
-  display:flex; flex-direction:column; height:100vh; background:#fff;
-}
-
-/* --- 페이지 헤더 및 제목 --- */
-.filter-header-section {
-  padding: 0.4rem;
-  max-width: 400px;
-  margin: 0 auto;
-  padding-top: 0;
-}
-
-.filter-header-section h2 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.filter-header-section p {
-  color: #555;
-  font-size: 0.8rem;
-  margin-bottom: 0;
-}
-
-
-/* 키워드 칩 바 */
-.keyword-chips{
-  margin-top:10px; display:flex; flex-wrap:nowrap; gap:8px; overflow-x:auto; padding-bottom:8px;
-}
-.keyword-chips::-webkit-scrollbar{ display:none; }
-.chip{
-  border:1px solid #e5e7eb; background:#f9fafb; color:#374151;
-  padding:8px 12px; border-radius:999px; font-size:14px; white-space:nowrap;
-}
-.chip.active{ background:#111827; color:#fff; border-color:#111827; }
-
-/* 카드 레일(가로 스크롤) */
-.challenge-card.redesigned.clean {
-  background: var(--cc-bg);
-  border: 1px solid var(--cc-line);
-  border-radius: var(--cc-radius);
-  color: var(--cc-text);
-  width: var(--card-width);
-  box-shadow: var(--cc-shadow);
-  transition: transform .15s ease, box-shadow .15s ease;
+  font-size: 28px;
+  line-height: 56px;
+  text-align: center;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-
-  flex: 0 0 var(--card-width);
-  scroll-snap-align: center; /* ← 여기 center 로 변경 */
-}
-.challenge-card.redesigned.clean:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(17,24,39,0.08);
+  transition: transform 0.3s ease-in-out;
+  z-index: 102; /* 칩 위에 위치하도록 z-index 설정 */
+  position: relative;
 }
 
-/* 카드 리스트 컨테이너 */
-.card-list-container {
+.fab-hash.open {
+  transform: rotate(-45deg);
+}
+
+/* -------------------- 슬라이드업 키워드 칩 스타일 -------------------- */
+.keyword-chips-slide-up {
+  display: flex;
+  flex-direction: column-reverse; /* 아래에서 위로 쌓이도록 설정 */
+  align-items: flex-end;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-bottom: 70px; /* 플로팅 버튼과 겹치지 않도록 여백 추가 */
+  pointer-events: none; /* 컨테이너는 클릭을 막음 */
+}
+
+.keyword-chips-slide-up .chip {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 0; /* 초기 상태는 투명 */
+  visibility: hidden; /* 초기 상태는 숨김 */
+  transform: translateY(20px); /* 초기 위치는 아래로 내려감 */
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0s 0.3s;
+  pointer-events: auto; /* 칩은 클릭 가능하도록 재설정 */
+}
+
+/* 열린 상태: 칩이 나타나고 위로 올라오는 애니메이션 */
+.fab-container.open .keyword-chips-slide-up .chip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chip.active {
+  background-color: #7c1d0d;
+  color: white;
+  border-color: #7c1d0d;
+}
+
+.chip-text {
+  font-size: 0.7rem;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+/* -------------------- ChallengeCategoryPage 레이아웃 -------------------- */
+.ccp-page {
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* 카드 사이 간격 */
-  padding: 0 16px 80px; /* 좌우 패딩 및 하단 여백 */
-  overflow-y: auto; /* 세로 스크롤 활성화 */
+  overflow: hidden;
+  max-width: 425px; /* 모바일 화면 너비 고정 */
+  margin: 0 auto;
+}
+
+.ccp-header {
+  padding: 20px 20px 10px;
+  background-color: white; /* 헤더 배경색 */
+  /* border-bottom: 1px solid #eee; */
+}
+
+.ccp-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1c1c1e;
+  margin: 0 0 7px 0;
+}
+
+.ccp-sub {
+  font-size: 12px;
+  color: #8e8e93;
+  margin: 0;
+}
+
+.ccp-scroll {
+  flex: 1;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-bottom: calc(var(--bottom-bar-h, 64px) + var(--safe-bottom, 0px) + 20px); /* FAB 버튼 하단 여백 확보 */
 }
-
-
-.empty-text{ color:#6b7280; padding:16px; }
-
-/* 플로팅 버튼 */
-.fab{
-  position:fixed; right:20px; bottom:80px; width:56px; height:56px;
-  border-radius:50%; border:1px solid #e5e7eb; background:#111827; color:#fff;
-  font-size:24px; line-height:56px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.12);
-}
-
-

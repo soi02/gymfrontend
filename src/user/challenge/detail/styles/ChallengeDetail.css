@@ -1,181 +1,254 @@
-/* ▼ 추가: 안전 여백 + 바텀바/CTA 높이 변수 */
-:root{
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --bottom-bar-h: 64px;   /* 실제 바텀바 높이로 맞춰줘 */
-  --cta-h: 52px;          /* .cdp-cta 높이와 동일 */
-}
-/* 페이지 래퍼 */
-.cdp{
-  max-width: 420px;
-  margin: 0 auto;
-  background:#fff;
-  color:#111827;
-  min-height: 100dvh;
+/* ChallengeDetail.css (최종본) */
 
-  /* 바텀바 영역만큼 하단 여유 */
+/* ▼ 추가: 안전 여백 + 바텀바/CTA 높이 변수 */
+:root {
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bottom-bar-h: 64px;   /* 실제 바텀바 높이로 맞춰주세요 */
+  --cta-h: 52px;          /* .cdp-cta-btn 높이와 동일 */
+}
+
+/* 전체 페이지 레이아웃 */
+.cdp-page-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  max-width: 425px; /* 모바일 화면 너비 고정 */
+  margin: 0 auto;
+  background-color: #f7f7f7;
+  
+  /* ✅ 바텀바 높이만큼 하단 여백 추가 */
   padding-bottom: calc(var(--bottom-bar-h) + var(--safe-bottom));
 }
 
-/* 히어로 이미지 그대로 */
-.cdp-hero{ position: relative; width: 100%; aspect-ratio: 16/10; background:#f3f4f6; overflow: hidden; }
-.cdp-hero img{ width:100%; height:100%; object-fit:cover; display:block; transform: translateZ(0); }
-/* 히어로 배지 좌우 여백 20px 정렬 */
-.cdp-hero-badges{
-  position:absolute;
-  left:20px; bottom:12px;
-  display:flex; gap:8px; flex-wrap:wrap;
+/* 스크롤 가능한 콘텐츠 영역 */
+.cdp-content-scrollable {
+  flex-grow: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* 필 배지들 그대로 */
-.pill{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#f3f4f6; color:#374151; border:1px solid #e5e7eb; font-size:12px; font-weight:700; }
-.pill-dday{ background:#ecfdf5; color:#065f46; border-color:#bbf7d0; }
-.pill-upcoming{ background:#e0ecff; color:#1e40af; border-color:#bfdbfe; }
-.pill-closed{ background:#fee2e2; color:#991b1b; border-color:#fecaca; }
-
-/* 본문: 양옆 20px + CTA 높이만큼 추가 여백 */
-.cdp-body{
-  padding: 16px 20px;
-  padding-bottom: calc(var(--cta-h) + 24px);
+/* 상단 헤더 - 스크롤에 따라 나타남 */
+.cdp-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 425px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
+  z-index: 100;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-.cdp-title{ font-size:22px; font-weight:900; letter-spacing:-0.3px; margin:6px 0 10px; }
-.cdp-chips{ display:flex; gap:8px; margin-bottom:10px; }
-.chip{ border:1px solid #e5e7eb; background:#f9fafb; color:#374151; padding:6px 10px; border-radius:999px; font-size:12px; white-space:nowrap; }
-.chip.more{ color:#6b7280; }
-
-.cdp-meta{ list-style:none; padding:0; margin:10px 0 14px; display:flex; flex-direction:column; gap:8px; }
-.cdp-meta li{ display:flex; align-items:center; gap:8px; color:#4b5563; font-size:14px; }
-.cdp-meta .dot{ width:6px; height:6px; border-radius:50%; background:#9ca3af; display:inline-block; }
-
-.cdp-desc{ color:#374151; font-size:14px; line-height:1.6; margin:6px 0 14px; }
-
-/* 보조 버튼 */
-.cdp-secondary{
-  width:100%; padding:12px 14px; border-radius:12px; border:1px solid #e5e7eb; background:#fff;
-  color:#111827; font-weight:700; margin-top:8px;
+.cdp-header.visible {
+  background-color: white;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* ▼ 하단 고정 CTA: 바텀바 높이만큼 위로 띄워서 겹침 방지 */
-.cdp-footer{
-  position: sticky;
-  bottom: var(--bottom-bar-h);   /* 바텀바 위에 고정 */
-  left: 0; right: 0;
-  background:#fff;
-
-  /* ← margin 대신 padding으로 20px 적용 */
-  padding: 12px 20px calc(12px + var(--safe-bottom));
-
-  border-top:1px solid #f3f4f6;
-  z-index: 30;
-}
-
-.cdp-cta{
-  width:100%; height:var(--cta-h);
-  border:none; border-radius:14px;
-  background:#7c1d0d; color:#fff; font-weight:800; font-size:16px;
-  box-shadow:0 8px 16px rgba(17,24,39,0.08);
-}
-.cdp-cta.disabled{ background:#d1d5db; color:#6b7280; box-shadow:none; }
-.cdp-cta:disabled{ cursor:not-allowed; }
-
-/* 로딩 */
-.cdp-loading{ max-width:420px; margin:0 auto; padding:40px 16px; color:#6b7280; }
-
-
-
-
-
-/* 핵심 정보: 토스톤 플랫 */
-/* 칩(행) 자체는 테두리선 없이, 배경도 아주 옅게 */
-.cdp-facts.clean { display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 14px; }
-.fact-row{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 12px;
-  background:#fff;        /* or #f9fafb */
-  border:none;            /* ← 테두리 제거 */
-  border-radius:12px;
-  box-shadow: 0 4px 14px rgba(17,24,39,0.06); /* 아주 은은한 그림자 */
-}
-
-/* 아이콘: 둥근 배경 + 소프트 섀도우(테두리 없음) */
-.ico-soft{
-  width:32px; height:32px; border-radius:999px;
-  display:inline-flex; align-items:center; justify-content:center;
-  background:#fff;
-  box-shadow:
-    0 1px 2px rgba(17,24,39,0.10),
-    0 6px 14px rgba(17,24,39,0.08); /* 부드러운 그림자 */
-}
-.ico-soft .bi{
-  font-size:16px; color:#111827;
-  filter: drop-shadow(0 1px 0 rgba(17,24,39,0.12)); /* 아이콘 자체도 살짝 입체감 */
-}
-
-/* 아이콘 & 텍스트 */
-.fact-row .bi{ font-size:16px; color:#6b7280; line-height:1; }
-/* 텍스트 스케일 */
-.fact-label{ color:#6b7280; font-size:12px; }
-.fact-value{ color:#111827; font-size:14px; font-weight:800; }
-.fact-value.money{ font-variant-numeric: tabular-nums; }
-.fact-nums{ display:inline-flex; align-items:baseline; gap:2px; }
-.fact-nums strong{ font-size:14px; font-weight:800; color:#111827; font-variant-numeric: tabular-nums; }
-.fact-nums .muted{ font-size:12px; color:#9ca3af; }
-
-/* 설명 카드 */
-.cdp-desc-card{
-  padding:12px; border:1px solid #e5e7eb; background:#f9fafb; border-radius:12px;
-}
-.cdp-desc-card p{ margin:0; color:#374151; line-height:1.6; font-size:14px; }
-
-
-/* 한 장짜리 정보 카드 */
-.cdp-info-card{
-  display: grid;
-  grid-template-columns: 1fr;      /* 모바일에선 세로 스택 */
-  gap: 10px;
-  padding: 12px;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 8px 24px rgba(17,24,39,0.06); /* 테두리 없이 그림자만 */
-  margin: 10px 0 14px;
-}
-
-/* 아이템 한 줄 */
-.info-item{
+.cdp-header-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 5px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
 }
 
-/* 둥근 아이콘 + 소프트 섀도우 */
-.ico-soft{
-  width: 36px; height: 36px; border-radius: 999px;
-  display: inline-flex; align-items: center; justify-content: center;
-  background: #fff;
-  box-shadow:
-    0 1px 2px rgba(17,24,39,0.10),
-    0 6px 14px rgba(17,24,39,0.08);
+.cdp-header-actions {
+  display: flex;
+  gap: 10px;
 }
-.ico-soft svg{ width: 18px; height: 18px; color: #111827; }
 
-/* 텍스트 스케일 */
-.info-text{ display: grid; gap: 2px; }
-.info-text .label{ font-size: 12px; color: #6b7280; }
-.info-text .value{ font-size: 14px; color: #111827; font-weight: 800; }
-.info-text .value.money{ font-variant-numeric: tabular-nums; }
-.info-text .value strong{ font-weight: 900; }
-.info-text .value .muted{ font-size: 12px; color: #9ca3af; }
-
-/* 설명 카드 톤 유지 */
-.cdp-desc-card{
-  padding: 12px; border-radius: 12px;
-  background: #f9fafb;
+/* 이미지 섹션 */
+.cdp-hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%;
+  overflow: hidden;
 }
-.cdp-desc-card p{ margin:0; color:#374151; line-height:1.6; font-size:14px; }
 
-/* (선택) 조금 넓은 화면에선 2열 배치 */
-@media (min-width: 380px){
-  .cdp-info-card{ grid-template-columns: 1fr 1fr; }
-  .cdp-info-card .info-item:nth-child(3){ grid-column: span 2; }
+.cdp-hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cdp-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 50%);
+}
+
+.cdp-hero-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  width: 100%;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.cdp-hero-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cdp-badge {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* 주요 콘텐츠 */
+.cdp-content {
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  margin-top: -20px;
+  position: relative;
+  z-index: 20;
+  flex-grow: 1;
+}
+
+.cdp-info-section {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.cdp-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 10px;
+}
+
+.cdp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  color: #666;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.cdp-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.cdp-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #666;
+}
+
+/* 상세 설명, 유의사항 섹션 */
+.cdp-detail-section {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cdp-detail-section:last-child {
+  border-bottom: none;
+}
+
+.cdp-detail-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 15px;
+}
+
+.cdp-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  white-space: pre-wrap;
+}
+
+.cdp-rules {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cdp-rules li {
+  margin-bottom: 20px;
+}
+
+.rule-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 5px;
+}
+
+/* ✅ 버튼 자체에 고정 스타일을 적용합니다. */
+.cdp-cta-btn {
+  /* position: fixed로 뷰포트 기준으로 고정 */
+  position: fixed;
+
+  /* ✅ 바텀바 높이만큼 위로 띄워 겹치지 않게 합니다. */
+  bottom: calc(var(--bottom-bar-h) + 10px); /* 10px은 버튼 하단 패딩 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px); /* 좌우 20px 패딩을 뺀 너비 */
+  max-width: calc(425px - 40px); /* 모바일 최대 너비에서도 중앙 정렬 */
+
+  background-color: #7c1d0d;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 50; /* 바텀바보다 위에 오도록 z-index 설정 */
+  margin-bottom: 10px;
+}
+
+.cdp-cta-btn.disabled {
+  background-color: #ddd;
+  color: #6b7280;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* 기타 스타일 */
+.text-sm {
+  font-size: 12px;
+  color: #666;
+}
+.muted {
+  color: #999;
 }

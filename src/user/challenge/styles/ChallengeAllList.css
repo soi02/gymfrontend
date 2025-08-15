@@ -1,0 +1,91 @@
+/* src/styles/AllChallengeList.css */
+
+.all-challenge-list-wrapper {
+  padding: 20px;
+  max-width: 425px; /* 아이폰 SE 기준 너비 */
+  margin: 0 auto;
+}
+
+.list-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.list-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1c1c1e;
+  margin-bottom: 4px;
+}
+
+.list-header p {
+  font-size: 14px;
+  color: #8e8e93;
+  margin: 0;
+}
+
+.challenge-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 모바일 화면에 맞춰 1열로 구성 */
+  gap: 20px;
+}
+
+.challenge-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.challenge-card:hover {
+  transform: translateY(-2px);
+}
+
+.challenge-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.challenge-info {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.challenge-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: #7c1d0d;
+  margin-bottom: 4px;
+}
+
+.challenge-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c1c1e;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.challenge-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.challenge-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #8e8e93;
+}

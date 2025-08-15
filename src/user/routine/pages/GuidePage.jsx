@@ -102,11 +102,14 @@ useEffect(() => {
 
 
   return (
+<>
+        <div className="divider-line" />{/* ← 동일한 상단 라인 */}
 
 
     <div className="main-content routine-main-content"
     style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
     >
+      
       <h4 className="routine-title">
         <span className="routine-subtitle">
           {meta.categoryName} &gt; {meta.elementName}
@@ -222,5 +225,6 @@ useEffect(() => {
 
 
 
+    </>
     );
 }

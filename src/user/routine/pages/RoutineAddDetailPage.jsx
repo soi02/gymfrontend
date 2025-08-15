@@ -18,6 +18,18 @@ export default function RoutineAddDetailPage() {
 
     const [setCount, setSetCount] = useState(5);
 
+    // RoutineAddDetailPage.tsx (컴포넌트 상단 useEffect 하나 추가)
+    useEffect(() => {
+    const prevHtml = document.documentElement.style.overflow;
+    const prevBody = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    return () => {
+        document.documentElement.style.overflow = prevHtml;
+        document.body.style.overflow = prevBody;
+    };
+    }, []);
+
     
 const navigate = useNavigate();
 
@@ -124,11 +136,9 @@ const navigate = useNavigate();
 
     return (
         <>
-              <div className="radp-header">
-                <button className="radp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-                {/* <h3 className='rfp-header-title'>자유운동</h3> */}
-              </div>
-            <div className="routine-main-content">
+        <div className="divider-line" />{/* ← 동일한 상단 라인 */}
+
+            <div className="routine-detail-main-content">
                 <div className="row">
                     <div className="col" style={{ paddingTop: "0rem", paddingLeft: "1rem" }}>
                         <h3>루틴 세부설정</h3>
@@ -200,10 +210,10 @@ const navigate = useNavigate();
                         </div>
                     ))}
 
-                </div>
                 <div className="routine-sticky-save-btn">
                     {/* <button onClick={handleSave}>루틴 저장하기</button> */}
                     <button onClick={() => setShowModal(true)}>루틴 저장하기</button>
+                </div>
                 </div>
                 
                 {showModal && (

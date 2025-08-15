@@ -1,10 +1,26 @@
-import '../styles/ChallengeCard.css';
+import { IoChevronForwardOutline, IoCalendarOutline, IoPeopleOutline } from "react-icons/io5";
+import "../styles/ChallengeCard.css";
+
+const CAT_COLORS = {
+  "루틴":      { bg: "#6ea79c", bd: "#5b9489" },
+  "회복":      { bg: "#8fa4c1", bd: "#7890b0" },
+  "소통":      { bg: "#d77e88", bd: "#c36b76" },
+  "정보":      { bg: "#f2a766", bd: "#ac6324" },
+  "습관":      { bg: "#7c1d0d", bd: "#5e140a" },
+  "동기부여":  { bg: "#d89a00", bd: "#bb8600" },
+  "자기관리":  { bg: "#7c7e1f", bd: "#52530e" },
+  "분위기":    { bg: "#001439", bd: "#00102e" },
+  "전체":      { bg: "#a9adb3", bd: "#8e9399" },
+};
+
+const CAT_NAME_BY_ID = {
+  1: "루틴", 2: "회복", 3: "소통", 4: "정보",
+  5: "습관", 6: "동기부여", 7: "자기관리", 8: "분위기",
+};
 
 export default function ChallengeCard({ challenge, onClick }) {
   const BACKEND_BASE_URL = "http://localhost:8080";
-
   const {
-    challengeId,
     challengeTitle,
     challengeRecruitStartDate,
     challengeRecruitEndDate,
@@ -13,80 +29,106 @@ export default function ChallengeCard({ challenge, onClick }) {
     challengeParticipantCount = 0,
     challengeThumbnailPath,
     keywords = [],
+    categoryId,
+    categoryName,
   } = challenge || {};
 
   const imageUrl = challengeThumbnailPath
     ? `${BACKEND_BASE_URL}${challengeThumbnailPath}`
-    : '/images/default-thumbnail.png';
+    : "/images/default-thumbnail.png";
 
-  // 날짜 포맷
   const fmt = (d) => {
-    if (!d) return '-';
+    if (!d) return "-";
     const dt = new Date(d);
     if (isNaN(dt)) return d;
-    const y = dt.getFullYear();
-    const m = String(dt.getMonth() + 1).padStart(2, '0');
-    const da = String(dt.getDate()).padStart(2, '0');
-    return `${y}.${m}.${da}`;
+    return `${dt.getFullYear()}.${String(dt.getMonth()+1).padStart(2,"0")}.${String(dt.getDate()).padStart(2,"0")}`;
   };
 
-  // 상태 계산
-  const today = new Date();
-  const recruitStart = new Date(challengeRecruitStartDate);
-  const recruitEnd = new Date(challengeRecruitEndDate);
+  const cat = categoryName || CAT_NAME_BY_ID[categoryId] || "전체";
+  const colors = CAT_COLORS[cat] || CAT_COLORS["전체"];
 
-  let status = '모집 종료';
-  if (today < recruitStart) status = '모집 예정';
-  else if (today >= recruitStart && today <= recruitEnd) status = '모집 중';
-
-  // D-Day (모집 중일 때만)
-  const daysBetween = (a, b) => {
-    const ONE = 24 * 60 * 60 * 1000;
-    const da = new Date(a.getFullYear(), a.getMonth(), a.getDate());
-    const db = new Date(b.getFullYear(), b.getMonth(), b.getDate());
-    return Math.round((db - da) / ONE);
+  // 선택: D-Day
+  const calcDday = () => {
+    if (!challengeRecruitStartDate) return null;
+    const today = new Date();
+    const start = new Date(challengeRecruitStartDate);
+    const diff = Math.ceil((start - today) / (1000 * 60 * 60 * 24));
+    if (diff > 0) return `D-${diff}`;
+    if (diff === 0) return "D-DAY";
+    return null;
   };
-  const dday = status === '모집 중' ? Math.max(0, daysBetween(today, recruitEnd)) : null; // 당일은 D-0
+  const dday = calcDday();
 
-  // 진행바
-  const percent = Math.max(
-    0,
-    Math.min(100, challengeMaxMembers ? Math.round((challengeParticipantCount / challengeMaxMembers) * 100) : 0)
+  // 카드에 색 변수 주입(적용 안 되는 문제 방지: 인라인 CSS 변수로 확실히 반영)
+  const styleVars = { "--cat-bg": colors.bg, "--cat-bg-d": colors.bd };
+
+  return (
+    <article
+      className="challenge-card apple-card color-skin"
+      style={styleVars}
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onClick?.(e)}
+      aria-label={`${challengeTitle} 카드`}
+    >
+
+
+      {/* 상단 이미지 */}
+<div className="apple-thumb-wrapper">
+  <img className="apple-thumb" src={imageUrl} alt="" loading="lazy" />
+
+  {/* 왼쪽 상단 기간 뱃지 */}
+  {challengeDurationDays && (
+    <span className="duration-badge">{challengeDurationDays}일 수련</span>
+  )}
+
+  {/* 오른쪽 상단 D-Day 뱃지 */}
+  {dday && <span className="dday-badge">{dday}</span>}
+</div>
+
+
+      {/* 본문 */}
+      <div className="apple-body">
+        <div className="apple-body-top">
+          <div className="apple-text">
+
+
+            <h3 className="apple-title">{challengeTitle}</h3>
+
+            {/* 해시태그 칩 */}
+            {keywords?.length > 0 && (
+              <div className="apple-keywords">
+                {keywords.map((kw, i) => (
+                  <span key={i} className="apple-keyword">#{kw}</span>
+                ))}
+              </div>
+            )}
+
+            {/* 메타 정보 (달력, 인원) */}
+            <div className="meta-row">
+              <div className="meta-item">
+                <IoCalendarOutline className="meta-ic" />
+                <span className="meta-txt">
+                  {fmt(challengeRecruitStartDate)} ~ {fmt(challengeRecruitEndDate)}
+                  {/* {challengeDurationDays ? ` · ${challengeDurationDays}일 수련` : ""} */}
+                </span>
+              </div>
+              {challengeMaxMembers ? (
+                <div className="meta-item">
+                  <IoPeopleOutline className="meta-ic" />
+                  <span className="meta-txt">
+                    {challengeParticipantCount}/{challengeMaxMembers}
+                  </span>
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          {/* iOS 체브론 */}
+          <IoChevronForwardOutline className="apple-chevron" />
+        </div>
+      </div>
+    </article>
   );
-
-return (
-  <article
-    className="challenge-card redesigned new-style" // 새로운 클래스 'new-style' 추가
-    role="button"
-    tabIndex={0}
-    onClick={onClick}
-    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick?.(e)}
-    aria-label={`${challengeTitle} 카드`}
-  >
-    <div className="card-image-wrapper">
-      <div className="card-thumbnail" style={{ backgroundImage: `url(${imageUrl})` }}></div>
-      <div className={`status-badge ${status === '모집 중' ? 'in-progress' : status === '모집 예정' ? 'upcoming' : 'closed'}`}>
-        {status === '모집 중' ? `D-${dday}` : status}
-      </div>
-    </div>
-    <div className="card-content">
-      <h3 className="card-title">{challengeTitle}</h3>
-      <div className="card-meta">
-        <div className="meta-item">
-          <span className="meta-label">Classes Type</span>
-          <span className="meta-value">{keywords[0] || 'N/A'}</span>
-        </div>
-        <div className="meta-item">
-          <span className="meta-label">Time</span>
-          <span className="meta-value">{fmt(challengeRecruitStartDate)} ~ {fmt(challengeRecruitEndDate)}</span>
-        </div>
-        <div className="meta-item">
-          <span className="meta-label">Participants</span>
-          <span className="meta-value">{challengeParticipantCount}/{challengeMaxMembers}</span>
-        </div>
-      </div>
-      <button className="book-now-button" style={{ backgroundColor: '#7c1d0d' }}>Book Now</button>
-    </div>
-  </article>
-);
 }
