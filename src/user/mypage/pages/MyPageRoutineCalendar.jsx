@@ -115,7 +115,7 @@ export default function MyPageRoutineCalendar() {
       <div className="divider-line"></div>
 
       <div className="mypage-container">
-        <h5>운동기록</h5>
+        {/* <h5>운동기록</h5> */}
 
         <div className="calendar-card">
           {" "}

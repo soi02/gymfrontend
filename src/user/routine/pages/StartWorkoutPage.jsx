@@ -190,6 +190,9 @@ const [restDuration, setRestDuration] = useState(60);
     return () => document.removeEventListener("mousedown", onClickOutsie);
   }, [showTimerMenu]);
 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+
   return (
     <div className="swp-main-content">
       <div {...handlers} className="start-workout-container">
@@ -470,7 +473,36 @@ const [restDuration, setRestDuration] = useState(60);
           </div>
         )}
 
-
+        {showConfirmModal && (
+          <div className="routine-timer-modal">
+            <div className="routine-timer-modal-content">
+              <h5>운동 종료</h5>
+              <p>체크 표시한 운동만 기록됩니다.</p>
+              <p>정말 종료하시겠습니까?</p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "1rem",
+                  marginTop: "1.5rem",
+                }}
+              >
+                <button
+                  className="sfwp-cancel-btn"
+                  onClick={() => setShowConfirmModal(false)}
+                >
+                  취소
+                </button>
+                <button
+                  className="sfwp-confirm-end-btn"
+                  onClick={handleComplete}
+                >
+                  종료
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
 
       </div>
