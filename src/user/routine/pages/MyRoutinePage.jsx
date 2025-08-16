@@ -6,6 +6,15 @@ import "../styles/MyRoutinePage.css";
 import gold from "../../../assets/img/challenge/norigae/gold.png";
 import silver from "../../../assets/img/challenge/norigae/silver.png";
 import bronze from "../../../assets/img/challenge/norigae/bronze.png";
+import RT11 from "../../../assets/img/routine/RT11.png";
+// import RT22 from "../../../assets/img/routine/RT22.png";
+import RT33 from "../../../assets/img/routine/RT33.png";
+import RT44 from "../../../assets/img/routine/RT44.png";
+import RT55 from "../../../assets/img/routine/RT55.png";
+import RT66 from "../../../assets/img/routine/RT66.png";
+// import RT77 from "../../../assets/img/routine/RT77.png";
+import RT88 from "../../../assets/img/routine/RT88.png";
+import RT99 from "../../../assets/img/routine/RT99.png";
 
 
 export default function MyRoutinePage() {
@@ -18,7 +27,7 @@ export default function MyRoutinePage() {
   const [openMenuId, setOpenMenuId] = useState(null); // 케밥 메뉴 열려있는 루틴 ID
   const menuRef = useRef(null);
 
-  const coverImages = [gold, silver, bronze];
+  const coverImages = [RT11, RT33, RT44, RT55, RT66, RT88, RT99];
 
   // 루틴 로드
   useEffect(() => {
@@ -74,7 +83,8 @@ export default function MyRoutinePage() {
         <h3 className="mrp-title">나의 루틴</h3>
         <p className="mrp-sub">
           나의 루틴에서 <b>오늘 할 운동</b>을 선택해 보시오.<br></br>
-          윤수도령 노리개 이미지 잠깐만 쓰고 돌려주겠소. 호호호
+                      하 여기 사진을 어쩌면 좋지
+
         </p>
       </div>
 
@@ -104,7 +114,7 @@ export default function MyRoutinePage() {
 
                   {/* 텍스트 영역 */}
                   <div className="mrp-card-content">
-                    <div className="mrp-tag">{r.targetPart || "나의 루틴"}</div>
+                  <div className="mrp-tag">{`루틴 ${idx + 1}`}</div>
                     <h4 className="mrp-card-title">{r.routineName}</h4>
 
                     <div className="mrp-chips">

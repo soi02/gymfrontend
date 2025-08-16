@@ -231,14 +231,22 @@
   opacity: .9;
 }
 
-.pf-actions{ margin-top: 8px; width: 100%; display:flex; justify-content:center; }
+.pf-actions{ margin-top: 8px; margin-bottom: 8px; width: 100%; display:flex; justify-content:center; gap: 0.6rem;}
 .pf-btn{
   background: #1d5269; /* 민트 버튼 */
   color: #fff; border: 0; border-radius: 14px;
-  padding: 12px 24px; font-weight: 800; font-size: 16px;
+  padding: 12px 18px; font-weight: 800; font-size: 16px;
   box-shadow: 0 10px 24px #1d52695a;
 }
 .pf-btn:active{ transform: translateY(1px); }
+
+.pf-actions-2{ margin-top: 10px; width: 100%; justify-content:center;}
+.pf-btn-2{
+  background: #1d5269; /* 민트 버튼 */
+  color: #fff; border: 0; border-radius: 14px;
+  padding: 12px 18px; font-weight: 800; font-size: 16px;
+  box-shadow: 0 10px 24px #1d52695a;
+}
 
 /* 1:1 정사각형 카드 */
 .pf-card-media{
