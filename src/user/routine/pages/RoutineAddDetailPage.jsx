@@ -120,7 +120,8 @@ const navigate = useNavigate();
 
         try {
             await routineService.saveRoutine(payload);
-            alert("루틴 저장완료! 바로 운동하러 가보시게.");
+            alert("루틴이 성공적으로 저장되었소.");
+            navigate("/routine/myroutines");
             setShowModal(false);
         } catch (error) {
             console.error("저장에러:", error);
@@ -144,8 +145,7 @@ const navigate = useNavigate();
                         <h3>루틴 세부설정</h3>
                         <p>
                             운동별 세트 수, 무게, 횟수를 설정해보시오.
-                            <br />
-                            루틴 저장 후 바로 운동하러 갈 수도 있소.
+                            
                         </p>
                     </div>
                 </div>

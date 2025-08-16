@@ -259,9 +259,16 @@ export default function ResultPage() {
 
         <div className="pf-actions">
           <button className="pf-btn" onClick={() => setShowModal(true)}>
-            사진과 글 기록을 추가하겠소
+            사진을 추가하겠소
           </button>
-          <button className="pf-btn" onClick={() => navigate("/home")}>
+          <button className="pf-btn" onClick={() => setShowModal(true)}>
+            일지를 작성하겠소
+          </button>
+
+
+        </div>
+        <div className="pf-action-2">
+          <button className="pf-btn-2" onClick={() => navigate("/home")}>
             나의 기록들을 보러가겠소
           </button>
         </div>
