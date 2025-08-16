@@ -1,0 +1,7 @@
+.share-wrap { width: 100%; display:flex; flex-direction:column; align-items:center; gap:12px; }
+.share-toolbar { display:flex; gap:10px; }
+.share-file, .share-save {
+  background:#111827; color:#fff; border:0; padding:10px 14px; border-radius:10px; font-weight:800;
+}
+.share-save { background:#10b981; }
+.share-canvas { width: min(420px, 92vw); height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.15); }

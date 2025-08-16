@@ -1,0 +1,102 @@
+/* modal */
+.wlm-backdrop{
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display:flex; align-items:center; justify-content:center; z-index: 1000;
+}
+.wlm-modal{
+  width: min(520px, 92vw); background:#fff; border-radius:16px; padding:16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+.wlm-file input{ width:100%; }
+.wlm-preview{ width:30%; height:auto; border-radius:12px; margin:10px 0; }
+.wlm-textarea{
+  width:100%; border:1px solid #e5e7eb; border-radius:12px; padding:10px; resize:vertical;
+}
+.wlm-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+.wlm-btn{ padding:10px 14px; border-radius:10px; border:0; font-weight:800; }
+.wlm-btn.primary{ background:#542717; color:#fff; }
+.wlm-btn.cancel{ background:#e5e7eb; color:#111827; }
+
+/* 기존 backdrop/modal는 유지하고 아래만 덧붙이면 됨 */
+
+/* 타이틀바 */
+.wlm-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px;
+  border-bottom:1px solid #e5e7eb;
+  background: linear-gradient(180deg,#ffffff,#fafafa);
+  border-radius:18px 18px 0 0;
+}
+.wlm-title{
+
+  
+  font-size:20px; font-weight:800; letter-spacing:-0.2px; color:#111827;
+}
+.wlm-close{
+  border:0; background:transparent; font-size:24px; line-height:1;
+  padding:0 4px; cursor:pointer; color:#6b7280;
+}
+.wlm-close:hover{ color:#111827; }
+
+/* 파일 행 */
+.wlm-file-row{
+  display:flex; align-items:center; gap:10px;
+  padding:14px 18px 6px 18px;
+}
+.wlm-file-input{
+  /* 접근성 유지하며 화면에서 숨김 */
+  position:absolute;
+  width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
+  white-space:nowrap; border:0;
+}
+.wlm-file-btn{
+  border:0; cursor:pointer;
+  background:#1f7a8c; color:#fff;
+  font-weight:800; font-size:14px;
+  padding:10px 14px; border-radius:12px;
+  box-shadow:0 6px 16px rgba(31,122,140,.25);
+}
+.wlm-file-btn:active{ transform: translateY(1px); }
+.wlm-file-help{
+  font-size:14px; color:#374151;
+}
+
+/* 미리보기(정사각) */
+.wlm-preview{
+  width:84px; height:84px; object-fit:cover;
+  border-radius:14px; border:1px solid #e5e7eb;
+  margin: 10px 0 10px 18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+/* 텍스트 박스 */
+.wlm-textarea{
+  width:calc(100% - 36px);
+  margin:12px 18px 0 18px;
+  border-radius:16px; border:1px solid #e5e7eb;
+  padding:14px; font-size:15px; outline:none;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+.wlm-textarea:focus{
+  border-color:#1f7a8c;
+  box-shadow:0 0 0 4px rgba(31,122,140,.12);
+}
+
+/* 하단 버튼 */
+.wlm-actions{
+  display:flex; justify-content:flex-end; gap:10px;
+  padding:16px 18px 18px 18px;
+}
+.wlm-btn{
+  border:0; border-radius:12px; padding:12px 18px; font-weight:800;
+  font-size:15px; cursor:pointer;
+}
+.wlm-btn.cancel{
+  background:#eef2f7; color:#111827;
+}
+.wlm-btn.primary{
+  background:#5a2d1c; color:#fff;
+  box-shadow:0 8px 18px rgba(90,45,28,.25);
+}
+.wlm-btn.primary:active{ transform: translateY(1px); }
