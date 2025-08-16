@@ -68,6 +68,7 @@ import MarketTopTabs from './user/market/commons/MarketTopTabs';
 import BuddyStart from './user/buddy/pages/BuddyStart';
 import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 import ChallengeAllList from './user/challenge/pages/ChallengeAllList';
+import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -217,6 +218,7 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
             <Route path="/challenge/challengeAllList" element={<ChallengeAllList />} />
             <Route path="/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
             <Route path="/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
+            <Route path="/challenge/challengeMyList" element={<ChallengeMyListPage />} />
 
             <Route path="/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
             <Route path="/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
