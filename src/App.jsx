@@ -35,7 +35,6 @@ import MyRoutinePage from './user/routine/pages/MyRoutinePage';
 import WorkoutPage from './user/routine/pages/WorkoutPage';
 import GuidePage from './user/routine/pages/GuidePage';
 import DiaryPage from './user/routine/pages/DiaryPage.Jsx';
-import SummaryPage from './user/routine/pages/SummaryPage';
 import ResultPage from './user/routine/pages/ResultPage';
 import BuddyTopTabs from './user/buddy/commons/BuddyTopTabs';
 import { useEffect } from 'react';
@@ -192,7 +191,6 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
             <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
             <Route path='/routine/workout' element={<WorkoutPage />} />
             <Route path='/routine/guide/:id' element={<GuidePage />} />
-            <Route path='/routine/summary' element={<SummaryPage />} />
             <Route path='/routine/diary' element={<DiaryPage />} />
             <Route path='/routine/result/:workoutId' element={<ResultPage />} />
 
