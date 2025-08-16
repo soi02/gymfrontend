@@ -1,4 +1,4 @@
-export default function MarketProductImageOnArticle() {
+export default function MarketProductImageOnArticle({imageLinkURL}) {
     
     return ( 
         
@@ -8,7 +8,7 @@ export default function MarketProductImageOnArticle() {
                 
                 <div className = "row">
                     <div className = "col">
-                        <img src = "/src/assets/img/market/test/example/ca_2nd_project_product_example.png" 
+                        <img src = {imageLinkURL}
                         style = {{
                             position: "absolute",
                             top: "50%",
@@ -27,3 +27,7 @@ export default function MarketProductImageOnArticle() {
     )
     
 }
+
+// "/src/assets/img/market/test/example/ca_2nd_project_product_example.png" 
+
+// ▲ 이미지 없을 시 사용하게 될 경로 참고용

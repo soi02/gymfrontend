@@ -11,6 +11,8 @@ import useMarketAPI from "../service/MarketService";
 
 export default function MarketArticlePageTest() {
     
+    const BACKEND_BASE_URL = "http://localhost:8080";
+    
     const {id : loadedId} = useParams();
     
     const checkUserStatus = 2;
@@ -27,13 +29,17 @@ export default function MarketArticlePageTest() {
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
         {
             
-            article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
+            article : {id : 0, marketUserId : 0, imageLink : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }
     ])
+    
+    const imageLinkPath = mergeMarketArticleInfo[0].article.imageLink;
+    
+    const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
     
     const [checkArticleWriteUser, setCheckArticleWriteUser] = useState(mergeMarketArticleInfo[0].article.marketUserId);
     
@@ -255,6 +261,9 @@ export default function MarketArticlePageTest() {
                 setCountOfInterestedLogsOnArticle(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                 setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
                 setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
+                
+                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted");
+                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 
             } catch (error) {
                 
@@ -521,7 +530,7 @@ export default function MarketArticlePageTest() {
                                 <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{height : "33vh", overflow : "hidden", position : "relative", marginBottom : "2vh"}}>
-                                            <MarketProductImageOnArticle />
+                                            <MarketProductImageOnArticle imageLinkURL = {imageLinkURL}/>
                                         </div>
                                     </div>
                                     <div className = "row">
