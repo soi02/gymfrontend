@@ -1,3 +1,4 @@
+// StepLayout.jsx (수정)
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ChallengeCreate.css';
@@ -16,14 +17,18 @@ export default function StepLayout({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClose = () => setIsModalOpen(true);
-  const handleConfirmExit = () => { setIsModalOpen(false); navigate('/challenge'); };
+  
+  // 엑스 버튼 클릭 시 이동 경로를 /challenge/challengeList 로 변경
+  const handleConfirmExit = () => { setIsModalOpen(false); navigate('/challenge/challengeList'); };
+  
   const handleCancelExit = () => setIsModalOpen(false);
 
   return (
     <div className="step-layout-container">
       {/* 헤더 */}
       <div className="step-start-header">
-        <button className="ch-create-back-button" onClick={onBack}>&lt;</button>
+        {/* onBack 프롭스가 있을 때만 뒤로 가기 버튼 렌더링 */}
+        {onBack && <button className="ch-create-back-button" onClick={onBack}>&lt;</button>}
         <button className="ch-create-close-button" onClick={handleClose}>&times;</button>
       </div>
 

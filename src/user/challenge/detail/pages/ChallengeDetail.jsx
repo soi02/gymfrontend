@@ -20,6 +20,8 @@ import {
   MdLogout,            // 중도 포기
   MdReportGmailerrorred// 부정/부적절 인증
 } from "react-icons/md";
+import { IoRibbonOutline } from "react-icons/io5";
+
 
 
 
@@ -217,34 +219,67 @@ export default function ChallengeDetail() {
             </div>
             <div className="cdp-title-creator">
               <h1 className="cdp-title">{challengeTitle}</h1>
-              <div className="cdp-creator">
-                <img 
-                  src={profileImage || '/src/assets/img/default_profile_img.svg'}
-                  alt={`${challengeCreator}님의 프로필 사진`}
-                  className="cdp-creator-avatar"
-                />
-                <span className="text-sm">수련 리더 {challengeCreator}</span>
-              </div>
+
             </div>
-            <div className="cdp-stats">
-              <div className="cdp-stat-item">
-                <BsFillPeopleFill />
-                <span className="text-sm">현재 {participantCount} / {challengeMaxMembers}명 참여</span>
-              </div>
-              <div className="cdp-stat-item">
-                <BsCashStack />
-                <span className="text-sm">보증금 {challengeDepositAmount.toLocaleString()}원</span>
-              </div>
-              <div className="cdp-stat-item">
-                <BsFillCalendarEventFill />
-                <span className="text-sm">{challengeDurationDays}일간 진행</span>
-              </div>
-            </div>
+<div className="cdp-meta2x2" role="group" aria-label="수련 주요 정보">
+  {/* 좌상: 수련 리더 */}
+  <div className="m2-cell">
+    <span className="m2-label">
+      <BsFillPeopleFill className="m2-lab-ic" />
+      수련 리더
+    </span>
+    <div className="m2-value m2-leader">
+      <img
+        className="m2-avatar"
+        src={profileImage || '/src/assets/img/default_profile_img.svg'}
+        alt=""
+      />
+      <span>{challengeCreator}</span>
+    </div>
+  </div>
+
+  {/* 우상: 진행 기간 */}
+  <div className="m2-cell">
+    <span className="m2-label">
+      <BsFillCalendarEventFill className="m2-lab-ic" />
+      진행 기간
+    </span>
+    <div className="m2-value">
+      <span>{fmt(challengeRecruitStartDate)} ~ {fmt(challengeRecruitEndDate)}</span>
+    </div>
+  </div>
+
+  {/* 좌하: 현재 참여 인원 */}
+  <div className="m2-cell">
+    <span className="m2-label">
+      <BsFillPeopleFill className="m2-lab-ic" />
+      현재 참여 인원
+    </span>
+    <div className="m2-value">
+      <span>{participantCount} / {challengeMaxMembers}명</span>
+    </div>
+  </div>
+
+  {/* 우하: 진행 · 보증금 */}
+  <div className="m2-cell">
+    <span className="m2-label">
+      <BsCashStack className="m2-lab-ic" />
+      진행 · 보증금
+    </span>
+    <div className="m2-value m2-inline">
+      <span>{challengeDurationDays}일</span>
+      <span className="m2-dot" aria-hidden="true">·</span>
+      <span>{challengeDepositAmount.toLocaleString()}원</span>
+    </div>
+  </div>
+</div>
+
+
           </div>
 
           {challengeDescription && (
             <div className="cdp-detail-section">
-              <h2>수련 설명</h2>
+              {/* <h2>수련 설명</h2> */}
               <p className="cdp-description">{challengeDescription}</p>
             </div>
           )}
@@ -253,7 +288,7 @@ export default function ChallengeDetail() {
 <section className="ngx" aria-labelledby="ngx-title">
   <header className="ngx-head">
     <h2 id="ngx-title">노리개 보상 규정</h2>
-    <p className="ngx-sub">출석률에 따라 등급이 정해지오.<br /> 날마다 수련을 인증하여 노리개를 거두시오.</p>
+    <p className="ngx-sub">출석률에 따라 등급이 정해지오.<br /> 날마다 수련을 인증하여 노리개를 수집하시오.</p>
   </header>
 
   {/* 큰 이미지 3개 – 항상 3-up */}
@@ -277,33 +312,45 @@ export default function ChallengeDetail() {
   {/* 출석률 계산: 이미지 바로 밑, 얇은 안내문 */}
   <div className="ngx-brief" role="note" aria-label="출석률 계산식">
     {/* <span className="fx">출석률 = (성공 인증 일수 ÷ 전체 인증 가능 일수) × 100</span> */}
-    <span className="hint"> 출석률 = (성공 인증 일수 ÷ 전체 인증 가능 일수) × 100 <br /> 출석률은 수련 기간을 바탕으로 헤아리오.</span>
+    <span className="hint"> 출석률 = (성공 인증 일수 ÷ 전체 인증 가능 일수) × 100</span>
   </div>
 
-  {/* 상세 안내 */}
-  <div className="ngx-detail">
-    <div className="ngx-block">
-      <h3>노리개 지급 규정</h3>
-      <p>
-        출석률이 <b>50% 이상</b>이면 동, <b>80% 이상</b>이면 은, <b>100%</b>이면 금 노리개를 내어 드리오.
-      </p>
-    </div>
+<section className="memo-section nrg-memo" aria-labelledby="nrg-memo-title">
+  <div className="memo-list">
+    {/* 지급 규정 + 예시 (통합 카드) */}
+    <div className="memo-item">
+<div
+  className="mi-ic bg-ink"
+  style={{ '--ic-offset': '0px' }}   // ← 여기!
+  aria-hidden="true"
+>
+  <IoRibbonOutline size={20} />
+</div>
+      <div className="mi-body">
+        <div className="mi-head">노리개 지급 규정 및 예시</div>
 
-    <div className="ngx-block">
-      <h3>예시</h3>
-      <p>30일 중 15일 성공 → <b>50%</b> → <b>동</b> 노리개</p>
-      <p>30일 중 24일 성공 → <b>80%</b> → <b>은</b> 노리개</p>
-      <p>30일 중 30일 성공 → <b>100%</b> → <b>금</b> 노리개</p>
-    </div>
+        {/* <p className="mi-text">
+          출석률이 <b><span className="nx-g bronze">50% 이상</span></b>이면 동,
+          <b> <span className="nx-g silver">80% 이상</span></b>이면 은,
+          <b> <span className="nx-g gold">100%</span></b>이면 금 노리개를 내어 드리오.
+        </p> */}
+        <p className="nx-criteria">
+          <b className="nx-g bronze">동 50%</b> · <b className="nx-g silver">은 80%</b> · <b className="nx-g gold">금 100%</b>
+        </p>
 
-    <div className="ngx-block">
-      <h3>유의하시오</h3>
-      <p>
-        늦은 인증, 수련과 무관한 그림, 도용 인증 등 규정을 어기면 실패로 처리하며,
-        중도 포기하거나 실격되면 노리개는 지급되지 않소.
-      </p>
+        <div className="mi-sep" aria-hidden="true"></div>
+
+        <div className="nx-ex">
+          <p><i className="nx-dot" /> 30일 수련 중 15일 성공 → <b>50%</b> → <b>동</b></p>
+          <p><i className="nx-dot" /> 30일 수련 중 24일 성공 → <b>80%</b> → <b>은</b></p>
+          <p><i className="nx-dot" /> 30일 수련 중 30일 성공 → <b>100%</b> → <b>금</b></p>
+        </div>
+      </div>
     </div>
   </div>
+</section>
+
+
 </section>
 
 
@@ -353,6 +400,10 @@ export default function ChallengeDetail() {
       <MdCheckCircleOutline className="vs-rule-ic" />
       <span>스마트폰 화면에 <b>날짜·시간</b>이 또렷하게 보이도록</span>
     </div>
+    <div className="vs-rule ok">
+      <MdCheckCircleOutline className="vs-rule-ic" />
+      <span>수련 수행 <b>정황</b>이 드러나도록 구성</span>
+    </div>
     <div className="vs-rule no">
       <MdOutlineCancel className="vs-rule-ic" />
       <span>수련과 무관한 셀카·사물만 찍은 사진</span>
@@ -360,6 +411,10 @@ export default function ChallengeDetail() {
     <div className="vs-rule no">
       <MdOutlineCancel className="vs-rule-ic" />
       <span>타인 사진·캡처 등 도용, 혹은 날짜·시간 미표시</span>
+    </div>
+    <div className="vs-rule no">
+      <MdOutlineCancel className="vs-rule-ic" />
+      <span>과거 사진 <b>재사용·중복 업로드</b> 또는 <b>과도한 보정</b></span>
     </div>
   </div>
 </section>
