@@ -121,10 +121,12 @@ function AppContent() {
   ];
 
   // TopHeader 숨길 조건들
-  const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
-                        location.pathname.startsWith('/challenge/challengeTest') ||
-                        location.pathname.startsWith('/buddy/buddyChat/')||
-                        location.pathname.startsWith('/buddy/videoCall');
+const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
+                       location.pathname.startsWith('/challenge/challengeTest') ||
+                       location.pathname.startsWith('/buddy/buddyChat/') ||
+                       location.pathname.startsWith('/buddy/videoCall') ||
+                       location.pathname.startsWith('/challenge/detail') ||
+                       location.pathname.startsWith('/challenge/payment/success');
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
   const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || 
