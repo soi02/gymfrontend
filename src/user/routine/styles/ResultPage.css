@@ -231,14 +231,22 @@
   opacity: .9;
 }
 
-.pf-actions{ margin-top: 8px; width: 100%; display:flex; justify-content:center; }
+.pf-actions{ margin-top: 8px; margin-bottom: 8px; width: 100%; display:flex; justify-content:center; gap: 0.6rem;}
 .pf-btn{
   background: #1d5269; /* 민트 버튼 */
   color: #fff; border: 0; border-radius: 14px;
-  padding: 12px 24px; font-weight: 800; font-size: 16px;
+  padding: 12px 18px; font-weight: 800; font-size: 16px;
   box-shadow: 0 10px 24px #1d52695a;
 }
 .pf-btn:active{ transform: translateY(1px); }
+
+.pf-actions-2{ margin-top: 10px; width: 100%; justify-content:center;}
+.pf-btn-2{
+  background: #1d5269; /* 민트 버튼 */
+  color: #fff; border: 0; border-radius: 14px;
+  padding: 12px 18px; font-weight: 800; font-size: 16px;
+  box-shadow: 0 10px 24px #1d52695a;
+}
 
 /* 1:1 정사각형 카드 */
 .pf-card-media{
@@ -324,3 +332,98 @@
 .pf-stat-ico{ font-size:0.9rem; flex:0 0 auto; filter:drop-shadow(0 1px 6px rgba(0,0,0,.25)); }
 .pf-stat-name{ min-width:18px; opacity:.95; }
 .pf-stat-value{ margin-left:1rem; }
+
+/* 히어로: 좌 타이틀 / 우 공유 버튼 */
+.pf-hero-row{
+  width:100%;
+  max-width:520px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin: 6px 0 10px;
+}
+.pf-hero-title{ font-size: 22px; font-weight: 800; color:#0f172a; }
+.pf-hero-share{ position: relative; }
+
+.pf-share-trigger{
+  width:34px; height:34px;
+  display:grid; place-items:center;
+  border:0; border-radius:999px;
+  background:#eef2f7;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+.pf-share-trigger img{ width:18px; height:18px; }
+
+.pf-share-menu{
+  position:absolute; right:0; top:42px;
+  min-width: 148px;
+  background:#fff; border-radius:12px;
+  box-shadow:0 16px 40px rgba(0,0,0,.16);
+  padding:6px;
+  z-index:10;
+}
+.pf-share-menu button{
+  width:100%; text-align:left;
+  padding:10px 12px; border:0; background:transparent;
+  font-weight:700; color:#0f172a; border-radius:10px;
+}
+.pf-share-menu button:active{ background:#f3f4f6; }
+
+/* 사진 선택 버튼 */
+.pf-photo-picker{
+  width:100%; max-width:520px;
+  display:flex; justify-content:center;
+  margin: 10px 0 6px;
+}
+.pf-btn-file{
+  background:#eef2f7; color:#0f172a;
+  border-radius:14px; border:0;
+  padding:12px 18px; font-weight:800; box-shadow:none;
+}
+
+/* 2버튼 가로 배치 */
+.pf-cta-row{
+  width:100%; max-width:520px;
+  display:flex; gap:8px; margin-top: 6px;
+}
+.pf-cta-row .pf-btn{ flex:1; }
+
+.pf-btn-primary{
+  background:#1d5269; color:#fff;
+  box-shadow:0 10px 24px #1d52695a; border:0; border-radius:14px;
+}
+.pf-btn-secondary{
+  background:#0b3d2e; color:#fff; /* 색 다르게 */
+  box-shadow:0 10px 24px rgba(11,61,46,.35); border:0; border-radius:14px;
+}
+
+/* 3분할 헤더 레이아웃 */
+.pf-hero-row3{
+  width:100%; max-width:520px;
+  display:grid; grid-template-columns: 8fr 1fr ;;
+  align-items:center; gap:5px;
+  margin: 6px 0 10px;
+}
+.pf-hero-left, .pf-hero-right{ position:relative; }
+.pf-hero-title.center{ text-align:left; margin-left: 0.4rem; font-size:22px; font-weight:800; color:#0f172a; }
+
+/* 버튼/메뉴는 기존 스타일 재사용 */
+.pf-share-trigger{
+  width:34px; height:34px; display:grid; place-items:center;
+  border:0; border-radius:9px; background:#d1d1d1;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+.pf-share-trigger img{ width:18px; height:18px; }
+
+.pf-share-menu{
+  position:absolute; top:42px; right:0;
+  min-width:148px; background:#fff; border-radius:12px;
+  box-shadow:0 16px 40px rgba(0,0,0,.16);
+  padding:6px; z-index:10;
+}
+.pf-share-menu button{
+  width:100%; text-align:left; padding:10px 12px;
+  border:0; background:transparent; font-weight:700; color:#0f172a; border-radius:10px;
+}
+.pf-share-menu button:active{ background:#f3f4f6; }
+

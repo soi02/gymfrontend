@@ -10,35 +10,35 @@ import axios from "axios";
 
 export default function MarketWriteArticlePage() {
     
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     
-    //
+    // //
     
-    const constToken = localStorage.getItem("token");
+    // const constToken = localStorage.getItem("token");
     
-    if (constToken) {
+    // if (constToken) {
         
-        try {
+    //     try {
             
-            const decodedToken = jwtDecode(constToken);
+    //         const decodedToken = jwtDecode(constToken);
             
-            console.log("decodedToken : ", decodedToken);
+    //         console.log("decodedToken : ", decodedToken);
             
-        } catch (error) {
-            console.error("Token Error :", error)
-        }
+    //     } catch (error) {
+    //         console.error("Token Error :", error)
+    //     }
         
-    } else {
+    // } else {
         
-        console.log("No Token");
+    //     console.log("No Token");
         
-    }
+    // }
     
-    //
+    // //
     
-    const userId = useSelector(state => state.auth.id);
+    // const userId = useSelector(state => state.auth.id);
     
-    console.log(userId);
+    // console.log(userId);
     
     //
     
@@ -134,6 +134,12 @@ export default function MarketWriteArticlePage() {
             
         }
         
+        if (imageLinkRef.current) {
+            
+            imageLinkRef.current.value = null;
+            
+        }
+        
         setInsertImageLink(null);
         setPreviewURL("")
         
@@ -196,10 +202,26 @@ export default function MarketWriteArticlePage() {
         };
         
         setInsertMarketArticleElement(submitArticleData);
+        
+        const submitArticleFormData = new FormData();
+        
+        if (insertImageLink) {
+            
+            submitArticleFormData.append('imageLink', insertImageLink);
+            
+        }
+        
+        console.log('imageLink');
+        console.log(insertImageLink);
+        
+        submitArticleFormData.append('marketUserId', checkUserStatus);
+        submitArticleFormData.append('title', titleRef.current.value);
+        submitArticleFormData.append('productCost', productCostRef.current.value);
+        submitArticleFormData.append('content', contentRef.current.value);
             
         try {
             
-            const constPostInsertMarketArticle = await marketAPI.postInsertMarketArticle(submitArticleData);
+            const constPostInsertMarketArticle = await marketAPI.postInsertMarketArticle(submitArticleFormData);
             navigate(`/market`);
 
             
@@ -241,6 +263,9 @@ export default function MarketWriteArticlePage() {
                                                 사진
                                             </div>
                                         </div>
+                                        
+                                        
+                                        
                                         <div className = "row">
                                             <div className = "col" style = {{marginBottom : "2vh"}}>
                                                 <div className = "row gx-0">
@@ -297,8 +322,7 @@ export default function MarketWriteArticlePage() {
                                                     insertImageLink ?
                                                     <div className = "row">
                                                         <div className = "col">
-                                                            {
-                                                            insertImageLink.name}
+                                                            {insertImageLink.name}
                                                         </div>
                                                         <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
                                                         onClick = {constRemoveImageLink}>
@@ -315,6 +339,8 @@ export default function MarketWriteArticlePage() {
                                                 <i className="ri-information-line"></i> 선택한 사진이 대표 사진으로 표시됩니다.
                                             </div>
                                         </div>
+                                        
+                                        
                                     </div>
                                 </div>
                                 
