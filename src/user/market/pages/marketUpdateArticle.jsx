@@ -12,15 +12,70 @@ export default function MarketUpdateArticlePage() {
     
     const navigate = useNavigate();
     
+    const BACKEND_BASE_URL = "http://localhost:8080";
+    
+    const imageLinkRef = useRef(null);
     const titleRef = useRef(null);
     const productCostRef = useRef(null);
     const contentRef = useRef(null);
+    
+    const [updateImageLink, setUpdateImageLink] = useState(null);
+    const [previewURL, setPreviewURL] = useState('');
+    const [displayImageName, setDisplayImageName] = useState(null);
     
     const [updateMarketArticleElement, setUpdateMarketArticleElement] = useState(
         {id : 0, marketUserId : checkUserStatus, imageLink : null, mainImageId : -1, title : "ERROR", content : "ERROR", productCostOption : -1, productCost : -1,
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : null
         }
     )
+    
+    console.log("updateMarketArticleElement");
+    console.log(updateMarketArticleElement);
+    
+    console.log("updateImageLink : ", updateImageLink);
+    console.log("previewURL : ", previewURL);
+            
+    const marketAPI = useMarketAPI();
+    
+    const handleDivisionClick = () => {
+        
+        imageLinkRef.current.click();
+        
+    }
+    
+    const constApplyImageLink = (element) => {
+        
+        const constFile = element.target.files[0];
+        
+        if (constFile && constFile.type.startsWith('image/')) {
+            
+            const constUpdateImageLink = setUpdateImageLink(constFile);
+            setPreviewURL(URL.createObjectURL(constFile));
+            setDisplayImageName(constFile.name);
+                
+        }
+        
+    }
+    
+    const constRemoveImageLink = () => {
+        
+        if (previewURL) {
+            
+            URL.revokeObjectURL(previewURL);
+            
+        }
+        
+        if (imageLinkRef.current) {
+            
+            imageLinkRef.current.value = null;
+            
+        }
+        
+        setUpdateImageLink(null);
+        setPreviewURL("");
+        setDisplayImageName(null);
+        
+    }
     
     const constApplyTextContent = (element) => {
         
@@ -56,7 +111,7 @@ export default function MarketUpdateArticlePage() {
         
     }
     
-    const constButtonToInsertMarketArticle = async (element) => {
+    const constButtonToUpdateMarketArticle = async (element) => {
         
         const submitArticleData = {
             ...updateMarketArticleElement,
@@ -66,10 +121,26 @@ export default function MarketUpdateArticlePage() {
         };
         
         setUpdateMarketArticleElement(submitArticleData);
+        
+        const submitArticleFormData = new FormData();
+        
+        if (updateImageLink) {
+            
+            submitArticleFormData.append('imageLink', updateImageLink);
+            
+        }
+        
+        console.log('imageLink');
+        console.log(updateImageLink);
+        
+        submitArticleFormData.append('marketUserId', checkUserStatus);
+        submitArticleFormData.append('title', titleRef.current.value);
+        submitArticleFormData.append('productCost', productCostRef.current.value);
+        submitArticleFormData.append('content', contentRef.current.value);
             
         try {
             
-            const constPostInsertMarketArticle = await marketAPI.postUpdateMarketArticle(submitArticleData);
+            const constPostUpdateMarketArticle = await marketAPI.postUpdateMarketArticle(submitArticleFormData);
             navigate(`/market/article/${checkArticleId}`);
 
             
@@ -78,8 +149,6 @@ export default function MarketUpdateArticlePage() {
         }
         
     }
-    
-    const marketAPI = useMarketAPI();
     
     useEffect(() => {
         
@@ -92,6 +161,15 @@ export default function MarketUpdateArticlePage() {
                 const constGetSelectSpecificMarketArticle = await marketAPI.getSelectSpecificMarketArticle(checkArticleId);
                 
                 setUpdateMarketArticleElement(constGetSelectSpecificMarketArticle);
+                
+                if (constGetSelectSpecificMarketArticle.imageLink) {
+                    
+                    const constUpdateImageLinkURL = `${BACKEND_BASE_URL}${constGetSelectSpecificMarketArticle.imageLink}`
+                    // setUpdateImageLink(constGetSelectSpecificMarketArticle.imageLink);
+                    setDisplayImageName(constGetSelectSpecificMarketArticle.imageLink);
+                    setPreviewURL(constUpdateImageLinkURL);
+                    
+                }
                 
             } catch (error) {
                 
@@ -109,6 +187,17 @@ export default function MarketUpdateArticlePage() {
         
     }, [])
     
+    useEffect(() => {
+        
+        if (updateImageLink && previewURL) {
+            
+            console.log("updateImageLink : ", updateImageLink);
+            console.log("previewURL : ", previewURL);
+            
+        }
+        
+    }, [updateImageLink, previewURL])
+    
     return(
         <>
                             
@@ -124,7 +213,90 @@ export default function MarketUpdateArticlePage() {
                                             사진
                                         </div>
                                     </div>
+                                    
+                                    
+                                    
                                     <div className = "row">
+                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                            <div className = "row gx-0">
+                                                <div className = "col-auto" style = {{width : "15vh", height : "15vh", overflow : "hidden", position : "relative",
+                                                paddingLeft : "0vh", paddingRight : "0vh", border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
+                                                    <input type = "file" style = {{display : "none"}} accept = "image*" onChange = {constApplyImageLink} ref = {imageLinkRef} />
+                                                        <div className = "row">
+                                                            <div className = "col basicDivisionOnClickStyle" onClick = {handleDivisionClick}>
+                                                                <MarketFetchMyPhotoOnWriteArticle />
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div className = "col" style = {{padding : "0vh", marginLeft : "2vh", marginRight : "2vh", 
+                                                border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh", overflow : "hidden"}}> 
+                                                    <div className = "row gx-0 flex-nowrap">
+                                                        <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden",
+                                                            display: "flex", justifyContent: "center", padding : "0vh", alignItems: "center", marginBottom : "2.5vh", 
+                                                            border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
+                                                            <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                        </div>
+                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
+                                                                </div>
+                                                                <div className = "col" style = {{flexGrow : "8", padding : "0vh"}}>
+                                                                    대표 사진으로 
+                                                                    <br />
+                                                                    표시됩니다.
+                                                                </div>
+                                                                <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className = "row gx-0">
+                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", 
+                                        marginBottom : "1vh", height : "9.5vh", overflowY : "auto"}}>
+                                            {/* {
+                                                updateImageLink ?
+                                                <div className = "row">
+                                                    <div className = "col">
+                                                        {updateImageLink.name}
+                                                    </div>
+                                                    <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                    onClick = {constRemoveImageLink}>
+                                                        ×
+                                                    </div>
+                                                </div>
+                                                :
+                                                <></>
+                                            } */}
+                                            {
+                                                displayImageName ?
+                                                <div className = "row">
+                                                    <div className = "col">
+                                                        {displayImageName}
+                                                    </div>
+                                                    <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                    onClick = {constRemoveImageLink}>
+                                                        ×
+                                                    </div>
+                                                </div>
+                                                :
+                                                <></>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col" style = {{fontSize : "1.5vh", marginTop : "0.75vh"}}>
+                                            <i className="ri-information-line"></i> 선택한 사진이 대표 사진으로 표시됩니다.
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                    {/* <div className = "row">
                                         <div className = "col" style = {{marginBottom : "2vh"}}>
                                             <div className = "row gx-0">
                                                 <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
@@ -142,7 +314,7 @@ export default function MarketUpdateArticlePage() {
                                             가져온 사진 목록 3 <br />
                                             가져온 사진 목록 4 <br />
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             
@@ -217,7 +389,7 @@ export default function MarketUpdateArticlePage() {
                                         <div className = "col d-flex justify-content-center">
                                             <div className = "row">
                                                 <div className = "col-auto">
-                                                    <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketArticle}
+                                                    <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle}
                                                     style = {{fontSize : "1.875vh", fontWeight : "bold"}}>수정</button>
                                                 </div>
                                             </div>

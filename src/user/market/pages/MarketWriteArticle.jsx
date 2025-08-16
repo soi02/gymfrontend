@@ -263,6 +263,9 @@ export default function MarketWriteArticlePage() {
                                                 사진
                                             </div>
                                         </div>
+                                        
+                                        
+                                        
                                         <div className = "row">
                                             <div className = "col" style = {{marginBottom : "2vh"}}>
                                                 <div className = "row gx-0">
@@ -336,6 +339,8 @@ export default function MarketWriteArticlePage() {
                                                 <i className="ri-information-line"></i> 선택한 사진이 대표 사진으로 표시됩니다.
                                             </div>
                                         </div>
+                                        
+                                        
                                     </div>
                                 </div>
                                 

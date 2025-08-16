@@ -45,11 +45,11 @@ export default function useMarketAPI() {
     const postUpdateMarketArticle = async(payload) => {
         const response = await axios.post(`${constMarketAPIBasedURL}/updateMarketArticle`,
             payload,
-            {
-                headers : {
-                    "Content-Type": "application/json"
-                }
-            }
+            // {
+            //     headers : {
+            //         "Content-Type": "application/json"
+            //     }
+            // }
         )
         return response.data;
     }
