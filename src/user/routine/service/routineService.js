@@ -36,6 +36,12 @@ export default function useRoutineService() {
     return res.data;
   }, [api]);
 
+  const deleteRoutineById = useCallback(async (routineId) => {
+    const res = await api.delete(`/deleteRoutine/${routineId}`, {}, withAuth());
+    return res.data;
+  }, [api, withAuth]);
+  
+
   const getRoutinesByUserId = useCallback(async (userId) => {
     const res = await api.get(`/getRoutinesByUserId/${userId}`, withAuth());
     return res.data;
@@ -119,7 +125,8 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
       updateMemo,
       youtubeSearch,
       upsertWorkoutLogExtras,
-      getWorkoutLog
+      getWorkoutLog,
+      deleteRoutineById
 
     }),
     [
@@ -136,8 +143,8 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
       updateMemo,
       youtubeSearch,
       upsertWorkoutLogExtras,
-      getWorkoutLog,
-
+      getWorkoutLog,  
+      deleteRoutineById
     ]
   );
 
