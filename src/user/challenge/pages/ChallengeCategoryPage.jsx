@@ -108,22 +108,46 @@ export default function ChallengeCategoryPage() {
 return (
   <div className="ch-category-page">
     <div className="ch-category-header">
-      {/* 아이콘 컨테이너 */}
-      {categoryId && (
-        <div className="ch-category-icon-wrap">
-          <img
-            src={categoryIcons[categoryId]}
-            alt={`${categoryName} 아이콘`}
-            className="ch-category-icon"
-          />
+      {/* Icon and Text container */}
+      <div className="ch-header-content">
+        {categoryId && (
+          <div className="ch-category-icon-wrap">
+            <img
+              src={categoryIcons[categoryId]}
+              alt={`${categoryName} 아이콘`}
+              className="ch-category-icon"
+            />
+          </div>
+        )}
+        <div className="ch-category-text">
+          <h2 className="ch-category-title">{categoryName}</h2>
+          {descriptionText.map((line, index) => (
+            <p key={index} className="ch-category-sub">{line}</p>
+          ))}
         </div>
-      )}
-      {/* 텍스트 컨테이너 */}
-      <div className="ch-category-text">
-        <h2 className="ch-category-title">{categoryName}</h2>
-        {descriptionText.map((line, index) => (
-          <p key={index} className="ch-category-sub">{line}</p>
-        ))}
+      </div>
+      
+      {/* Moved keyword filter container into the header */}
+      <div className={`ch-category-fab-container ${isFabOpen ? 'open' : ''}`} ref={fabRef}>
+        <button className={`ch-category-fab-hash ${isFabOpen ? 'open' : ''}`} onClick={handleFabClick}>
+          #
+        </button>
+        <div className="ch-category-keyword-chips-slide-down">
+          {selectedCategory && (
+            (selectedCategory?.keywords || []).map((kw, index) => (
+              <button
+                key={kw.keywordId}
+                className={`ch-category-chip ${selectedKeywordId === kw.keywordId ? 'active' : ''}`}
+                onClick={() => handleKeywordClick(kw.keywordId)}
+                style={{
+                  transitionDelay: isFabOpen ? `${index * 0.05}s` : '0s',
+                }}
+              >
+                <span className="ch-category-chip-text">#{kw.keywordName}</span>
+              </button>
+            ))
+          )}
+        </div>
       </div>
     </div>
     
@@ -143,27 +167,7 @@ return (
       </section>
     </div>
 
-    <div className={`ch-category-fab-container ${isFabOpen ? 'open' : ''}`} ref={fabRef}>
-      <div className="ch-category-keyword-chips-slide-up">
-        {selectedCategory && (
-          (selectedCategory?.keywords || []).map((kw, index) => (
-            <button
-              key={kw.keywordId}
-              className={`ch-category-chip ${selectedKeywordId === kw.keywordId ? 'active' : ''}`}
-              onClick={() => handleKeywordClick(kw.keywordId)}
-              style={{
-                transitionDelay: isFabOpen ? `${index * 0.05}s` : '0s',
-              }}
-            >
-              <span className="ch-category-chip-text">#{kw.keywordName}</span>
-            </button>
-          ))
-        )}
-      </div>
-      <button className={`ch-category-fab-hash ${isFabOpen ? 'open' : ''}`} onClick={handleFabClick}>
-        #
-      </button>
-    </div>
+
   </div>
 );
 }

@@ -35,8 +35,8 @@
 .amc-tint {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, .15) 0%, rgba(0, 0, 0, .25) 35%, rgba(0, 0, 0, .45) 70%),
-    linear-gradient(135deg, rgba(0, 0, 0, .08), rgba(0, 0, 0, .0) 55%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, .08) 0%, rgba(0, 0, 0, .15) 35%, rgba(0, 0, 0, .25) 70%),
+    linear-gradient(135deg, rgba(0, 0, 0, .05), rgba(0, 0, 0, .0) 55%);
   mix-blend-mode: multiply;
 }
 

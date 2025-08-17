@@ -903,13 +903,20 @@
 
 /* Header section */
 .ch-category-page .ch-category-header {
-  /* 아이콘과 텍스트를 가로로 정렬합니다. */
   display: flex;
-  align-items: center; /* 세로 중앙 정렬 */
-  text-align: left; /* 텍스트는 왼쪽 정렬 */
+  justify-content: space-between; /* Space out the main content and the filter button */
+  align-items: flex-start; /* Align content to the top */
   padding: 25px 20px 10px;
-  gap: 15px; /* 아이콘과 텍스트 사이 간격 */
+  position: relative; /* Essential for positioning the chips */
 }
+
+/* A new container for the icon and text */
+.ch-category-page .ch-header-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 
 .ch-category-page .ch-category-icon-wrap {
   /* 아이콘 크기 및 정렬 */
@@ -962,30 +969,47 @@
   color: #999;
 }
 
-/* FAB button and keyword chips */
+/* Remove fixed positioning from the FAB container */
 .ch-category-page .ch-category-fab-container {
-  position: fixed;
-  right: 20px;
-  bottom: calc(var(--bottom-bar-height) + 20px); /* Adjust this line */
+  /* No longer fixed */
+  position: relative; /* Use relative positioning within the header */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end; /* Align the FAB button to the right */
   gap: 10px;
-  z-index: 100; /* Ensure it is on top of other elements */
+  z-index: 100;
 }
+
+/* New CSS for the chips to slide down */
+.ch-category-page .ch-category-keyword-chips-slide-down {
+  display: flex;
+  flex-direction: column; /* Stacks chips downwards */
+  align-items: flex-end;
+  gap: 8px;
+  position: absolute;
+  top: 100%; /* Position below the header */
+  right: 0;
+  padding-top: 10px; /* Space between the button and the first chip */
+  pointer-events: none;
+  width: max-content;
+}
+
+/* Update the .ch-category-fab-hash selector */
 .ch-category-page .ch-category-fab-hash {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  background-color: #007bff;
+  width: 50px;
+  height: 50px;
+  background-color: #7c1d0d;
   color: white;
   border-radius: 50%;
   font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
   transition: transform 0.2s ease;
+  border: none; /* remove button border */
+  outline: none; /* remove button outline on focus/click */
 }
 
 .ch-category-page .ch-category-fab-hash:hover {
@@ -1014,8 +1038,14 @@
 }
 
 .ch-category-page .ch-category-chip.active {
-  background-color: #007bff;
+  background-color: #7c1d0d;
   color: white;
+}
+
+
+/* New active state to slide down */
+.ch-category-page .ch-category-fab-container.open .ch-category-keyword-chips-slide-down {
+  pointer-events: auto;
 }
 
 .ch-category-page .ch-category-fab-container.open .ch-category-chip {
