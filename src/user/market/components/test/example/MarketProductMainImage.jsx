@@ -1,4 +1,4 @@
-export default function MarketProductMainImage() {
+export default function MarketProductMainImage({imageLinkURL}) {
     
     return ( 
         
@@ -8,7 +8,7 @@ export default function MarketProductMainImage() {
                 
                 <div className = "row">
                     <div className = "col">
-                        <img src = "/src/assets/img/market/test/example/ca_2nd_project_product_example.png" 
+                        <img src = {imageLinkURL}
                         style = {{
                             position: "absolute",
                             top: "50%",

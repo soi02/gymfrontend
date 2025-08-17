@@ -29,7 +29,7 @@ export default function MarketArticlePageTest() {
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
         {
             
-            article : {id : 0, marketUserId : 0, imageLink : null, mainImageId : 0,
+            article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}

@@ -8,7 +8,13 @@ import useMarketAPI from "../service/MarketService";
 
 function MarketArticleElement({marketArticleElem1}) {
     
+    const BACKEND_BASE_URL = "http://localhost:8080";
+    
     const { article, userInfo } = marketArticleElem1;
+    
+    const imageLinkPath = article.imageLink;
+    
+    const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
     
     function funcSellEnded(sellEnded) {
         
@@ -73,7 +79,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                             <div className = "row">
                                                 <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
                                                     paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                    <MarketProductMainImage />
+                                                    <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                 </div>
                                                 <div className = "col" style = {{position : "relative"}}>
                                                     <div className = "row">
@@ -120,7 +126,7 @@ function MarketArticleElement({marketArticleElem1}) {
 export default function MarketBoardPage() {
     
     const [marketArticleList, setMarketArticleList] = useState([
-        {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
+        {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
         title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
         viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
     ]) 
