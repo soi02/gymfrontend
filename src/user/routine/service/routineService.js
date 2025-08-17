@@ -113,6 +113,34 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
     return await api.get(`/workoutLog/${workoutId}`, withAuth());
   }, [api, withAuth]);
 
+
+
+  // ✅ 날짜별 여러 번의 운동 카드(목록) 가져오기
+  const getWorkoutsByDate = useCallback((userId, date) => {
+    return api.get(`/workouts/byDate`, {
+      params: { userId, date },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  // ✅ 일지/사진 가져오기 (workoutId로)
+  const getWorkoutLogByDate = useCallback((workoutId) => {
+    return api.get(`/workoutlog/workoutId`, {
+      params: { workoutId },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  // ✅ 해당 운동 세트 상세 가져오기 (workoutId로)
+  const getActualWorkoutByWorkoutId = useCallback((workoutId) => {
+    return api.get(`/actualworkout/workoutId`, {
+      params: { workoutId },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  
+
   return useMemo(
     () => ({
       getWorkoutList,
@@ -129,8 +157,10 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
       youtubeSearch,
       upsertWorkoutLogExtras,
       getWorkoutLog,
-      deleteRoutineById
-
+      deleteRoutineById,
+      getWorkoutsByDate,
+      getWorkoutLogByDate,
+      getActualWorkoutByWorkoutId
     }),
     [
       getWorkoutList,
@@ -147,7 +177,10 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
       youtubeSearch,
       upsertWorkoutLogExtras,
       getWorkoutLog,  
-      deleteRoutineById
+      deleteRoutineById,
+      getWorkoutsByDate,
+      getWorkoutLogByDate,
+      getActualWorkoutByWorkoutId
     ]
   );
 

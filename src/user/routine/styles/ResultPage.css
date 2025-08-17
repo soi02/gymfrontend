@@ -449,3 +449,21 @@
 }
 .flip-front{ transform: rotateY(0); }
 .flip-back{ transform: rotateY(180deg); }
+
+/* src/routine/styles/DiaryFlip.css 또는 기존 css 하단 */
+
+.flip { perspective: 1000px; }
+.flip-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 카드도 정사각형 */
+  transform-style: preserve-3d;
+  transition: transform .6s;
+}
+.flip-inner.is-flipped { transform: rotateY(180deg); }
+
+.flip-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+}
+.flip-back { transform: rotateY(180deg); }

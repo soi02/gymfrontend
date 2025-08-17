@@ -1,0 +1,81 @@
+/* ===== DiaryFlip: 카드 앞/뒤 전환 전용 ===== */
+
+/* 3D 원근감 */
+.flip {
+  perspective: 1100px;
+}
+
+/* 앞/뒤 두 면을 감싸는 래퍼 */
+.flip-inner {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;              /* 정사각형 카드 유지 */
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+
+/* 뒤집힌 상태 */
+.flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* 앞/뒤 공통 면 */
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;      /* 뒤집혔을 때 안 보이게 */
+  -webkit-backface-visibility: hidden; /* iOS/Safari */
+  overflow: hidden;                  /* 라운드 밖 자르기 */
+}
+
+/* 앞면/뒷면 회전 */
+.flip-front { transform: rotateY(0deg); }
+.flip-back  { transform: rotateY(180deg); }
+
+/* 카드(결과 페이지 스타일 재사용)와 사이즈를 정확히 맞춤 */
+.flip-face > .pf-card-media {
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+}
+
+/* 모션 최소화 환경 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition: none; }
+}
+
+/* 운동 n 라벨 */
+.pf-chip {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  margin: 4px 0 6px;
+}
+
+/* 카드 아래 버튼 줄(겹침 방지용 마진) */
+.pf-cta-row--diary {
+  margin-top: 10px;
+}
+
+/* 카드 사이 구분선 */
+.pf-divider {
+  width: 100%;
+  max-width: 520px;
+  height: 1px;
+  background: #e5e7eb;
+  border: 0;
+  margin: 14px 0;
+}
+
+/* (선택) 섹션 래퍼 여백 */
+.diary-section {
+  width: 100%;
+  max-width: 520px;
+}
