@@ -1,0 +1,77 @@
+/* src/styles/ChallengeMyListPage.css */
+
+.cmlp-page {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+  color: #1c1c1e;
+  overflow-x: hidden;
+}
+
+/* src/styles/ChallengeMyListPage.css */
+
+.cmlp-header {
+  padding: 20px 20px 10px; /* ⬅️ 원래 패딩으로 복원 */
+  background-color: white;
+  flex-shrink: 0;
+  display: flex; /* ⬅️ Flexbox 사용 */
+  align-items: center;
+  position: relative; /* ⬅️ 버튼 위치 지정을 위해 추가 */
+}
+
+.cmlp-header .back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #1c1c1e;
+  font-size: 24px;
+  position: absolute; /* ⬅️ 버튼을 절대 위치로 설정 */
+  left: 20px; /* ⬅️ 좌측 끝에 배치 */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.cmlp-title {
+  font-size: 22px; /* ⬅️ 원래 크기로 복원 */
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+  flex-grow: 1; /* ⬅️ 남은 공간을 채워 중앙 정렬 유도 */
+  text-align: center; /* ⬅️ 텍스트 중앙 정렬 */
+}
+
+.cmlp-sub {
+  font-size: 13px; /* ⬅️ 원래 크기로 복원 */
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+  text-align: center; /* ⬅️ 텍스트 중앙 정렬 */
+  width: 100%; /* ⬅️ 다음 줄에 오도록 너비 설정 */
+}
+
+.cmlp-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-bottom: calc(var(--bottom-bar-h, 64px) + env(safe-area-inset-bottom) + 20px);
+}
+
+.cmlp-card-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cmlp-empty-text {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
