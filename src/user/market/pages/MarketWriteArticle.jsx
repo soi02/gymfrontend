@@ -100,7 +100,8 @@ export default function MarketWriteArticlePage() {
     const [previewURL, setPreviewURL] = useState('');
     
     const [insertMarketArticleElement, setInsertMarketArticleElement] = useState(
-        {id : 1, marketUserId : checkUserStatus, imageLink : null, mainImageId : 0, title : "", content : "", productCostOption : 0, productCost : 0,
+        {id : 1, marketUserId : checkUserStatus, imageLink : null, imageOriginalFilename : null, mainImageId : 0, 
+            title : "", content : "", productCostOption : 0, productCost : "",
             viewedCount : 0, sellEnded : 0, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : null
         }
     )
@@ -197,7 +198,7 @@ export default function MarketWriteArticlePage() {
         const submitArticleData = {
             ...insertMarketArticleElement,
             title : titleRef.current.value,
-            productCost : productCostRef.current.value,
+            productCost : parseInt(productCostRef.current.value || 0, 10),
             content : contentRef.current.value
         };
         
@@ -216,7 +217,7 @@ export default function MarketWriteArticlePage() {
         
         submitArticleFormData.append('marketUserId', checkUserStatus);
         submitArticleFormData.append('title', titleRef.current.value);
-        submitArticleFormData.append('productCost', productCostRef.current.value);
+        submitArticleFormData.append('productCost', parseInt(productCostRef.current.value || 0, 10));
         submitArticleFormData.append('content', contentRef.current.value);
             
         try {

@@ -24,7 +24,8 @@ export default function MarketUpdateArticlePage() {
     const [displayImageName, setDisplayImageName] = useState(null);
     
     const [updateMarketArticleElement, setUpdateMarketArticleElement] = useState(
-        {id : 0, marketUserId : checkUserStatus, imageLink : null, mainImageId : -1, title : "ERROR", content : "ERROR", productCostOption : -1, productCost : -1,
+        {id : 0, marketUserId : checkUserStatus, imageLink : null, imageOriginalFilename : null, mainImageId : -1, 
+            title : "ERROR", content : "ERROR", productCostOption : -1, productCost : -1,
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : null
         }
     )
@@ -167,7 +168,7 @@ export default function MarketUpdateArticlePage() {
                     
                     const constUpdateImageLinkURL = `${BACKEND_BASE_URL}${constGetSelectSpecificMarketArticle.imageLink}`
                     // setUpdateImageLink(constGetSelectSpecificMarketArticle.imageLink);
-                    setDisplayImageName(constGetSelectSpecificMarketArticle.imageLink);
+                    setDisplayImageName(constGetSelectSpecificMarketArticle.imageOriginalFilename);
                     setPreviewURL(constUpdateImageLinkURL);
                     
                 }
