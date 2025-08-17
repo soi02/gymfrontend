@@ -167,7 +167,7 @@ export default function MyPageRoutineCalendar() {
             </div>
 
             <div className="col arrow-col">
-              <span>&gt;</span>
+              <span><button>일지</button></span>
             </div>
           </div>
         </div>
