@@ -1,0 +1,23 @@
+.wdm-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.4);
+  display:grid; place-items:center; z-index:999;
+}
+.wdm-modal{
+  width:min(560px, 92vw); max-height:80vh; overflow:auto;
+  background:#fff; border-radius:16px; box-shadow:0 20px 48px rgba(0,0,0,.25);
+}
+.wdm-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid #e5e7eb;
+}
+.wdm-title{ font-weight:900; font-size:16px; }
+.wdm-close{
+  border:0; background:#f3f4f6; border-radius:8px; width:28px; height:28px; font-size:16px; font-weight:900;
+}
+.wdm-list{ padding: 12px; display:grid; gap:10px; }
+.wdm-row{
+  border:1px solid #e5e7eb; border-radius:12px; padding:10px 12px;
+}
+.wdm-name{ font-weight:800; margin-bottom:6px; }
+.wdm-meta{ display:flex; gap:12px; font-size:14px; color:#334155; }
+.wdm-empty{ padding:16px; }
