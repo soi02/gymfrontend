@@ -12,9 +12,9 @@ export default function MyPageRoutineCalendar() {
   const id = useSelector((state) => state.auth.id);
 
   const routineService = useRoutineService();
-
-  // console.log(name);
   const navigate = useNavigate();
+  // console.log(name);
+
   const [value, setValue] = useState(new Date());
   const [workoutDates, setWorkoutDates] = useState([]);
   useEffect(() => {
@@ -102,16 +102,15 @@ export default function MyPageRoutineCalendar() {
     fetchWorkout();
   }, [value]);
 
+  console.log("🕒 클라이언트 현재 시간:", new Date());
+  console.log("🕒 타임존 오프셋 (분):", new Date().getTimezoneOffset());
 
   function formatMD(date) {
     const m = date.getMonth() + 1;
     const d = date.getDate();
     return `${m}/${d}`;
   }
-const toLocalYYYYMMDD = (d) => {
-  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-  return local.toISOString().slice(0, 10);
-};
+
   return (
     <>
       <div className="divider-line"></div>
@@ -151,10 +150,12 @@ const toLocalYYYYMMDD = (d) => {
     </div>
   </div>
 </div> */}
-<div
-  className="workout-bar"
-  onClick={() => navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)}
->
+        <div
+          className="workout-bar"
+          onClick={() =>
+            navigate(`/routine/diary?date=${value.toISOString().slice(0, 10)}`)
+          }
+        >
           <div className="workout-row">
             {/* col-3 : 날짜 */}
             <div className="col date-col">
