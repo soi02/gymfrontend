@@ -133,6 +133,7 @@ export default function MarketUpdateArticlePage() {
         console.log('imageLink');
         console.log(updateImageLink);
         
+        submitArticleFormData.append('id', checkArticleId);
         submitArticleFormData.append('marketUserId', checkUserStatus);
         submitArticleFormData.append('title', titleRef.current.value);
         submitArticleFormData.append('productCost', productCostRef.current.value);
