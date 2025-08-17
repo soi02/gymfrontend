@@ -36,9 +36,10 @@
 }
 
 .ch-intro-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   line-height: 1.5;
+  letter-spacing: 0.02rem;
   margin-top: 0;
   color: #111;
   margin-bottom: 0.6rem;
@@ -53,7 +54,7 @@
 
 /* 캐릭터 이미지 스타일 */
 .ch-intro-character-img {
-  width: 38%; /* 이미지 크기 조정 */
+  width: 40%; /* 이미지 크기 조정 */
   margin-top: 15px;
   margin-bottom: 12px; /* 말풍선과의 간격 조정 */
 }
