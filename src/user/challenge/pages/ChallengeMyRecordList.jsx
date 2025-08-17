@@ -394,7 +394,7 @@ return (
             </div>
           </div>
           <div className="faq-item">
-            <div className="faq-q">문의/피드백은 어떻게 전달하오?</div>
+            <div className="faq-q">Q. 문의/피드백은 어떻게 전달하오?</div>
             <div className="faq-a">
               <p>앱 내 '설정 → 문의하기' 메뉴를 통해 보내주시면, 빠르게 답변해 드리겠소. 여러분의 목소리는 짐마당을 더욱 성장시키오!</p>
             </div>
