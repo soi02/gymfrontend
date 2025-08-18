@@ -234,7 +234,6 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
             
             {/* 장터 관련 */}
             <Route path="/market" element={<MarketBoardPage />} />
-            <Route path="/market/board/:searchWord?" element={<MarketBoardPageWhenSearch />} /> {/* 업데이트 시 추가 예정*/}
             <Route path="/market/article/:id" element={<MarketArticlePage />} />
             <Route path="/market/user/:id" element={<MarketUserPage />} />
             <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
