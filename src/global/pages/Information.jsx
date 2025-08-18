@@ -3,22 +3,22 @@ import '../styles/Information.css';
 
 const teamMembers = [
   {
-    name: "김철수",
+    name: "강소이",
     role: "백엔드 개발, 데이터베이스 설계",
     tasks: "사용자 인증, 챌린지 시스템, 버디 매칭 로직 구현"
   },
   {
-    name: "이영희",
+    name: "김지은",
     role: "프론트엔드 개발, UI/UX 디자인",
     tasks: "메인 페이지, 루틴 기록 기능, 탭 바 및 헤더 UI 개발"
   },
   {
-    name: "박민수",
+    name: "문정혁",
     role: "프론트엔드 개발, 웹RTC",
     tasks: "버디 채팅 및 화상 통화 기능, 마이페이지 구현"
   },
   {
-    name: "최지우",
+    name: "진윤수",
     role: "백엔드 개발, 서버 관리",
     tasks: "장터 기능, 알림 시스템, 결제 연동"
   }
