@@ -40,6 +40,23 @@ export default function BottomNavigation() {
     // Redux 상태가 업데이트되기 전에 함수가 실행될 수 있기 때문입니다.
     // const token = useSelector(state => state.auth.token);
 
+    const handleRoutineTabClick = async (e) => {
+      e.preventDefault();
+
+      const token = localStorage.getItem('token');
+
+      if (!userId || !token) {
+        alert("로그인이 필요합니다.")
+        navigate('/login');
+        return;
+      }
+  
+      navigate('/routine');
+
+    };
+
+
+
     const handleChallengeTabClick = async (e) => {
         e.preventDefault();
 
@@ -126,7 +143,7 @@ export default function BottomNavigation() {
         matchPrefix="/routine"
         iconClass="ri-file-paper-2-fill"
         label="훈련기록"
-        onClick={() => navigate('/routine')}
+        onClick={handleRoutineTabClick}
       />
       <BottomNavigationItem
         link="/challenge"

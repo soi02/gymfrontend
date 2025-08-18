@@ -203,6 +203,12 @@ export default function MarketBoardPageWhenSearch() {
                         
                         <MarketSearchDivision />
                         
+                        <div className = "row">
+                            <div className = "col" style = {{marginBottom : "2vh"}}>
+                                "keyword" 단어로 게시글을 찾았소.
+                            </div>
+                        </div>
+                        
                         {
                             constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
                         }
