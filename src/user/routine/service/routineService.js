@@ -67,13 +67,16 @@ export default function useRoutineService() {
     return await api.get(`/result/${workoutId}`, withAuth(cfg));
   }, [api, withAuth]);
 
-  // 3) 버그 수정: 인자로 받은 userId를 실제로 사용
-  const getWorkoutByDate = useCallback(async (userId, selectedDate) => {
-    return await api.get(`/getWorkoutByDate`, {
-      params: { userId, date: selectedDate },
-      ...withAuth(),
-    });
-  }, [api, withAuth]);
+// useRoutineService.js 안
+const getWorkoutByDate = useCallback(async (userId, selectedDate) => {
+  const cfg = {
+    params: { userId, date: selectedDate },
+    ...withAuth(),
+  };
+  console.log("[svc] GET /getWorkoutByDate", cfg); // 헤더/파라미터 확인
+  return await api.get(`/getWorkoutByDate`, cfg);
+}, [api, withAuth]);
+
 
   const getWorkoutDatesBetween = useCallback((userId, startDate, endDate) => {
     return api.get(`/getWorkoutDatesBetween`, {
@@ -110,6 +113,34 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
     return await api.get(`/workoutLog/${workoutId}`, withAuth());
   }, [api, withAuth]);
 
+
+
+  // ✅ 날짜별 여러 번의 운동 카드(목록) 가져오기
+  const getWorkoutsByDate = useCallback((userId, date) => {
+    return api.get(`/workouts/byDate`, {
+      params: { userId, date },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  // ✅ 일지/사진 가져오기 (workoutId로)
+  const getWorkoutLogByDate = useCallback((workoutId) => {
+    return api.get(`/workoutlog/workoutId`, {
+      params: { workoutId },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  // ✅ 해당 운동 세트 상세 가져오기 (workoutId로)
+  const getActualWorkoutByWorkoutId = useCallback((workoutId) => {
+    return api.get(`/actualworkout/workoutId`, {
+      params: { workoutId },
+      ...withAuth(),
+    });
+  }, [api, withAuth]);
+
+  
+
   return useMemo(
     () => ({
       getWorkoutList,
@@ -126,8 +157,10 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
       youtubeSearch,
       upsertWorkoutLogExtras,
       getWorkoutLog,
-      deleteRoutineById
-
+      deleteRoutineById,
+      getWorkoutsByDate,
+      getWorkoutLogByDate,
+      getActualWorkoutByWorkoutId
     }),
     [
       getWorkoutList,
@@ -144,7 +177,10 @@ const upsertWorkoutLogExtras = useCallback(async (workoutId, { memo, file }) => 
       youtubeSearch,
       upsertWorkoutLogExtras,
       getWorkoutLog,  
-      deleteRoutineById
+      deleteRoutineById,
+      getWorkoutsByDate,
+      getWorkoutLogByDate,
+      getActualWorkoutByWorkoutId
     ]
   );
 

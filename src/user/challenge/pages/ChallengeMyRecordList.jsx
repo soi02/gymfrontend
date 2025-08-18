@@ -6,11 +6,13 @@ import { useSelector } from 'react-redux';
 import MyChallengeCard from '../components/MyChallengeCard';
 import '../styles/ChallengeList.css';
 import '../styles/MyChallengeCard.css';
+import '../styles/ChallengeMyRecordList.css';
 
 import goldImg from '/src/assets/img/challenge/norigae/gold.png';
 import silverImg from '/src/assets/img/challenge/norigae/silver.png';
 import bronzeImg from '/src/assets/img/challenge/norigae/bronze.png';
 
+import { MdChevronRight } from 'react-icons/md';
 import { 
   FaFire, // 불꽃 아이콘
   FaUsers, // 사람 아이콘

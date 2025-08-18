@@ -1,0 +1,182 @@
+.wdm-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.4);
+  display:grid; place-items:center; z-index:999;
+}
+.wdm-modal{
+  width:min(560px, 92vw); max-height:80vh; overflow:auto;
+  background:#fff; border-radius:16px; box-shadow:0 20px 48px rgba(0,0,0,.25);
+}
+.wdm-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid #e5e7eb;
+}
+.wdm-title{ font-weight:900; font-size:16px; }
+.wdm-close{
+  border:0; background:#f3f4f6; border-radius:8px; width:28px; height:28px; font-size:16px; font-weight:900;
+}
+.wdm-list{ padding: 12px; display:grid; gap:10px; }
+.wdm-row{
+  border:1px solid #e5e7eb; border-radius:12px; padding:10px 12px;
+}
+.wdm-name{ font-weight:800; margin-bottom:6px; }
+.wdm-meta{ display:flex; gap:12px; font-size:14px; color:#334155; }
+.wdm-empty{ padding:16px; }
+
+/* Backdrop */
+.wdm-backdrop{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.42);
+  display: grid; place-items: center;
+  z-index: 9999;
+}
+
+/* Modal */
+.wdm-modal{
+  width: min(370px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  background: #ffffff;            /* 화이트 테마 */
+  color:#0f172a;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.25);
+  overflow: auto;
+  padding: 18px 18px 22px;
+}
+
+/* Header */
+.wdm-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 14px;
+}
+.wdm-title{
+  margin:0; font-size: 22px; font-weight: 900; letter-spacing: -.2px;
+}
+.wdm-close{
+  width:36px; height:36px; border-radius:10px;
+  border:0; background:#eef2f7; color:#0f172a; font-size:20px; font-weight:800;
+}
+
+/* Summary card */
+.wdm-summary{
+  background: linear-gradient(135deg, #eef6ff, #e9fbf5);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.04);
+}
+.wdm-summary-body{
+  display:grid; gap:10px;
+}
+.wdm-summary-row{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items:center;
+}
+.wdm-summary-name{
+  font-size: 16px; font-weight: 800;
+}
+.wdm-summary-right{
+  font-size: 15px; font-weight: 800; opacity:.85;
+}
+
+/* Metrics row */
+.wdm-metrics{
+  display: flex;
+  gap: 17px;
+  justify-content: center; /* 가로 가운데 정렬 */
+  align-items: center;     /* 세로 가운데 정렬 */
+  margin-top: 12px;
+}
+
+.wdm-metric{ display:flex; gap:8px; align-items:center; font-weight: 900; }
+.wdm-metric-ico{ font-size:18px; }
+.wdm-metric-text{ font-size:15px; }
+
+/* Divider */
+.wdm-divider{
+  border:0; height:1px; background:#e5e7eb;
+  margin: 18px 0 14px;
+}
+
+/* Section */
+.wdm-section-title{
+  font-size: 1rem; font-weight: 900; margin: 0 0 10px 0;
+}
+
+/* Exercise block */
+.wdm-ex{ padding: 10px 0; }
+.wdm-ex-head{ display:flex; align-items:center; gap:14px; margin-bottom: 10px; }
+.wdm-thumb{ width:56px; height:56px; border-radius: 12px; overflow:hidden; background:#f1f5f9; display:grid; place-items:center; }
+.wdm-thumb img{ width:100%; height:100%; object-fit:contain; }
+.wdm-thumb-ph{ font-size: 24px; }
+.wdm-ex-title{ font-size: 18px; font-weight: 900; }
+
+/* Sets grid */
+.wdm-set-grid{
+  display:grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+}
+.wdm-set-cell{
+  background:#f8fafc;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px #eef2f7;
+}
+
+/* Sub divider between exercises */
+.wdm-subdivider{
+  height:1px; background:#e5e7eb; margin: 14px 0 4px;
+}
+
+/* Empty */
+.wdm-empty{
+  padding: 20px; text-align:center; color:#6b7280; font-weight: 700;
+}
+
+.wdm-index{
+  width: 200px; height: 28px;
+  display:grid; place-items:center;
+  background:#eef2f7; color:#111827;
+  border-radius: 8px; font-weight: 900; font-size: 14px;
+}
+
+/* 그룹 큰 박스 */
+.wdm-exbox{
+  background: #f3f4f6;      /* 연한 회색 배경 (컨테이너) */
+  border-radius: 16px;
+  padding: 12px;
+  margin: 10px 0 14px;
+}
+
+/* 제목 필(가운데) */
+.wdm-exbox-head{
+  display: flex;
+  /* justify-content: center; */
+    margin: 0 auto;
+}
+.wdm-exbox-title{
+  background: #e9eef5;      /* 살짝 진한 회색 */
+  padding: 6px 14px;
+  margin-left: 0.5rem;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+/* 2×2 세트 그리드 */
+.wdm-setgrid-2{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0px;
+}
+
+/* 세트 칩(보더 없음, 가운데 정렬) */
+.wdm-setpill{
+  /* background: #eef2f7;      보더 없이 연회색 칩 */
+  border-radius: 12px;
+  padding: 10px 8px;
+  text-align: center;
+  font-weight: 700;
+  color: #0f172a;
+}
