@@ -155,13 +155,13 @@
   left:16px; right:16px; top:64px; bottom:16px;
   border-radius:16px;
   padding:12px;
-  color:#363636;
+  color:#ffffff;
   overflow:auto;
   white-space:pre-wrap;
   line-height:1.5;
   font-weight:700;
   isolation:isolate;            /* 텍스트와 블러 분리 */
-  background:rgba(255, 255, 255, 0.497);
+  background:rgba(255, 255, 255, 0.117);
 }
 .pf-memo::before{
   content:"";

@@ -1,278 +1,287 @@
-// src/routine/components/DiaryPage.jsx
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import "../styles/ResultPage.css";
 import useRoutineService from "../service/routineService";
-import "../styles/ResultPage.css";              // ✅ 카드 스타일 재활용
-import gibon from "../../../assets/img/routine/r_gym.png";
+import gold from "../../../assets/img/challenge/norigae/gold.png";
+import WorkoutShareCard from "./WorkoutShareCard.jsx";
+import WorkoutLogModal from "./WorkoutLogModal.jsx";
 import logo from "../../../assets/img/gymmadang_logo_kr.svg";
-import WorkoutDetailModal from "./WorkoutDetailModal"; // ✅ 새 모달
+import gibon from "../../../assets/img/routine/r_gym.png";
 
-const toLocalYYYYMMDD = (d) => {
-  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-  return local.toISOString().slice(0, 10);
-};
+export default function ResultPage() {
+  const { getActualWorkout, upsertWorkoutLogExtras, getWorkoutLog } =
+    useRoutineService();
+  const { workoutId } = useParams();
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [logExtras, setLogExtras] = useState({ memo: "", pictureUrl: "" });
 
-const normalizePic = (raw) => {
-  const s = (raw || "").trim();
-  if (!s) return "";
-  if (/^https?:\/\//i.test(s)) return s;
-  const withSlash = s.startsWith("/") ? s : `/${s}`;
-  const normalized = withSlash.startsWith("/uploadFiles/")
-    ? withSlash
-    : `/uploadFiles${withSlash}`;
-  // 절대 URL (개발 서버 기준). 프록시 쓰면 앞부분 빼도 됨.
-  return `http://localhost:8080${normalized}`;
-};
+  const [workoutList, setWorkoutList] = useState([]);
+  const [summary, setSummary] = useState({
+    dateLabel: "",
+    totalVolume: 0,
+    totalSets: 0,
+    totalCalories: 0,
+    totalMinutes: 0,
+  });
 
-export default function DiaryPage() {
-  const [sp] = useSearchParams();
-  const date = sp.get("date") || toLocalYYYYMMDD(new Date());
-  const id = useSelector((s) => s.auth.id);
+  const photoUrl = useMemo(() => {
+    const raw = (logExtras.pictureUrl || "").trim();
+    if (!raw) return "";
 
-  const { getWorkoutByDate, getWorkoutLog, getActualWorkout } = useRoutineService();
+    // 이미 절대 URL이면 그대로 사용
+    if (/^https?:\/\//i.test(raw)) return raw;
 
-  // 날짜의 workout 리스트
-  const [workouts, setWorkouts] = useState([]); // [{ workoutId, totalSets, totalCalories, totalVolume, exerciseCount }]
-  const [loading, setLoading] = useState(true);
+    // 앞 슬래시 강제
+    const withSlash = raw.startsWith("/") ? raw : `/${raw}`;
 
-  // 카드 앞/뒤 상태
-  const [flipped, setFlipped] = useState({});   // { [workoutId]: true/false }
-  // 일지/사진 캐시
-  const [logs, setLogs] = useState({});         // { [workoutId]: { memo, pictureUrl } }
+    // /uploadFiles 프리픽스 강제
+    const normalized = withSlash.startsWith("/uploadFiles/")
+      ? withSlash
+      : `/uploadFiles${withSlash}`;
 
-  // 상세 모달
-  const [detailOpen, setDetailOpen] = useState(false);
-  const [detailRows, setDetailRows] = useState([]);
-  const [detailTarget, setDetailTarget] = useState(null); // workoutId
+    return `http://localhost:8080${normalized}`;
+  }, [logExtras.pictureUrl]);
 
-  // 날짜 타이틀
-  const dateTitle = useMemo(() => `${date} 운동`, [date]);
+  const bgUrl = useMemo(() => {
+    return photoUrl || gibon;
+  }, [photoUrl]);
 
-  // 날짜별 workout 불러오기
+
+  // 데이터 로드 (너가 쓰던 방식 유지)
   useEffect(() => {
-    let alive = true;
+    if (!workoutId) return;
+    const controller = new AbortController();
+
     (async () => {
-      setLoading(true);
       try {
-        const res = await getWorkoutByDate(id, date);
-        const arr = Array.isArray(res?.data) ? res.data : (res?.data?.list ?? []);
-        // 백엔드 필드 케이스를 유연하게 대응
-        const mapped = arr
-          .map((x, idx) => {
-            const workoutId =
-              x.workoutId ?? x.id ?? x.workout_id ?? x.workoutid ?? null;
-            if (!workoutId) return null;
-            return {
-              workoutId,
-              totalSets: x.setCount ?? x.totalSets ?? x.sets ?? 0,
-              totalCalories: x.calories ?? x.kcal ?? 0,
-              totalVolume: x.totalVolume ?? x.volume ?? 0,
-              exerciseCount: x.workoutCount ?? x.exerciseCount ?? x.exercises ?? 0,
-            };
-          })
-          .filter(Boolean);
-        if (alive) setWorkouts(mapped);
+        const res = await getActualWorkout(workoutId, {
+          signal: controller.signal,
+        });
+        const d = res?.data ?? res;
+        const list = Array.isArray(d)
+          ? d
+          : d.list ??
+            d.results ??
+            d.rows ??
+            d.items ??
+            d.sets ??
+            d.details ??
+            d.data ??
+            [];
+        setWorkoutList(list);
       } catch (e) {
-        console.error("날짜별 workout 조회 실패:", e);
-        if (alive) setWorkouts([]);
-      } finally {
-        if (alive) setLoading(false);
+        if (e.name !== "CanceledError" && e.name !== "AbortError")
+          console.error(e);
       }
     })();
-    return () => {
-      alive = false;
-    };
-  }, [id, date, getWorkoutByDate]);
 
-  // 카드 뒤집기 + 일지 로드(처음 뒤집을 때만)
-  const handleFlipToBack = async (workoutId) => {
-    setFlipped((prev) => ({ ...prev, [workoutId]: true }));
-    // 이미 로드했으면 스킵
-    if (logs[workoutId]) return;
+    return () => controller.abort();
+  }, [workoutId, getActualWorkout]);
+
+  async function handleSaveExtras({ memo, file }) {
     try {
-      const { data } = await getWorkoutLog(workoutId);
-      setLogs((prev) => ({
-        ...prev,
-        [workoutId]: {
-          memo: data?.memo || "",
-          pictureUrl: normalizePic(data?.pictureUrl),
-        },
-      }));
+      const { data } = await upsertWorkoutLogExtras(workoutId, { memo, file });
+      setLogExtras({
+        memo: data.memo || "",
+        pictureUrl: data.pictureUrl || "",
+      });
+      setShowModal(false);
     } catch (e) {
-      console.error("일지/사진 로드 실패:", e);
-      setLogs((prev) => ({
-        ...prev,
-        [workoutId]: { memo: "", pictureUrl: "" },
-      }));
+      console.error(e);
+      alert("업로드에 실패했소.");
     }
-  };
+  }
 
-  const handleFlipToFront = (workoutId) => {
-    setFlipped((prev) => ({ ...prev, [workoutId]: false }));
-  };
+  useEffect(() => {
+    if (!workoutId) return;
+    (async () => {
+      try {
+        const { data } = await getWorkoutLog(workoutId);
+        if (data)
+          setLogExtras({
+            memo: data.memo || "",
+            pictureUrl: data.pictureUrl || "",
+          });
+      } catch (_) {}
+    })();
+  }, [workoutId, getWorkoutLog]);
 
-  // 상세 모달 열기
-  const openDetail = async (workoutId) => {
-    setDetailTarget(workoutId);
-    setDetailOpen(true);
-    try {
-      const res = await getActualWorkout(workoutId);
-      const list = Array.isArray(res?.data)
-        ? res.data
-        : res?.data?.list ?? res?.data?.items ?? res?.data?.data ?? [];
-      setDetailRows(list);
-    } catch (e) {
-      console.error("운동 상세 조회 실패:", e);
-      setDetailRows([]);
+  // 요약 계산 (첫 행에서 minutes/calories 읽기)
+  useEffect(() => {
+    const dateLabel = new Date().toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    if (!workoutList.length) {
+      setSummary((s) => ({ ...s, dateLabel }));
+      return;
     }
-  };
 
+    const totalSets = workoutList.length;
+    const totalVolume = workoutList.reduce(
+      (acc, w) => acc + (Number(w.kg) || 0) * (Number(w.reps) || 0),
+      0
+    );
+
+    const first = workoutList[0] ?? {};
+    const totalCalories = Number(
+      first.calories ?? first.calorie ?? first.kcal ?? 0
+    );
+
+    let totalMinutes = Number(first.minutes ?? first.durationMinutes ?? 0);
+    if (!totalMinutes) {
+      const start = first.startTime ?? first.workoutStart ?? first.startAt;
+      const end = first.endTime ?? first.workoutEnd ?? first.endAt;
+      if (start && end) {
+        totalMinutes = Math.max(
+          0,
+          Math.round((new Date(end) - new Date(start)) / 60000)
+        );
+      }
+    }
+
+    setSummary({
+      dateLabel,
+      totalVolume,
+      totalSets,
+      totalCalories,
+      totalMinutes,
+    });
+  }, [workoutList]);
+
+  const fmtInt = (n) => Number(n || 0).toLocaleString("ko-KR");
+  const fmtHMS = (m) => {
+    const total = Math.max(0, Math.round(m || 0)) * 60;
+    const h = Math.floor(total / 3600);
+    const mm = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    return `${String(h).padStart(2, "0")}:${String(mm).padStart(
+      2,
+      "0"
+    )}:${String(s).padStart(2, "0")}`;
+  };
+  const datePill = (() => {
+    const d = new Date();
+    return `${String(d.getMonth() + 1).padStart(2, "0")}월 ${String(
+      d.getDate()
+    ).padStart(2, "0")}일`;
+  })();
+
+  // 요약 계산 useEffect 아래에 추가
+  const exerciseCount = useMemo(() => {
+    const keys = new Set(
+      workoutList.map((w) => w.elementId ?? w.elementName ?? `#${w.detailId}`)
+    );
+    return keys.size;
+  }, [workoutList]);
+
+  useEffect(() => {
+  }, [photoUrl]);
   return (
-    <div className="pf-page" style={{ paddingTop: 12 }}>
-      <div className="pf-hero-row" style={{ marginTop: 0 }}>
-        <div className="pf-hero-title">{dateTitle}</div>
-      </div>
-
-      {loading ? (
-        <div style={{ padding: 16 }}>불러오는 중…</div>
-      ) : workouts.length === 0 ? (
-        <div style={{ padding: 16 }}>이 날짜의 운동 기록이 없소.</div>
-      ) : (
-        <div style={{ width: "100%", maxWidth: 520, display: "grid", gap: 12 }}>
-          {workouts.map((w) => {
-            const log = logs[w.workoutId] || {};
-            const bg = log.pictureUrl || gibon;
-
-            return (
-              <div key={w.workoutId} className="flip">
-                <div className={`flip-inner ${flipped[w.workoutId] ? "is-flipped" : ""}`}>
-                  {/* 앞면(카드 = ResultPage 스타일) */}
-                  <div className="flip-face flip-front">
-                    <div
-                      className={`pf-card-media has-photo`}
-                      style={{ ["--pf-bg"]: `url("${bg}")` }}
-                    >
-                      <div className="pf-media-overlay" />
-                      <div className="pf-share-header">
-                        <img className="pf-share-logo" src={logo} alt="짐마당" />
-                        <div className="pf-share-date">{date}</div>
-                      </div>
-
-                      <div className="pf-stats-box">
-                        <div className="pf-stat-row">
-                          <span className="pf-stat-ico">🏋️</span>
-                          <span className="pf-stat-value">
-                            {Number(w.totalVolume || 0).toLocaleString("ko-KR")} kg
-                          </span>
-                        </div>
-                        <div className="pf-stat-row">
-                          <span className="pf-stat-ico">💪</span>
-                          <span className="pf-stat-value">
-                            {Number(w.exerciseCount || 0).toLocaleString("ko-KR")} 운동
-                          </span>
-                        </div>
-                        <div className="pf-stat-row">
-                          <span className="pf-stat-ico">🏆</span>
-                          <span className="pf-stat-value">
-                            {Number(w.totalSets || 0).toLocaleString("ko-KR")} 세트
-                          </span>
-                        </div>
-                        <div className="pf-stat-row">
-                          <span className="pf-stat-ico">🔥</span>
-                          <span className="pf-stat-value">
-                            {Number(w.totalCalories || 0).toLocaleString("ko-KR")} 칼로리
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* 카드 하단 액션 */}
-                      <div style={{
-                        position: "absolute", left: 16, right: 16, bottom: 16,
-                        display: "flex", gap: 8, zIndex: 1
-                      }}>
-                        <button
-                          className="pf-btn pf-btn-primary"
-                          style={{ flex: 1 }}
-                          onClick={() => handleFlipToBack(w.workoutId)}
-                        >
-                          일지 보기
-                        </button>
-                        <button
-                          className="pf-btn pf-btn-secondary"
-                          style={{ flex: 1 }}
-                          onClick={() => openDetail(w.workoutId)}
-                        >
-                          운동 상세보기
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 뒷면(일지) */}
-                  <div className="flip-face flip-back">
-                    <div
-                      className={`pf-card-media has-photo`}
-                      style={{ ["--pf-bg"]: `url("${bg}")` }}
-                    >
-                      <div className="pf-media-overlay" />
-                      <div className="pf-share-header">
-                        <img className="pf-share-logo" src={logo} alt="짐마당" />
-                        <div className="pf-share-date">{date}</div>
-                      </div>
-
-                      {/* 일지 내용 */}
-                      <div style={{
-                        position: "absolute",
-                        left: 16, right: 16, top: 64, bottom: 72,
-                        zIndex: 1,
-                        background: "rgba(255,255,255,.18)",
-                        backdropFilter: "blur(4px)",
-                        borderRadius: 16,
-                        padding: 12,
-                        color: "#fff",
-                        overflow: "auto",
-                        whiteSpace: "pre-wrap",
-                        lineHeight: 1.5,
-                        fontWeight: 700
-                      }}>
-                        {log.memo ? log.memo : "작성된 일지가 없소."}
-                      </div>
-
-                      <div style={{
-                        position: "absolute", left: 16, right: 16, bottom: 16,
-                        display: "flex", gap: 8, zIndex: 1
-                      }}>
-                        <button
-                          className="pf-btn pf-btn-secondary"
-                          style={{ flex: 1 }}
-                          onClick={() => handleFlipToFront(w.workoutId)}
-                        >
-                          앞면으로
-                        </button>
-                        <button
-                          className="pf-btn pf-btn-primary"
-                          style={{ flex: 1 }}
-                          onClick={() => openDetail(w.workoutId)}
-                        >
-                          운동 상세보기
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+    <>
+      <div className="divider-line"></div>
+      <div className="pf-page">
+        {/* 상단 히어로 */}
+        <div className="pf-hero">
+          {/* <span className="pf-confetti" aria-hidden>🎉</span> */}
+          <div className="pf-hero-title">오늘도 한 걸음 성장하였소</div>
+          {/* <div className="pf-hero-date">{summary.dateLabel}</div> */}
         </div>
-      )}
 
-      {/* 상세 모달 */}
-      <WorkoutDetailModal
-        open={detailOpen}
-        onClose={() => setDetailOpen(false)}
-        rows={detailRows}
-      />
-    </div>
+        {/* 메인 카드 */}
+        {/* 메인 카드 (사진 배경 + 오버레이 UI) */}
+          <div
+            className={`pf-card-media ${bgUrl ? "has-photo" : ""}`}
+            style={{ ["--pf-bg"]: `url("${bgUrl}")` }}
+          >
+          {/* 가독성 오버레이 */}
+          <div className="pf-media-overlay" />
+
+          {/* 상단 바: 좌측 로고(교체), 우측 날짜 */}
+          <div className="pf-share-header">
+            {/* 로고는 네가 static 경로로 교체해서 쓰면 됨 */}
+            <img className="pf-share-logo" src={logo} alt="짐마당" />
+            <div className="pf-share-date">
+              {(() => {
+                const d = new Date();
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, "0");
+                const day = String(d.getDate()).padStart(2, "0");
+                return `${y}.${m}.${day}.`;
+              })()}
+            </div>
+          </div>
+
+          {/* 좌하단: 하나의 박스 안에 4줄 */}
+          <div className="pf-stats-box">
+            <div className="pf-stat-row">
+              <span className="pf-stat-ico" aria-hidden>
+                🏋️
+              </span>
+              <span className="pf-stat-value">
+                {fmtInt(summary.totalVolume)} kg
+              </span>
+            </div>
+            <div className="pf-stat-row">
+              <span className="pf-stat-ico" aria-hidden>
+                💪
+              </span>
+              <span className="pf-stat-value">
+                {fmtInt(exerciseCount)} 운동
+              </span>
+            </div>
+            <div className="pf-stat-row">
+              <span className="pf-stat-ico" aria-hidden>
+                🏆
+              </span>
+              <span className="pf-stat-value">
+                {fmtInt(summary.totalSets)}&nbsp;세트
+              </span>
+            </div>
+            <div className="pf-stat-row">
+              <span className="pf-stat-ico" aria-hidden>
+                🔥
+              </span>
+              <span className="pf-stat-value">
+                {fmtInt(summary.totalCalories)} 칼로리
+              </span>
+            </div>
+          </div>
+
+          {/* 오른쪽 스티커(금 노리개) – 원하면 이미지 바꿔도 됨 */}
+          {/* <img src={gold} alt="" className="pf-sticker" /> */}
+        </div>
+
+        {/* 하단 브랜드/액션 */}
+        {/* <div className="pf-brand">짐마당</div> */}
+
+        <div className="pf-actions">
+          <button className="pf-btn" onClick={() => setShowModal(true)}>
+            사진을 추가하겠소
+          </button>
+          <button className="pf-btn" onClick={() => setShowModal(true)}>
+            일지를 작성하겠소
+          </button>
+
+
+        </div>
+        <div className="pf-action-2">
+          <button className="pf-btn-2" onClick={() => navigate("/routineCalendar")}>
+            나의 기록들을 보러가겠소
+          </button>
+        </div>
+
+        {/* 모달 */}
+        <WorkoutLogModal
+          open={showModal}
+          onClose={() => setShowModal(false)}
+          onSave={handleSaveExtras}
+          initialMemo={logExtras.memo}
+          initialPreview={photoUrl}
+        />
+      </div>
+    </>
   );
 }
