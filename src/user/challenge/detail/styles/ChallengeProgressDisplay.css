@@ -1,120 +1,95 @@
-/* src/user/challenge/styles/ChallengeProgressDisplay.css */
+/* cpd- : 낙관 도장 보드 (N일 전용) — 레이아웃 오버플로우 방지 버전 */
+:root{
+  --cpd-accent:#7c1d0d; /* 낙관 먹색 */
+  --cpd-ink:#322D29;
+  --cpd-sub:#8e8986;
+  --cpd-line:#D9D9D9;
 
-.progress-display-container {
-    margin-top: 20px;
+  /* gap만 유지하고, 타일 픽셀 고정은 제거 */
+  --cpd-gap:6px;
 }
 
-.progress-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7개 열로 구성 */
-    gap: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+/* 기본 */
+.cpd-board{ width:100%; color:var(--cpd-ink); }
+.cpd-empty{ color:#999; font-size:14px; }
+
+/* 헤더 */
+.cpd-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.cpd-title{ font-weight:900; letter-spacing:-.2px; }
+.cpd-stat{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--cpd-sub); }
+.cpd-dot{ width:10px; height:10px; border-radius:50%; background:var(--cpd-accent); display:inline-block; }
+
+/* (옵션) 요일 */
+.cpd-weekdays{
+  display:grid; grid-template-columns:repeat(7,1fr);
+  column-gap:var(--cpd-gap); margin-bottom:6px;
+  font-size:11px; color:var(--cpd-sub); text-align:center;
 }
 
-.progress-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    min-height: 80px; 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s; /* 호버 효과를 위한 transition */
+/* ===== 핵심: 부모 가용폭 100%로, 칸 너비를 비율로 계산 ===== */
+.cpd-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);  /* 7등분 */
+  column-gap: var(--cpd-gap);
+  row-gap: 12px;
+  /* 카드 안쪽 padding/border를 고려해도 자동으로 맞춰짐 */
+  box-sizing: border-box;
 }
 
-/* 클릭 가능한 항목에 대한 스타일 */
-.progress-item.clickable {
-    cursor: pointer;
+/* 셀: 정사각형 유지 (aspect-ratio) */
+.cpd-cell{
+  position:relative;
+  width:100%;
+  aspect-ratio:1 / 1;           /* 정사각형 */
+  border:none; background:transparent; padding:0;
+  cursor:default;
+}
+.cpd-cell.clickable{ cursor:pointer; }
+
+/* 낙관(원형 기본) — 셀 크기 대비 비율로 표시 */
+.cpd-stamp{
+  position:absolute; left:50%; top:50%;
+  width:46%; height:46%;         /* 셀 대비 크기 (예전 20px 정도 느낌) */
+  transform: translate(-50%, -50%);
+  border-radius:50%;
+  border:2px solid var(--cpd-line);
+  background:transparent;
+  transition: transform .12s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.cpd-cell.sq .cpd-stamp{ border-radius:6px; } /* 방형 낙관 */
+
+/* 인증완료 */
+.cpd-cell.on .cpd-stamp{
+  border-color:var(--cpd-accent);
+  background:var(--cpd-accent);
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 1px 0 rgba(0,0,0,.05), inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.cpd-cell.on .cpd-stamp::after{
+  content:""; position:absolute; inset:6% 6%;
+  border-radius:inherit;
+  background: radial-gradient(closest-side, rgba(0,0,0,.12), rgba(0,0,0,0) 70%);
+  opacity:.22;
 }
 
-.progress-item.clickable:hover {
-    transform: scale(1.05); /* 호버 시 약간 확대 */
+/* 결석/미래 */
+.cpd-cell.miss .cpd-stamp{ border-color:#bfbfbf; }
+.cpd-cell.miss .cpd-stamp::before{
+  content:""; position:absolute; left:12%; right:12%; top:50%;
+  height:1.5px; background:#c9c9c9; transform:rotate(-24deg);
+}
+.cpd-cell.future .cpd-stamp{ border-color:#cfcfcf; border-style:dashed; opacity:.6; }
+
+/* 날짜(우하단) — 화면 크기에 따라 유연하게 */
+.cpd-day{
+  position:absolute; right:6%; bottom:5%;
+  font-size: clamp(9px, 2.6vw, 11px);
+  color:var(--cpd-sub);
 }
 
-/* 상태별 배경색 */
-.status-인증완료 {
-    background-color: #e6ffe6; /* 연한 초록색 */
-}
-
-.status-결석 {
-    background-color: #ffe6e6; /* 연한 빨간색 */
-}
-
-.status-미래 {
-    background-color: #f0f0f0; /* 연한 회색 */
-}
-
-.item-date {
-    font-size: 0.8em;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.item-content {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.attendance-photo {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    max-height: 60px; /* 이미지 최대 높이 */
-    object-fit: cover;
-}
-
-.status-icon {
-    font-size: 1.5em;
-}
-
-/* 모달 관련 스타일 */
-.photo-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.photo-modal-content {
-    position: relative;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    max-width: 90vw;
-    max-height: 90vh;
-}
-
-.photo-modal-content img {
-    max-width: 100%;
-    max-height: 70vh; /* 모달 내 이미지 높이 */
-    display: block;
-}
-
-.close-modal-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+/* 사진 모달 (동일) */
+.cpd-modal{ position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,.45); display:grid; place-items:center; }
+.cpd-modal-sheet{ background:#fff; border-radius:16px; padding:12px; width:90%; max-width:420px; box-shadow:0 18px 36px rgba(0,0,0,.18); }
+.cpd-modal-sheet img{ width:100%; border-radius:12px; display:block; }
+.cpd-close{ margin-top:10px; width:100%; border:none; border-radius:10px; padding:10px; background:#7c1d0d; color:#fff; font-weight:800; cursor:pointer; }

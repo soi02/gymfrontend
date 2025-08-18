@@ -1,4 +1,3 @@
-// src/user/challenge/pages/ChallengeMyRecordDetail.jsx
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,21 +13,21 @@ import goldNorigae from '../../../assets/img/challenge/norigae/gold.png';
 import silverNorigae from '../../../assets/img/challenge/norigae/silver.png';
 import bronzeNorigae from '../../../assets/img/challenge/norigae/bronze.png';
 
-const BACKEND_BASE_URL = "http://localhost:8080";
+const BACKEND_BASE_URL = 'http://localhost:8080';
 
 const norigaeImages = {
-  '금': goldNorigae,
-  '은': silverNorigae,
-  '동': bronzeNorigae,
-  'gold': goldNorigae,
-  'silver': silverNorigae,
-  'bronze': bronzeNorigae,
+  금: goldNorigae,
+  은: silverNorigae,
+  동: bronzeNorigae,
+  gold: goldNorigae,
+  silver: silverNorigae,
+  bronze: bronzeNorigae,
 };
 
-const ChallengeMyRecordDetail = () => {
+export default function ChallengeMyRecordDetail() {
   const { challengeId } = useParams();
   const navigate = useNavigate();
-  const userId = useSelector(state => state.auth.id);
+  const userId = useSelector((state) => state.auth.id);
 
   const [progressData, setProgressData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -41,14 +40,13 @@ const ChallengeMyRecordDetail = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(
-        `${BACKEND_BASE_URL}/api/challenge/getChallengeProgressProcess`,
-        { params: { userId, challengeId } }
-      );
-      setProgressData(response.data);
-    } catch (err) {
-      console.error("챌린지 상세 진행 상황 조회 실패:", err);
-      setError("챌린지 진행 상황을 불러오는 데 실패했습니다.");
+      const res = await axios.get(`${BACKEND_BASE_URL}/api/challenge/getChallengeProgressProcess`, {
+        params: { userId, challengeId },
+      });
+      setProgressData(res.data);
+    } catch (e) {
+      console.error(e);
+      setError('챌린지 진행 상황을 불러오는 데 실패했습니다.');
       setProgressData(null);
     } finally {
       setLoading(false);
@@ -57,7 +55,7 @@ const ChallengeMyRecordDetail = () => {
 
   useEffect(() => {
     if (!userId) {
-      alert("로그인이 필요한 페이지입니다.");
+      alert('로그인이 필요한 페이지입니다.');
       navigate('/login', { state: { from: `/challenge/challengeMyRecordDetail/${challengeId}` } });
       return;
     }
@@ -67,105 +65,106 @@ const ChallengeMyRecordDetail = () => {
   const handleOpenNorigaeListModal = () => setIsNorigaeListModalOpen(true);
   const handleCloseNorigaeListModal = () => setIsNorigaeListModalOpen(false);
 
-  // useMemo 훅을 조건부 렌더링 위에 위치시킴
-const awardedNorigaeIcon = useMemo(() => {
-  if (progressData?.awardedNorigaeName) {
-    const norigaeName = progressData.awardedNorigaeName.replace('노리개', '').trim().toLowerCase();
-    
-    // 로컬 이미지 맵에 키가 존재하는지 먼저 확인
-    if (norigaeImages[norigaeName]) {
-      return norigaeImages[norigaeName];
+  // 노리개 아이콘: 로컬 리소스 우선, 없으면 서버 경로 사용
+  const awardedNorigaeIcon = useMemo(() => {
+    if (progressData?.awardedNorigaeName) {
+      const key = progressData.awardedNorigaeName.replace('노리개', '').trim().toLowerCase();
+      if (norigaeImages[key]) return norigaeImages[key];
     }
-  }
-  // 로컬 이미지를 찾지 못하면 백엔드 경로 사용 (기존 로직 유지)
-  return progressData?.awardedNorigaeIconPath || null;
-}, [progressData]);
+    return progressData?.awardedNorigaeIconPath || null;
+  }, [progressData]);
 
-  // 로딩 중 또는 데이터가 없을 때 렌더링 중단
-  if (loading) {
-    return <div className="cmd-loading">로딩 중...</div>;
-  }
-  
-  if (error || !progressData) {
-    return <div className="cmd-error">{error || "챌린지 정보를 찾을 수 없습니다."}</div>;
-  }
+  if (loading) return <div className="crd-loading">불러오는 중…</div>;
+  if (error || !progressData) return <div className="crd-error">{error || '챌린지 정보를 찾을 수 없습니다.'}</div>;
 
-  // ===== 뷰 계산 =====
-  // 이제 progressData가 null이 아님을 보장
+  // ===== Derived =====
   const total = Number(progressData.totalPeriod) || 0;
   const done = Number(progressData.myAchievement) || 0;
   const progressPct = total > 0 ? Math.round((done / total) * 100) : 0;
 
   const attendedTodayServer = progressData.challengeAttendanceStatus?.some(
-    (status) => status.isToday && status.isAchieved
+    (s) => s.isToday && s.isAchieved
   );
-
   const attendedToday = attendedTodayServer || attendedTodayLocal;
 
   const handleAttendanceSuccess = async () => {
-    setAttendedTodayLocal(true);
+    setAttendedTodayLocal(true); // 즉시 잠금
     await fetchChallengeProgress();
   };
 
   return (
-    <div className="cmd-page">
-      {/* ... (이하 JSX 코드 동일) ... */}
-      <header className="cmd-hero">
-        <button className="cmd-back" onClick={() => navigate(-1)} aria-label="뒤로 가기">←</button>
+    <div className="crd-page">
+      {/* ===== Top Bar ===== */}
+      <div className="crd-topbar">
+        <button className="crd-back" onClick={() => navigate(-1)} aria-label="뒤로 가기">&lt;</button>
+        <div className="crd-top-title">나의 수련기록</div>
+        <div className="crd-top-spacer" />
+      </div>
 
-        <div className="cmd-hero-main">
-          <h1 className="cmd-title">{progressData.challengeTitle}</h1>
-          <p className="cmd-sub">총 {total}일 중 {done}회 달성 · 진행률 {progressPct}%</p>
+      {/* ===== Hero ===== */}
+      <header className="crd-hero">
+        <h1 className="crd-title">{progressData.challengeTitle}</h1>
+        <p className="crd-sub">총 {total}일 중 {done}회 달성 · 진행률 {progressPct}%</p>
 
-          <div className="cmd-progress">
-            <div className="cmd-progress-bar" style={{ width: `${progressPct}%` }} />
-          </div>
+        {/* Progress */}
+        {/* <div className="crd-progress">
+          <div className="crd-progress-bar" style={{ width: `${progressPct}%` }} />
+        </div> */}
 
-          <div className="cmd-hero-actions">
-            <button
-              className={`cmd-cta ${attendedToday ? 'done' : ''}`}
-              disabled={attendedToday}
-              onClick={() => {
-                document.querySelector('#cmd-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
-            >
-              {attendedToday ? '오늘 인증 완료' : '오늘 인증하기'}
+        {/* Quick facts & Norigae */}
+        {/* <div className="crd-quick">
+          <div className="crd-chip"><span className="crd-k">기간</span><span className="crd-v">{total}일</span></div>
+          <div className="crd-chip"><span className="crd-k">달성</span><span className="crd-v">{done}회</span></div>
+          <div className="crd-chip"><span className="crd-k">진행률</span><span className="crd-v">{progressPct}%</span></div>
+
+          {awardedNorigaeIcon && (
+            <button className="crd-chip crd-chip-pill" onClick={handleOpenNorigaeListModal} aria-label="획득 노리개 보기">
+              <img className="crd-chip-img" src={awardedNorigaeIcon} alt="" />
+              <span className="crd-v">{progressData.awardedNorigaeName || '노리개'}</span>
             </button>
+          )}
+        </div> */}
 
-            <button className="cmd-ghost" onClick={handleOpenNorigaeListModal}>
-              획득 뱃지 보기
-            </button>
-          </div>
+        {/* Actions */}
+        <div className="crd-actions">
+          <button
+            className={`crd-cta ${attendedToday ? 'done' : ''}`}
+            disabled={attendedToday}
+            onClick={() => document.querySelector('#crd-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          >
+            {attendedToday ? '오늘 인증 완료' : '오늘 인증하기'}
+          </button>
+
+          <button className="crd-ghost" onClick={handleOpenNorigaeListModal}>
+            획득 뱃지 보기
+          </button>
         </div>
-
-        {awardedNorigaeIcon && (
-          <img
-            src={awardedNorigaeIcon}
-            alt={progressData.awardedNorigaeName || '노리개'}
-            className="cmd-badge"
-          />
-        )}
       </header>
 
-      <main className="cmd-body">
-        <section className="cmd-section">
-          <h2 className="cmd-sec-title">나의 수련 현황</h2>
-          <div className="cmd-card">
-            <ChallengeProgressDisplay statusList={progressData.challengeAttendanceStatus} />
+      {/* ===== Body ===== */}
+      <main className="crd-body">
+        <section className="crd-section">
+          {/* <h2 className="crd-sec-title">나의 수련 현황</h2> */}
+          <div className="crd-card">
+            {/* N일 보드(7/14/20/30)에 맞추고 싶으면 totalDays 전달 */}
+            <ChallengeProgressDisplay
+              statusList={progressData.challengeAttendanceStatus}
+              totalDays={total || undefined}
+            />
           </div>
         </section>
 
-        <section className="cmd-section" id="cmd-form">
-          <h2 className="cmd-sec-title">오늘의 인증</h2>
+        <section className="crd-section" id="crd-form">
+          {/* <h2 className="crd-sec-title">오늘의 인증</h2> */}
           {attendedToday ? (
-            <div className="cmd-card cmd-card-center">
-              <div className="cmd-done-badge">오늘 인증을 완료했어요 👏</div>
-              <button className="cmd-ghost" onClick={handleOpenNorigaeListModal}>
-                내 노리개 확인
-              </button>
+            <div className="crd-card crd-card-center">
+              <div className="crd-done-badge">오늘의 수련 인증 완료!</div>
+                  <p className="crd-help-text">
+                        달력의 날짜를 누르면 사진을 확인할 수 있소.
+                    </p>
             </div>
           ) : (
-            <div className="cmd-card">
+            <div className="crd-card">
               <ChallengeAttendanceForm
                 challengeId={challengeId}
                 userId={userId}
@@ -177,13 +176,12 @@ const awardedNorigaeIcon = useMemo(() => {
         </section>
       </main>
 
-  <NorigaeListModal
-    isOpen={isNorigaeListModalOpen}
-    onClose={handleCloseNorigaeListModal}
-    norigaeList={progressData.awardedNorigaeList}
-  />
+      {/* Norigae Modal */}
+      <NorigaeListModal
+        isOpen={isNorigaeListModalOpen}
+        onClose={handleCloseNorigaeListModal}
+        norigaeList={progressData.awardedNorigaeList}
+      />
     </div>
   );
-};
-
-export default ChallengeMyRecordDetail;
+}
