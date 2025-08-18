@@ -5,7 +5,7 @@ export default function MarketSearchDivision() {
     return(
         <>
         
-            <div className = "row" style = {{height : "5.5vh", marginTop : "1vh", marginBottom : "3vh"}}>
+            <div className = "row" style = {{height : "5.5vh", marginTop : "1vh", marginBottom : "4vh"}}>
                 <div className = "widthDefault">
                     <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center"}}>
                         <div className = "row h-100">
