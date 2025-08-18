@@ -25,8 +25,8 @@ export default function MyPageRoutineCalendar() {
       const start = new Date(value.getFullYear(), value.getMonth(), 1);
       const end = new Date(value.getFullYear(), value.getMonth() + 1, 0);
 
-      const startStr = start.toISOString().split("T")[0];
-      const endStr = end.toISOString().split("T")[0];
+      const startStr = toLocalYYYYMMDD(start);
+      const endStr = toLocalYYYYMMDD(end);
 
       try {
         const res = await routineService.getWorkoutDatesBetween(
@@ -34,7 +34,7 @@ export default function MyPageRoutineCalendar() {
           startStr,
           endStr
         );
-        const dates = res.data; // ✅ 이미 문자열 배열이라면 그대로 써야 함!
+        const dates = res.data;
         setWorkoutDates(dates);
       } catch (err) {
         console.error("🔥 날짜 불러오기 실패", err);
@@ -73,15 +73,19 @@ export default function MyPageRoutineCalendar() {
     );
   };
 
+  // utils
+  const toLocalYYYYMMDD = (d) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+
   const [workoutSummary, setWorkoutSummary] = useState(null);
 
   useEffect(() => {
     const fetchWorkout = async () => {
-      const selectedDate = new Date(
-        value.getTime() - value.getTimezoneOffset() * 60000
-      )
-        .toISOString()
-        .split("T")[0];
+      const selectedDate = toLocalYYYYMMDD(value);
 
       console.log("💡 Fetching workout with:", id, selectedDate); // 🔍 로그 확인
 
@@ -130,30 +134,10 @@ export default function MyPageRoutineCalendar() {
           />
         </div>
 
-        {/* <div className="workout-result">
-
-  <div className="summary-section">
-  <div className="selected-date">
-    {value.getMonth() + 1}/{value.getDate()}
-  </div>
-    <div className="summary-item">
-      <i className="ri-heart-line"></i>
-      <span>{workoutSummary?.workoutCount ?? 0}개의 운동</span>
-    </div>
-    <div className="summary-item">
-      <i className="ri-timer-line"></i>
-      <span>{workoutSummary?.setCount ?? 0}세트</span>
-    </div>
-    <div className="summary-item">
-      <i className="ri-fire-line"></i>
-      <span>{workoutSummary?.calories ?? 0}kcal</span>
-    </div>
-  </div>
-</div> */}
         <div
           className="workout-bar"
           onClick={() =>
-            navigate(`/routine/diary?date=${value.toISOString().slice(0, 10)}`)
+            navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)
           }
         >
           <div className="workout-row">
@@ -183,7 +167,7 @@ export default function MyPageRoutineCalendar() {
             </div>
 
             <div className="col arrow-col">
-              <span>&gt;</span>
+              <span><button>일지</button></span>
             </div>
           </div>
         </div>

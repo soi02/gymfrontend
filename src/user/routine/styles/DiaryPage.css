@@ -1,0 +1,216 @@
+/* ===== DiaryFlip: 카드 앞/뒤 전환 전용 ===== */
+
+/* 3D 원근감 */
+.flip {
+  perspective: 1100px;
+}
+
+/* 앞/뒤 두 면을 감싸는 래퍼 */
+.flip-inner {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;              /* 정사각형 카드 유지 */
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+
+/* 뒤집힌 상태 */
+.flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* 앞/뒤 공통 면 */
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;      /* 뒤집혔을 때 안 보이게 */
+  -webkit-backface-visibility: hidden; /* iOS/Safari */
+  overflow: hidden;                  /* 라운드 밖 자르기 */
+}
+
+/* 앞면/뒷면 회전 */
+.flip-front { transform: rotateY(0deg); }
+.flip-back  { transform: rotateY(180deg); }
+
+/* 카드(결과 페이지 스타일 재사용)와 사이즈를 정확히 맞춤 */
+.flip-face > .pf-card-media {
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+}
+
+/* 모션 최소화 환경 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition: none; }
+}
+
+/* 운동 n 라벨 */
+.pf-chip {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 9px;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  margin: 4px 0 6px;
+}
+
+/* 카드 아래 버튼 줄(겹침 방지용 마진) */
+.pf-cta-row--diary {
+  margin-top: 10px;
+}
+
+.dp-cta-row{
+  width:100%; max-width:520px;
+  display:flex; gap:8px; margin-top: 6px;
+}
+.dp-cta-row .dp-btn{ flex:1; }
+.dp-btn{
+  background: #1d5269; /* 민트 버튼 */
+  color: #fff; border: 0; border-radius: 14px;
+  padding: 12px 18px; font-weight: 800; font-size: 16px;
+  box-shadow: 0 10px 10px #1d52695a;
+}
+
+.dp-btn-primary{
+  background:#1d5269; color:#fff;
+  box-shadow:0 0px 0px #1d52695a; border:0; border-radius:14px;
+}
+.dp-btn-secondary{
+  background:#0b3d2e; color:#fff; /* 색 다르게 */
+  box-shadow:0 0px 0px rgba(11,61,46,.35); border:0; border-radius:14px;
+}
+
+/* 카드 사이 구분선 */
+.pf-divider {
+  width: 100%;
+  max-width: 470px;
+  height: 1px;
+  color: #0f172a;
+  background: #0f5fff;
+  border: 0;
+  margin: 10px 0;
+}
+
+/* (선택) 섹션 래퍼 여백 */
+.diary-section {
+  width: 100%;
+  max-width: 470px;
+  /* margin-bottom: 0; */
+}
+/* ===== 날짜 내비게이션 ===== */
+.pf-date-nav{
+  width: 100%;
+  max-width: 520px;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 6px;
+}
+
+.pf-icon-btn{
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: #eef2f7;
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+
+.pf-date-pill-btn{
+  height: 40px;
+  border: 0;
+  border-radius: 12px;
+  background: #e9eef5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  color: #0f172a;
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+}
+
+.pf-cal-emoji{ font-size: 18px; line-height: 1; }
+
+/* 실제 date input은 화면에서 숨김 */
+.pf-date-input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+/* ===== 유리(메모) 박스: 텍스트는 선명, 배경만 블러 ===== */
+.pf-memo{
+  position:absolute;
+  left:16px; right:16px; top:64px; bottom:16px;
+  border-radius:16px;
+  padding:12px;
+  color:#363636;
+  overflow:auto;
+  white-space:pre-wrap;
+  line-height:1.5;
+  font-weight:700;
+  isolation:isolate;            /* 텍스트와 블러 분리 */
+  background:rgba(255, 255, 255, 0.497);
+}
+.pf-memo::before{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:inherit;
+  backdrop-filter: blur(0px);   /* 필요하면 2~4px로 올리세요 */
+  -webkit-backdrop-filter: blur(0px);
+  z-index:-1;                   /* 블러는 뒤로 */
+}
+.pf-memo__text{
+  position:relative; z-index:0; /* 텍스트는 블러 위에 */
+}
+.pf-stats-box{
+  background:rgba(0,0,0,.28);
+  backdrop-filter:none;          /* 필요시 끄기 */
+  -webkit-backdrop-filter:none;
+}
+
+/* iOS 작은 화면(= SE급)에서는 3D flip → 페이드 전환으로 변경 */
+@media (max-width: 360px) and (hover: none) and (pointer: coarse) {
+  .flip { perspective: none; }
+  .flip-inner { transform: none !important; }
+
+  /* 3D 회전 제거하고 opacity 전환 */
+  .flip-front, .flip-back {
+    transform: none !important;
+    transition: opacity .28s ease;
+  }
+  .flip-back { opacity: 0; }
+  .flip-inner.is-flipped .flip-front { opacity: 0; }
+  .flip-inner.is-flipped .flip-back  { opacity: 1; }
+
+  /* 유리효과 블러 비활성화(텍스트 선명) */
+  .pf-memo::before{
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0,0,0,.28); /* 가독성용 살짝 어둡게 */
+  }
+}
+
+/* 공통: 텍스트 선명도 보정 */
+.flip-face,
+.pf-card-media,
+.pf-stats-box,
+.pf-share-date,
+.pf-stat-row {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 카드/레이아웃이 소수점 픽셀로 떨어지며 흐려지는 것 방지(경계 그리기 최적화) */
+.diary-section, .flip-inner, .pf-card-media { contain: paint; }

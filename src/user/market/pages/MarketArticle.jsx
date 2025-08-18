@@ -157,6 +157,10 @@ export default function MarketArticlePageTest() {
         
     });
     
+    const insertMarketCommentOnArticleElementDefaultValue =
+        {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "", 
+        createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null};
+    
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
         {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
@@ -413,6 +417,7 @@ export default function MarketArticlePageTest() {
         try {
             
             const constPostInsertMarketCommentOnArticle = await marketAPI.postInsertMarketCommentOnArticle(submitCommentOnArticleData);
+            setInsertMarketCommentOnArticleElement(insertMarketCommentOnArticleElementDefaultValue);
             setCommentOnArticleReloading(true);
             setCommentOnArticleLoading(true);
             

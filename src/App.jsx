@@ -68,8 +68,10 @@ import BuddyStart from './user/buddy/pages/BuddyStart';
 import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 import ChallengeAllList from './user/challenge/pages/ChallengeAllList';
 import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
+
 import { useState } from 'react';
 import QRCodeSection from './global/pages/QRCodeSection';
+
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!

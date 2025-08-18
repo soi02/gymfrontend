@@ -441,6 +441,7 @@
 
 :root {
   --key: #7c1d0d;
+  --bottom-bar-height: 64px; 
 }
 
 .challenge-list-wrapper {
@@ -885,4 +886,173 @@
   color: #6b7280;
   margin: 0;
   line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+
+/* Challenge Category Page Styles */
+.ch-category-page {
+  padding-bottom: calc(var(--bottom-bar-height) + 100px); /* Give enough space for both chips and the bottom bar */
+}
+
+/* Header section */
+.ch-category-page .ch-category-header {
+  display: flex;
+  justify-content: space-between; /* Space out the main content and the filter button */
+  align-items: flex-start; /* Align content to the top */
+  padding: 25px 20px 10px;
+  position: relative; /* Essential for positioning the chips */
+}
+
+/* A new container for the icon and text */
+.ch-category-page .ch-header-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+.ch-category-page .ch-category-icon-wrap {
+  /* 아이콘 크기 및 정렬 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* 아이콘이 축소되지 않도록 설정 */
+}
+
+.ch-category-page .ch-category-icon {
+  width: 60px; /* 아이콘 크기 조절 */
+  height: 60px;
+}
+
+.ch-category-page .ch-category-text {
+  /* 텍스트 영역이 남은 공간을 차지하도록 설정 */
+  flex-grow: 1;
+}
+
+.ch-category-page .ch-category-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.ch-category-page .ch-category-sub {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.2; /* 줄 간격 조절 */
+  margin: 5px 0 0; /* 제목과의 간격 조절 */
+}
+
+/* Scrollable content and card list */
+.ch-category-page .ch-category-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ch-category-page .ch-category-list-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.ch-category-page .ch-category-empty-text {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+}
+
+/* Remove fixed positioning from the FAB container */
+.ch-category-page .ch-category-fab-container {
+  /* No longer fixed */
+  position: relative; /* Use relative positioning within the header */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align the FAB button to the right */
+  gap: 10px;
+  z-index: 100;
+}
+
+/* New CSS for the chips to slide down */
+.ch-category-page .ch-category-keyword-chips-slide-down {
+  display: flex;
+  flex-direction: column; /* Stacks chips downwards */
+  align-items: flex-end;
+  gap: 8px;
+  position: absolute;
+  top: 100%; /* Position below the header */
+  right: 0;
+  padding-top: 10px; /* Space between the button and the first chip */
+  pointer-events: none;
+  width: max-content;
+}
+
+/* Update the .ch-category-fab-hash selector */
+.ch-category-page .ch-category-fab-hash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #7c1d0d;
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
+  transition: transform 0.2s ease;
+  border: none; /* remove button border */
+  outline: none; /* remove button outline on focus/click */
+}
+
+.ch-category-page .ch-category-fab-hash:hover {
+  transform: scale(1.05);
+}
+
+.ch-category-page .ch-category-keyword-chips-slide-up {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ch-category-page .ch-category-chip {
+  background-color: #e9ecef;
+  color: #495057;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.ch-category-page .ch-category-chip.active {
+  background-color: #7c1d0d;
+  color: white;
+}
+
+
+/* New active state to slide down */
+.ch-category-page .ch-category-fab-container.open .ch-category-keyword-chips-slide-down {
+  pointer-events: auto;
+}
+
+.ch-category-page .ch-category-fab-container.open .ch-category-chip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ch-category-page .ch-category-chip-text {
+  white-space: nowrap;
 }

@@ -1,65 +1,152 @@
-/* src/user/challenge/styles/ChallengeMyRecordDetail.css */
-
-.challenge-detail-container {
-  position: relative; /* 노리개 뱃지를 absolute로 배치하기 위해 필요 */
-  padding: 20px;
-  /* 다른 레이아웃 관련 스타일 추가 가능 */
+/* 네임스페이스: cmd-  (Challenge My record Detail) */
+:root{
+  --cmd-accent: #7c1d0d;
+  --cmd-accent-ink: #fff;
+  --cmd-max: 520px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-.challenge-detail-title {
-  /* 뱃지와 겹치지 않도록 마진 추가 */
-  margin-right: 70px; 
-  /* 제목 스타일 추가 */
+/* 기본 레이아웃 */
+.cmd-page{
+  width:100%;
+  max-width: var(--cmd-max);
+  margin:0 auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  /* background:#fafafa; */
+  color:#333;
+}
+@media (prefers-color-scheme: dark){
+  .cmd-page{ /* background:#0d0e10; */ color:#f3f4f6; }
 }
 
-/* 획득한 노리개 뱃지 스타일 */
-.norigae-badge-icon {
-  position: absolute;
-  top: 10px; /* 원하는 위치로 조정 (상단에서 10px 아래) */
-  right: 10px; /* 원하는 위치로 조정 (우측에서 10px 왼쪽) */
-  width: 60px; /* 뱃지 크기 */
-  height: 60px;
-  border-radius: 50%; /* 원형으로 만들기 */
-  overflow: hidden; /* 이미지가 뱃지 영역을 벗어나지 않게 함 */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 은은한 그림자 효과 */
-  background-color: white; /* 뱃지 배경색 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10; /* 다른 요소 위에 뱃지가 표시되도록 함 */
+/* ===== Hero ===== */
+.cmd-hero{
+  position: relative;
+  padding: 20px 20px 16px;
+  background:
+    radial-gradient(100% 60% at 0% 0%,
+      color-mix(in srgb, var(--cmd-accent) 22%, transparent) 0%,
+      transparent 70%),
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.02) 100%);
+}
+.cmd-back{
+  position:absolute; left:12px; top:12px;
+  background:none; border:none; color:#8a8a8a; font-size:22px;
+  padding:6px; border-radius:10px; cursor:pointer;
+}
+.cmd-back:active{ transform: translateY(1px); }
+
+.cmd-hero-main{ margin-top: 18px; }
+.cmd-title{
+  margin:0;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+  color: #333;
+}
+.cmd-sub{
+  margin:6px 0 0;
+  font-size: 13px;
+  color:#7a7f86;
+}
+@media (prefers-color-scheme: dark){ .cmd-sub{ color:#a5acb4; } }
+
+.cmd-progress{
+  height: 10px; border-radius: 999px; overflow: hidden;
+  margin: 12px 0 0;
+  background: color-mix(in srgb, var(--cmd-accent) 18%, #e8e8e8);
+}
+.cmd-progress-bar{
+  height:100%;
+  background: var(--cmd-accent);
+  border-radius: 999px;
+  transition: width .35s ease;
 }
 
-.norigae-badge img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* 이미지 비율을 유지하며 뱃지 영역에 맞게 조정 */
+.cmd-hero-actions{
+  display:flex; gap:8px; margin-top:12px; flex-wrap: wrap;
+}
+.cmd-cta{
+  appearance:none;
+  border:none;
+  border-radius:12px;
+  padding:10px 14px;
+  font-weight: 900; font-size:14px;
+  background: var(--cmd-accent);
+  color: var(--cmd-accent-ink);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--cmd-accent) 40%, transparent);
+  cursor:pointer;
+  transition: transform .08s ease, opacity .12s ease, box-shadow .15s ease, background .12s ease;
+}
+.cmd-cta:active{ transform: translateY(1px); }
+.cmd-cta.done,
+.cmd-cta:disabled{
+  opacity:.7; cursor: default; box-shadow:none;
+  background: color-mix(in srgb, var(--cmd-accent) 65%, #d4d4d4);
 }
 
-
-/* 노리개 정보를 뱃지 형식으로 표시하지 않고, 기존처럼 별도의 블록으로 표시할 경우의 스타일 */
-/* .norigae-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+.cmd-ghost{
+  appearance:none;
+  border:1px solid rgba(0,0,0,.08);
+  background:#fff; color:#222;
+  padding:10px 14px; border-radius:12px;
+  font-weight:800; font-size:14px; cursor:pointer;
+}
+@media (prefers-color-scheme: dark){
+  .cmd-ghost{ background:#15171b; color:#f3f4f6; border-color:rgba(255,255,255,.12); }
 }
 
-.norigae-info h3 {
-  margin: 0;
-  font-size: 1.2em;
+/* 우상단 노리개 뱃지 */
+.cmd-badge{
+  position:absolute; right:16px; top:12px;
+  width:64px; height:64px; border-radius:50%;
+  background:#fff; object-fit:cover;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  z-index: 2;
+}
+@media (prefers-color-scheme: dark){
+  .cmd-badge{ background:#1a1c20; border-color:rgba(255,255,255,.08); }
 }
 
-.norigae-info p {
-  margin: 0;
-  font-size: 1em;
+/* ===== Body ===== */
+.cmd-body{
+  flex:1; overflow:auto; -webkit-overflow-scrolling:touch;
+  padding: 10px 16px calc(20px + var(--safe-bottom));
+  display:grid; row-gap:16px;
+}
+.cmd-section{}
+.cmd-sec-title{
+  margin: 2px 2px 10px;
+  font-size: 16px; font-weight: 900;
 }
 
-.norigae-icon {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-} */
+/* 카드 래퍼 */
+.cmd-card{
+  background:#fff; border-radius:16px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  padding: 14px;
+}
+.cmd-card-center{ text-align:center; }
+@media (prefers-color-scheme: dark){
+  .cmd-card{ background:#15171b; border-color:rgba(255,255,255,.08); box-shadow: 0 10px 28px rgba(0,0,0,.35); }
+}
+
+/* 완료 뱃지 텍스트 */
+.cmd-done-badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:8px 12px; border-radius:999px;
+  background: color-mix(in srgb, var(--cmd-accent) 16%, transparent);
+  border:1px solid color-mix(in srgb, var(--cmd-accent) 36%, transparent);
+  color: var(--cmd-accent);
+  font-weight: 900; font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* 로딩/에러 */
+.cmd-loading, .cmd-error{
+  padding: 20px; text-align: center; color:#7a7f86;
+}
