@@ -1,0 +1,116 @@
+/* src/styles/Information.css */
+
+.info-page-container {
+  max-width: 320px;
+  padding: 10px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Gowun Dodum', sans-serif;
+  box-sizing: border-box;
+}
+
+.info-title {
+  text-align: center;
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 3px;
+}
+
+.info-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+}
+
+.info-section {
+  margin-bottom: 15px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: #4a4a4a;
+  /* '짐마당' 테마 색상으로 변경 */
+  border-left: 4px solid #f9c74f; 
+  padding-left: 5px;
+  margin-bottom: 10px;
+}
+
+.section-content {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #666;
+}
+
+/* 기술 스택 */
+.tech-stack-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4열로 정렬 */
+  gap: 15px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.tech-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px; /* 사각형 형태로 변경 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.tech-icon-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tech-icon-wrapper i {
+  font-size: 2.2rem; /* 아이콘 크기 약간 키움 */
+  color: #fff; /* 아이콘 색상을 흰색으로 변경 */
+}
+
+/* 팀원 소개 */
+.team-members-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.member-card {
+  /* 배경색을 옅은 회색으로 변경 */
+  background-color: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  flex: 1 1 auto;
+  min-width: 100px;
+  max-width: 140px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.member-card h3 {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.member-role {
+  font-size: 0.75em;
+  color: #888;
+  margin-bottom: 3px;
+}
+
+.member-tasks {
+  font-size: 0.75em;
+  color: #666;
+  line-height: 1.3;
+}
