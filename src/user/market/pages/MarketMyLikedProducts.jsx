@@ -5,7 +5,7 @@ import useMarketAPI from "../service/MarketService";
 
 export default function MarketMyLikedProductsPage() {
     
-    const checkUserStatus = 2;
+    const checkUserStatus = 1;
     const defaultUserStatus = 1004;
     
     const [countOfInterestedLogsOnUser, setCountOfInterestedLogsOnUser] = useState(-1);
@@ -393,7 +393,13 @@ export default function MarketMyLikedProductsPage() {
         
     function MarketUserLikedProductElement({marketUserLikedProductElem1}) {
         
+        const BACKEND_BASE_URL = "http://localhost:8080";
+        
         const { article, userInfo, interestedLog } = marketUserLikedProductElem1; // interestedLog 는 하트 표시 여부에 반영
+        
+        const imageLinkPath = article.imageLink;
+        
+        const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
         
         const [ likeChecked, setLikeChecked ] = useState(true);
         
@@ -533,7 +539,7 @@ export default function MarketMyLikedProductsPage() {
                                                         <div className = "row">
                                                             <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
                                                                 paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                                <MarketProductMainImage />
+                                                                <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                             </div>
                                                             <div className = "col" style = {{position : "relative"}}>
                                                                 <div className = "row">

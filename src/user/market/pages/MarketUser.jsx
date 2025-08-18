@@ -14,7 +14,7 @@ export default function MarketUserPage() {
     console.log("idParam");
     console.log(loadedId);
     
-    const checkUserStatus = 2;
+    const checkUserStatus = 1;
     const checkUserId = loadedId;
     const defaultUserStatus = 1004;
     
@@ -193,7 +193,13 @@ export default function MarketUserPage() {
     
     function MarketUserSoldProductElement({marketUserSoldProductElem1}) {
         
+        const BACKEND_BASE_URL = "http://localhost:8080";
+        
         const { article, userInfo } = marketUserSoldProductElem1;
+        
+        const imageLinkPath = article.imageLink;
+        
+        const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
         
         function funcSellEnded(sellEnded) {
             
@@ -228,7 +234,7 @@ export default function MarketUserPage() {
                                                 <div className = "row">
                                                     <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
                                                         paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                        <MarketProductMainImage />
+                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                     </div>
                                                     <div className = "col" style = {{position : "relative"}}>
                                                         <div className = "row">
@@ -274,7 +280,13 @@ export default function MarketUserPage() {
 
     function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
         
+        const BACKEND_BASE_URL = "http://localhost:8080";
+        
         const { article, userInfo } = marketUserBoughtProductElem1;
+        
+        const imageLinkPath = article.imageLink;
+        
+        const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
         
         function funcSellEnded(sellEnded) {
             
@@ -309,7 +321,7 @@ export default function MarketUserPage() {
                                                 <div className = "row">
                                                     <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
                                                         paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
-                                                        <MarketProductMainImage />
+                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                     </div>
                                                     <div className = "col" style = {{position : "relative"}}>
                                                         <div className = "row">

@@ -15,7 +15,7 @@ export default function MarketArticlePageTest() {
     
     const {id : loadedId} = useParams();
     
-    const checkUserStatus = 2;
+    const checkUserStatus = 1;
     const checkArticleId = loadedId;
     const defaultUserStatus = 1004;
     
@@ -925,7 +925,7 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh", marginBottom : "1vh"}}>
+                                                        <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh", marginBottom : "1vh", whiteSpace : "pre-wrap"}}>
                                                             {comment.content}
                                                         </div>
                                                     </div>

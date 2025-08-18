@@ -87,7 +87,7 @@ export default function MarketWriteArticlePage() {
     
     //
     
-    const checkUserStatus = 2;
+    const checkUserStatus = 1;
     
     const navigate = useNavigate();
     

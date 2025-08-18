@@ -7,7 +7,7 @@ export default function MarketUpdateArticlePage() {
     
     const {id : loadedId} = useParams()
     
-    const checkUserStatus = 2;
+    const checkUserStatus = 1;
     const checkArticleId = loadedId;
     
     const navigate = useNavigate();
