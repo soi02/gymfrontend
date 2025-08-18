@@ -71,6 +71,7 @@ import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
 
 import { useState } from 'react';
 import QRCodeSection from './global/pages/QRCodeSection';
+import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
 
 
 
@@ -259,6 +260,7 @@ function AppContent() {
 
             {/* 장터 관련 */}
             <Route path="/market" element={<MarketBoardPage />} />
+            <Route path="/market/board/:searchWord?" element={<MarketBoardPageWhenSearch />} />
             <Route path="/market/article/:id" element={<MarketArticlePage />} />
             <Route path="/market/user/:id" element={<MarketUserPage />} />
             <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
