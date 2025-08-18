@@ -261,6 +261,15 @@ export default function useMarketAPI() {
         return response.data;
     }
     
+    const selectMarketArticleBySearchWord = async(searchWord) => {
+        
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketArticleBySearchWord`, {
+            params : {searchWord}
+        });
+        return response.data;
+        
+    }
+    
     return {
         getSelectMarketUserInfo, postInsertMarketArticle, getSelectMarketArticle, getSelectSpecificMarketArticle, getSelectSpecificMarketArticleInfo, 
         postUpdateMarketArticle, postDeleteMarketArticle, postInsertMarketCommentOnArticle, 
@@ -271,7 +280,8 @@ export default function useMarketAPI() {
         getSelectMarketProductInterestedLogWhenArticleInfo, getSelectCountMarketProductInterestedLogWhenArticleInfo,
         getSelectMarketProductInterestedLogWhenUserAndArticleInfo, postInsertMarketDealedLog, getSelectMarketDealedLogWhenBuyer, getSelectCountMarketDealedLogWhenBuyer,
         getSelectMarketDealedLogWhenSeller, getSelectCountMarketDealedLogWhenSeller,
-        postInsertMarketReviewToUser, getSelectMarketReviewToUser, postUpdateMarketReviewToUser, postDeleteMarketReviewToUser
+        postInsertMarketReviewToUser, getSelectMarketReviewToUser, postUpdateMarketReviewToUser, postDeleteMarketReviewToUser,
+        selectMarketArticleBySearchWord
     };
     
 }
