@@ -157,6 +157,10 @@ export default function MarketArticlePageTest() {
         
     });
     
+    const insertMarketCommentOnArticleElementDefaultValue =
+        {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "", 
+        createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null};
+    
     const [insertMarketCommentOnArticleElement, setInsertMarketCommentOnArticleElement] = useState(
         {id : 1, articleId : checkArticleId, marketUserId : checkUserStatus, content : "", 
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
@@ -413,6 +417,7 @@ export default function MarketArticlePageTest() {
         try {
             
             const constPostInsertMarketCommentOnArticle = await marketAPI.postInsertMarketCommentOnArticle(submitCommentOnArticleData);
+            setInsertMarketCommentOnArticleElement(insertMarketCommentOnArticleElementDefaultValue);
             setCommentOnArticleReloading(true);
             setCommentOnArticleLoading(true);
             
@@ -557,9 +562,10 @@ export default function MarketArticlePageTest() {
                                                         <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
                                                             {article.createdAt.toLocaleString()}
                                                         </div>
-                                                        <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                        {/* 시간 여유 시 구현 목표로 하는 코드 및 시스템*/}
+                                                        {/* <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
                                                             조회수 {article.viewedCount}
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -593,7 +599,7 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.5vh", minHeight : "15vh", marginBottom : "4vh"}}>
+                                        <div className = "col" style = {{fontSize : "2.125vh", minHeight : "15vh", marginBottom : "4vh", whiteSpace : "pre-wrap"}}>
                                             {article.content}
                                         </div>
                                     </div>

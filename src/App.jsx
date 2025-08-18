@@ -69,11 +69,28 @@ import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 import ChallengeAllList from './user/challenge/pages/ChallengeAllList';
 import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
 
+import { useState } from 'react';
+import QRCodeSection from './global/pages/QRCodeSection';
+import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
+import Information from './global/pages/Information';
+
+
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
   const dispatch = useDispatch();
+  // 윈도우 크기 변경 시 isMobile 상태 업데이트
+  // PC 화면에서 사이드 컨테이너를 보여줄지 결정하는 변수
+  const [isPc, setIsPc] = useState(window.innerWidth >= 768);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPc(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   // verify token 관련 (새로고침해도 로그인 유지)
   useEffect(() => {
     const checkAuth = async () => {
@@ -117,22 +134,22 @@ function AppContent() {
     '/buddy/buddyChat',
     '/buddy/register',
     // 루틴 추가 상세 페이지에서도 숨길 필요가 있다면 여기에 추가
-    
+
   ];
 
   // TopHeader 숨길 조건들
-const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) || 
-                       location.pathname.startsWith('/challenge/challengeTest') ||
-                       location.pathname.startsWith('/buddy/buddyChat/') ||
-                       location.pathname.startsWith('/buddy/videoCall') ||
-                       location.pathname.startsWith('/challenge/detail') ||
-                       location.pathname.startsWith('/challenge/payment/success');
+  const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
+    location.pathname.startsWith('/challenge/challengeTest') ||
+    location.pathname.startsWith('/buddy/buddyChat/') ||
+    location.pathname.startsWith('/buddy/videoCall') ||
+    location.pathname.startsWith('/challenge/detail') ||
+    location.pathname.startsWith('/challenge/payment/success');
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
-  const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) || 
-                           location.pathname.startsWith('/challenge/challengeTest') ||
-                           location.pathname.startsWith('/buddy/buddyChat/') ||
-                           location.pathname.startsWith('/buddy/videoCall');
+  const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) ||
+    location.pathname.startsWith('/challenge/challengeTest') ||
+    location.pathname.startsWith('/buddy/buddyChat/') ||
+    location.pathname.startsWith('/buddy/videoCall');
 
   const isChallengeSection = location.pathname.startsWith('/challenge') && !location.pathname.includes('challengeTest');
   const isBuddySection = location.pathname.startsWith('/buddy');
@@ -142,9 +159,20 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
   const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건
 
   return (
-    <div className='app-shell'>
-      {/* 탑헤더 조건 */}
-      {!shouldHideTop && <TopHeader />}
+
+    <div className="pc-layout-wrapper">
+      {isPc && (
+        <div className="side-container">
+          {/* <h2>짐마당</h2>
+          <p>함께 운동할 벗을 찾아보세요!</p>
+          <p>모바일 앱 QR 코드</p>
+          <img src="https://via.placeholder.com/150" alt="QR Code" style={{ width: '150px' }} /> */}
+          <Information/>
+        </div>
+      )}
+      <div className='app-shell'>
+        {/* 탑헤더 조건 */}
+        {!shouldHideTop && <TopHeader />}
 
         {/* ✅ 메인 컨텐츠 flex로 확장 */}
         <main className="app-content">
@@ -230,9 +258,10 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
 
 
 
-            
+
             {/* 장터 관련 */}
             <Route path="/market" element={<MarketBoardPage />} />
+            <Route path="/market/board/:searchWord?" element={<MarketBoardPageWhenSearch />} />
             <Route path="/market/article/:id" element={<MarketArticlePage />} />
             <Route path="/market/user/:id" element={<MarketUserPage />} />
             <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
@@ -243,10 +272,20 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
           </Routes>
         </main>
 
-      {/* 바텀 네비게이션은 항상 표시 (단, 숨겨야 할 조건 제외) */}
-      {/* 이제 BuddyBottomNavigation, ChallengeBottomNavigation 대신 공통 BottomNavigation만 사용합니다. */}
-      {!shouldHideBottom && <BottomNavigation />}
+        {/* 바텀 네비게이션은 항상 표시 (단, 숨겨야 할 조건 제외) */}
+        {/* 이제 BuddyBottomNavigation, ChallengeBottomNavigation 대신 공통 BottomNavigation만 사용합니다. */}
+        {!shouldHideBottom && <BottomNavigation />}
+      </div>
+      {/* PC 화면일 때만 오른쪽 컨테이너를 렌더링합니다. */}
+      {isPc && (
+        <div className="side-container">
+          {/* <h2>건강한 하루, 짐마당에서 시작하세요.</h2>
+          <p>다양한 챌린지에 참여하고<br/>운동 기록을 공유해 보세요!</p> */}
+          <QRCodeSection />
+        </div>
+      )}
     </div>
+
   );
 }
 

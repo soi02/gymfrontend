@@ -1,3 +1,57 @@
-.test{
-  /* 깃허브에 올리는 용도로 그냥 채워둠 */
+/* =======================================
+ * 전역 스타일 및 반응형 레이아웃
+ * ======================================= */
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
+  height: 100vh;
+  font-family: 'Gowun Dodum', sans-serif !important;
+  box-sizing: border-box;
+}
+
+/* PC 화면 (768px 이상)에서만 적용될 스타일 */
+@media (min-width: 768px) {
+  body {
+    /* 여기서 display: flex를 제거합니다. */
+    /* background-color: #f0f2f5; */
+  }
+
+  /* ✅ 새로운 wrapper에 flexbox 속성을 적용합니다. */
+  .pc-layout-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    height: 100vh;
+    width: 100%; /* 너비를 100%로 설정 */
+    overflow-y: hidden;
+  }
+
+  /* 왼쪽, 오른쪽 컨테이너 스타일 */
+  .side-container {
+    flex: 1;
+    /* background-color: #fff; */
+    border: 1px solid rgb(226, 226, 226);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-y: auto;
+  }
+}
+
+/* 모바일 화면 (767px 이하)에서만 적용될 스타일 */
+@media (max-width: 767px) {
+  body {
+    min-width: 375px;
+    max-width: 425px;
+    /* border: 1px solid rgb(226, 226, 226); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 }

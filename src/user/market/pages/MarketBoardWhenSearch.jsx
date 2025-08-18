@@ -3,7 +3,7 @@ import MarketProductMainImage from "../components/test/example/MarketProductMain
 import '../styles/MarketCommonStyles.css';
 import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArticleFloatingFixedButton";
 import MarketSearchDivision from "../commons/test/example/MarketSearchDivision";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 function MarketArticleElement({marketArticleElem1}) {
@@ -123,7 +123,13 @@ function MarketArticleElement({marketArticleElem1}) {
     
 }
 
-export default function MarketBoardPage() {
+export default function MarketBoardPageWhenSearch() {
+    
+    const {searchWord : loadedSearchWord} = useParams();
+    
+    const checkSearchWord = loadedSearchWord ?? '';
+    console.log("checkSearchWord");
+    console.log(checkSearchWord);
     
     const navigate = useNavigate();
     
@@ -203,7 +209,7 @@ export default function MarketBoardPage() {
             
             try {
                 
-                const constGetSelectMarketArticle = await marketAPI.getSelectMarketArticle();
+                const constGetSelectMarketArticle = await marketAPI.selectMarketArticleBySearchWord(checkSearchWord);
                 
                 // console.log(constGetSelectMarketArticle)
                 
@@ -212,6 +218,33 @@ export default function MarketBoardPage() {
                 
                 // setMarketArticleList(constArticleElementFromAPI);
                 // setMarketUserInfoList(constUserInfoElementFromAPI);
+                
+                const constGetSelectMarketArticleAndDistincted = constGetSelectMarketArticle.map(APIElem1 => ({
+                    article : APIElem1.marketArticleDto,
+                    userInfo : APIElem1.marketUserInfoDto
+                }))
+                
+                setMergeMarketArticleInfo(constGetSelectMarketArticleAndDistincted);
+                
+            } catch (error) {
+                
+                console.error("로드 실패:", error);
+                
+            }
+            
+        }
+        
+        constUseEffect();
+        
+    }, [loadedSearchWord]);
+    
+    useEffect(() => {
+        
+        const constUseEffect = async () => {
+            
+            try {
+                
+                const constGetSelectMarketArticle = await marketAPI.selectMarketArticleBySearchWord(checkSearchWord);
                 
                 const constGetSelectMarketArticleAndDistincted = constGetSelectMarketArticle.map(APIElem1 => ({
                     article : APIElem1.marketArticleDto,
@@ -243,6 +276,28 @@ export default function MarketBoardPage() {
                         
                         <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
                         constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
+                        
+                        {
+                            (checkSearchWord != '') ?
+                            (
+                                <>
+                                            
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                            "{checkSearchWord}" 단어로 게시글을 찾았소.
+                                        </div>
+                                    </div>
+                                            
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                </>
+                            )
+                        }
+                        
+
                         
                         {
                             constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>

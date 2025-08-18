@@ -1,16 +1,47 @@
+/* =======================================
+ * 앱 컨텐츠 레이아웃
+ * ======================================= */
+
 .app-shell {
   display: flex;
   flex-direction: column;
-  height: 100dvh; /* 전체 화면 높이 */
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  min-width: 375px;
+}
+
+/* PC 화면 (768px 이상)에서만 적용될 스타일 */
+@media (min-width: 768px) {
+  .app-shell {
+    height: 100vh;
+    min-width: 425px;
+    max-width: 425px; /* ✅ PC에서도 가운데 콘텐츠 너비는 425px로 고정 */
+    border-left: 1px solid rgb(226, 226, 226);
+    border-right: 1px solid rgb(226, 226, 226);
+  }
+}
+
+
+/* 모바일 화면 (767px 이하)에서만 적용될 스타일 */
+@media (max-width: 767px) {
+  .app-shell {
+    min-width: 375px;
+    max-width: 425px;
+    border: none;
+    box-shadow: none;
+  }
 }
 
 .app-content {
-  flex: 1; /* 헤더·푸터 사이 영역을 전부 차지 */
+  flex: 1;
   display: flex;
   flex-direction: column;
   padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  overflow-y: auto;
 }
 
+/* ... (나머지 CSS 코드는 그대로 둡니다.) */
 /* 이 페이지가 DOM에 있을 때, 바깥(문서) 스크롤 OFF */
 html:has(.rfp-page),
 body:has(.rfp-page) {
