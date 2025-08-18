@@ -68,12 +68,25 @@ import BuddyStart from './user/buddy/pages/BuddyStart';
 import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 import ChallengeAllList from './user/challenge/pages/ChallengeAllList';
 import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
+import { useState } from 'react';
+import QRCodeSection from './global/pages/QRCodeSection';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
 function AppContent() {
   const dispatch = useDispatch();
+   // 윈도우 크기 변경 시 isMobile 상태 업데이트
+  // PC 화면에서 사이드 컨테이너를 보여줄지 결정하는 변수
+  const [isPc, setIsPc] = useState(window.innerWidth >= 768);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsPc(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   // verify token 관련 (새로고침해도 로그인 유지)
   useEffect(() => {
     const checkAuth = async () => {
@@ -142,6 +155,17 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
   const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건
 
   return (
+    
+      <div className="pc-layout-wrapper">
+    {isPc && (
+        <div className="side-container">
+          <h2>짐마당</h2>
+          <p>함께 운동할 벗을 찾아보세요!</p>
+          <p>모바일 앱 QR 코드</p>
+          {/* 여기에 QR 코드 이미지를 넣으세요. */}
+          <img src="https://via.placeholder.com/150" alt="QR Code" style={{ width: '150px' }}/>
+        </div>
+      )}
     <div className='app-shell'>
       {/* 탑헤더 조건 */}
       {!shouldHideTop && <TopHeader />}
@@ -247,6 +271,16 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
       {/* 이제 BuddyBottomNavigation, ChallengeBottomNavigation 대신 공통 BottomNavigation만 사용합니다. */}
       {!shouldHideBottom && <BottomNavigation />}
     </div>
+    {/* PC 화면일 때만 오른쪽 컨테이너를 렌더링합니다. */}
+      {isPc && (
+        <div className="side-container">
+          {/* <h2>건강한 하루, 짐마당에서 시작하세요.</h2>
+          <p>다양한 챌린지에 참여하고<br/>운동 기록을 공유해 보세요!</p> */}
+          <QRCodeSection />
+        </div>
+      )}
+      </div>
+    
   );
 }
 
