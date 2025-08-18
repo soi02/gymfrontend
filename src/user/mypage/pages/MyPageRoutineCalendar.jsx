@@ -120,11 +120,8 @@ export default function MyPageRoutineCalendar() {
       <div className="divider-line"></div>
 
       <div className="mypage-container">
-        {/* <h5>운동기록</h5> */}
-
+        {/* 캘린더 */}
         <div className="calendar-card">
-          {" "}
-          {/* ← 추가 */}
           <Calendar
             className="routine-calendar"
             onChange={setValue}
@@ -134,41 +131,36 @@ export default function MyPageRoutineCalendar() {
           />
         </div>
 
-        <div
-          className="workout-bar"
-          onClick={() =>
-            navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)
-          }
-        >
-          <div className="workout-row">
-            {/* col-3 : 날짜 */}
-            <div className="col date-col">
-              <span className="date-chip">
-                {value.getMonth() + 1}/{value.getDate()}
-              </span>
+        {/* 새로운 운동 기록 요약 섹션 */}
+        <div className="workout-summary-container">
+          <div className="workout-summary-title">
+            {value.getMonth() + 1}월 {value.getDate()}일 운동기록
+          </div>
+          <div className="workout-summary-content">
+            {/* 요약 카드 */}
+            <div className="summary-card">
+              <div className="summary-item">
+                <i className="ri-heart-line" />
+                <span>{workoutSummary?.workoutCount ?? 0}개 운동</span>
+              </div>
+              <div className="summary-item">
+                <i className="ri-timer-line" />
+                <span>{workoutSummary?.setCount ?? 0}세트</span>
+              </div>
+              <div className="summary-item">
+                <i className="ri-fire-line" />
+                <span>{workoutSummary?.calories ?? 0}kcal</span>
+              </div>
             </div>
-
-            {/* col-2 : 운동 개수 */}
-            <div className="col kpi-col">
-              <i className="ri-heart-line" />
-              <span>{workoutSummary?.workoutCount ?? 0}개의 운동</span>
-            </div>
-
-            {/* col-2 : 세트 수 */}
-            <div className="col kpi-col">
-              <i className="ri-timer-line" />
-              <span>{workoutSummary?.setCount ?? 0}세트</span>
-            </div>
-
-            {/* col-2 : 칼로리 */}
-            <div className="col kpi-col">
-              <i className="ri-fire-line" />
-              <span>{workoutSummary?.calories ?? 0}kcal</span>
-            </div>
-
-            <div className="col arrow-col">
-              <span><button>일지</button></span>
-            </div>
+            {/* 일지보기 버튼 */}
+            <button
+              className="view-diary-button"
+              onClick={() =>
+                navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)
+              }
+            >
+              일지<br/>보러가기
+            </button>
           </div>
         </div>
       </div>

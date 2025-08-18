@@ -1,152 +1,110 @@
-/* 네임스페이스: cmd-  (Challenge My record Detail) */
+/* 네임스페이스: crd-  | Clean White + Accent #7c1d0d */
 :root{
-  --cmd-accent: #7c1d0d;
-  --cmd-accent-ink: #fff;
-  --cmd-max: 520px;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --crd-accent:#7c1d0d;
+  --crd-ink:#111;
+  --crd-sub:#6b7280;
+  --crd-line:#e9eaee;
+  --crd-bg:#fff; /* 페이지 배경은 항상 흰색 */
 }
 
-/* 기본 레이아웃 */
-.cmd-page{
+/* 페이지 */
+.crd-page{
   width:100%;
-  max-width: var(--cmd-max);
+  max-width: 480px;   /* 모바일 기준 폭 */
   margin:0 auto;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  /* background:#fafafa; */
-  color:#333;
-}
-@media (prefers-color-scheme: dark){
-  .cmd-page{ /* background:#0d0e10; */ color:#f3f4f6; }
+  background:#fff;    /* 다크모드 금지 */
+  color:var(--crd-ink);
 }
 
-/* ===== Hero ===== */
-.cmd-hero{
-  position: relative;
-  padding: 20px 20px 16px;
-  background:
-    radial-gradient(100% 60% at 0% 0%,
-      color-mix(in srgb, var(--cmd-accent) 22%, transparent) 0%,
-      transparent 70%),
-    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.02) 100%);
+/* 상단 바 */
+.crd-topbar{
+  height:52px; display:flex; align-items:center; gap:8px;
+  padding:0 12px; border-bottom:1px solid var(--crd-line);
 }
-.cmd-back{
-  position:absolute; left:12px; top:12px;
-  background:none; border:none; color:#8a8a8a; font-size:22px;
-  padding:6px; border-radius:10px; cursor:pointer;
+.crd-back{
+  appearance:none; border:none; background:none; cursor:pointer;
+  font-size:15px; line-height:1; padding:6px 8px; color:#333;
 }
-.cmd-back:active{ transform: translateY(1px); }
+.crd-top-title{ font-weight:800; font-size:15px; }
+.crd-top-spacer{ margin-left:auto; }
 
-.cmd-hero-main{ margin-top: 18px; }
-.cmd-title{
-  margin:0;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -0.2px;
-  color: #333;
+/* 히어로 */
+.crd-hero{
+  padding:16px 16px 16px;
+  background-color: #f2f2f2;
 }
-.cmd-sub{
-  margin:6px 0 0;
-  font-size: 13px;
-  color:#7a7f86;
+.crd-title{
+  margin:0; font-size:18px; font-weight:900; line-height:1.3;
 }
-@media (prefers-color-scheme: dark){ .cmd-sub{ color:#a5acb4; } }
-
-.cmd-progress{
-  height: 10px; border-radius: 999px; overflow: hidden;
-  margin: 12px 0 0;
-  background: color-mix(in srgb, var(--cmd-accent) 18%, #e8e8e8);
-}
-.cmd-progress-bar{
-  height:100%;
-  background: var(--cmd-accent);
-  border-radius: 999px;
-  transition: width .35s ease;
+.crd-sub{
+  margin:6px 0 12px; font-size:12px; color:var(--crd-sub);
 }
 
-.cmd-hero-actions{
-  display:flex; gap:8px; margin-top:12px; flex-wrap: wrap;
+/* 프로그레스 */
+.crd-progress{
+  height:10px; border-radius:999px; background:#fff;
+  border:1px solid var(--crd-line); overflow:hidden;
 }
-.cmd-cta{
-  appearance:none;
-  border:none;
-  border-radius:12px;
-  padding:10px 14px;
-  font-weight: 900; font-size:14px;
-  background: var(--cmd-accent);
-  color: var(--cmd-accent-ink);
-  box-shadow: 0 8px 18px color-mix(in srgb, var(--cmd-accent) 40%, transparent);
-  cursor:pointer;
-  transition: transform .08s ease, opacity .12s ease, box-shadow .15s ease, background .12s ease;
-}
-.cmd-cta:active{ transform: translateY(1px); }
-.cmd-cta.done,
-.cmd-cta:disabled{
-  opacity:.7; cursor: default; box-shadow:none;
-  background: color-mix(in srgb, var(--cmd-accent) 65%, #d4d4d4);
+.crd-progress-bar{
+  height:100%; width:0; background:var(--crd-accent);
+  transition:width .25s ease;
 }
 
-.cmd-ghost{
-  appearance:none;
-  border:1px solid rgba(0,0,0,.08);
-  background:#fff; color:#222;
-  padding:10px 14px; border-radius:12px;
-  font-weight:800; font-size:14px; cursor:pointer;
+/* 요약 칩 */
+.crd-quick{
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;
 }
-@media (prefers-color-scheme: dark){
-  .cmd-ghost{ background:#15171b; color:#f3f4f6; border-color:rgba(255,255,255,.12); }
+.crd-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 10px; border:1px solid var(--crd-line); border-radius:12px; background:#fff;
+  font-size:12px; font-weight:700; color:#222;
+}
+.crd-chip .crd-k{ color:var(--crd-sub); font-weight:600; }
+.crd-chip .crd-v{ color:#222; }
+.crd-chip-pill{ cursor:pointer; }
+.crd-chip-img{ width:18px; height:18px; object-fit:contain; }
+
+/* 액션 버튼 */
+.crd-actions{ display:flex; gap:12px; margin-top:16px; }
+.crd-cta{
+  flex: 1; /* flex:1 1 auto; 대신 간단하게 flex: 1; 을 사용 */
+  appearance:none; border:none; border-radius:12px; padding:12px 14px;
+  font-weight:900; font-size:15px; cursor:pointer; background:var(--crd-accent); color:#fff;
+  /* box-shadow:0 10px 22px rgba(124,29,13,.18); */
+}
+.crd-cta.done{ opacity:.6; box-shadow:none; cursor:default; }
+.crd-ghost{
+  flex: 1; /* flex:0 0 auto; 대신 flex: 1; 을 적용 */
+  appearance:none; border:1px solid var(--crd-line); background:#fff; color:#222;
+  border-radius:12px; padding:12px 14px; font-weight:800; font-size:14px; cursor:pointer;
+}
+/* 본문 섹션 */
+.crd-body{ padding:14px 16px 16px; }
+.crd-section + .crd-section{ margin-top:16px; }
+.crd-sec-title{
+  margin:0 0 10px; font-size:15px; font-weight:900; letter-spacing:-.2px;
+}
+.crd-card{
+  background:#fff; border:1px solid var(--crd-line); border-radius:14px; padding:14px;
+}
+.crd-card-center{ text-align:center; }
+.crd-done-badge{
+  display:inline-block; padding:10px 12px; border-radius:12px;
+  background:#f2f2f2; border:1px solid var(--crd-line); font-weight:800; font-size:14px;
 }
 
-/* 우상단 노리개 뱃지 */
-.cmd-badge{
-  position:absolute; right:16px; top:12px;
-  width:64px; height:64px; border-radius:50%;
-  background:#fff; object-fit:cover;
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow: 0 8px 18px rgba(0,0,0,.15);
-  z-index: 2;
-}
-@media (prefers-color-scheme: dark){
-  .cmd-badge{ background:#1a1c20; border-color:rgba(255,255,255,.08); }
+/* 로딩 / 에러 */
+.crd-loading, .crd-error{
+  padding:24px 16px; text-align:center; color:#333;
 }
 
-/* ===== Body ===== */
-.cmd-body{
-  flex:1; overflow:auto; -webkit-overflow-scrolling:touch;
-  padding: 10px 16px calc(20px + var(--safe-bottom));
-  display:grid; row-gap:16px;
-}
-.cmd-section{}
-.cmd-sec-title{
-  margin: 2px 2px 10px;
-  font-size: 16px; font-weight: 900;
-}
 
-/* 카드 래퍼 */
-.cmd-card{
-  background:#fff; border-radius:16px;
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow: 0 8px 24px rgba(0,0,0,.06);
-  padding: 14px;
-}
-.cmd-card-center{ text-align:center; }
-@media (prefers-color-scheme: dark){
-  .cmd-card{ background:#15171b; border-color:rgba(255,255,255,.08); box-shadow: 0 10px 28px rgba(0,0,0,.35); }
-}
 
-/* 완료 뱃지 텍스트 */
-.cmd-done-badge{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:8px 12px; border-radius:999px;
-  background: color-mix(in srgb, var(--cmd-accent) 16%, transparent);
-  border:1px solid color-mix(in srgb, var(--cmd-accent) 36%, transparent);
-  color: var(--cmd-accent);
-  font-weight: 900; font-size: 14px;
-  margin-bottom: 10px;
-}
-
-/* 로딩/에러 */
-.cmd-loading, .cmd-error{
-  padding: 20px; text-align: center; color:#7a7f86;
+/* crd-done-badge 스타일과 유사한 위치에 추가 */
+.crd-help-text {
+    font-size: 12px;
+    color: #888; /* 옅은 회색 */
+    text-align: center;
+    margin-top: 10px; /* 위쪽 여백 */
+    margin-bottom: 0; /* 아래쪽 여백 */
 }

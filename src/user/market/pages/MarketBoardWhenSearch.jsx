@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
 import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArticleFloatingFixedButton";
 import MarketSearchDivision from "../commons/test/example/MarketSearchDivision";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 function MarketArticleElement({marketArticleElem1}) {
@@ -125,6 +125,20 @@ function MarketArticleElement({marketArticleElem1}) {
 
 export default function MarketBoardPageWhenSearch() {
     
+    const {searchWord : loadedSearchWord} = useParams();
+    
+    const checkSearchWord = loadedSearchWord ?? '';
+    console.log("checkSearchWord");
+    console.log(checkSearchWord);
+    
+    const navigate = useNavigate();
+    
+    const searchWordRef = useRef(null);
+    // if (searchWordRef.current != null) {
+        // console.log("searchWordRef.current.value");
+        // console.log(searchWordRef.current.value);
+    // } // null 체크 꼭 해 주기
+    
     const [marketArticleList, setMarketArticleList] = useState([
         {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
         title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
@@ -139,6 +153,10 @@ export default function MarketBoardPageWhenSearch() {
         const userInfo = marketUserInfoList.find(user => user.userId === article.marketUserId);
         return { article, userInfo };
     });
+    
+    const [inputSearchWord, setInputSearchWord] = useState("");
+    // console.log("inputSearchWord");
+    // console.log(inputSearchWord);
     
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
         {
@@ -155,6 +173,34 @@ export default function MarketBoardPageWhenSearch() {
         <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement} />
     ))
     
+    const constApplySearchWord = (element) => {
+        
+        const constApplySearchWordValue = element.target.value;
+        
+        setInputSearchWord(constApplySearchWordValue);
+        // console.log("constApplySearchWord");
+        // console.log(element);
+        // console.log("constApplySearchWordValue");
+        // console.log(constApplySearchWordValue);
+        
+    }
+    
+    const constButtonToSendSearchWordParam = () => {
+        
+        let constSearchWordParam = "";
+        
+        if (searchWordRef.current != null) {
+            
+            constSearchWordParam = searchWordRef.current.value;
+            console.log("constSearchWordParam");
+            console.log(constSearchWordParam);
+            
+        }
+        
+        navigate(`/market/board/${constSearchWordParam}`);
+        
+    }
+    
     const marketAPI = useMarketAPI();
     
     useEffect(() => {
@@ -163,7 +209,7 @@ export default function MarketBoardPageWhenSearch() {
             
             try {
                 
-                const constGetSelectMarketArticle = await marketAPI.getSelectMarketArticle();
+                const constGetSelectMarketArticle = await marketAPI.selectMarketArticleBySearchWord(checkSearchWord);
                 
                 // console.log(constGetSelectMarketArticle)
                 
@@ -172,6 +218,33 @@ export default function MarketBoardPageWhenSearch() {
                 
                 // setMarketArticleList(constArticleElementFromAPI);
                 // setMarketUserInfoList(constUserInfoElementFromAPI);
+                
+                const constGetSelectMarketArticleAndDistincted = constGetSelectMarketArticle.map(APIElem1 => ({
+                    article : APIElem1.marketArticleDto,
+                    userInfo : APIElem1.marketUserInfoDto
+                }))
+                
+                setMergeMarketArticleInfo(constGetSelectMarketArticleAndDistincted);
+                
+            } catch (error) {
+                
+                console.error("로드 실패:", error);
+                
+            }
+            
+        }
+        
+        constUseEffect();
+        
+    }, [loadedSearchWord]);
+    
+    useEffect(() => {
+        
+        const constUseEffect = async () => {
+            
+            try {
+                
+                const constGetSelectMarketArticle = await marketAPI.selectMarketArticleBySearchWord(checkSearchWord);
                 
                 const constGetSelectMarketArticleAndDistincted = constGetSelectMarketArticle.map(APIElem1 => ({
                     article : APIElem1.marketArticleDto,
@@ -201,13 +274,30 @@ export default function MarketBoardPageWhenSearch() {
                 <div className = "row">
                     <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "75vh", overflowX : "hidden"}}>
                         
-                        <MarketSearchDivision />
+                        <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
+                        constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
                         
-                        <div className = "row">
-                            <div className = "col" style = {{marginBottom : "2vh"}}>
-                                "keyword" 단어로 게시글을 찾았소.
-                            </div>
-                        </div>
+                        {
+                            (checkSearchWord != '') ?
+                            (
+                                <>
+                                            
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                            "{checkSearchWord}" 단어로 게시글을 찾았소.
+                                        </div>
+                                    </div>
+                                            
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                </>
+                            )
+                        }
+                        
+
                         
                         {
                             constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>

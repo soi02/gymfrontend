@@ -425,7 +425,8 @@ export default function MarketWriteArticlePage() {
                                             <div className = "col d-flex justify-content-end">
                                                 <div className = "row">
                                                     <div className = "col-auto">
-                                                        <button className = "btn buttonCancellationDefault" style = {{fontSize : "1.875vh", fontWeight : "bold"}}>취소</button>
+                                                        <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)}
+                                                        style = {{fontSize : "1.875vh", fontWeight : "bold"}}>취소</button>
                                                     </div>
                                                 </div>
                                             </div>

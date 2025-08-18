@@ -36,9 +36,11 @@ export default function NorigaeListModal({ isOpen, onClose, norigaeList = [] }) 
         norigaeImages[key] ||
         (key.includes('금') ? goldNorigae : key.includes('은') ? silverNorigae : key.includes('동') ? bronzeNorigae : null);
 
-      return {
+        return {
         ...n,
         iconPath: localImg || toAbsUrl(n.iconPath),
+        description: n.description, // 백엔드에서 제공하는 설명 필드
+        awardedDate: n.awardedDate, // 백엔드에서 제공하는 날짜 필드
       };
     });
   }, [norigaeList]);
@@ -51,16 +53,47 @@ export default function NorigaeListModal({ isOpen, onClose, norigaeList = [] }) 
 
   if (!isOpen) return null;
 
+  // ⭐️ 노리개 리스트가 비어 있을 때 처리
+  if (norigaeList.length === 0) {
+    return (
+      <div className="nlm-overlay" onClick={onClose}>
+        <div className="nlm-sheet" onClick={(e) => e.stopPropagation()}>
+          {/* 상단 바는 동일하게 유지 */}
+          <div className="nlm-topbar">
+            <button className="nlm-top-btn" onClick={onClose} aria-label="닫기">
+              <IoChevronBackOutline />
+              <span className="nlm-top-label">나의 수련기록</span>
+            </button>
+          </div>
+
+          {/* ⭐️ 획득한 노리개가 없을 때 표시할 내용 */}
+          <div className="nlm-empty-state">
+            <h2 className="nlm-empty-title">아직 획득한 노리개가 없습니다.</h2>
+            <p className="nlm-empty-desc">
+              챌린지에 참여하고 첫 노리개를 획득해 보세요!
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ⭐️ 노리개가 있을 때 기존 UI 렌더링
   const current = mapped[idx] || null;
   const title = current?.name || '노리개';
-  // 설명문구: 서버에 설명/날짜가 없을 수 있으니 기본 문구 제공
-  const desc = '꾸준한 수련으로 획득하셨습니다. 계속 이어가 보세요!';
+  const description = current?.description || '꾸준한 수련으로 획득하셨습니다. 계속 이어가 보세요!';
+  const awardedDate = current?.awardedDate || null;
+  const formattedDate = awardedDate ? `${new Date(awardedDate).getFullYear()}/${new Date(awardedDate).getMonth() + 1}/${new Date(awardedDate).getDate()}` : '';
 
-  const handleShare = () => {
-    // 실제 공유 로직은 앱 정책에 맞춰 연결하세요.
-    // 여기서는 단순히 이미지 주소를 클립보드에 복사.
+  const handleShare = async () => {
     if (!current?.iconPath) return;
-    navigator.clipboard?.writeText(current.iconPath).catch(() => {});
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url: current.iconPath });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(current.iconPath);
+      }
+    } catch (_) {}
   };
 
   return (
@@ -70,7 +103,7 @@ export default function NorigaeListModal({ isOpen, onClose, norigaeList = [] }) 
         <div className="nlm-topbar">
           <button className="nlm-top-btn" onClick={onClose} aria-label="닫기">
             <IoChevronBackOutline />
-            <span className="nlm-top-label">뒤로</span>
+            <span className="nlm-top-label">나의 수련기록</span>
           </button>
           <button className="nlm-top-btn right" onClick={handleShare} aria-label="공유">
             <IoShareOutline />
@@ -86,7 +119,11 @@ export default function NorigaeListModal({ isOpen, onClose, norigaeList = [] }) 
         {/* 타이틀/설명 */}
         <div className="nlm-text">
           <h2 className="nlm-title">{title}</h2>
-          <p className="nlm-desc">{desc}</p>
+          <p className="nlm-desc">
+            {description}
+            <br />
+            <span className="nlm-date">{formattedDate}</span>
+          </p>
         </div>
       </div>
     </div>

@@ -704,7 +704,8 @@ export default function MarketUserPage() {
                         
                         {<MarketUserSoldProductPageLayout />}
                         
-                        {<MarketUserRatePageLayout />}
+                        {/* 시간 여유 시 구현 목표로 하는 코드 */}
+                        {/* {<MarketUserRatePageLayout />} */}
                         
                     </div>
                 </div>

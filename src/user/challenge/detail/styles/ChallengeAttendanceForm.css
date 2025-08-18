@@ -1,48 +1,84 @@
-.attendance-form-container {
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 20px;
-  text-align: center;
+/* 네임스페이스: att-  (Toss-like clean style) */
+:root{
+  --att-accent:#7c1d0d;   /* 페이지 포인트 컬러 */
+  --att-ink:#fff;
+  --att-line:#e9eaee;
+  --att-text:#111;
+  --att-sub:#6b7280;
 }
 
-.file-upload-label {
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #f0f0f0;
-  border: 1px dashed #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  width: 80%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+/* 래퍼 */
+.att-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
-#photo-upload {
-  display: none; /* 실제 input 숨기기 */
+/* 드롭존 */
+.att-drop{
+  position: relative;
+  border: 1px dashed var(--att-line);
+  background:#f2f2f2;
+  border-radius:16px;
+  min-height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 0;
+  cursor:pointer;
+  transition:border-color .15s ease, box-shadow .2s ease, background .2s ease;
+}
+.att-drop:hover{ box-shadow:0 8px 20px rgba(0,0,0,.05); }
+.att-drop.is-drag{
+  border-color: color-mix(in srgb, var(--att-accent) 55%, var(--att-line));
+  background: color-mix(in srgb, var(--att-accent) 6%, #fff);
 }
 
-.submit-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s;
+/* 비어있을 때 */
+.att-empty .att-ico{ font-size:28px; margin-bottom:6px; }
+.att-empty .att-title{
+  font-weight:800; font-size:16px; color:var(--att-text);
+}
+.att-empty .att-sub{
+  font-size:13px; color:var(--att-sub); margin-top:2px; margin-bottom:10px;
+}
+.att-ghost{
+  appearance:none; border:1px solid var(--att-line); background:#fff; color:#222;
+  padding:8px 12px; border-radius:10px; font-weight:700; font-size:14px; cursor:pointer;
 }
 
-.submit-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+/* 미리보기 */
+.att-preview{
+  position:relative; width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+}
+.att-preview img{
+  width:100%; height:100%; max-height:360px; object-fit:cover; border-radius:12px;
+}
+.att-reset{
+  position:absolute; right:12px; bottom:12px;
+  appearance:none; border:none; border-radius:999px; padding:8px 12px;
+  background:rgba(0,0,0,.55); color:#fff; font-weight:800; font-size:12px; cursor:pointer;
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
-  font-size: 14px;
+/* 에러 */
+.att-error{
+  color:#d60c0c; font-size:13px; font-weight:700;
+}
+
+/* 액션 */
+.att-actions{ display:flex; flex-direction:column; gap:8px; }
+.att-submit{
+  appearance:none; border:none; border-radius:12px; padding:12px 14px;
+  font-weight:900; font-size:15px; cursor:pointer;
+  background:var(--att-accent); color:var(--att-ink);
+  box-shadow:0 10px 22px color-mix(in srgb, var(--att-accent) 40%, transparent);
+  transition:transform .08s ease, opacity .12s ease, box-shadow .15s ease;
+}
+.att-submit:disabled{ opacity:.6; box-shadow:none; cursor:default; }
+.att-submit.done{ background: color-mix(in srgb, var(--att-accent) 70%, #bdbdbd); }
+
+.att-hint{
+  text-align:center; font-size:12px; color:var(--att-sub);
 }
