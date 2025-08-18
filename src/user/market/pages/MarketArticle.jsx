@@ -599,7 +599,7 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.5vh", minHeight : "15vh", marginBottom : "4vh"}}>
+                                        <div className = "col" style = {{fontSize : "2.125vh", minHeight : "15vh", marginBottom : "4vh", whiteSpace : "pre-wrap"}}>
                                             {article.content}
                                         </div>
                                     </div>
