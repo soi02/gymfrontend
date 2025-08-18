@@ -68,6 +68,7 @@ import BuddyStart from './user/buddy/pages/BuddyStart';
 import MarketUpdateArticlePage from './user/market/pages/marketUpdateArticle';
 import ChallengeAllList from './user/challenge/pages/ChallengeAllList';
 import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
+import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -233,6 +234,7 @@ const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
             
             {/* 장터 관련 */}
             <Route path="/market" element={<MarketBoardPage />} />
+            <Route path="/market/board/:searchWord?" element={<MarketBoardPageWhenSearch />} /> {/* 업데이트 시 추가 예정*/}
             <Route path="/market/article/:id" element={<MarketArticlePage />} />
             <Route path="/market/user/:id" element={<MarketUserPage />} />
             <Route path="/market/writeArticle" element={<MarketWriteArticlePage />} />
