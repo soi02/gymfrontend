@@ -562,9 +562,10 @@ export default function MarketArticlePageTest() {
                                                         <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
                                                             {article.createdAt.toLocaleString()}
                                                         </div>
-                                                        <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                        {/* 시간 여유 시 구현 목표로 하는 코드 및 시스템*/}
+                                                        {/* <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center"}}>
                                                             조회수 {article.viewedCount}
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>

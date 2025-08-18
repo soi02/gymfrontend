@@ -277,11 +277,27 @@ export default function MarketBoardPageWhenSearch() {
                         <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
                         constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
                         
-                        <div className = "row">
-                            <div className = "col" style = {{marginBottom : "2vh"}}>
-                                "{checkSearchWord}" 단어로 게시글을 찾았소.
-                            </div>
-                        </div>
+                        {
+                            (checkSearchWord != '') ?
+                            (
+                                <>
+                                            
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                            "{checkSearchWord}" 단어로 게시글을 찾았소.
+                                        </div>
+                                    </div>
+                                            
+                                </>
+                            )
+                            :
+                            (
+                                <>
+                                </>
+                            )
+                        }
+                        
+
                         
                         {
                             constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
