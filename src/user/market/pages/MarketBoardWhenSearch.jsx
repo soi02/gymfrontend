@@ -127,7 +127,7 @@ export default function MarketBoardPageWhenSearch() {
     
     const {searchWord : loadedSearchWord} = useParams();
     
-    const checkSearchWord = loadedSearchWord;
+    const checkSearchWord = loadedSearchWord ?? '';
     console.log("checkSearchWord");
     console.log(checkSearchWord);
     
