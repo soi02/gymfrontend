@@ -1,0 +1,159 @@
+/* src/MyUserInformation.css */
+
+.mp-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Pretendard', sans-serif, -apple-system, BlinkMacSystemFont;
+    color: #333;
+}
+
+/* --- 상단 프로필 섹션 --- */
+.mp-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #2c2c2c;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.mp-profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.mp-profile-image-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+}
+
+.mp-profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eee;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.mp-edit-button {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 32px;
+    height: 32px;
+    background-color: #5858E0;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.mp-edit-button:hover {
+    transform: scale(1.1);
+}
+.mp-edit-icon {
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+}
+
+.mp-user-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* --- 폼 섹션 --- */
+.mp-form-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.mp-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.mp-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.mp-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.mp-input::placeholder {
+    color: #ccc;
+}
+.mp-input:focus {
+    outline: none;
+    border-color: #5858E0;
+    box-shadow: 0 0 0 3px rgba(88, 88, 224, 0.1);
+}
+
+/* 세로선 */
+.mp-divider {
+    border: none;
+    height: 1px;
+    background-color: #eee;
+    margin: 30px 0;
+}
+
+/* --- 체크박스 --- */
+.mp-checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.mp-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: #5858E0;
+    margin-right: 10px;
+}
+.mp-label-checkbox {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+}
+
+/* --- 버튼 --- */
+.mp-button-group {
+    display: flex;
+    justify-content: flex-end;
+}
+.mp-save-button {
+    padding: 14px 28px;
+    background-color: #5858E0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.mp-save-button:hover {
+    background-color: #4a4ac9;
+}

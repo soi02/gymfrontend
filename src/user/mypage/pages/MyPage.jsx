@@ -103,7 +103,7 @@ export default function MyPage() {
   return (
     <div className="mypage-container">
       {/* 유저 정보 */}
-      <div className="profile-box" onClick={() => navigate("/editProfile")}>
+      <div className="profile-box" onClick={() => navigate("/myUserInformation")}>
         <div className="profile-info-wrapper">
           <div className="profile-info">
             <div className="profile-img" />

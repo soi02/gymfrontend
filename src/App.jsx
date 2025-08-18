@@ -73,6 +73,7 @@ import { useState } from 'react';
 import QRCodeSection from './global/pages/QRCodeSection';
 import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
 import Information from './global/pages/Information';
+import MyUserInformation from './user/mypage/pages/MyUserInformation';
 
 
 
@@ -208,6 +209,7 @@ function AppContent() {
             <Route path="/home" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/routineCalendar" element={<MyPageRoutineCalendar />} />
+            <Route path="/myUserInformation" element={<MyUserInformation />} />
 
             {/* 루틴 */}
             <Route path='/routine' element={<RoutineHomePage />} />
