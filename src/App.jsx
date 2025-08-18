@@ -72,6 +72,7 @@ import ChallengeMyListPage from './user/challenge/pages/ChallengeMyListPage';
 import { useState } from 'react';
 import QRCodeSection from './global/pages/QRCodeSection';
 import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
+import Information from './global/pages/Information';
 
 
 
@@ -162,11 +163,11 @@ function AppContent() {
     <div className="pc-layout-wrapper">
       {isPc && (
         <div className="side-container">
-          <h2>짐마당</h2>
+          {/* <h2>짐마당</h2>
           <p>함께 운동할 벗을 찾아보세요!</p>
           <p>모바일 앱 QR 코드</p>
-          {/* 여기에 QR 코드 이미지를 넣으세요. */}
-          <img src="https://via.placeholder.com/150" alt="QR Code" style={{ width: '150px' }} />
+          <img src="https://via.placeholder.com/150" alt="QR Code" style={{ width: '150px' }} /> */}
+          <Information/>
         </div>
       )}
       <div className='app-shell'>
