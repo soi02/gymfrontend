@@ -74,8 +74,7 @@ import QRCodeSection from './global/pages/QRCodeSection';
 import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
 import Information from './global/pages/Information';
 import MyUserInformation from './user/mypage/pages/MyUserInformation';
-import NorigaeListPage from './user/challenge/components/NorigaeListModal';
-
+import NorigaeListPage from './user/challenge/components/NorigaeListPage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
