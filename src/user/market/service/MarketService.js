@@ -204,6 +204,12 @@ export default function useMarketAPI() {
         )
         return response.data;
     }
+    const getSelectSpecificMarketDealedLogCheckedBySeller = async(sellerId, specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketDealedLogCheckedBySeller`, {
+            params : {sellerId, specificArticleId}
+        });
+        return response.data;
+    }
     const postDeleteMarketDealedLogCheckedBySeller = async(specificArticleId) => {
         const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketCommentOnArticle`,
             {  } ,
@@ -225,6 +231,12 @@ export default function useMarketAPI() {
                 }
             }
         )
+        return response.data;
+    }
+    const getSelectSpecificMarketDealedLogCheckedByBuyer = async(buyerId, specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketDealedLogCheckedByBuyer`, {
+            params : {buyerId, specificArticleId}
+        });
         return response.data;
     }
     const postDeleteMarketDealedLogCheckedByBuyer = async(specificArticleId) => {
@@ -334,8 +346,8 @@ export default function useMarketAPI() {
         getSelectMarketProductInterestedLogWhenArticleInfo, getSelectCountMarketProductInterestedLogWhenArticleInfo,
         getSelectMarketProductInterestedLogWhenUserAndArticleInfo, 
         postInsertMarketDealedLog, getSelectSpecificMarketDealedLog,
-        postInsertMarketDealedLogCheckedBySeller, postDeleteMarketDealedLogCheckedBySeller,
-        postInsertMarketDealedLogCheckedByBuyer, postDeleteMarketDealedLogCheckedByBuyer,
+        postInsertMarketDealedLogCheckedBySeller, getSelectSpecificMarketDealedLogCheckedBySeller, postDeleteMarketDealedLogCheckedBySeller,
+        postInsertMarketDealedLogCheckedByBuyer, getSelectSpecificMarketDealedLogCheckedByBuyer, postDeleteMarketDealedLogCheckedByBuyer,
         getSelectMarketDealedLogWhenBuyer, getSelectCountMarketDealedLogWhenBuyer,
         getSelectMarketDealedLogWhenSeller, getSelectCountMarketDealedLogWhenSeller,
         postInsertMarketReviewToUser, getSelectMarketReviewToUser, postUpdateMarketReviewToUser, postDeleteMarketReviewToUser,
