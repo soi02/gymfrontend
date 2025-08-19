@@ -921,17 +921,17 @@
 /* ⭐️ 상단 헤더 섹션 (고정 영역) ⭐️ */
 /* ======================================= */
 .ch-category-header {
-  /* padding: 10px 0 10px; */
-  padding: 0;
+  /* padding: 24px 16px 14px; */
+  padding:0;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
   display: grid;
   grid-template-columns: 96px 1fr;
   gap: 14px;
   align-items: center;
-  flex-shrink: 0; /* 헤더는 크기가 줄어들지 않도록 */
-  position: relative;
+  flex-shrink: 0;
+  position: relative; /* FAB 버튼을 포함하기 위해 relative로 설정 */
   z-index: 10;
-  /* 부드러운 하이라이트(아이콘 뒤 보케) */
-  /* 헤더와 스크롤 영역을 분리하기 위해 box-shadow 추가 */
   box-shadow: 0 2px 4px -2px rgba(0,0,0,0.05);
 }
 
@@ -941,13 +941,10 @@
   left: 14px; top: 18px;
   width: 120px; height: 120px;
   border-radius: 50%;
-  /* background: radial-gradient(ellipse at center,
-                              rgba(68,136,255,0.15) 0%, rgba(68,136,255,0.0) 65%); */
   pointer-events: none;
   filter: blur(6px);
   z-index: -1;
 }
-
 
 /* 아이콘 */
 .ch-category-icon-wrap {
@@ -1011,12 +1008,13 @@
 
 /* ======================================= */
 /* ⭐️ 플로팅 버튼 (`FAB`) 및 키워드 칩 ⭐️ */
+/* (헤더 내부에 배치) */
 /* ======================================= */
 .ch-category-fab-container {
-  /* 상단 오른쪽에 고정 */
-  position: fixed;
-  right: calc(16px + env(safe-area-inset-right));
-  top: calc(110px + env(safe-area-inset-top)); /* 80px은 상단 헤더와 여백을 고려한 값 */
+  /* 헤더 내부에 절대 위치로 배치 */
+  position: absolute;
+  top: 100px; /* 헤더 내에서 top 위치 조정 */
+  right: 16px; /* 페이지의 padding과 동일하게 설정 */
   z-index: 40;
 }
 
@@ -1038,7 +1036,6 @@
 .ch-category-fab-hash.open{ transform: rotate(45deg); }
 
 .ch-category-keyword-chips-slide-up {
-  /* 슬라이드 다운으로 변경 */
   position: absolute;
   right: 0;
   top: 56px; /* 버튼 바로 아래 위치 */
@@ -1067,7 +1064,7 @@
   color: inherit;
   display: inline-flex; align-items: center; gap: 6px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  transform: translateY(-8px); /* 위에서 아래로 나타나도록 변경 */
+  transform: translateY(-8px);
   opacity: 0;
   transition: transform .24s ease, opacity .24s ease, box-shadow .12s ease;
 }
