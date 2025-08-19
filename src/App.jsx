@@ -74,6 +74,7 @@ import QRCodeSection from './global/pages/QRCodeSection';
 import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
 import Information from './global/pages/Information';
 import MyUserInformation from './user/mypage/pages/MyUserInformation';
+import NorigaeListPage from './user/challenge/components/NorigaeListPage';
 
 
 
@@ -138,19 +139,23 @@ function AppContent() {
 
   ];
 
+  const norigaePath = '/challenge/norigae';
+
   // TopHeader 숨길 조건들
   const shouldHideTop = hideHeaderFooterRoutes.includes(location.pathname) ||
     location.pathname.startsWith('/challenge/challengeTest') ||
     location.pathname.startsWith('/buddy/buddyChat/') ||
     location.pathname.startsWith('/buddy/videoCall') ||
     location.pathname.startsWith('/challenge/detail') ||
-    location.pathname.startsWith('/challenge/payment/success');
+    location.pathname.startsWith('/challenge/payment/success')||
+    location.pathname === norigaePath;
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
   const shouldHideBottom = hideHeaderFooterRoutes.includes(location.pathname) ||
     location.pathname.startsWith('/challenge/challengeTest') ||
     location.pathname.startsWith('/buddy/buddyChat/') ||
     location.pathname.startsWith('/buddy/videoCall');
+    
 
   const isChallengeSection = location.pathname.startsWith('/challenge') && !location.pathname.includes('challengeTest');
   const isBuddySection = location.pathname.startsWith('/buddy');
@@ -158,6 +163,9 @@ function AppContent() {
 
   const isChallengeIntro = location.pathname === '/challenge/challengeIntro'; // 강제 조건
   const isBuddyIntro = location.pathname === '/buddy'; // 강제 조건
+
+  const shouldHideTopTabs = location.pathname === norigaePath;
+
 
   return (
 
@@ -180,7 +188,7 @@ function AppContent() {
 
 
           {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}
-          {isChallengeSection && !shouldHideTop && !isChallengeIntro && (
+          {isChallengeSection && !shouldHideTop && !isChallengeIntro && !shouldHideTopTabs && (
             <div style={{ borderBottom: '1px solid #eee' }}>
               <ChallengeTopTabs />
             </div>
@@ -247,6 +255,7 @@ function AppContent() {
             <Route path="/challenge/category/:categoryId" element={<ChallengeCategoryPage />} />
             <Route path="/challenge/challengeMyRecordDetail/:challengeId" element={<ChallengeMyRecordDetail />} />
             <Route path="/challenge/challengeMyList" element={<ChallengeMyListPage />} />
+            <Route path="/challenge/norigae" element={<NorigaeListPage />} />
 
             <Route path="/challenge/challengeTest/intro" element={<ChallengeTestIntro />} />
             <Route path="/challenge/challengeTest/step/:stepId" element={<ChallengeTestPage />} />
