@@ -184,7 +184,7 @@ function AppContent() {
         {!shouldHideTop && <TopHeader />}
 
         {/* ✅ 메인 컨텐츠 flex로 확장 */}
-        <main className="app-content">
+      <main className={`app-content ${shouldHideBottom ? 'no-bottom-padding' : ''}`}>
 
 
           {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}

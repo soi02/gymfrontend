@@ -2,7 +2,7 @@
  * 전역 스타일 및 반응형 레이아웃
  * ======================================= */
 
-html {
+html, body, #root {
   height: 100%;
 }
 
@@ -11,6 +11,8 @@ body {
   height: 100vh;
   font-family: 'Gowun Dodum', sans-serif !important;
   box-sizing: border-box;
+    overscroll-behavior: none; /* 선택: iOS 끌어당김 방지 */
+
 }
 
 /* PC 화면 (768px 이상)에서만 적용될 스타일 */

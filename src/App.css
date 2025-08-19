@@ -41,6 +41,10 @@
   overflow-y: auto;
 }
 
+.app-content.no-bottom-padding {
+  padding-bottom: 0;
+}
+
 /* ... (나머지 CSS 코드는 그대로 둡니다.) */
 /* 이 페이지가 DOM에 있을 때, 바깥(문서) 스크롤 OFF */
 html:has(.rfp-page),
