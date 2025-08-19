@@ -1,10 +1,13 @@
 // src/MyUserInformation.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import useUserService from '../../../auth/service/userService';
 import '../styles/MyUserInformation.css';
+
+// 백엔드 API 기본 URL
+const API_BASE_URL = 'http://localhost:8080';
 
 // Daum Postcode API를 로드하기 위한 스크립트
 const loadDaumPostcodeScript = () => {
@@ -18,8 +21,15 @@ const loadDaumPostcodeScript = () => {
 };
 
 export default function MyUserInformation() {
+    // Redux store에서 사용자 ID를 가져옵니다.
     const userId = useSelector(state => state.auth.id);
 
+    // 파일 입력(input) 엘리먼트에 접근하기 위한 ref 생성
+    const fileInputRef = useRef(null);
+    // ✅ 프로필 이미지 파일 객체를 저장할 상태 추가
+    const [profileImageFile, setProfileImageFile] = useState(null);
+
+    // 백엔드 데이터와 일치하도록 상태 필드명을 camelCase로 설정
     const [userData, setUserData] = useState({
         id: '',
         name: '',
@@ -38,6 +48,7 @@ export default function MyUserInformation() {
     const navigate = useNavigate();
     const { getUserInfo, updateUserInfo } = useUserService();
 
+    // 컴포넌트 마운트 시 사용자 정보 로드
     useEffect(() => {
         if (userId) {
             console.log("Current User ID from Redux:", userId);
@@ -45,6 +56,7 @@ export default function MyUserInformation() {
                 try {
                     const data = await getUserInfo(userId);
                     console.log("Data fetched from backend:", data);
+                    // ✅ 컴포넌트 상태 업데이트
                     setUserData(data);
                 } catch (error) {
                     console.error("사용자 정보 로드 실패:", error);
@@ -54,10 +66,11 @@ export default function MyUserInformation() {
             fetchUserData();
         }
 
+        // 주소 검색 API 스크립트 로드
         if (window.daum === undefined) {
             loadDaumPostcodeScript();
         }
-    }, [userId]); // ✅ getUserInfo를 의존성 배열에서 제거
+    }, [userId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -91,15 +104,39 @@ export default function MyUserInformation() {
         }
     };
 
+    // ✅ handleSave 함수 수정: FormData를 사용하여 데이터를 보냄
     const handleSave = async () => {
         if (!isPhoneValid || userData.phone.replace(/[^0-9]/g, '').length < 10) {
             alert('전화번호 형식을 확인해 주세요.');
             return;
         }
 
+        // FormData 객체 생성
+        const formData = new FormData();
+
+        // 텍스트 필드를 FormData에 추가
+        formData.append('id', userData.id);
+        formData.append('name', userData.name);
+        formData.append('password', userData.password); // 비밀번호는 수정 시에만 보내도록 로직 추가 가능
+        formData.append('birth', userData.birth);
+        formData.append('address', userData.address);
+        formData.append('phone', userData.phone);
+        formData.append('height', userData.height);
+        formData.append('weight', userData.weight);
+        formData.append('muscleMass', userData.muscleMass);
+
+        // ✅ 이미지 파일이 존재하면 FormData에 추가
+        if (profileImageFile) {
+            formData.append('profileImageFile', profileImageFile);
+        }
+
         try {
-            await updateUserInfo(userData);
+            // ✅ updateUserInfo 함수에 FormData를 전달
+            await updateUserInfo(formData);
             alert('정보가 성공적으로 저장되었습니다!');
+            // 저장 후 사용자 정보 다시 불러와서 화면 갱신
+            const updatedData = await getUserInfo(userId);
+            setUserData(updatedData);
         } catch (error) {
             console.error("정보 저장 실패:", error);
             alert('정보 저장에 실패했습니다. 다시 시도해 주세요.');
@@ -113,7 +150,7 @@ export default function MyUserInformation() {
     const handleAddressSearch = () => {
         if (window.daum && window.daum.Postcode) {
             new window.daum.Postcode({
-                oncomplete: function(data) {
+                oncomplete: function (data) {
                     setUserData({
                         ...userData,
                         address: data.address
@@ -125,12 +162,32 @@ export default function MyUserInformation() {
         }
     };
 
+    const getProfileImageUrl = () => {
+        // ✅ 상태에 새로운 파일이 있으면 미리보기 URL을 반환
+        if (profileImageFile) {
+            return URL.createObjectURL(profileImageFile);
+        }
+        // ✅ 그렇지 않으면 기존 이미지 URL을 반환
+        return userData.profileImage
+            ? `${API_BASE_URL}/uploadFiles/${userData.profileImage}`
+            : 'https://placehold.co/100x100?text=No+Image';
+    };
+
+    // ✅ 파일 변경 핸들러 함수 수정
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            console.log("선택된 파일:", file.name);
+            setProfileImageFile(file); // ✅ 파일 객체를 상태에 저장
+        }
+    };
+
     return (
         <div className="mpInfo-container">
             <header className="mpInfo-main-header">
                 <button onClick={handleGoBack} className="mpInfo-back-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/>
+                        <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z" />
                     </svg>
                 </button>
                 <h2 className="mpInfo-header-title">프로필 수정</h2>
@@ -139,18 +196,25 @@ export default function MyUserInformation() {
 
             <div className="mpInfo-profile-section">
                 <div className="mpInfo-profile-image-container">
-                    <img src={userData.profileImage} alt="프로필 이미지" className="mpInfo-profile-image" />
-                    <button className="mpInfo-edit-button">
-                        <svg className="mpInfo-edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7.127 22.564l-2.091-2.091c-.516-.516-.763-1.16-.729-1.802l.068-.781 1.776 1.776c.075.075.16.14.25.195l.1.06c.09.054.187.087.29.098l.128.012c.11.002.215-.02.32-.075l.1-.059 1.776 1.776.082-.246c.02-.06.036-.12.045-.181l.012-.13c.01-.102-.016-.207-.07-.317l-.06-.1zM19.782 5.218c-.39-.39-1.024-.39-1.414 0l-12.8 12.8c-.39.39-.39 1.024 0 1.414.39.39 1.024.39 1.414 0l12.8-12.8c.39-.39.39-1.024 0-1.414zm-4.364 2.89l-2.09-2.091 6.364-6.364c.39-.39 1.024-.39 1.414 0l2.09 2.09c.39.39.39 1.024 0 1.414l-6.364 6.364zm-5.01-1.378l1.414 1.414-1.414 1.414-1.414-1.414 1.414-1.414zm-2.09-2.09l-1.414 1.414-1.414-1.414 1.414-1.414 1.414 1.414z"/>
-                        </svg>
+                    <img src={getProfileImageUrl()} alt="프로필 이미지" className="mpInfo-profile-image" />
+                    <button
+                        onClick={() => fileInputRef.current.click()}
+                        className="mpInfo-edit-button"
+                    >
+                        <i className="bi bi-camera"></i>
                     </button>
                 </div>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                />
                 <h1 className="mpInfo-user-name">@{userData.accountName}</h1>
             </div>
 
             <div className="mpInfo-form-section">
-                
                 <div className="mpInfo-form-group">
                     <label className="mpInfo-label">이름</label>
                     <input
@@ -174,7 +238,7 @@ export default function MyUserInformation() {
                         placeholder="새 비밀번호 입력"
                     />
                 </div>
-                
+
                 <div className="mpInfo-form-group">
                     <label className="mpInfo-label">생년월일</label>
                     <input
@@ -185,7 +249,7 @@ export default function MyUserInformation() {
                         className="mpInfo-input"
                     />
                 </div>
-                
+
                 <div className="mpInfo-form-group">
                     <label className="mpInfo-label">거주지역</label>
                     <div className="mpInfo-address-input-group">
@@ -202,7 +266,7 @@ export default function MyUserInformation() {
                         </button>
                     </div>
                 </div>
-                
+
                 <div className="mpInfo-form-group">
                     <label className="mpInfo-label">전화번호</label>
                     <input
