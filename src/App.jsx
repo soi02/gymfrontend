@@ -74,7 +74,7 @@ import QRCodeSection from './global/pages/QRCodeSection';
 import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch';
 import Information from './global/pages/Information';
 import MyUserInformation from './user/mypage/pages/MyUserInformation';
-import NorigaeListPage from './user/challenge/components/NorigaeListPage';
+import NorigaeListPage from './user/challenge/components/NorigaeListModal';
 
 
 
