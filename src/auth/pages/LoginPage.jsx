@@ -93,7 +93,7 @@ export default function LoginPage() {
                 </div>
 
                 <div className="social-buttons">
-                    <button className="social-btn" onClick={handleKakaoLogin}>
+                    <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
                         <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" alt="Kakao" />
                     </button>
                     <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
