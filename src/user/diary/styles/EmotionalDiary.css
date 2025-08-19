@@ -1,208 +1,260 @@
-/*
-  전체적인 레이아웃 및 스타일
-  - body {
-    font-family: 'Pretendard', sans-serif;
-    background-color: #f4f7f9;
-  }
-*/
+/* src/styles/EmotionalDiary.css */
 
-.emotional-diary-container {
-  max-width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+/* 전체적인 레이아웃 및 스타일 */
+.emotional-diary {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f7f3e9; /* 부드러운 배경색 */
+    color: #444;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* 헤더: 뒤로가기, 캘린더 버튼 */
 .diary-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  padding: 0 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    margin-bottom: 20px;
 }
 
-.diary-icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
+.diary-nav {
+    display: flex;
+    align-items: center;
+}
+
+.diary-back-link,
+.diary-calendar-link {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease-in-out;
+}
+
+.diary-back-link:hover,
+.diary-calendar-link:hover {
+    color: #000;
+}
+
+.diary-calendar-link span {
+    font-size: 14px;
+}
+
+/* 에러 메시지 */
+.diary-error-message {
+    text-align: center;
+    color: #d9534f;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* 로딩 스피너 */
+.diary-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.125em;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
   border-radius: 50%;
-  transition: background-color 0.2s, transform 0.2s;
+  animation: .75s linear infinite spinner-border;
 }
 
-.diary-icon-btn i {
-  font-size: 1.5rem;
-  color: #555;
+@keyframes spinner-border {
+  to { transform: rotate(360deg) }
 }
 
-.diary-icon-btn:hover {
-  background-color: #e9e9e9;
-  transform: scale(1.05);
+.text-warning {
+  color: #ffc107!important;
 }
+
+.visually-hidden {
+  position: absolute!important;
+  width: 1px!important;
+  height: 1px!important;
+  padding: 0!important;
+  margin: -1px!important;
+  overflow: hidden!important;
+  clip: rect(0, 0, 0, 0)!important;
+  white-space: nowrap!important;
+  border: 0!important;
+}
+
 
 /* 모달: 감정 선택 창 */
-.diary-modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
+.diary-emotion-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .diary-modal-content {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.4s ease-out;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.4s ease-out;
 }
 
 .diary-modal-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
 }
 
 .diary-emotions-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
 }
 
-.emotion-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  background-color: #f9f9f9;
-  border-radius: 15px;
-  padding: 12px 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
+.diary-emotion-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 12px 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.emotion-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+.diary-emotion-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
 }
 
-.emotion-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 5px;
+.diary-emotion-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
 }
 
-.emotion-name {
-  font-size: 0.85rem;
-  color: #555;
-  font-weight: 500;
+.diary-emotion-item p {
+    font-size: 0.85rem;
+    color: #555;
+    font-weight: 500;
 }
 
-/* 메인 일기 작성 화면 */
-.diary-main-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  flex-grow: 1;
-  padding: 0 20px;
+/* 일기 작성 부분 */
+.diary-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+    padding: 0 20px;
 }
 
-.emotion-display {
-  margin-bottom: 30px;
+.diary-selected-emotion {
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
-.emotion-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s;
+.diary-selected-emotion:hover {
+    transform: scale(1.05);
 }
 
-.emotion-circle:hover {
-  transform: scale(1.05);
+.diary-selected-emotion img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.emotion-image-large {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.diary-selected-emotion p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
 }
 
-.emotion-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #333;
+.diary-input-textarea {
+    width: 100%;
+    height: 300px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: none;
+    font-family: 'Pretendard', sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s;
 }
 
-.diary-textarea {
-  width: 100%;
-  height: 300px;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  font-size: 1rem;
-  line-height: 1.6;
-  resize: none;
-  font-family: 'Pretendard', sans-serif;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  transition: border-color 0.3s;
+.diary-input-textarea:focus {
+    outline: none;
+    border-color: #a0c4ff;
 }
 
-.diary-textarea:focus {
-  outline: none;
-  border-color: #a0c4ff;
+.diary-save-button {
+    width: 90%;
+    max-width: 400px;
+    padding: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
 }
 
-.diary-save-btn {
-  width: 90%;
-  max-width: 400px;
-  padding: 18px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+.diary-save-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
 }
 
-.diary-save-btn:hover {
-  background-color: #45a049;
-  transform: translateY(-2px);
+.diary-save-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
 /* 애니메이션 */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideIn {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }

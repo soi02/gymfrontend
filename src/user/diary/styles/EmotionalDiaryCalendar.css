@@ -1,0 +1,150 @@
+/* src/styles/EmotionalDiaryCalendar.css */
+
+.diary-calendar {
+    font-family: 'Pretendard', sans-serif;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f4f7f9;
+    color: #333;
+}
+
+/* 캘린더 헤더 */
+.diary-calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.diary-back-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #555;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.diary-back-btn:hover {
+    transform: scale(1.1);
+    color: #000;
+}
+
+.diary-calendar-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+}
+
+/* 월 이동 네비게이션 */
+.diary-calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.diary-calendar-navigation h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 15px;
+}
+
+.diary-calendar-navigation button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.diary-calendar-navigation button:hover {
+    color: #000;
+}
+
+/* 캘린더 그리드 */
+.diary-calendar-grid {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.diary-calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    padding: 15px 0;
+    font-weight: 600;
+    color: #888;
+    border-bottom: 1px solid #eee;
+}
+
+.diary-calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 15px;
+}
+
+.diary-calendar-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    border-radius: 50%;
+}
+
+.diary-calendar-day:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.diary-day-number {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.diary-calendar-day.other-month {
+    color: #ccc;
+    cursor: default;
+}
+
+.diary-calendar-day.other-month:hover {
+    background-color: transparent;
+    transform: none;
+}
+
+.diary-calendar-day.has-entry {
+    background-color: #fff4d8;
+    border: 1px solid #ffd700;
+}
+
+/* 이미지와 텍스트 정렬을 위한 조정 */
+.diary-calendar-day.has-entry .diary-day-number {
+    color: #8a6a01;
+}
+
+/* 이미지 스타일 */
+.diary-emotion-indicator {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-top: 10px; /* 아이콘 위치 조정 */
+}
