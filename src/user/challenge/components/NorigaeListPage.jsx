@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { IoChevronBackOutline, IoShareOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import '../styles/NorigaeListPage.css';
@@ -44,72 +44,94 @@ const getNorigaeTier = (daysAttended, totalDays) => {
 
 export default function NorigaeListPage() {
     const navigate = useNavigate();
+    const location = useLocation();
+  const { challengeId: filterChallengeId } = location.state || {}; // 챌린지 ID를 가져옵니다.
+
     const userId = useSelector((state) => state.auth.id);
     const [norigaeList, setNorigaeList] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // 컴포넌트 마운트 시 데이터 불러오기
     useEffect(() => {
-        async function fetchNorigaeList() {
-            try {
-                if (!userId) {
-                    navigate('/login', { state: { from: '/norigae' } });
-                    return;
-                }
-                setLoading(true);
-
-                // 1단계: 모든 챌린지 기록 목록 가져오기
-                const allMyChallengesRes = await axios.get(`${BACKEND_BASE_URL}/api/challenge/getAllMyChallengeListProcess`, {
-                    params: { userId },
-                });
-                const myChallenges = allMyChallengesRes.data || [];
-
-                const awardedNorigae = [];
-
-                // 2단계: 각 챌린지 ID로 상세 기록을 가져와 노리개 정보 추출
-                for (const challenge of myChallenges) {
-                    try {
-                        const detailRes = await axios.get(`${BACKEND_BASE_URL}/api/challenge/getMyRecordDetailProcess`, {
-                            params: {
-                                userId,
-                                challengeId: challenge.challengeId,
-                            },
-                        });
-                        const detailData = detailRes.data;
-
-                        if (detailData && detailData.challengeInfo) {
-                            const { daysAttended, challengeDurationDays, challengeTitle } = detailData.challengeInfo;
-
-                            // 챌린지 출석률을 기반으로 노리개 등급 판별
-                            const norigae = getNorigaeTier(daysAttended, challengeDurationDays);
-
-                            // 노리개를 획득했다면 리스트에 추가
-                            if (norigae) {
-                                awardedNorigae.push({
-                                    id: challenge.challengeId,
-                                    name: norigae.name,
-                                    description: <><strong>{challengeTitle}</strong> 챌린지를 통해 획득</>,
-                                    iconPath: norigae.icon,
-                                    awardedDate: new Date().toISOString(), // 획득 날짜는 임시로 현재 날짜 사용
-                                });
-                            }
-                        }
-                    } catch (detailError) {
-                        console.error(`챌린지 상세 정보를 불러오는 데 실패했습니다: ${challenge.challengeId}`, detailError);
-                    }
-                }
-
-                setNorigaeList(awardedNorigae);
-
-            } catch (e) {
-                console.error("노리개 리스트를 불러오는 데 실패했습니다.", e);
-                setNorigaeList([]);
-            } finally {
-                setLoading(false);
-            }
+    async function fetchNorigaeList() {
+      try {
+        if (!userId) {
+          navigate('/login', { state: { from: '/norigae' } });
+          return;
         }
-        fetchNorigaeList();
-    }, [userId, navigate]);
+        setLoading(true);
+
+        // 1단계: 모든 챌린지 기록 목록 가져오기
+        const allMyChallengesRes = await axios.get(`${BACKEND_BASE_URL}/api/challenge/getAllMyChallengeListProcess`, {
+          params: { userId },
+        });
+        const myChallenges = allMyChallengesRes.data || [];
+
+        const awardedNorigae = [];
+
+        // 2단계: 각 챌린지 ID로 상세 기록을 가져와 노리개 정보 추출
+for (const challenge of myChallenges) {
+                        // 👇 여기에 디버깅용 로그 추가
+            console.log('--- 필터링 디버깅 ---');
+            console.log('filterChallengeId:', filterChallengeId, ' (타입:', typeof filterChallengeId, ')');
+            console.log('challenge.challengeId:', challenge.challengeId, ' (타입:', typeof challenge.challengeId, ')');
+            console.log('두 ID가 일치하는가:', challenge.challengeId == filterChallengeId);
+            console.log('--------------------');
+
+          // 필터링할 챌린지 ID가 있고, 현재 챌린지 ID와 일치하지 않으면 건너뜁니다.
+    if (filterChallengeId && challenge.challengeId !== Number(filterChallengeId)) {
+        continue;
+    }
+
+          try {
+            const detailRes = await axios.get(`${BACKEND_BASE_URL}/api/challenge/getMyRecordDetailProcess`, {
+              params: {
+                userId,
+                challengeId: challenge.challengeId,
+              },
+            });
+            const detailData = detailRes.data;
+
+                                // 👇 이 부분을 추가하여 데이터 확인!
+        console.log(`--- 챌린지 상세 기록 확인: ${challenge.challengeId} ---`);
+        console.log('챌린지 제목:', detailData.challengeInfo.challengeTitle);
+        console.log('달성 일수:', detailData.challengeInfo.daysAttended);
+        console.log('총 기간:', detailData.challengeInfo.challengeDurationDays);
+        const calculatedRate = (detailData.challengeInfo.daysAttended / detailData.challengeInfo.challengeDurationDays) * 100;
+        console.log('계산된 출석률:', calculatedRate.toFixed(2) + '%');
+        console.log('----------------------------');
+
+            if (detailData && detailData.challengeInfo) {
+              const { daysAttended, challengeDurationDays, challengeTitle } = detailData.challengeInfo;
+
+              // 챌린지 출석률을 기반으로 노리개 등급 판별
+              const norigae = getNorigaeTier(daysAttended, challengeDurationDays);
+
+              // 노리개를 획득했다면 리스트에 추가
+              if (norigae) {
+                awardedNorigae.push({
+                  id: challenge.challengeId,
+                  name: norigae.name,
+                  description: <><strong>{challengeTitle}</strong> 챌린지를 통해 획득</>,
+                  iconPath: norigae.icon,
+                  awardedDate: new Date().toISOString(),
+                });
+              }
+            }
+          } catch (detailError) {
+            console.error(`챌린지 상세 정보를 불러오는 데 실패했습니다: ${challenge.challengeId}`, detailError);
+          }
+        }
+        setNorigaeList(awardedNorigae);
+      } catch (e) {
+        console.error("노리개 리스트를 불러오는 데 실패했습니다.", e);
+        setNorigaeList([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchNorigaeList();
+  }, [userId, navigate, filterChallengeId]); // 👈 여기에 filterChallengeId를 추가
 
     const mapped = useMemo(() => {
         return norigaeList.map(n => ({
@@ -117,6 +139,8 @@ export default function NorigaeListPage() {
             iconPath: n.iconPath || toAbsUrl(n.iconPath),
         }));
     }, [norigaeList]);
+
+
 
     // ✅ 노리개 등급에 따라 정렬하는 코드 추가
     const norigaeOrder = ['금', '은', '동'];

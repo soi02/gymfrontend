@@ -58,12 +58,26 @@ export default function ChallengeMyRecordDetail() {
       return;
     }
     fetchChallengeProgress();
+
+
+    // **이제 useEffect가 progressData가 변경될 때마다 실행됩니다.**
+    if (progressData) {
+        console.log('--- 챌린지 진행 상황 데이터 확인 ---');
+        console.log('총 기간:', progressData.totalPeriod);
+        console.log('내 달성 일수:', progressData.myAchievement);
+        const progressPct = progressData.totalPeriod > 0 ? (progressData.myAchievement / progressData.totalPeriod) * 100 : 0;
+        console.log('계산된 진행률:', progressPct.toFixed(2) + '%');
+        console.log('획득 노리개 이름:', progressData.awardedNorigaeName);
+        console.log('---------------------------------');
+    }
+
+
   }, [challengeId, userId, navigate, fetchChallengeProgress]);
 
-  // ⭐️ 획득 뱃지 보기 버튼 클릭 시 페이지 이동
-  const handleGoToNorigaePage = () => {
-    navigate('/challenge/norigae');
-  };
+const handleGoToNorigaePage = () => {
+  // 현재 챌린지 ID를 상태로 함께 전달
+  navigate('/challenge/norigae', { state: { challengeId } });
+};
 
   // 노리개 아이콘: 로컬 리소스 우선, 없으면 서버 경로 사용
   const awardedNorigaeIcon = useMemo(() => {
