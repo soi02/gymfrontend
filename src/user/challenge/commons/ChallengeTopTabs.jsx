@@ -7,12 +7,12 @@ function TabItem({ to, label }) {
     let isActive = false;
     
     if (to === "/challenge/challengeList") {
-        // '수련 목록' 탭은 '/challenge/challengeList', '/challenge/category', '/challenge/detail' 경로에서 모두 활성화
         isActive = location.pathname.startsWith("/challenge/challengeList") 
             || location.pathname.startsWith("/challenge/category") 
             || location.pathname.startsWith("/challenge/detail");
+    } else if (to === "/challenge/groupchatList") { // ✅ 그룹채팅 탭 활성화 로직 추가
+        isActive = location.pathname.startsWith("/challenge/groupchat");
     } else {
-        // 나머지 탭은 기존 로직대로 정확한 경로에서만 활성화
         isActive = location.pathname.startsWith(to);
     }
 
@@ -60,7 +60,7 @@ export default function ChallengeTopTabs() {
       <TabItem to="/challenge/challengeHome" label="수련장 홈" />
       <TabItem to="/challenge/challengeList" label="수련 목록" />
       <TabItem to="/challenge/challengeMy" label="나의 수련기록" />
-      <TabItem to="/challenge/그룹채팅리스트페이지 넣기" label="그룹채팅" />
+      <TabItem to="/challenge/groupchatList" label="그룹채팅" />
     </div>
   );
 }

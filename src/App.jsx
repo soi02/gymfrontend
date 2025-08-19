@@ -75,7 +75,7 @@ import MarketBoardPageWhenSearch from './user/market/pages/MarketBoardWhenSearch
 import Information from './global/pages/Information';
 import MyUserInformation from './user/mypage/pages/MyUserInformation';
 import NorigaeListPage from './user/challenge/components/NorigaeListPage';
-
+import GroupChatList from './user/challenge/groupchat/pages/GroupChatList';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -265,6 +265,7 @@ function AppContent() {
             <Route path="/challenge/payment/success" element={<ChallengeStartPaymentSuccess />} />
 
             <Route path="/challenge/groupchat/:challengeId" element={<GroupChatRoom />} />
+            <Route path="/challenge/groupchatList" element={<GroupChatList />} />
 
 
 

@@ -1,0 +1,90 @@
+.group-chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
+}
+
+/* 제목 스타일 */
+.group-chat-container h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 로딩/오류 메시지 스타일 */
+.loading-message, .error-message, .empty-message {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    padding: 20px;
+}
+
+/* 챌린지 목록 스타일 */
+.challenge-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.challenge-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 12px;
+    background-color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.challenge-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-item:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 챌린지 썸네일 스타일 */
+.challenge-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 16px;
+    border: 1px solid #eee;
+}
+
+/* 챌린지 정보 텍스트 */
+.challenge-info {
+    flex: 1;
+}
+
+.challenge-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 4px 0;
+}
+
+.challenge-info p {
+    font-size: 14px;
+    color: #999;
+    margin: 0;
+}
+
+/* 로그인 필요 메시지 스타일 */
+.login-required {
+    text-align: center;
+    font-size: 16px;
+    color: #ff5c5c;
+    padding: 20px;
+}
