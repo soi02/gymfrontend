@@ -240,6 +240,13 @@ export default function useMarketAPI() {
         return response.data;
     }
     
+    const getSelectSpecificMarketDealedLog = async(specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketDealedLog`, {
+            params : {specificArticleId}
+        });
+        return response.data;
+    }
+    
     const getSelectMarketDealedLogWhenBuyer = async(buyerId) =>{
         const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketDealedLogWhenBuyer`, {
             params : {buyerId}
@@ -326,7 +333,7 @@ export default function useMarketAPI() {
         getSelectMarketProductInterestedLogWhenUserInfo, getSelectCountMarketProductInterestedLogWhenUserInfo, 
         getSelectMarketProductInterestedLogWhenArticleInfo, getSelectCountMarketProductInterestedLogWhenArticleInfo,
         getSelectMarketProductInterestedLogWhenUserAndArticleInfo, 
-        postInsertMarketDealedLog, 
+        postInsertMarketDealedLog, getSelectSpecificMarketDealedLog,
         postInsertMarketDealedLogCheckedBySeller, postDeleteMarketDealedLogCheckedBySeller,
         postInsertMarketDealedLogCheckedByBuyer, postDeleteMarketDealedLogCheckedByBuyer,
         getSelectMarketDealedLogWhenBuyer, getSelectCountMarketDealedLogWhenBuyer,

@@ -15,7 +15,7 @@ export default function MarketArticlePageTest() {
     
     const {id : loadedId} = useParams();
     
-    const checkUserStatus = 1;
+    const checkUserStatus = 2;
     const checkArticleId = Number(loadedId);
     console.log("checkArticleId");
     console.log(checkArticleId);
@@ -25,6 +25,8 @@ export default function MarketArticlePageTest() {
     
     const [ dealConfirmCompleted, setDealConfirmCompleted ] = useState(false);
     // 이게 완료됐을 시, 판매자 체크 및 구매자 체크 탭은 별도로 표시하지 않음
+    console.log("dealConfirmCompleted");
+    console.log(dealConfirmCompleted);
     
     const [countOfInterestedLogsOnArticle, setCountOfInterestedLogsOnArticle] = useState(-1);
     const [countOfCommentOnArticle, setCountOfCommentOnArticle] = useState(-1);
@@ -283,13 +285,14 @@ export default function MarketArticlePageTest() {
                 console.log("Loading Test Start") // Reload 코드 그대로 불러와서... (Finally 시 처리는 다른데...) 수정해야 됨....
                 
                 const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
-                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
+                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo, constGetSelectSpecificMarketDealedLog ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
                     marketAPI.getSelectMarketUserInfo(checkUserStatus),
                     marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectCountMarketProductInterestedLogWhenArticleInfo(checkArticleId),
                     marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
-                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
+                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId),
+                    marketAPI.getSelectSpecificMarketDealedLog(checkArticleId) // 별도로 사이트에 기록하지는 않는 로드 데이터
                 ]) 
                 
                 const constGetSelectSpecificMarketArticleInfoAndDistincted = {
@@ -329,8 +332,11 @@ export default function MarketArticlePageTest() {
                     
                 }
                 
-                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId");
-                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId);
+                if (constGetSelectSpecificMarketDealedLog != null) {
+                    
+                    setDealConfirmCompleted(true);
+                    
+                }
                     
                 } catch (error) {
                     
@@ -555,6 +561,23 @@ export default function MarketArticlePageTest() {
                 } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
                 
                 const constPostInsertMarketDealedLogCheckedByBuyer = await marketAPI.postInsertMarketDealedLogCheckedByBuyer(marketDealedLogCheckedByBuyerDto);
+                const constGetSelectSpecificMarketDealedLog = await marketAPI.getSelectSpecificMarketDealedLog(checkArticleId); // useEffect -> Reload 방식이 더 깔끔하기는 함 (이건 임시 조치용....)
+                
+                console.log("constGetSelectSpecificMarketDealedLog");
+                console.log(constGetSelectSpecificMarketDealedLog);
+                console.log(typeof constGetSelectSpecificMarketDealedLog);
+                
+                if (constGetSelectSpecificMarketDealedLog) {
+                    
+                    setMergeMarketArticleInfo(articleInfo => ([{
+                        ...articleInfo[0],
+                        article : {
+                            ...articleInfo[0].article,
+                            sellEnded : 1
+                        }
+                    }]));
+                    
+                }
                 
             } catch (error) {
                 console.error("로드 실패:", error);
@@ -794,6 +817,23 @@ export default function MarketArticlePageTest() {
                     console.log(marketDealedLogCheckedBySellerDto);
                     
                     const constPostInsertMarketDealedLogCheckedBySeller = await marketAPI.postInsertMarketDealedLogCheckedBySeller(marketDealedLogCheckedBySellerDto);
+                    const constGetSelectSpecificMarketDealedLog = await marketAPI.getSelectSpecificMarketDealedLog(checkArticleId); // useEffect -> Reload 방식이 더 깔끔하기는 함 (이건 임시 조치용....)
+                    
+                    console.log("constGetSelectSpecificMarketDealedLog");
+                    console.log(constGetSelectSpecificMarketDealedLog);
+                    console.log(typeof constGetSelectSpecificMarketDealedLog);
+                    
+                    if (constGetSelectSpecificMarketDealedLog) {
+                        
+                        setMergeMarketArticleInfo(articleInfo => ([{
+                            ...articleInfo[0],
+                            article : {
+                                ...articleInfo[0].article,
+                                sellEnded : 1
+                            }
+                        }]));
+                        
+                    }
                     
                 } catch (error) {
                     console.error("로드 실패:", error);
@@ -823,6 +863,23 @@ export default function MarketArticlePageTest() {
                     console.log(marketDealedLogCheckedByBuyerDto);
                     
                     const constPostInsertMarketDealedLogCheckedByBuyer = await marketAPI.postInsertMarketDealedLogCheckedByBuyer(marketDealedLogCheckedByBuyerDto);
+                    const constGetSelectSpecificMarketDealedLog = await marketAPI.getSelectSpecificMarketDealedLog(checkArticleId); // useEffect -> Reload 방식이 더 깔끔하기는 함 (이건 임시 조치용....)
+                    
+                    console.log("constGetSelectSpecificMarketDealedLog");
+                    console.log(constGetSelectSpecificMarketDealedLog);
+                    console.log(typeof constGetSelectSpecificMarketDealedLog);
+                    
+                    if (constGetSelectSpecificMarketDealedLog) {
+                        
+                        setMergeMarketArticleInfo(articleInfo => ([{
+                            ...articleInfo[0],
+                            article : {
+                                ...articleInfo[0].article,
+                                sellEnded : 1
+                            }
+                        }]));
+                        
+                    }
                     
                 } catch (error) {
                     console.error("로드 실패:", error);
