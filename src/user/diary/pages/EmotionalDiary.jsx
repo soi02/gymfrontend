@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/EmotionalDiary.css';
-// Bootstrap icons
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const emotions = [
-  { id: 1, emoji: '😊', name: '행복', image: 'https://via.placeholder.com/60?text=Happy' },
-  { id: 2, emoji: '😢', name: '슬픔', image: 'https://via.placeholder.com/60?text=Sad' },
-  { id: 3, emoji: '😡', name: '화남', image: 'https://via.placeholder.com/60?text=Angry' },
-  { id: 4, emoji: '😌', name: '평온', image: 'https://via.placeholder.com/60?text=Calm' },
-  { id: 5, emoji: '🤔', name: '고민', image: 'https://via.placeholder.com/60?text=Worried' },
-  { id: 6, emoji: '😴', name: '피곤', image: 'https://via.placeholder.com/60?text=Tired' }
+  { id: 1, name: '행복', image: 'https://via.placeholder.com/60?text=Happy', color: '#ffec5e' },
+  { id: 2, name: '슬픔', image: 'https://via.placeholder.com/60?text=Sad', color: '#68a0d9' },
+  { id: 3, name: '화남', image: 'https://via.placeholder.com/60?text=Angry', color: '#e74c3c' },
+  { id: 4, name: '평온', image: 'https://via.placeholder.com/60?text=Calm', color: '#2ecc71' },
+  { id: 5, name: '고민', image: 'https://via.placeholder.com/60?text=Worried', color: '#f39c12' },
+  { id: 6, name: '피곤', image: 'https://via.placeholder.com/60?text=Tired', color: '#95a5a6' }
 ];
 
 const EmotionalDiary = () => {
@@ -25,50 +24,47 @@ const EmotionalDiary = () => {
   };
 
   const handleSave = () => {
-    // TODO: 일기 저장 로직 구현
     if (!diaryContent.trim()) {
       alert('일기 내용을 입력해주세요.');
       return;
     }
     
     const diaryData = {
-      emotion: selectedEmotion,
+      emotion: selectedEmotion.name,
       content: diaryContent,
       date: new Date().toISOString()
     };
     
     console.log('저장된 일기:', diaryData);
-    // API 호출 또는 저장 로직 추가
-    alert('일기가 저장되었습니다.');
+    alert('일기가 성공적으로 저장되었습니다!');
+    // 저장 후 페이지 이동 또는 초기화
+    // navigate('/diary/calendar');
   };
 
   return (
-    <div className="emotional-diary">
+    <div className="emotional-diary-container">
       <div className="diary-header">
-        <div className="diary-nav">
-          <button className="diary-back-link" onClick={() => navigate(-1)}>
-            <i className="bi bi-chevron-left"></i>
-          </button>
-          <button className="diary-calendar-link" onClick={() => navigate('/diary/calendar')}>
-            <i className="bi bi-calendar3"></i>
-            <span>캘린더 보기</span>
-          </button>
-        </div>
+        <button className="diary-icon-btn" onClick={() => navigate(-1)}>
+          <i className="bi bi-arrow-left"></i>
+        </button>
+        <button className="diary-icon-btn calendar-btn" onClick={() => navigate('/diary/calendar')}>
+          <i className="bi bi-calendar3"></i>
+        </button>
       </div>
 
       {showModal && (
-        <div className="diary-emotion-modal">
+        <div className="diary-modal-backdrop">
           <div className="diary-modal-content">
-            <h2 className="diary-modal-title">오늘의 기분은 어떠셨나요?</h2>
+            <h2 className="diary-modal-title">오늘 하루는 어떠셨나요?</h2>
             <div className="diary-emotions-grid">
               {emotions.map((emotion) => (
                 <div
                   key={emotion.id}
-                  className="diary-emotion-item"
+                  className="emotion-card"
                   onClick={() => handleEmotionSelect(emotion)}
                 >
-                  <img src={emotion.image} alt={emotion.name} />
-                  <p>{emotion.emoji} {emotion.name}</p>
+                  <img src={emotion.image} alt={emotion.name} className="emotion-image" />
+                  <span className="emotion-name">{emotion.name}</span>
                 </div>
               ))}
             </div>
@@ -77,20 +73,26 @@ const EmotionalDiary = () => {
       )}
 
       {selectedEmotion && (
-        <div className="diary-content-wrapper">
-          <div className="diary-selected-emotion">
-            <img src={selectedEmotion.image} alt={selectedEmotion.name} />
-            <p>{selectedEmotion.emoji} {selectedEmotion.name}</p>
+        <div className="diary-main-content">
+          <div className="emotion-display">
+            <div
+              className="emotion-circle"
+              style={{ backgroundColor: selectedEmotion.color }}
+              onClick={() => setShowModal(true)} // 이모지 클릭 시 모달 다시 열기
+            >
+              <img src={selectedEmotion.image} alt={selectedEmotion.name} className="emotion-image-large" />
+            </div>
+            {/* <h3 className="emotion-title">오늘의 기분은 **{selectedEmotion.name}**입니다.</h3> */}
           </div>
           
           <textarea
-            className="diary-input-textarea"
+            className="diary-textarea"
             value={diaryContent}
             onChange={(e) => setDiaryContent(e.target.value)}
-            placeholder="오늘 하루는 어떠셨나요? 자유롭게 작성해주세요."
+            placeholder="오늘 하루를 기록해보세요."
           />
           
-          <button className="diary-button diary-save-button" onClick={handleSave}>
+          <button className="diary-save-btn" onClick={handleSave}>
             저장하기
           </button>
         </div>
