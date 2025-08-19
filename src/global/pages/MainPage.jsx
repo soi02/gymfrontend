@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../styles/MainPage.css';
-import mainImg from '../../assets/img/yellowmain.png'
+import mainImg from '../../assets/img/mainphoto_new.png'
 
 export default function MainPage() {
   return (
