@@ -18,60 +18,62 @@ function toAbsUrl(path) {
     return `${BACKEND_BASE_URL}/uploadFiles/${path}`;
 }
 
+// 24시간 형식으로 분 단위 시간을 포맷하는 함수
+const formatTime = (isoString) => {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+};
+
 export default function GroupChatRoom() {
-    const { challengeId } = useParams();
-    const navigate = useNavigate();
-    const userId = useSelector(state => state.auth.id);
-    const reduxToken = useSelector(state => state.auth.token);
-    const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
-    const stompClient = useRef(null);
-    const messagesEndRef = useRef(null);
+    const { challengeId } = useParams();
+    const navigate = useNavigate();
+    const userId = useSelector(state => state.auth.id);
+    const reduxToken = useSelector(state => state.auth.token);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    const stompClient = useRef(null);
+    const messagesEndRef = useRef(null);
 
-    // 💡 새로운 상태 변수: 전체 참여 인원 수
-    const [participantCount, setParticipantCount] = useState(0);
-    // 💡 이 로딩 상태를 추가해야 합니다.
-    const [isLoading, setIsLoading] = useState(true);
+    const [participantCount, setParticipantCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const token = reduxToken || localStorage.getItem("token");
+    const token = reduxToken || localStorage.getItem("token");
 
-    // 채팅방 접속 시, 데이터 불러오기 및 읽음 처리
-    useEffect(() => {
-        const fetchChatData = async () => {
-            // 로딩 시작
+    // 채팅방 접속 시, 데이터 불러오기 및 읽음 처리
+    useEffect(() => {
+        const fetchChatData = async () => {
             setIsLoading(true);
-            try {
-                // 💡 1. 챌린지 참여 인원 수 불러오기
-                const participantResponse = await apiClient.get(`/challenge/groupchat/getParticipantCount/${challengeId}`);
-                setParticipantCount(participantResponse.data);
+            try {
+                const participantResponse = await apiClient.get(`/challenge/groupchat/getParticipantCount/${challengeId}`);
+                setParticipantCount(participantResponse.data);
 
-                // 2. 이전 채팅 기록 불러오기
-                const historyResponse = await apiClient.get(`/challenge/groupchat/getChatHistoryProcess/${challengeId}`);
-                const chatHistory = historyResponse.data;
-                setMessages(chatHistory);
+                const historyResponse = await apiClient.get(`/challenge/groupchat/getChatHistoryProcess/${challengeId}`);
+                const chatHistory = historyResponse.data;
+                setMessages(chatHistory);
 
-                // 3. 메시지 읽음 처리 API 호출
-                if (chatHistory.length > 0) {
-                    const messageIds = chatHistory.map(msg => msg.groupChatMessageId);
-                    await apiClient.post(`/challenge/groupchat/readMessageProcess`, {
-                        messageIds: messageIds,
-                        userId: userId
-                    });
-                }
-            } catch (error) {
-                console.error("채팅 데이터를 불러오는 데 실패했습니다:", error);
-                alert("채팅 데이터를 불러올 수 없습니다. 다시 시도해 주세요.");
-                navigate(`/challenge/challengeDetail/${challengeId}`);
-            } finally {
-                // 로딩 종료
+                if (chatHistory.length > 0) {
+                    const messageIds = chatHistory.map(msg => msg.groupChatMessageId);
+                    await apiClient.post(`/challenge/groupchat/readMessageProcess`, {
+                        messageIds: messageIds,
+                        userId: userId
+                    });
+                }
+            } catch (error) {
+                console.error("채팅 데이터를 불러오는 데 실패했습니다:", error);
+                alert("채팅 데이터를 불러올 수 없습니다. 다시 시도해 주세요.");
+                navigate(`/challenge/challengeDetail/${challengeId}`);
+            } finally {
                 setIsLoading(false);
             }
-        };
+        };
 
-        if (challengeId && token) {
-            fetchChatData();
-        }
-    }, [challengeId, navigate, token, userId]);
+        if (challengeId && token) {
+            fetchChatData();
+        }
+    }, [challengeId, navigate, token, userId]);
     // WebSocket 연결 및 구독
     useEffect(() => {
         if (!token) {
@@ -148,74 +150,78 @@ export default function GroupChatRoom() {
 
     console.log("GroupChatRoom 컴포넌트가 렌더링되었습니다. challengeId:", challengeId);
 
-return (
-    <div className="group-chat-room-container">
-        <header className="group-chat-room-header">
-            <h2>챌린지 채팅방</h2>
-            <button onClick={() => navigate(-1)} className="group-chat-room-back-button">뒤로</button>
-        </header>
-        <div className="group-chat-room-messages">
-            {messages.map((msg, index) => {
-                const unreadCount = participantCount - (msg.readCount || 0);
+    return (
+        <div className="group-chat-room-container">
+            <header className="group-chat-room-header">
+                <button onClick={() => navigate(-1)} className="group-chat-room-back-button">&lt;</button>
+                <h2>챌린지 채팅방</h2>
+                <div></div>
+            </header>
+            <div className="group-chat-room-messages">
+                {messages.map((msg, index) => {
+                    const prevMsg = messages[index - 1];
+                    const nextMsg = messages[index + 1];
+                    const isMyMessage = msg.senderUserId === userId;
 
-                // 💡 여기에 디버깅용 console.log를 추가합니다.
-                console.log(
-                    `--- 메시지 ID: ${msg.groupChatMessageId} ---`
-                );
-                console.log(`participantCount: ${participantCount}`);
-                console.log(`msg.readCount: ${msg.readCount}`);
-                console.log(`unreadCount: ${unreadCount}`);
-                console.log(`userId: ${userId}, msg.senderUserId: ${msg.senderUserId}, 동일 여부: ${userId === msg.senderUserId}`);
-                console.log(`unreadCount > 0 조건: ${unreadCount > 0}`);
+                    const shouldShowSenderInfo = !isMyMessage && (!prevMsg || prevMsg.senderUserId !== msg.senderUserId);
+                    const shouldShowTime = !nextMsg || (nextMsg && new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes());
+                    const shouldShowReadCount = isMyMessage && (!nextMsg || nextMsg.senderUserId !== msg.senderUserId || new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes());
 
-                return (
-                    <div 
-                        key={index} 
-                        className={`group-chat-room-message ${msg.senderUserId === userId ? 'group-chat-room-my-message' : 'group-chat-room-other-message'}`}
-                    >
-                        {msg.senderUserId !== userId && (
-                            <img 
-                                src={toAbsUrl(msg.senderProfileImagePath)}
-                                alt={msg.senderNickname || '프로필 사진'} 
-                                className="group-chat-room-profile-image" 
-                            />
-                        )}
-                        <div className="group-chat-room-message-bubble">
-                            {msg.senderUserId !== userId && (
-                                <span className="group-chat-room-message-sender">
-                                    {msg.senderNickname || `사용자 ${msg.senderUserId}`}
-                                </span>
-                            )}
-                            <div className="group-chat-room-message-content">
-                                {msg.groupChatMessageContent}
-                            </div>
-                            {/* 💡 unreadCount와 time을 감싸는 div를 추가 */}
-                            <div className="group-chat-room-message-info">
-                                {unreadCount > 0 && (
-                                    <span className="group-chat-room-unread-count">
-                                        {unreadCount}
+                    return (
+                        <div 
+                            key={index} 
+                            className={`group-chat-room-message-row ${isMyMessage ? 'group-chat-room-my-message' : 'group-chat-room-other-message'} ${shouldShowSenderInfo ? 'first-message' : ''}`}
+                        >
+                            {!isMyMessage && (
+                                shouldShowSenderInfo ? (
+                                    <img 
+                                        src={toAbsUrl(msg.senderProfileImagePath)}
+                                        alt={msg.senderNickname || '프로필 사진'} 
+                                        className="group-chat-room-profile-image" 
+                                    />
+                                ) : (
+                                    <div className="group-chat-room-profile-placeholder"></div>
+                                )
+                            )}
+                            <div className="group-chat-room-message-group">
+                                {shouldShowSenderInfo && (
+                                    <span className="group-chat-room-message-sender">
+                                        {msg.senderNickname || `사용자 ${msg.senderUserId}`}
                                     </span>
                                 )}
-                                <span className="group-chat-room-message-time">
-                                    {new Date(msg.createdAt).toLocaleTimeString()}
-                                </span>
+                                <div className="group-chat-room-message-and-info">
+                                    <div className="group-chat-room-message-content">
+                                        {msg.groupChatMessageContent}
+                                    </div>
+                                    {shouldShowTime && (
+                                        <div className="group-chat-room-message-info">
+                                            {isMyMessage && shouldShowReadCount && (
+                                                <span className="group-chat-room-unread-count">
+                                                    {participantCount - (msg.readCount || 0)}
+                                                </span>
+                                            )}
+                                            <span className="group-chat-room-message-time">
+                                                {formatTime(msg.createdAt)}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                );
-            })}
-            <div ref={messagesEndRef} /> 
+                        </div>
+                    );
+                })}
+                <div ref={messagesEndRef} /> 
+            </div>
+            <form onSubmit={handleSendMessage} className="group-chat-room-input-form">
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="메시지를 입력하세요..."
+                    className="group-chat-room-input"
+                />
+                <button type="submit" className="group-chat-room-send-button">전송</button>
+            </form>
         </div>
-        <form onSubmit={handleSendMessage} className="group-chat-room-input-form">
-            <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="메시지를 입력하세요..."
-                className="group-chat-room-input"
-            />
-            <button type="submit" className="group-chat-room-send-button">전송</button>
-        </form>
-    </div>
-);
+    );
 }
