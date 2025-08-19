@@ -1,30 +1,33 @@
 import { useEffect, useState } from "react";
-import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
-import "../styles/MyPage.css"; // ✨ 여기서 예쁜 스타일링
+import "../styles/MyPage.css";
 import { useNavigate } from "react-router-dom";
 import useRoutineService from "../../routine/service/routineService";
-import fireIcon from "../../../assets/img/routine/fire.png"; // 🔥 아이콘
-import fireIcon2 from "../../../assets/img/routine/3d-fire.png"; // 🔥 아이콘
+import useUserService from '../../../auth/service/userService';;
+import fireIcon from "../../../assets/img/routine/fire.png";
+import fireIcon2 from "../../../assets/img/routine/3d-fire.png";
+
+const API_BASE_URL = 'http://localhost:8080';
 
 export default function MyPage() {
   const name = useSelector((state) => state.auth.name);
+  const id = useSelector((state) => state.auth.id);
+  
   const navigate = useNavigate();
   const routineService = useRoutineService();
-  const id = useSelector((state) => state.auth.id);
+  const userService = useUserService();
 
-  // 🗓 이번 주 일요일 ~ 토요일 범위 구하기
+  const [userData, setUserData] = useState(null);
+  const [daysSinceSignUp, setDaysSinceSignUp] = useState(0);
+
   const getWeekRange = () => {
     const now = new Date();
-    const day = now.getDay(); // 0(일) ~ 6(토)
+    const day = now.getDay();
     const sunday = new Date(now);
-    sunday.setDate(now.getDate() - day); // 이번 주 일요일
-
+    sunday.setDate(now.getDate() - day);
     const saturday = new Date(sunday);
-    saturday.setDate(sunday.getDate() + 6); // 이번 주 토요일
-
+    saturday.setDate(sunday.getDate() + 6);
     const toStr = (date) => date.toISOString().split("T")[0];
-
     return {
       startStr: toStr(sunday),
       endStr: toStr(saturday),
@@ -39,25 +42,53 @@ export default function MyPage() {
   const [thisWeekWorkoutDates, setThisWeekWorkoutDates] = useState([]);
 
   useEffect(() => {
-    const { startStr, endStr } = getWeekRange();
+    const fetchMyPageData = async () => {
+      try {
+        const data = await userService.getUserInfo(id);
+        setUserData(data);
 
-    const fetch = async () => {
+        // ✅ 필드 이름을 'createdAt'으로 수정했습니다.
+        if (data && data.createdAt) {
+          const signUpDate = new Date(data.createdAt);
+          if (!isNaN(signUpDate.getTime())) {
+            const today = new Date();
+            const timeDiff = today.getTime() - signUpDate.getTime();
+            const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+            setDaysSinceSignUp(dayDiff);
+          } else {
+            console.error("잘못된 날짜 형식입니다:", data.createdAt);
+            setDaysSinceSignUp(0);
+          }
+        }
+      } catch (err) {
+        console.error("🔥 사용자 정보 로드 실패!", err);
+      }
+
+      const { startStr, endStr } = getWeekRange();
       try {
         const res = await routineService.getWorkoutDatesBetween(
           id,
           startStr,
           endStr
         );
-        setThisWeekWorkoutDates(res.data); // 예: ["2025-08-03", "2025-08-04"]
+        setThisWeekWorkoutDates(res.data);
       } catch (err) {
         console.error("🔥 이번 주 운동 불러오기 실패!", err);
       }
     };
 
-    fetch();
-  }, []);
+    if (id) {
+      fetchMyPageData();
+    }
+  }, [id]);
 
-  // 공통 아이템 컴포넌트
+  const getProfileImageUrl = () => {
+    if (userData && userData.profileImage) {
+      return `${API_BASE_URL}/uploadFiles/${userData.profileImage}`;
+    }
+    return 'https://placehold.co/100x100?text=No+Image';
+  };
+
   const WeekItem = ({ day, color, isWorkout }) => (
     <div
       style={{
@@ -102,34 +133,32 @@ export default function MyPage() {
 
   return (
     <div className="mypage-container">
-      {/* 유저 정보 */}
       <div className="profile-box" onClick={() => navigate("/myUserInformation")}>
         <div className="profile-info-wrapper">
           <div className="profile-info">
-            <div className="profile-img" />
+            <div
+              className="profile-img"
+              style={{
+                backgroundImage: `url(${getProfileImageUrl()})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                borderRadius: '50%',
+              }}
+            />
             <div className="profile-text">
-              <div className="username">{name}님</div>
-              <div className="greeting">정진 223일째</div>
+              <div className="username">{userData ? userData.name : ''}님</div>
+              <div className="greeting">정진 {daysSinceSignUp}일째</div>
             </div>
           </div>
-
           <div className="go-arrow">{">"}</div>
         </div>
       </div>
 
-
-
-      {/* 운동기록 */}
       <div className="each-box">
-        <div
-          className="box-header"
-          onClick={() => navigate("/routineCalendar")}
-        >
+        <div className="box-header" onClick={() => navigate("/routineCalendar")}>
           <div style={{ fontWeight: 500 }}>이번주 운동 기록</div>
           <span style={{ fontSize: "1.2rem", color: "#888" }}>{">"}</span>
         </div>
-
-
         <div className="box-body">
           <div className="week-preview">
             {getWeekRange().weekDates.map((dateStr, i) => {
@@ -155,39 +184,25 @@ export default function MyPage() {
         </div>
       </div>
 
-
-      {/* 수련장 */}
       <div className="each-box">
-        <div
-          className="box-header"
-          onClick={() => navigate("/errorPage")}
-        >
+        <div className="box-header" onClick={() => navigate("/errorPage")}>
           <div style={{ fontWeight: 500 }}>수련장 출첵</div>
           <span style={{ fontSize: "1.2rem", color: "#888" }}>{">"}</span>
         </div>
-
         <div className="box-body">
           <span style={{ fontSize: "0.9rem", color: "#888" }}>윤수도령 오늘 출첵하셨소?</span>
         </div>
       </div>
 
-      {/* 장터 */}
       <div className="each-box">
-        <div
-          className="box-header"
-          onClick={() => navigate("/errorPage")}
-        >
+        <div className="box-header" onClick={() => navigate("/errorPage")}>
           <div style={{ fontWeight: 500 }}>장터 관련</div>
           <span style={{ fontSize: "1.2rem", color: "#888" }}>{">"}</span>
         </div>
-
         <div className="box-body">
           <span style={{ fontSize: "0.9rem", color: "#888" }}>장터관련 내용</span>
-
         </div>
       </div>
-
-
     </div>
   );
 }
