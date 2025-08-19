@@ -492,7 +492,8 @@ export default function MarketMyLikedProductsPage() {
                                                     (<>
                                                     
                                                         <div className = "row">
-                                                            <div className = "col" onClick = {() => clickPossibleWhenLikeChecked({marketUserId : checkUserStatus, specificArticleId : article.id})} 
+                                                            <div className = "col basicDivisionOnClickStyle" 
+                                                            onClick = {() => clickPossibleWhenLikeChecked({marketUserId : checkUserStatus, specificArticleId : article.id})} 
                                                             style = {{padding : "1.5vh"}}>
                                                                 <i className="ri-heart-3-fill"></i>
                                                             </div>
@@ -502,7 +503,7 @@ export default function MarketMyLikedProductsPage() {
                                                     (<>
                                                     
                                                         <div className = "row">
-                                                            <div className = "col" onClick = {() => clickPossibleWhenLikeUnchecked({insertMarketProductInterestedLog})} 
+                                                            <div className = "col basicDivisionOnClickStyle" onClick = {() => clickPossibleWhenLikeUnchecked({insertMarketProductInterestedLog})} 
                                                             style = {{padding : "1.5vh"}}>
                                                                 <i className="ri-heart-3-line"></i>
                                                             </div>
