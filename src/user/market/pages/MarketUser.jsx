@@ -15,7 +15,7 @@ export default function MarketUserPage() {
     console.log(loadedId);
     
     const checkUserStatus = 1;
-    const checkUserId = loadedId;
+    const checkUserId = Number(loadedId);
     const defaultUserStatus = 1004;
     
     const [countOfSoldLogsOnUser, setCountOfSoldLogsOnUser] = useState(-1);
