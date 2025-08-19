@@ -22,6 +22,16 @@ import {
 } from "react-icons/md";
 import { IoRibbonOutline } from "react-icons/io5";
 
+import goldNorigaeImage from '/src/assets/img/challenge/norigae/gold.png';
+import silverNorigaeImage from '/src/assets/img/challenge/norigae/silver.png';
+import bronzeNorigaeImage from '/src/assets/img/challenge/norigae/bronze.png';
+
+import badExam from '/src/assets/img/challenge/attendance/bad_exam.png';
+import goodExam from '/src/assets/img/challenge/attendance/bad_exam.png';
+
+
+
+
 
 
 
@@ -294,17 +304,17 @@ export default function ChallengeDetail() {
   {/* 큰 이미지 3개 – 항상 3-up */}
   <div className="ngx-grid">
     <figure className="ngx-item gold" role="group" aria-label="금 노리개 · 100%">
-      <img src="/src/assets/img/challenge/norigae/gold.png" alt="금 노리개" loading="lazy" />
+      <img src={goldNorigaeImage} alt="금 노리개" loading="lazy" />
       <figcaption>금 · 100% 달성</figcaption>
     </figure>
 
     <figure className="ngx-item silver" role="group" aria-label="은 노리개 · 80% 이상">
-      <img src="/src/assets/img/challenge/norigae/silver.png" alt="은 노리개" loading="lazy" />
+      <img src={silverNorigaeImage} alt="은 노리개" loading="lazy" />
       <figcaption>은 · 80% 이상</figcaption>
     </figure>
 
     <figure className="ngx-item bronze" role="group" aria-label="동 노리개 · 50% 이상">
-      <img src="/src/assets/img/challenge/norigae/bronze.png" alt="동 노리개" loading="lazy" />
+      <img src={bronzeNorigaeImage} alt="동 노리개" loading="lazy" />
       <figcaption>동 · 50% 이상</figcaption>
     </figure>
   </div>
@@ -369,7 +379,7 @@ export default function ChallengeDetail() {
   <div className="vs-row">
     <figure className="vs-card bad" role="group" aria-label="잘못된 인증">
       <div className="vs-media">
-        <img src="/src/assets/img/challenge/attendance/bad_exam.png" alt="잘못된 인증 예시" />
+        <img src={badExam} alt="잘못된 인증 예시" />
         <span className="vs-pill bad">
           <MdOutlineCancel className="vs-pill-ic" />
           
@@ -380,7 +390,7 @@ export default function ChallengeDetail() {
 
     <figure className="vs-card good" role="group" aria-label="올바른 인증">
       <div className="vs-media">
-        <img src="/src/assets/img/challenge/attendance/good_exam.png" alt="올바른 인증 예시" />
+        <img src={goodExam} alt="올바른 인증 예시" />
         <span className="vs-pill good">
           <MdCheckCircleOutline className="vs-pill-ic" />
           {/* 올바른 방식 */}
