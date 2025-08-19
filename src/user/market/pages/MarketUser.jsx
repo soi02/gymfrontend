@@ -279,7 +279,7 @@ export default function MarketUserPage() {
     }
 
     function MarketUserBoughtProductElement({marketUserBoughtProductElem1}) {
-        
+
         const BACKEND_BASE_URL = "http://localhost:8080";
         
         const { article, userInfo } = marketUserBoughtProductElem1;

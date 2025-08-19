@@ -73,23 +73,31 @@ export default function MarketArticlePageTest() {
         }
     ]);
     
-    const marketCommentListOnArticleBeforeLoad = [
-        {id : 0, articleId : 0, marketUserId : 0, content : "ERROR", 
-        createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null},
-    ] 
+    //
     
-    const marketUserInfoListOnCommentOnArticleBeforeLoad = [
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
-    ]
+    // const marketCommentListOnArticleBeforeLoad = [
+    //     {id : 0, articleId : 0, marketUserId : 0, content : "ERROR", 
+    //     createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null},
+    // ] 
+    
+    // const marketUserInfoListOnCommentOnArticleBeforeLoad = [
+    //     {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+    // ]
+    
+    // ▲ 안 쓰는 방식의 코드
     
     const [reloadingProductInterestedLogWhenUserAndArticleInfo, setReloadingProductInterestedLogWhenUserAndArticleInfo] = useState(false);
     const [commentOnArticleLoading, setCommentOnArticleLoading] = useState(true);
     const [commentOnArticleReloading, setCommentOnArticleReloading] = useState(false);
     
-    const mergedListOnCommentOnArticleBeforeLoad = marketCommentListOnArticleBeforeLoad.map(comment => {
-        const userInfo = marketUserInfoListOnCommentOnArticleBeforeLoad.find(user => user.userId === comment.marketUserId);
-        return { comment, userInfo };
-    });
+    //
+    
+    // const mergedListOnCommentOnArticleBeforeLoad = marketCommentListOnArticleBeforeLoad.map(comment => {
+    //     const userInfo = marketUserInfoListOnCommentOnArticleBeforeLoad.find(user => user.userId === comment.marketUserId);
+    //     return { comment, userInfo };
+    // });
+    
+    // ▲ 안 쓰는 방식의 코드
     
     const handleEditMode = (targetId) => {
         
