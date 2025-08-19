@@ -58,21 +58,21 @@
 
 /* 메시지 기본 스타일 */
 .group-chat-room-message {
-    display: flex; /* Flexbox를 사용하여 이미지와 내용 정렬 */
-    align-items: flex-start; /* 이미지와 내용의 상단 정렬 */
-    gap: 10px; /* 이미지와 말풍선 사이 간격 */
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 }
 
-/* 내가 보낸 메시지 스타일 */
+/* 내 메시지 스타일 */
 .group-chat-room-my-message {
     align-self: flex-end;
-    flex-direction: row-reverse; /* 이미지와 말풍선 순서 변경 */
+    flex-direction: row-reverse;
 }
 
-/* 상대방이 보낸 메시지 스타일 */
+/* 상대방 메시지 스타일 */
 .group-chat-room-other-message {
     align-self: flex-start;
-    flex-direction: row; /* 기본 순서 유지 */
+    flex-direction: row;
 }
 
 /* 프로필 이미지 스타일 */
@@ -81,7 +81,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    align-self: flex-end; /* 말풍선 하단에 이미지 정렬 */
+    align-self: flex-end;
 }
 
 /* 메시지 말풍선 컨테이너 */
@@ -89,24 +89,7 @@
     display: flex;
     flex-direction: column;
     max-width: 70%;
-}
-
-/* 내가 보낸 메시지 말풍선 스타일 */
-.group-chat-room-my-message .group-chat-room-message-bubble {
-    align-items: flex-end;
-}
-
-/* 상대방이 보낸 메시지 말풍선 스타일 */
-.group-chat-room-other-message .group-chat-room-message-bubble {
-    align-items: flex-start;
-}
-
-/* 메시지 내용 (말풍선) */
-.group-chat-room-message-content {
-    padding: 10px 15px;
-    border-radius: 18px;
-    word-wrap: break-word;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative; /* 읽지 않은 수의 위치를 잡기 위한 기준점 */
 }
 
 /* 메시지 발신자 이름 */
@@ -116,28 +99,51 @@
     margin-bottom: 5px;
 }
 
-/* 내 메시지의 발신자 이름 (숨김) */
+/* 내 메시지일 때는 발신자 이름 숨김 */
 .group-chat-room-my-message .group-chat-room-message-sender {
     display: none;
 }
 
 /* 메시지 내용 */
 .group-chat-room-message-content {
+    padding: 10px 15px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     font-size: 1rem;
     line-height: 1.4;
+}
+
+/* 메시지 정보 (시간, 읽음 수) 컨테이너 */
+.group-chat-room-message-info {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+/* 내가 보낸 메시지일 경우, 정보 컨테이너를 반전 */
+.group-chat-room-my-message .group-chat-room-message-info {
+    flex-direction: row-reverse;
 }
 
 /* 메시지 전송 시간 */
 .group-chat-room-message-time {
     font-size: 0.7rem;
     color: #999;
-    margin-top: 5px;
     text-align: right;
 }
 
-/* 내 메시지 전송 시간 */
+/* 내 메시지 전송 시간 색상 */
 .group-chat-room-my-message .group-chat-room-message-time {
     color: rgba(255, 255, 255, 0.7);
+}
+
+/* 읽지 않은 사람 수 */
+.group-chat-room-unread-count {
+    font-size: 0.7rem;
+    color: #888;
+    font-weight: bold;
 }
 
 /* 입력 폼 */
@@ -164,7 +170,7 @@
 }
 
 .group-chat-room-send-button {
-    background-color: #7c1d0d; /* 메인 컬러 */
+    background-color: #7c1d0d;
     color: white;
     border: none;
     padding: 10px 20px;
