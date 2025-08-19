@@ -4,6 +4,18 @@
   height: 100vh;
   overflow-y: auto; /* 스크롤 추가 */
 }
+/* 스크롤 되지만 스크롤바는 숨김 (크롬/사파리/엣지/파폭/IE용) */
+.mypage-container {
+  overflow-y: auto;               /* 기존 유지 */
+  -ms-overflow-style: none;       /* IE/Edge(레거시) */
+  scrollbar-width: none;          /* Firefox */
+  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
+}
+.mypage-container::-webkit-scrollbar {
+  width: 0;                       /* Chrome/Safari/Edge */
+  height: 0;
+  background: transparent;
+}
 
 /* 캘린더 본체 */
 .react-calendar {

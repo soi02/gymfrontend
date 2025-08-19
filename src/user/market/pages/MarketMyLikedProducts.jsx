@@ -14,32 +14,36 @@ export default function MarketMyLikedProductsPage() {
     const [reloadProcessing, setReloadProcessing] = useState(false);
     const [reloadLikeDivision, setReloadLikeDivision] = useState(false);
     
-    const [marketuserLikedProductList, setMarketUserLikedProductList] = useState([
-        {id : 1, marketUserId : 11, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 12345, 
-        viewedCount : 67, sellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
-        {id : 2, marketUserId : 12, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 67890, 
-        viewedCount : 89, sellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
-        {id : 3, marketUserId : 13, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 98765, 
-        viewedCount : 12, sellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
-        {id : 4, marketUserId : 14, imageLink : null, mainImageId : null,
-        title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 43210, 
-        viewedCount : 34, sellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
-    ]) 
+    //
     
-    const [marketUserInfoListOnLikedProduct, setMarketUserInfoListOnLikedProduct] = useState([
-        {id : 11, userId : 11, nickname : "GreatDevil", createdAt : new Date("2024-06-09T12:34:56")},
-        {id : 12, userId : 12, nickname : "EvilAngel", createdAt : new Date("2024-06-09T12:34:56")},
-        {id : 13, userId : 13, nickname : "ArmWrestler", createdAt : new Date("2024-06-09T12:34:56")},
-        {id : 14, userId : 14, nickname : "GymThief", createdAt : new Date("2024-06-09T12:34:56")}
-    ])
+    // const [marketuserLikedProductList, setMarketUserLikedProductList] = useState([
+    //     {id : 1, marketUserId : 11, imageLink : null, mainImageId : null,
+    //     title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 12345, 
+    //     viewedCount : 67, sellEnded : 0, createdAt : new Date("2024-06-10T12:34:56"), updatedAt : null},
+    //     {id : 2, marketUserId : 12, imageLink : null, mainImageId : null,
+    //     title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 67890, 
+    //     viewedCount : 89, sellEnded : 0, createdAt : new Date("2024-06-11T12:34:56"), updatedAt : null},
+    //     {id : 3, marketUserId : 13, imageLink : null, mainImageId : null,
+    //     title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 98765, 
+    //     viewedCount : 12, sellEnded : 0, createdAt : new Date("2024-06-12T12:34:56"), updatedAt : null},
+    //     {id : 4, marketUserId : 14, imageLink : null, mainImageId : null,
+    //     title : "My Neck", content : "My Dragon", productCostOption : 1, productCost : 43210, 
+    //     viewedCount : 34, sellEnded : 0, createdAt : new Date("2024-06-13T12:34:56"), updatedAt : null}
+    // ]) 
     
-    const mergedListOnLikedProduct = marketuserLikedProductList.map(article => {
-        const userInfo = marketUserInfoListOnLikedProduct.find(user => user.userId === article.marketUserId);
-        return { article, userInfo };
-    });
+    // const [marketUserInfoListOnLikedProduct, setMarketUserInfoListOnLikedProduct] = useState([
+    //     {id : 11, userId : 11, nickname : "GreatDevil", createdAt : new Date("2024-06-09T12:34:56")},
+    //     {id : 12, userId : 12, nickname : "EvilAngel", createdAt : new Date("2024-06-09T12:34:56")},
+    //     {id : 13, userId : 13, nickname : "ArmWrestler", createdAt : new Date("2024-06-09T12:34:56")},
+    //     {id : 14, userId : 14, nickname : "GymThief", createdAt : new Date("2024-06-09T12:34:56")}
+    // ])
+    
+    // const mergedListOnLikedProduct = marketuserLikedProductList.map(article => {
+    //     const userInfo = marketUserInfoListOnLikedProduct.find(user => user.userId === article.marketUserId);
+    //     return { article, userInfo };
+    // });
+    
+    // ▲ 안 쓰는 방식의 코드
     
     const [mergeMarketUserLikedProduct, setMergeMarketUserLikedProduct] = useState([
         {

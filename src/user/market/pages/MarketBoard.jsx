@@ -133,20 +133,24 @@ export default function MarketBoardPage() {
         // console.log(searchWordRef.current.value);
     // } // null 체크 꼭 해 주기
     
-    const [marketArticleList, setMarketArticleList] = useState([
-        {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
-        title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-        viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
-    ]) 
+    //
     
-    const [marketUserInfoList, setMarketUserInfoList] = useState([
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
-    ])
+    // const [marketArticleList, setMarketArticleList] = useState([
+    //     {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
+    //     title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
+    //     viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
+    // ]) 
     
-    const mergedList = marketArticleList.map(article => {
-        const userInfo = marketUserInfoList.find(user => user.userId === article.marketUserId);
-        return { article, userInfo };
-    });
+    // const [marketUserInfoList, setMarketUserInfoList] = useState([
+    //     {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+    // ])
+    
+    // const mergedList = marketArticleList.map(article => {
+    //     const userInfo = marketUserInfoList.find(user => user.userId === article.marketUserId);
+    //     return { article, userInfo };
+    // });
+    
+    // ▲ 안 쓰는 방식의 코드
     
     const [inputSearchWord, setInputSearchWord] = useState("");
     // console.log("inputSearchWord");
