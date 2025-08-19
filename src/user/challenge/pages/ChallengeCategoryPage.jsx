@@ -1,10 +1,11 @@
+// ChallengeCategoryPage.jsx
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../../../global/api/apiClient';
 import ChallengeCard from '../components/ChallengeCard';
 import '../styles/ChallengeList.css';
 
-// 카테고리 아이콘 이미지 임포트
+// (기존 import와 코드들은 그대로 유지)
 import routineIcon from '../../../assets/img/challenge/categoryIcon/ct_routine.png';
 import recoveryIcon from '../../../assets/img/challenge/categoryIcon/ct_recovery.png';
 import communicationIcon from '../../../assets/img/challenge/categoryIcon/ct_communication.png';
@@ -14,7 +15,6 @@ import motivationIcon from '../../../assets/img/challenge/categoryIcon/ct_motiva
 import selfControlIcon from '../../../assets/img/challenge/categoryIcon/ct_selfcontrol.png';
 import stanceIcon from '../../../assets/img/challenge/categoryIcon/ct_stance.png';
 
-// 챌린지 카테고리별 설명 문구
 const categoryDescriptions = {
   '1': ['꾸준함의 힘으로 매일 성장하는', '루틴 수련을 둘러보시오.'],
   '2': ['휴식과 재충전으로', '몸과 마음을 다스리는 회복 수련을 둘러보시오.'],
@@ -26,7 +26,6 @@ const categoryDescriptions = {
   '8': ['긍정적인 기운을 나누며', '함께 즐기는 분위기 수련을 둘러보시오.'],
 };
 
-// 카테고리 ID에 따라 아이콘 경로 매핑
 const categoryIcons = {
   '1': routineIcon,
   '2': recoveryIcon,
@@ -92,33 +91,34 @@ export default function ChallengeCategoryPage() {
     return challenges.filter(ch => (ch.keywords || []).includes(keywordName));
   }, [challenges, selectedKeywordId, selectedCategory]);
 
-    const descriptionText = useMemo(() => {
+  const descriptionText = useMemo(() => {
     return categoryDescriptions[categoryId] || ['선택한 범주의', '수련들을 확인해보고 힘껏 도전해보시오.'];
-    }, [categoryId]);
+  }, [categoryId]);
 
   const handleFabClick = () => {
     setIsFabOpen(prev => !prev);
   };
-  
+
   const handleKeywordClick = (kwId) => {
     setSelectedKeywordId(prev => (prev === kwId ? null : kwId));
     setIsFabOpen(false);
   };
 
-return (
-  <div className="ch-category-page">
-    <div className="ch-category-header">
-      {/* Icon and Text container */}
-      <div className="ch-header-content">
-        {categoryId && (
-          <div className="ch-category-icon-wrap">
+  return (
+    // ⭐️ 1. 전체 페이지 컨테이너
+    <div className="ch-category-page">
+      
+      {/* ⭐️ 2. 스크롤되지 않는 헤더 영역 */}
+      <div className="ch-category-header">
+        <div className="ch-category-icon-wrap">
+          {categoryId && (
             <img
               src={categoryIcons[categoryId]}
               alt={`${categoryName} 아이콘`}
               className="ch-category-icon"
             />
-          </div>
-        )}
+          )}
+        </div>
         <div className="ch-category-text">
           <h2 className="ch-category-title">{categoryName}</h2>
           {descriptionText.map((line, index) => (
@@ -127,12 +127,29 @@ return (
         </div>
       </div>
       
-      {/* Moved keyword filter container into the header */}
+      {/* ⭐️ 3. 스크롤 가능한 콘텐츠 영역 */}
+      <div className="ch-category-scroll">
+        <section className="ch-category-list-container">
+          {challengesAfterKeywordFilter.length > 0 ? (
+            challengesAfterKeywordFilter.map((challenge) => (
+              <ChallengeCard
+                key={challenge.challengeId}
+                challenge={challenge}
+                onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
+              />
+            ))
+          ) : (
+            <p className="ch-category-empty-text">등록된 챌린지가 없습니다.</p>
+          )}
+        </section>
+      </div>
+
+      {/* ⭐️ 4. 페이지 최상위에 플로팅 버튼 배치 */}
       <div className={`ch-category-fab-container ${isFabOpen ? 'open' : ''}`} ref={fabRef}>
         <button className={`ch-category-fab-hash ${isFabOpen ? 'open' : ''}`} onClick={handleFabClick}>
           #
         </button>
-        <div className="ch-category-keyword-chips-slide-down">
+        <div className="ch-category-keyword-chips-slide-up">
           {selectedCategory && (
             (selectedCategory?.keywords || []).map((kw, index) => (
               <button
@@ -150,24 +167,5 @@ return (
         </div>
       </div>
     </div>
-    
-    <div className="ch-category-scroll">
-      <section className="ch-category-list-container">
-        {challengesAfterKeywordFilter.length > 0 ? (
-          challengesAfterKeywordFilter.map((challenge) => (
-            <ChallengeCard
-              key={challenge.challengeId}
-              challenge={challenge}
-              onClick={() => navigate(`/challenge/detail/${challenge.challengeId}`)}
-            />
-          ))
-        ) : (
-          <p className="ch-category-empty-text">등록된 챌린지가 없습니다.</p>
-        )}
-      </section>
-    </div>
-
-
-  </div>
-);
+  );
 }

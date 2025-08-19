@@ -896,163 +896,187 @@
 
 
 
-/* Challenge Category Page Styles */
+/* ChallengeList.css */
+
+/* ======================================= */
+/* ⭐️ 전체 페이지 레이아웃 컨테이너 ⭐️ */
+/* ======================================= */
 .ch-category-page {
-  padding-bottom: calc(var(--bottom-bar-height) + 100px); /* Give enough space for both chips and the bottom bar */
+  height: 100dvh; /* 뷰포트 높이 고정 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* 페이지 전체 스크롤 방지 */
+  padding: 0 16px;
+  box-sizing: border-box;
+  /* background: #f7f8fb; */
+  color: #111;
+  width: 100%;
+  max-width: 425px; /* 모바일 뷰포트 너비 고정 */
+  margin: 0 auto;
 }
 
-/* Header section */
-.ch-category-page .ch-category-header {
-  display: flex;
-  justify-content: space-between; /* Space out the main content and the filter button */
-  align-items: flex-start; /* Align content to the top */
-  padding: 25px 20px 10px;
-  position: relative; /* Essential for positioning the chips */
-}
 
-/* A new container for the icon and text */
-.ch-category-page .ch-header-content {
-  display: flex;
+
+/* ======================================= */
+/* ⭐️ 상단 헤더 섹션 (고정 영역) ⭐️ */
+/* ======================================= */
+.ch-category-header {
+  /* padding: 10px 0 10px; */
+  padding: 0;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
   align-items: center;
-  gap: 15px;
+  flex-shrink: 0; /* 헤더는 크기가 줄어들지 않도록 */
+  position: relative;
+  z-index: 10;
+  /* 부드러운 하이라이트(아이콘 뒤 보케) */
+  /* 헤더와 스크롤 영역을 분리하기 위해 box-shadow 추가 */
+  box-shadow: 0 2px 4px -2px rgba(0,0,0,0.05);
+}
+
+.ch-category-header::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 18px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  /* background: radial-gradient(ellipse at center,
+                              rgba(68,136,255,0.15) 0%, rgba(68,136,255,0.0) 65%); */
+  pointer-events: none;
+  filter: blur(6px);
+  z-index: -1;
 }
 
 
-.ch-category-page .ch-category-icon-wrap {
-  /* 아이콘 크기 및 정렬 */
+/* 아이콘 */
+.ch-category-icon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; /* 아이콘이 축소되지 않도록 설정 */
+  flex-shrink: 0;
+}
+.ch-category-icon{
+  width: 90px; height: 90px;
+  object-fit: contain;
+  display: block;
+  border-radius: 0px;
+  padding: 10px;
+  z-index: 1;
 }
 
-.ch-category-page .ch-category-icon {
-  width: 60px; /* 아이콘 크기 조절 */
-  height: 60px;
-}
 
-.ch-category-page .ch-category-text {
-  /* 텍스트 영역이 남은 공간을 차지하도록 설정 */
+/* 텍스트 그룹 */
+.ch-category-text {
   flex-grow: 1;
 }
-
-.ch-category-page .ch-category-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
+.ch-category-title{
   margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 900;
+  letter-spacing: -0.3px;
 }
-
-.ch-category-page .ch-category-sub {
+.ch-category-sub{
+  margin: 6px 0 0;
   font-size: 12px;
-  color: #666;
-  line-height: 1.2; /* 줄 간격 조절 */
-  margin: 5px 0 0; /* 제목과의 간격 조절 */
+  color: #7a7f86;
+  line-height: 1;
 }
 
-/* Scrollable content and card list */
-.ch-category-page .ch-category-scroll {
-  overflow-y: auto;
+
+
+/* ======================================= */
+/* ⭐️ 목록 스크롤 영역 ⭐️ */
+/* ======================================= */
+.ch-category-scroll {
+  flex: 1; /* 남은 공간을 모두 차지 */
+  overflow-y: auto; /* 이 영역만 스크롤 가능하게 */
   -webkit-overflow-scrolling: touch;
+  padding: 8px 16px 24px;
+  box-sizing: border-box;
+  background: none;
 }
 
-.ch-category-page .ch-category-list-container {
+.ch-category-list-container {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  padding: 16px;
 }
-
-.ch-category-page .ch-category-empty-text {
+.ch-category-empty-text{
   padding: 20px;
   text-align: center;
   color: #999;
 }
 
-/* Remove fixed positioning from the FAB container */
-.ch-category-page .ch-category-fab-container {
-  /* No longer fixed */
-  position: relative; /* Use relative positioning within the header */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; /* Align the FAB button to the right */
-  gap: 10px;
-  z-index: 100;
+/* ======================================= */
+/* ⭐️ 플로팅 버튼 (`FAB`) 및 키워드 칩 ⭐️ */
+/* ======================================= */
+.ch-category-fab-container {
+  /* 상단 오른쪽에 고정 */
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right));
+  top: calc(110px + env(safe-area-inset-top)); /* 80px은 상단 헤더와 여백을 고려한 값 */
+  z-index: 40;
 }
 
-/* New CSS for the chips to slide down */
-.ch-category-page .ch-category-keyword-chips-slide-down {
-  display: flex;
-  flex-direction: column; /* Stacks chips downwards */
-  align-items: flex-end;
-  gap: 8px;
+.ch-category-fab-hash{
+  appearance:none;
+  width:56px; height:56px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.08);
+  background:#001439; color:#fff;
+  font-weight:900; font-size:22px; line-height:0;
+  display:grid; place-items:center;
+  box-shadow:0 12px 28px rgba(0,0,0,0.18);
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.ch-category-fab-hash:hover{ box-shadow:0 16px 36px rgba(0,0,0,0.22); }
+.ch-category-fab-hash:active{ transform: translateY(1px) scale(0.98); }
+.ch-category-fab-hash.open{ transform: rotate(45deg); }
+
+.ch-category-keyword-chips-slide-up {
+  /* 슬라이드 다운으로 변경 */
   position: absolute;
-  top: 100%; /* Position below the header */
   right: 0;
-  padding-top: 10px; /* Space between the button and the first chip */
-  pointer-events: none;
+  top: 56px; /* 버튼 바로 아래 위치 */
+  display: grid;
+  grid-auto-rows: 36px;
+  row-gap: 8px;
   width: max-content;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .28s ease;
+  margin-top: 1rem;
 }
 
-/* Update the .ch-category-fab-hash selector */
-.ch-category-page .ch-category-fab-hash {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  background-color: #7c1d0d;
-  color: white;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
-  transition: transform 0.2s ease;
-  border: none; /* remove button border */
-  outline: none; /* remove button outline on focus/click */
+.ch-category-fab-container.open .ch-category-keyword-chips-slide-up {
+  max-height: 320px;
 }
 
-.ch-category-page .ch-category-fab-hash:hover {
-  transform: scale(1.05);
-}
-
-.ch-category-page .ch-category-keyword-chips-slide-up {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.ch-category-page .ch-category-chip {
-  background-color: #e9ecef;
-  color: #495057;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 14px;
-  cursor: pointer;
+.ch-category-chip {
+  appearance:none;
+  height: 36px; padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.85);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+          backdrop-filter: saturate(180%) blur(8px);
+  color: inherit;
+  display: inline-flex; align-items: center; gap: 6px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transform: translateY(-8px); /* 위에서 아래로 나타나도록 변경 */
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: transform .24s ease, opacity .24s ease, box-shadow .12s ease;
 }
 
-.ch-category-page .ch-category-chip.active {
-  background-color: #7c1d0d;
-  color: white;
-}
-
-
-/* New active state to slide down */
-.ch-category-page .ch-category-fab-container.open .ch-category-keyword-chips-slide-down {
-  pointer-events: auto;
-}
-
-.ch-category-page .ch-category-fab-container.open .ch-category-chip {
-  opacity: 1;
+.ch-category-fab-container.open .ch-category-chip {
   transform: translateY(0);
+  opacity: 1;
 }
 
-.ch-category-page .ch-category-chip-text {
-  white-space: nowrap;
-}
+.ch-category-chip:hover{ box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.ch-category-chip.active{ background:#001439; color:#fff; }
+.ch-category-chip-text{ font-size:12px; font-weight:bold; }
