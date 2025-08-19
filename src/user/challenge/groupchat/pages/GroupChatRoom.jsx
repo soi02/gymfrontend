@@ -4,8 +4,21 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Stomp from 'stompjs';
-// import '../styles/GroupChatRoom.css';
+import '../styles/GroupChatRoom.css';
 import apiClient from '../../../../global/api/apiClient';
+
+const BACKEND_BASE_URL = 'http://localhost:8080';
+
+// 상대 경로를 절대 URL로 변환하는 함수
+function toAbsUrl(path) {
+    if (!path) return null;
+    // 이미 http:// 또는 https://로 시작하는 완전한 URL이면 그대로 반환
+    if (/^https?:\/\//i.test(path)) {
+        return path;
+    }
+    // 백엔드 WebConfig에 설정된 URL 핸들러 '/uploadFiles/'를 반드시 포함해야 합니다.
+    return `${BACKEND_BASE_URL}/uploadFiles/${path}`;
+}
 
 export default function GroupChatRoom() {
     const { challengeId } = useParams();
@@ -85,55 +98,23 @@ export default function GroupChatRoom() {
         }
     }, [messages]);
 
-    // // 메시지 전송 핸들러
-    // const handleSendMessage = async (e) => {
-    //     e.preventDefault();
-    //     if (newMessage.trim() === '' || !stompClient.current || !stompClient.current.connected) {
-    //         return;
-    //     }
+    // 메시지 전송 핸들러
+    const handleSendMessage = (e) => { 
+        e.preventDefault();
+        if (newMessage.trim() === '' || !stompClient.current || !stompClient.current.connected) {
+            return;
+        }
+
+        const chatMessage = {
+            senderUserId: userId,
+            groupChatMessageContent: newMessage,
+            challengeId: challengeId
+        };
         
-    //     const chatMessage = {
-    //         senderUserId: userId, 
-    //         groupChatMessageContent: newMessage,
-    //         challengeId: challengeId
-    //     };
-        
-    //     try {
-    //         // ✅ API를 호출하여 메시지를 서버에 저장
-    //         const response = await apiClient.post(`/challenge/groupchat/saveGroupChatMessage`, chatMessage);
-    //         console.log("메시지 저장 성공:", response.data);
+        stompClient.current.send(`/app/sendGroupMessage/${challengeId}`, {}, JSON.stringify(chatMessage));
 
-    //         // STOMP를 통해 메시지 전송
-    //         stompClient.current.send(`/app/sendGroupMessage/${challengeId}`, {}, JSON.stringify(response.data));
-
-    //         // 전송 후 입력창 비우기
-    //         setNewMessage('');
-    //     } catch (error) {
-    //         console.error("메시지 저장 실패:", error);
-    //         alert("메시지 전송에 실패했습니다. 다시 시도해 주세요.");
-    //     }
-    // };
-
-// 메시지 전송 핸들러
-const handleSendMessage = (e) => { // ✅ async 키워드 삭제
-    e.preventDefault();
-    if (newMessage.trim() === '' || !stompClient.current || !stompClient.current.connected) {
-        return;
-    }
-
-    // 서버의 STOMP 컨트롤러가 받을 메시지 형식에 맞게 객체 구성
-    const chatMessage = {
-        senderUserId: userId,
-        groupChatMessageContent: newMessage,
-        challengeId: challengeId
-    };
-    
-    // ✅ STOMP를 통해 메시지 전송
-    stompClient.current.send(`/app/sendGroupMessage/${challengeId}`, {}, JSON.stringify(chatMessage));
-
-    // 전송 후 입력창 비우기
-    setNewMessage('');
-};
+        setNewMessage('');
+    };
 
     console.log("GroupChatRoom 컴포넌트가 렌더링되었습니다. challengeId:", challengeId);
 
@@ -149,9 +130,28 @@ const handleSendMessage = (e) => { // ✅ async 키워드 삭제
                         key={index} 
                         className={`group-chat-room-message ${msg.senderUserId === userId ? 'group-chat-room-my-message' : 'group-chat-room-other-message'}`}
                     >
-                        <span className="group-chat-room-message-sender">{msg.senderUserId}</span>
-                        <div className="group-chat-room-message-content">{msg.groupChatMessageContent}</div>
-                        <span className="group-chat-room-message-time">{new Date(msg.createdAt).toLocaleTimeString()}</span>
+                        {/* 💡 상대방 메시지일 때만 프로필 사진을 표시 */}
+                        {msg.senderUserId !== userId && (
+                            <img 
+                                src={toAbsUrl(msg.senderProfileImagePath)}
+                                alt={msg.senderNickname || '프로필 사진'} 
+                                className="group-chat-room-profile-image" 
+                            />
+                        )}
+                        <div className="group-chat-room-message-bubble">
+                            {/* 💡 상대방 메시지일 때만 닉네임을 표시 */}
+                            {msg.senderUserId !== userId && (
+                                <span className="group-chat-room-message-sender">
+                                    {msg.senderNickname || `사용자 ${msg.senderUserId}`}
+                                </span>
+                            )}
+                            <div className="group-chat-room-message-content">
+                                {msg.groupChatMessageContent}
+                            </div>
+                            <span className="group-chat-room-message-time">
+                                {new Date(msg.createdAt).toLocaleTimeString()}
+                            </span>
+                        </div>
                     </div>
                 ))}
                 <div ref={messagesEndRef} /> 
