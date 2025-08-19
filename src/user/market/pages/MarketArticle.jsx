@@ -16,7 +16,9 @@ export default function MarketArticlePageTest() {
     const {id : loadedId} = useParams();
     
     const checkUserStatus = 1;
-    const checkArticleId = loadedId;
+    const checkArticleId = Number(loadedId);
+    console.log("checkArticleId");
+    console.log(checkArticleId);
     const defaultUserStatus = 1004;
     
     const [countOfInterestedLogsOnArticle, setCountOfInterestedLogsOnArticle] = useState(-1);
@@ -36,6 +38,9 @@ export default function MarketArticlePageTest() {
             
         }
     ])
+
+    console.log("mergeMarketArticleInfo");
+    console.log(mergeMarketArticleInfo);
     
     const imageLinkPath = mergeMarketArticleInfo[0].article.imageLink;
     
@@ -56,13 +61,30 @@ export default function MarketArticlePageTest() {
         {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
     ])
     
+    const [mergeMarketProductInterestedLogOnArticle, setMergeMarketProductInterestedLogOnArticle] = useState([
+        {
+            
+            article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
+            title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
+            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
+            interestInfo : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
+            
+        }
+    ])
+    
     const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
         {id : 1, marketUserId : checkUserStatus, specificArticleId : checkArticleId, createdAt : new Date("1970-01-01T00:00:03")}
     )
     
-    const constMarketProductInterestedLogElement = marketProductInterestedLogOnArticle
-    .filter(element => element.specificArticleId === 1 && element.marketUserId === 2)
-    .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element.id} elem1 = {element}/>)
+    const constMarketProductInterestedLogElement = mergeMarketProductInterestedLogOnArticle
+    .filter(element => element.interestInfo.specificArticleId === checkArticleId && element.interestInfo.marketUserId === checkUserStatus)
+    .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element.interestInfo.id} marketArticleElem1 = {element}/>)
+    
+    console.log("mergeMarketProductInterestedLogOnArticle");
+    console.log(mergeMarketProductInterestedLogOnArticle);
+    console.log("constMarketProductInterestedLogElement");
+    console.log(constMarketProductInterestedLogElement);
     
     const [mergeMarketCommentListOnArticle, setMergeMarketCommentListOnArticle] = useState([
         {
@@ -242,9 +264,9 @@ export default function MarketArticlePageTest() {
         
         const constUseEffect = async () => {
             
-            try {
-                
-                console.log("Loading Test Start")
+                try {
+                    
+                console.log("Reloading Test Start") // Reload 안의 코드는 load 시의 코드와 같음
                 
                 const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
                     constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
@@ -260,33 +282,41 @@ export default function MarketArticlePageTest() {
                     article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
                     userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
                 }
+                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted");
+                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
-                setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted]);
+                setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
                 setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
-                    userInfo : APIElem1.marketUserInfoDto,
-                    // editCondition : false
+                    userInfo : APIElem1.marketUserInfoDto
                 }))
                 setMergeMarketCommentListOnArticle(constCommentOnArticleElementsFromAPI);
-                setMergeMarketCommentEditElementListOnArticle(constCommentOnArticleElementsFromAPI);
                 setCountOfInterestedLogsOnArticle(constGetSelectCountMarketProductInterestedLogWhenArticleInfo);
                 setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
-                setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
-                
-                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted");
-                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
-                
-            } catch (error) {
-                
-                console.error("로드 실패:", error);
-                
-            } finally {
-                
-                setCommentOnArticleLoading(false);
-                console.log("Loading Test End")
-                
-            }
+                console.log("CommentTest");
+                console.log(mergeMarketCommentListOnArticle);
+                const constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted = {
+                    article : constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.marketArticleDto,
+                    userInfo : constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.marketUserInfoDto,
+                    interestInfo : constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.marketProductInterestedLogDto
+                }
+                setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
+                console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
+                console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                    
+                } catch (error) {
+                    
+                    console.error("로드 실패:", error);
+                    
+                } finally {
+                    
+                    setReloadingProductInterestedLogWhenUserAndArticleInfo(false);
+                    setCommentOnArticleReloading(false);
+                    setCommentOnArticleLoading(false);
+                    console.log("Reloading Test End")
+                    
+                }
             
         }
         
@@ -343,6 +373,8 @@ export default function MarketArticlePageTest() {
                     article : constGetSelectSpecificMarketArticleInfo.marketArticleDto,
                     userInfo : constGetSelectSpecificMarketArticleInfo.marketUserInfoDto
                 }
+                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted");
+                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
                 setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
@@ -355,7 +387,14 @@ export default function MarketArticlePageTest() {
                 setCountOfCommentOnArticle(constGetSelectCountMarketCommentOnArticle);
                 console.log("CommentTest");
                 console.log(mergeMarketCommentListOnArticle);
-                setMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo]);
+                const constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted = {
+                    article : constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.marketArticleDto,
+                    userInfo : constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.marketUserInfoDto,
+                    interestInfo : constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo.marketProductInterestedLogDto
+                }
+                setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
+                console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
+                console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
                     
                 } catch (error) {
                     
@@ -463,7 +502,7 @@ export default function MarketArticlePageTest() {
         
         try {
             
-            const constDeleteMarketProductInterestedLog = await marketAPI.postDeleteMarketProductInterestedLog(2, 1);
+            const constDeleteMarketProductInterestedLog = await marketAPI.postDeleteMarketProductInterestedLog(checkUserStatus, checkArticleId);
             setReloadingProductInterestedLogWhenUserAndArticleInfo(true);
             
         } catch (error) {
