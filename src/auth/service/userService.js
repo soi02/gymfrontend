@@ -112,16 +112,20 @@ export default function useUserService() {
     };
 
     /**
-     * 사용자 정보를 업데이트하는 함수를 추가합니다.
-     * @param {Object} updatedData - 업데이트할 사용자 정보 객체
+     * ✅ 사용자 정보를 업데이트하는 함수를 수정합니다.
+     * @param {FormData} formData - 업데이트할 FormData 객체 (텍스트 데이터와 파일 포함)
      * @returns {Promise<Object>} - API 응답 데이터
      */
-    const updateUserInfo = async (updatedData) => {
+    const updateUserInfo = async (formData) => {
         try {
             // JWT 토큰을 헤더에 포함하여 인증 정보를 보냅니다.
             const token = localStorage.getItem('token');
-            const response = await axios.post(`${API_BASE_URL}/user/update`, updatedData, {
+
+            // ✅ FormData를 사용하여 백엔드에 POST 요청을 보냄
+            const response = await axios.post(`${API_BASE_URL}/user/updateProfile`, formData, {
                 headers: {
+                    // FormData를 사용하면 Content-Type은 자동으로 multipart/form-data로 설정되지만,
+                    // 인증 헤더는 직접 추가해야 합니다.
                     'Authorization': `Bearer ${token}`
                 }
             });

@@ -28,7 +28,6 @@ function WorkoutElement({workoutList, onCheck, checked}) {
                         fontSize: "1rem",
                         color: "#555"
                     }}
-                
                 >
                     ⓘ
                 </span>

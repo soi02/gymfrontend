@@ -1,10 +1,10 @@
 /* 페이지 레이아웃: 바깥 스크롤 OFF, 내부만 스크롤 */
-.mrp-page {
+.mrp-page{
   height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 0 16px;
+  padding: 0;                 /* ← 페이지 패딩 0 */
   box-sizing: border-box;
 }
 
@@ -12,6 +12,7 @@
 .mrp-header {
   padding-top: 12px;
   padding-bottom: 8px;
+  margin-left: 1rem;
 }
 .mrp-title {
   margin: 0;
@@ -25,13 +26,33 @@
 }
 
 /* 스크롤 영역 */
-.mrp-scroll {
+.mrp-scroll{
   flex: 1;
   overflow-y: auto;
-  padding-bottom: calc(80px + 86px + 22px + env(safe-area-inset-bottom)); /* 바텀바 + 버튼 + 간격 */
-  scroll-padding-bottom: calc(80px + 66px + 12px + env(safe-area-inset-bottom));
+  padding: 12px var(--side-pad);
+  padding-top: 6px;
+  box-sizing: border-box;
+}
+/* 📱 모바일(<=768)에서는 바텀바+CTA 만큼 하단 여백 확보 */
+@media (max-width: 768px), (pointer: coarse) {
+  .mrp-scroll{
+    padding-bottom: calc(var(--bottombar-h) + var(--cta-h) + 12px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(var(--bottombar-h) + var(--cta-h) + 12px + env(safe-area-inset-bottom));
+  }
 }
 
+/* 💻 데스크탑(>=769)에서는 최소만 */
+@media (min-width: 769px){
+  .mrp-scroll{
+    padding-bottom: 16px;
+  }
+}
+
+.mrp-scroll::after{
+  content: "";
+  display: block;
+  height: var(--cta-h);
+}
 /* 루틴 목록 */
 .mrp-list {
   list-style: none;
