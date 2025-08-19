@@ -2,6 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import apiClient from '../../../../global/api/apiClient';
+import '../styles/GroupChatList.css';
+
+
+const BACKEND_BASE_URL = 'http://localhost:8080';
+
+// 상대 경로를 절대 URL로 변환하는 함수
+function toAbsUrl(path) {
+    if (!path) return null;
+    // 이미 http:// 또는 https://로 시작하는 완전한 URL이면 그대로 반환
+    if (/^https?:\/\//i.test(path)) {
+        return path;
+    }
+    // 상대 경로일 경우 기본 URL과 결합하여 반환
+    return `${BACKEND_BASE_URL}${path}`;
+}
 
 export default function GroupChatList() {
     const [challenges, setChallenges] = useState([]);
@@ -49,43 +64,48 @@ export default function GroupChatList() {
         return <div>{error}</div>;
     }
 
-    return (
-        <div style={{ padding: '16px' }}>
-            <h2>참여 중인 그룹 채팅</h2>
-            {challenges.length > 0 ? (
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                    {challenges.map(challenge => (
-                        <li 
-                            key={challenge.challengeId} 
-                            onClick={() => handleChallengeClick(challenge.challengeId)}
-                            style={{
-                                padding: '12px',
-                                borderBottom: '1px solid #eee',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center'
-                            }}
-                        >
-                            {/* 챌린지 썸네일 경로가 있다면 표시 */}
-                            {challenge.challengeThumbnailPath && (
-                                <img 
-                                    src={challenge.challengeThumbnailPath} 
-                                    alt={challenge.challengeTitle} 
-                                    style={{ width: '60px', height: '60px', marginRight: '16px', borderRadius: '8px', objectFit: 'cover' }}
-                                />
-                            )}
-                            <div style={{ flex: 1 }}>
-                                <h3>{challenge.challengeTitle}</h3>
-                                <p style={{ color: '#666', fontSize: '12px' }}>
-                                    참여일: {new Date(challenge.personalJoinDate).toLocaleDateString()}
-                                </p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>참여하고 있는 챌린지가 없습니다.</p>
-            )}
+return (
+    <div className="gcl-page"> {/* 인라인 스타일을 제거하고 클래스 이름 적용 */}
+        <div className="gcl-topbar">
+            <h2 className="gcl-top-title">참여 중인 그룹 채팅</h2>
         </div>
-    );
+            <div className="gcl-body">
+                        {challenges.length > 0 ? (
+                            <ul className="gcl-list">
+                                {challenges.map(challenge => (
+                                    <li
+                                        key={challenge.challengeId}
+                                        onClick={() => handleChallengeClick(challenge.challengeId)}
+                                        className="gcl-card"
+                                    >
+                                        {challenge.challengeThumbnailPath && (
+                                            <img
+                                                // 💡 src 속성에 toAbsUrl 함수 적용
+                                                src={toAbsUrl(challenge.challengeThumbnailPath)}
+                                                alt={challenge.challengeTitle}
+                                                className="gcl-thumbnail"
+                                            />
+                                        )}
+                                        <div className="gcl-info">
+                                            <h3 className="gcl-title">{challenge.challengeTitle}</h3>
+                                            
+                                    {challenge.challengeParticipantCount && (
+                                        <p className="gcl-members">
+                                            참가 인원: {challenge.challengeParticipantCount}명
+                                        </p>
+                                    )}
+
+                                            <p className="gcl-date">
+                                                참여일: {new Date(challenge.personalJoinDate).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="gcl-empty">참여하고 있는 챌린지가 없습니다.</p>
+                        )}
+                    </div>
+                </div>
+            );
 }
