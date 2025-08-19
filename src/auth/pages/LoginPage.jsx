@@ -48,6 +48,21 @@ export default function LoginPage() {
         }
     };
 
+    const handleKakaoLogin = async () => {
+    try {
+        const response = await fetch("http://localhost:8080/api/user/kakao/authorize", {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        });
+        const redirectUrl = await response.text();
+        window.location.href = redirectUrl; // 받은 URL로 이동
+
+    } catch (error) {
+        console.error("카카오 로그인 오류:", error);
+    }
+    };
+
     return (
         <div className="login-container">
             {/* <Link to="/gymmadang" className="back-btn">
@@ -78,13 +93,7 @@ export default function LoginPage() {
                 </div>
 
                 <div className="social-buttons">
-                    <button className="social-btn" 
-                            onClick={() => {
-                                const state = location.state?.from || "/home";
-                                window.location.href = `http://localhost:8080/api/user/oauth2/kakao/login?state=${encodeURIComponent(state)}`;
-                        
-                            }}
-                        >
+                    <button className="social-btn" onClick={handleKakaoLogin}>
                         <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" alt="Kakao" />
                     </button>
                     <button className="social-btn" onClick={() => setModalMessage(<><span>지금은 이용이 어려우나,</span><br/><span>머지않아 열릴 것이오.</span></>)}>
