@@ -21,6 +21,11 @@ export default function MarketArticlePageTest() {
     console.log(checkArticleId);
     const defaultUserStatus = 1004;
     
+    const [ articleSellerCheckedByBuyer, setArticleSellerCheckedByBuyer ] = useState(false);
+    
+    const [ dealConfirmCompleted, setDealConfirmCompleted ] = useState(false);
+    // 이게 완료됐을 시, 판매자 체크 및 구매자 체크 탭은 별도로 표시하지 않음
+    
     const [countOfInterestedLogsOnArticle, setCountOfInterestedLogsOnArticle] = useState(-1);
     const [countOfCommentOnArticle, setCountOfCommentOnArticle] = useState(-1);
     
@@ -46,7 +51,16 @@ export default function MarketArticlePageTest() {
     
     const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
     
-    const [checkArticleWriteUser, setCheckArticleWriteUser] = useState(mergeMarketArticleInfo[0].article.marketUserId);
+    const [checkArticleWriteUser, setCheckArticleWriteUser] = useState(0);
+    
+    console.log("checkArticleWriteUser");
+    console.log(checkArticleWriteUser);
+    
+    const [ checkUserDealerStatus, setCheckUserDealerStatus ] = useState(0);
+    // checkUserDealerStatus 가 1 일 땐 Seller 상태, 2 일 땐 Buyer 상태
+    
+    console.log("checkUserDealerStatus");
+    console.log(checkUserDealerStatus);
     
     const constMarketArticleElement = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
@@ -266,7 +280,7 @@ export default function MarketArticlePageTest() {
             
                 try {
                     
-                console.log("Reloading Test Start") // Reload 안의 코드는 load 시의 코드와 같음
+                console.log("Loading Test Start") // Reload 코드 그대로 불러와서... (Finally 시 처리는 다른데...) 수정해야 됨....
                 
                 const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
                     constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
@@ -286,7 +300,7 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
-                setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
+                setCheckArticleWriteUser(constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
                     userInfo : APIElem1.marketUserInfoDto
@@ -304,12 +318,25 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                
+                if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId) {
+                    
+                    setCheckUserDealerStatus(1);
+                    
+                } else {
+                    
+                    setCheckUserDealerStatus(2);
+                    
+                }
+                
+                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId");
+                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId);
                     
                 } catch (error) {
                     
                     console.error("로드 실패:", error);
                     
-                } finally {
+                } finally { // 여기는 reload 와 달라야 됨 (지금 잘못된 상태인데, 오류 발생 시에 고치기로....)
                     
                     setReloadingProductInterestedLogWhenUserAndArticleInfo(false);
                     setCommentOnArticleReloading(false);
@@ -511,6 +538,32 @@ export default function MarketArticlePageTest() {
         
     }
     
+    const constButtonToConfirmSellerByBuyer = async () => {
+        
+        if (checkUserDealerStatus === 2) {
+            
+            try {
+                
+                const { userInfo } = mergeMarketArticleInfo[0];
+                
+                const marketDealedLogCheckedByBuyerDto = {
+                    
+                    sellerId : userInfo.userId,
+                    buyerId : checkUserStatus,
+                    specificArticleId : checkArticleId
+                    
+                } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
+                
+                const constPostInsertMarketDealedLogCheckedByBuyer = await marketAPI.postInsertMarketDealedLogCheckedByBuyer(marketDealedLogCheckedByBuyerDto);
+                
+            } catch (error) {
+                console.error("로드 실패:", error);
+            }
+            
+        }
+        
+    }
+    
     const constDivisionToDeleteMarketCommentOnArticle = async ({commentId}) => {
         
         try {
@@ -702,6 +755,9 @@ export default function MarketArticlePageTest() {
         
         const [ commentEditModeChecked, setCommentEditModeChecked ] = useState(false);
         
+        const [ commentSellerCheckedByBuyer, setCommentSellerCheckedByBuyer ] = useState(false);
+        const [ commentBuyerCheckedBySeller, setCommentBuyerCheckedBySeller ] = useState(false);
+        
         const [ editingContent, setEditingContent ] = useState(comment.content);
         
         const handleContentChange = (event) => {
@@ -715,6 +771,64 @@ export default function MarketArticlePageTest() {
             onUpdateConfirm(comment.id, editingContent);
             
             setCommentEditModeChecked(false);
+            
+        }
+        
+        const constButtonToConfirmBuyerBySeller = async () => {
+            
+            if (checkUserDealerStatus === 1) {
+            
+                try {
+                    
+                    const { userInfo } = marketCommentElem1;
+                    
+                    const marketDealedLogCheckedBySellerDto = {
+                        
+                        sellerId : checkUserStatus,
+                        buyerId : userInfo.userId,
+                        specificArticleId : checkArticleId
+                        
+                    } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
+                    
+                    console.log("marketDealedLogCheckedBySellerDto");
+                    console.log(marketDealedLogCheckedBySellerDto);
+                    
+                    const constPostInsertMarketDealedLogCheckedBySeller = await marketAPI.postInsertMarketDealedLogCheckedBySeller(marketDealedLogCheckedBySellerDto);
+                    
+                } catch (error) {
+                    console.error("로드 실패:", error);
+                }
+                
+            }
+            
+        }
+        
+        const constButtonToConfirmSellerByBuyer = async () => {
+            
+            if (checkUserDealerStatus === 2) {
+            
+                try {
+                    
+                    const { userInfo } = marketCommentElem1;
+                    
+                    const marketDealedLogCheckedByBuyerDto = {
+                        
+                        sellerId : userInfo.userId,
+                        buyerId : checkUserStatus,
+                        specificArticleId : checkArticleId
+                        
+                    } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
+                    
+                    console.log("marketDealedLogCheckedByBuyerDto");
+                    console.log(marketDealedLogCheckedByBuyerDto);
+                    
+                    const constPostInsertMarketDealedLogCheckedByBuyer = await marketAPI.postInsertMarketDealedLogCheckedByBuyer(marketDealedLogCheckedByBuyerDto);
+                    
+                } catch (error) {
+                    console.error("로드 실패:", error);
+                }
+                
+            }
             
         }
             
@@ -847,7 +961,8 @@ export default function MarketArticlePageTest() {
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.75vh"}}>
                                     <div className = "row">
-                                        <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller}
+                                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                             구매인으로 선택
                                         </div>
                                     </div>
@@ -869,7 +984,8 @@ export default function MarketArticlePageTest() {
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "1.75vh"}}>
                                         <div className = "row">
-                                            <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
+                                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                                 판매인으로 선택
                                             </div>
                                         </div>
@@ -1048,7 +1164,8 @@ export default function MarketArticlePageTest() {
                     <div className = "row">
                         <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", fontSize : "2.25vh"}}>
                             <div className = "row">
-                                <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
+                                style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                     판매인으로 선택
                                 </div>
                             </div>

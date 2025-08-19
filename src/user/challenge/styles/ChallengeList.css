@@ -3,10 +3,11 @@
 /* 전체 컨테이너 */
 .challenge-list-wrapper {
   padding: 20px;
-  max-width: 425px; /* 아이폰 SE 기준 너비에 맞춤 */
+  max-width: 425px;
   margin: 0 auto;
-  min-height: 100vh;
+  height: 100vh;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* 헤더 섹션 */
@@ -816,7 +817,7 @@
 
 .ccp-scroll {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch; /* iOS 관성 스크롤 */
   padding: 10px 20px;
   padding-bottom: calc(var(--bottom-bar-h, 64px) + env(safe-area-inset-bottom) + 20px);
@@ -902,17 +903,18 @@
 /* ⭐️ 전체 페이지 레이아웃 컨테이너 ⭐️ */
 /* ======================================= */
 .ch-category-page {
-  height: 100dvh; /* 뷰포트 높이 고정 */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* 페이지 전체 스크롤 방지 */
-  padding: 0 16px;
-  box-sizing: border-box;
-  /* background: #f7f8fb; */
-  color: #111;
-  width: 100%;
-  max-width: 425px; /* 모바일 뷰포트 너비 고정 */
-  margin: 0 auto;
+    /* 뷰포트 높이에 맞추고, 페이지 전체 스크롤 방지 */
+    height: 100dvh; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+
+    width: 100%;
+    max-width: 425px; /* 모바일 뷰포트 너비 고정 */
+    margin: 0 auto;
+    background-color: #f7f8fb;
+    color: #111;
+    box-sizing: border-box;
 }
 
 
