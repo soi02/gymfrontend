@@ -76,6 +76,8 @@ import Information from './global/pages/Information';
 import MyUserInformation from './user/mypage/pages/MyUserInformation';
 import NorigaeListPage from './user/challenge/components/NorigaeListPage';
 import GroupChatList from './user/challenge/groupchat/pages/GroupChatList';
+import EmotionalDiary from './user/diary/pages/EmotionalDiary';
+import EmotionalDiaryCalendar from './user/diary/pages/EmotionalDiaryCalendar';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -147,7 +149,7 @@ function AppContent() {
     location.pathname.startsWith('/buddy/buddyChat/') ||
     location.pathname.startsWith('/buddy/videoCall') ||
     location.pathname.startsWith('/challenge/detail') ||
-    location.pathname.startsWith('/challenge/payment/success')||
+    location.pathname.startsWith('/challenge/payment/success') ||
     location.pathname === norigaePath;
 
   // BottomNavigation 숨길 조건들 (TopHeader와 동일하게 적용)
@@ -155,7 +157,7 @@ function AppContent() {
     location.pathname.startsWith('/challenge/challengeTest') ||
     location.pathname.startsWith('/buddy/buddyChat/') ||
     location.pathname.startsWith('/buddy/videoCall');
-    
+
 
   const isChallengeSection = location.pathname.startsWith('/challenge') && !location.pathname.includes('challengeTest');
   const isBuddySection = location.pathname.startsWith('/buddy');
@@ -176,7 +178,7 @@ function AppContent() {
           <p>함께 운동할 벗을 찾아보세요!</p>
           <p>모바일 앱 QR 코드</p>
           <img src="https://via.placeholder.com/150" alt="QR Code" style={{ width: '150px' }} /> */}
-          <Information/>
+          <Information />
         </div>
       )}
       <div className='app-shell'>
@@ -184,7 +186,7 @@ function AppContent() {
         {!shouldHideTop && <TopHeader />}
 
         {/* ✅ 메인 컨텐츠 flex로 확장 */}
-      <main className={`app-content ${shouldHideBottom ? 'no-bottom-padding' : ''}`}>
+        <main className={`app-content ${shouldHideBottom ? 'no-bottom-padding' : ''}`}>
 
 
           {/* 챌린지 탭 메뉴 (상단 카테고리처럼) */}
@@ -244,6 +246,10 @@ function AppContent() {
             <Route path='/buddy/buddyMy' element={<BuddyNotification />} />
             <Route path='/test' element={<SimpleWebSocketTest />} />
             {/* <Route path="/webrtc" element={<AutoJoinRoom />} /> */}
+
+            {/* 일기장 */}
+            <Route path="/diary" element={<EmotionalDiary />} />
+            <Route path="/diary/calendar" element={<EmotionalDiaryCalendar />} />
 
             {/* 수련장 */}
             <Route path="/challenge/challengeIntro" element={<ChallengeIntro />} />

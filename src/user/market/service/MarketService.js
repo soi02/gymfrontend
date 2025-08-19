@@ -204,6 +204,12 @@ export default function useMarketAPI() {
         )
         return response.data;
     }
+    const getSelectSpecificMarketDealedLogCheckedBySeller = async(sellerId, specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketDealedLogCheckedBySeller`, {
+            params : {sellerId, specificArticleId}
+        });
+        return response.data;
+    }
     const postDeleteMarketDealedLogCheckedBySeller = async(specificArticleId) => {
         const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketCommentOnArticle`,
             {  } ,
@@ -227,6 +233,12 @@ export default function useMarketAPI() {
         )
         return response.data;
     }
+    const getSelectSpecificMarketDealedLogCheckedByBuyer = async(buyerId, specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketDealedLogCheckedByBuyer`, {
+            params : {buyerId, specificArticleId}
+        });
+        return response.data;
+    }
     const postDeleteMarketDealedLogCheckedByBuyer = async(specificArticleId) => {
         const response = await axios.post(`${constMarketAPIBasedURL}/deleteMarketCommentOnArticle`,
             {  } ,
@@ -237,6 +249,13 @@ export default function useMarketAPI() {
                 }
             }
         )
+        return response.data;
+    }
+    
+    const getSelectSpecificMarketDealedLog = async(specificArticleId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectSpecificMarketDealedLog`, {
+            params : {specificArticleId}
+        });
         return response.data;
     }
     
@@ -326,9 +345,9 @@ export default function useMarketAPI() {
         getSelectMarketProductInterestedLogWhenUserInfo, getSelectCountMarketProductInterestedLogWhenUserInfo, 
         getSelectMarketProductInterestedLogWhenArticleInfo, getSelectCountMarketProductInterestedLogWhenArticleInfo,
         getSelectMarketProductInterestedLogWhenUserAndArticleInfo, 
-        postInsertMarketDealedLog, 
-        postInsertMarketDealedLogCheckedBySeller, postDeleteMarketDealedLogCheckedBySeller,
-        postInsertMarketDealedLogCheckedByBuyer, postDeleteMarketDealedLogCheckedByBuyer,
+        postInsertMarketDealedLog, getSelectSpecificMarketDealedLog,
+        postInsertMarketDealedLogCheckedBySeller, getSelectSpecificMarketDealedLogCheckedBySeller, postDeleteMarketDealedLogCheckedBySeller,
+        postInsertMarketDealedLogCheckedByBuyer, getSelectSpecificMarketDealedLogCheckedByBuyer, postDeleteMarketDealedLogCheckedByBuyer,
         getSelectMarketDealedLogWhenBuyer, getSelectCountMarketDealedLogWhenBuyer,
         getSelectMarketDealedLogWhenSeller, getSelectCountMarketDealedLogWhenSeller,
         postInsertMarketReviewToUser, getSelectMarketReviewToUser, postUpdateMarketReviewToUser, postDeleteMarketReviewToUser,
