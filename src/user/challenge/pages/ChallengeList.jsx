@@ -30,6 +30,8 @@ export default function ChallengeList() {
     };
   }, [fetchKeywordTree]);
 
+  
+
   // handleCategoryClick 함수 수정
   const handleCategoryClick = (categoryId) => {
     if (categoryId === null) {

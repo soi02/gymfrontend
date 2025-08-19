@@ -94,5 +94,44 @@ export default function useUserService() {
         }
     }
 
-    return { registerUser, login }
+    /**
+     * 특정 ID를 가진 사용자 정보를 조회하는 함수를 추가합니다.
+     * @param {number} userId - 조회할 사용자의 ID
+     * @returns {Promise<Object>} - 사용자 정보 객체
+     */
+    const getUserInfo = async (userId) => {
+        try {
+            // userId를 URL 경로 변수로 보내거나, 쿼리 파라미터로 보낼 수 있습니다.
+            // 여기서는 경로 변수 방식을 사용합니다.
+            const response = await axios.get(`${API_BASE_URL}/user/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error("사용자 정보 조회 오류:", error);
+            throw error.response?.data?.message || error.message || '사용자 정보 조회 실패';
+        }
+    };
+
+    /**
+     * 사용자 정보를 업데이트하는 함수를 추가합니다.
+     * @param {Object} updatedData - 업데이트할 사용자 정보 객체
+     * @returns {Promise<Object>} - API 응답 데이터
+     */
+    const updateUserInfo = async (updatedData) => {
+        try {
+            // JWT 토큰을 헤더에 포함하여 인증 정보를 보냅니다.
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${API_BASE_URL}/user/update`, updatedData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error("사용자 정보 업데이트 오류:", error);
+            throw error.response?.data?.message || error.message || '정보 업데이트 실패';
+        }
+    };
+
+
+    return { registerUser, login, getUserInfo, updateUserInfo }
 }

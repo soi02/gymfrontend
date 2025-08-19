@@ -103,6 +103,7 @@ const BuddyChatRoom = () => {
         // Stomp 클라이언트 생성
         stompClient.current = new Client({
             brokerURL: `ws://localhost:8080/ws/chat`,
+            // brokerURL: `wss://gymmadangapi.null-pointer-exception.com/ws/chat`,
             connectHeaders: {
                 Authorization: `Bearer ${token}`
             },

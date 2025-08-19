@@ -1,32 +1,66 @@
 // src/MyUserInformation.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useUserService from '../../../auth/service/userService';
 import '../styles/MyUserInformation.css';
 
+// Daum Postcode API를 로드하기 위한 스크립트
+const loadDaumPostcodeScript = () => {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error('Failed to load Daum Postcode script.'));
+        document.head.appendChild(script);
+    });
+};
+
 export default function MyUserInformation() {
+    const userId = useSelector(state => state.auth.id);
+
     const [userData, setUserData] = useState({
-        id: 1,
-        name: '홍길동',
-        age: 30,
-        gender: 'M',
-        account_name: 'hong_gildong',
-        password: 'password123',
-        birth: '1995-01-01',
-        address: '서울시 강남구',
-        phone: '010-1234-5678',
-        profile_image: 'https://via.placeholder.com/150',
-        height: 175,
-        weight: 70,
-        muscle_mass: 40,
-        is_buddy: true,
-        created_at: '2023-01-01T10:00:00Z',
+        id: '',
+        name: '',
+        password: '',
+        birth: '',
+        address: '',
+        phone: '',
+        profileImage: '',
+        height: '',
+        weight: '',
+        muscleMass: '',
+        accountName: ''
     });
 
     const [isPhoneValid, setIsPhoneValid] = useState(true);
+    const navigate = useNavigate();
+    const { getUserInfo, updateUserInfo } = useUserService();
+
+    useEffect(() => {
+        if (userId) {
+            console.log("Current User ID from Redux:", userId);
+            const fetchUserData = async () => {
+                try {
+                    const data = await getUserInfo(userId);
+                    console.log("Data fetched from backend:", data);
+                    setUserData(data);
+                } catch (error) {
+                    console.error("사용자 정보 로드 실패:", error);
+                    alert("사용자 정보를 불러오는 데 실패했습니다.");
+                }
+            };
+            fetchUserData();
+        }
+
+        if (window.daum === undefined) {
+            loadDaumPostcodeScript();
+        }
+    }, [userId]); // ✅ getUserInfo를 의존성 배열에서 제거
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         if (name === 'phone') {
             const cleanedValue = value.replace(/[^0-9]/g, '');
             if (cleanedValue.length > 11) {
@@ -44,16 +78,9 @@ export default function MyUserInformation() {
             } else {
                 formattedValue = cleanedValue;
             }
-
-            setUserData({
-                ...userData,
-                [name]: formattedValue,
-            });
+            setUserData({ ...userData, [name]: formattedValue });
         } else {
-            setUserData({
-                ...userData,
-                [name]: value,
-            });
+            setUserData({ ...userData, [name]: value });
         }
     };
 
@@ -64,71 +91,78 @@ export default function MyUserInformation() {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!isPhoneValid || userData.phone.replace(/[^0-9]/g, '').length < 10) {
             alert('전화번호 형식을 확인해 주세요.');
             return;
         }
-        
-        console.log('변경된 사용자 정보:', userData);
-        alert('정보가 성공적으로 저장되었습니다!');
+
+        try {
+            await updateUserInfo(userData);
+            alert('정보가 성공적으로 저장되었습니다!');
+        } catch (error) {
+            console.error("정보 저장 실패:", error);
+            alert('정보 저장에 실패했습니다. 다시 시도해 주세요.');
+        }
     };
 
     const handleGoBack = () => {
-        window.history.back();
+        navigate(-1);
     };
 
-    // 주소 검색 함수
     const handleAddressSearch = () => {
-        new window.daum.Postcode({
-            oncomplete: function(data) {
-                // 주소 정보를 받아와 userData 상태 업데이트
-                setUserData({
-                    ...userData,
-                    address: data.address
-                });
-            }
-        }).open();
+        if (window.daum && window.daum.Postcode) {
+            new window.daum.Postcode({
+                oncomplete: function(data) {
+                    setUserData({
+                        ...userData,
+                        address: data.address
+                    });
+                }
+            }).open();
+        } else {
+            alert("주소 검색 스크립트를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+        }
     };
 
     return (
         <div className="mpInfo-container">
-            {/* 뒤로가기 버튼 섹션 */}
-            <div className="mpInfo-back-button-container">
+            <header className="mpInfo-main-header">
                 <button onClick={handleGoBack} className="mpInfo-back-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/>
                     </svg>
                 </button>
-            </div>
+                <h2 className="mpInfo-header-title">프로필 수정</h2>
+                <button onClick={handleSave} className="mpInfo-save-button-top">저장</button>
+            </header>
 
-            {/* 헤더 섹션 */}
-            <div className="mpInfo-header">
+            <div className="mpInfo-profile-section">
                 <div className="mpInfo-profile-image-container">
-                    <img src={userData.profile_image} alt="프로필 이미지" className="mpInfo-profile-image" />
+                    <img src={userData.profileImage} alt="프로필 이미지" className="mpInfo-profile-image" />
                     <button className="mpInfo-edit-button">
                         <svg className="mpInfo-edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M7.127 22.564l-2.091-2.091c-.516-.516-.763-1.16-.729-1.802l.068-.781 1.776 1.776c.075.075.16.14.25.195l.1.06c.09.054.187.087.29.098l.128.012c.11.002.215-.02.32-.075l.1-.059 1.776 1.776.082-.246c.02-.06.036-.12.045-.181l.012-.13c.01-.102-.016-.207-.07-.317l-.06-.1zM19.782 5.218c-.39-.39-1.024-.39-1.414 0l-12.8 12.8c-.39.39-.39 1.024 0 1.414.39.39 1.024.39 1.414 0l12.8-12.8c.39-.39.39-1.024 0-1.414zm-4.364 2.89l-2.09-2.091 6.364-6.364c.39-.39 1.024-.39 1.414 0l2.09 2.09c.39.39.39 1.024 0 1.414l-6.364 6.364zm-5.01-1.378l1.414 1.414-1.414 1.414-1.414-1.414 1.414-1.414zm-2.09-2.09l-1.414 1.414-1.414-1.414 1.414-1.414 1.414 1.414z"/>
                         </svg>
                     </button>
                 </div>
-                <h1 className="mpInfo-user-name">{userData.name}</h1>
-                <h2 className="mpInfo-title">내 정보 수정</h2>
+                <h1 className="mpInfo-user-name">@{userData.accountName}</h1>
             </div>
 
             <div className="mpInfo-form-section">
+                
                 <div className="mpInfo-form-group">
-                    <label className="mpInfo-label">아이디</label>
+                    <label className="mpInfo-label">이름</label>
                     <input
                         type="text"
-                        name="account_name"
-                        value={userData.account_name}
+                        name="name"
+                        value={userData.name}
                         onChange={handleChange}
                         className="mpInfo-input"
-                        placeholder="아이디"
+                        placeholder="이름"
                     />
                 </div>
-                
+
                 <div className="mpInfo-form-group">
                     <label className="mpInfo-label">비밀번호</label>
                     <input
@@ -153,28 +187,13 @@ export default function MyUserInformation() {
                 </div>
                 
                 <div className="mpInfo-form-group">
-                    <label className="mpInfo-label">성별</label>
-                    <select
-                        name="gender"
-                        value={userData.gender}
-                        onChange={handleChange}
-                        className="mpInfo-input"
-                    >
-                        <option value="M">남자</option>
-                        <option value="F">여자</option>
-                        <option value="O">기타</option>
-                    </select>
-                </div>
-
-                {/* 주소 입력 필드와 버튼으로 변경 */}
-                <div className="mpInfo-form-group">
                     <label className="mpInfo-label">거주지역</label>
                     <div className="mpInfo-address-input-group">
                         <input
                             type="text"
                             name="address"
                             value={userData.address}
-                            readOnly // 사용자가 직접 입력하지 못하게 readOnly 속성 추가
+                            readOnly
                             className="mpInfo-input"
                             placeholder="주소 검색"
                         />
@@ -235,8 +254,8 @@ export default function MyUserInformation() {
                         <div className="mpInfo-input-with-unit">
                             <input
                                 type="number"
-                                name="muscle_mass"
-                                value={userData.muscle_mass}
+                                name="muscleMass"
+                                value={userData.muscleMass}
                                 onChange={handleChange}
                                 onKeyDown={handleKeyDown}
                                 className="mpInfo-input"
@@ -246,10 +265,6 @@ export default function MyUserInformation() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="mpInfo-button-group">
-                <button onClick={handleSave} className="mpInfo-save-button">정보 저장</button>
             </div>
         </div>
     );

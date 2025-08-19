@@ -44,13 +44,16 @@
       /* flex-direction: column; */
       border: 1px solid rgb(226, 226, 226);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+      margin: 0;
       height: 100%;
       font-family: 'Gowun Dodum', sans-serif !important;
       overflow-y: hidden;
       overflow-x: hidden;
+      overscroll-behavior: none; /* 선택: iOS 끌어당김 방지 */
+
     }
-    html, body {
+    html, body, #root {
+      min-height: 100dvh;   /* 최신 브라우저에서 주소창 변화에도 안전 */
       height: 100%;
       overflow: hidden; 
     }
