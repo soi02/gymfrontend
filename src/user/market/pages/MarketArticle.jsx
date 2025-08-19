@@ -15,7 +15,7 @@ export default function MarketArticlePageTest() {
     
     const {id : loadedId} = useParams();
     
-    const checkUserStatus = 2;
+    const checkUserStatus = 1;
     const checkArticleId = Number(loadedId);
     console.log("checkArticleId");
     console.log(checkArticleId);
@@ -63,6 +63,9 @@ export default function MarketArticlePageTest() {
     
     console.log("checkUserDealerStatus");
     console.log(checkUserDealerStatus);
+    
+    const [ dealerCheckDivisionActivate, setDealerCheckDivisionActivate ] = useState(true);
+    // const [] = useState();
     
     const constMarketArticleElement = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
@@ -332,7 +335,7 @@ export default function MarketArticlePageTest() {
                     
                 }
                 
-                if (constGetSelectSpecificMarketDealedLog != null) {
+                if (constGetSelectSpecificMarketDealedLog) {
                     
                     setDealConfirmCompleted(true);
                     
@@ -393,13 +396,17 @@ export default function MarketArticlePageTest() {
                 console.log("Reloading Test Start") // Reload 안의 코드는 load 시의 코드와 같음
                 
                 const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
-                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo ] = await Promise.all([
+                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo, 
+                    constGetSelectSpecificMarketDealedLogCheckedBySeller, constGetSelectSpecificMarketDealedLogCheckedByBuyer, constGetSelectSpecificMarketDealedLog ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
                     marketAPI.getSelectMarketUserInfo(checkUserStatus),
                     marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectCountMarketProductInterestedLogWhenArticleInfo(checkArticleId),
                     marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
-                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId)
+                    marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId),
+                    marketAPI.getSelectSpecificMarketDealedLogCheckedBySeller(checkUserStatus, checkArticleId),
+                    marketAPI.getSelectSpecificMarketDealedLogCheckedByBuyer(checkUserStatus, checkArticleId),
+                    marketAPI.getSelectSpecificMarketDealedLog(checkArticleId) // 별도로 사이트에 기록하지는 않는 로드 데이터
                 ]) 
                 
                 const constGetSelectSpecificMarketArticleInfoAndDistincted = {
@@ -410,7 +417,7 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
-                setCheckArticleWriteUser(mergeMarketArticleInfo[0].article.marketUserId);
+                setCheckArticleWriteUser(constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
                     userInfo : APIElem1.marketUserInfoDto
@@ -428,6 +435,34 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                
+                if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId) {
+                    
+                    setCheckUserDealerStatus(1);
+                    
+                    if (constGetSelectSpecificMarketDealedLogCheckedBySeller) {
+                        
+                        setDealerCheckDivisionActivate(false);
+                        
+                    }
+                    
+                } else {
+                    
+                    setCheckUserDealerStatus(2);
+                    
+                    if (constGetSelectSpecificMarketDealedLogCheckedByBuyer) {
+                        
+                        setDealerCheckDivisionActivate(false);
+                        
+                    }
+                    
+                }
+                
+                if (constGetSelectSpecificMarketDealedLog) {
+                    
+                    setDealConfirmCompleted(true);
+                    
+                }
                     
                 } catch (error) {
                     
