@@ -203,6 +203,16 @@ export default function MyPage() {
           <span style={{ fontSize: "0.9rem", color: "#888" }}>장터관련 내용</span>
         </div>
       </div>
+
+       <div className="each-box">
+        <div className="box-header" onClick={() => navigate("/diary")}>
+          <div style={{ fontWeight: 500 }}>일기장 바로가기</div>
+          <span style={{ fontSize: "1.2rem", color: "#888" }}>{">"}</span>
+        </div>
+        <div className="box-body">
+          <span style={{ fontSize: "0.9rem", color: "#888" }}>오늘의 감정은 어떠신가요?</span>
+        </div>
+      </div>
     </div>
   );
 }
