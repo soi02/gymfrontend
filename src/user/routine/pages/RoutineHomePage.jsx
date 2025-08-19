@@ -80,7 +80,7 @@ export default function RoutineHomePage() {
 
                 {/* 캐릭터, 말풍선 */}
                 <div className="routine-homepage-title">
-                  훈련기록
+                  운동기록
                 </div>
 
                 {/* 실제 보이는 말풍선 */}

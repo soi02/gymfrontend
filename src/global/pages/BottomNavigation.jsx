@@ -142,7 +142,7 @@ export default function BottomNavigation() {
         link="/routine"
         matchPrefix="/routine"
         iconClass="ri-file-paper-2-fill"
-        label="훈련기록"
+        label="운동기록"
         onClick={handleRoutineTabClick}
       />
       <BottomNavigationItem

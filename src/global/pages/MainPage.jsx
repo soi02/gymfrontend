@@ -9,7 +9,7 @@ export default function MainPage() {
       {/* <img src="../src/assets/img/mainPicture.png" alt="메인맵" className="main-image" /> */}
       <img src={mainImg} alt="메인맵" className="main-image" />
       
-      {/* 득근실록 */}
+      {/* 훈련기록 */}
       <Link to="/routine" className="link-area routine" />
       {/* 수련장 */}
       <Link to="/challenge/challengeHome" className="link-area challenge" />
