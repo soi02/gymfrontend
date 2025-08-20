@@ -687,7 +687,7 @@ export default function MarketArticlePageTest() {
                 
                 return (
                     <>
-                        완료
+                        거래 완료
                     </>
                 );
                 
@@ -695,7 +695,7 @@ export default function MarketArticlePageTest() {
                 
                 return (
                     <>
-                        미완료
+                        거래 미완료
                     </>
                 );
                 
@@ -1504,9 +1504,10 @@ export default function MarketArticlePageTest() {
             return(
                 <>
                 
-                    <div className = "row" style = {{marginTop : "0.75vh", marginBottom : "3.5vh"}}>
-                        <div className = "col" style = {{fontSize : "2vh"}}>
-                            {/* <button type="button" className="btn buttonCancellationDefault" style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                    <div className = "row gx-0" style = {{marginTop : "0.75vh", marginBottom : "3.5vh"}}>
+                        <div className = "col-auto" style = {{fontSize : "2vh"}}>
+                            <button type="button" className="btn buttonDefault" disabled = {true}
+                            style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
                                 
                                 {
                                     <>
@@ -1514,8 +1515,8 @@ export default function MarketArticlePageTest() {
                                     </>
                                 }
                                 
-                            </button> */}
-                            본인의 게시글은 탐냄을 할 수 없소.
+                            </button>
+                            {/* 본인의 게시글은 탐냄을 할 수 없소. */}
                         </div>
                     </div>
                 
