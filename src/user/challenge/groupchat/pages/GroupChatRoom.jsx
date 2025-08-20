@@ -39,6 +39,7 @@ export default function GroupChatRoom() {
 
     const [participantCount, setParticipantCount] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [challengeTitle, setChallengeTitle] = useState('챌린지 채팅방');
 
     const token = reduxToken || localStorage.getItem("token");
 
@@ -47,11 +48,24 @@ export default function GroupChatRoom() {
         const fetchChatData = async () => {
             setIsLoading(true);
             try {
+                // ❌ 챌린지 정보를 가져오는 API 호출을 삭제합니다.
+                // 이전 백엔드 수정으로 인해 필요 없는 호출입니다.
+                // const challengeResponse = await apiClient.get(`/challenge/getChallenge/${challengeId}`);
+                // if (challengeResponse.data && challengeResponse.data.challengeName) {
+                //     setChallengeTitle(challengeResponse.data.challengeName);
+                // }
+
                 const participantResponse = await apiClient.get(`/challenge/groupchat/getParticipantCount/${challengeId}`);
                 setParticipantCount(participantResponse.data);
 
                 const historyResponse = await apiClient.get(`/challenge/groupchat/getChatHistoryProcess/${challengeId}`);
                 const chatHistory = historyResponse.data;
+
+                // ✅ 챌린지 제목을 채팅 기록에서 가져와 설정합니다.
+                if (chatHistory.length > 0) {
+                    setChallengeTitle(chatHistory[0].challengeTitle);
+                }
+
                 setMessages(chatHistory);
 
                 if (chatHistory.length > 0) {
@@ -62,8 +76,8 @@ export default function GroupChatRoom() {
                     });
                 }
             } catch (error) {
-                console.error("채팅 데이터를 불러오는 데 실패했습니다:", error);
-                alert("채팅 데이터를 불러올 수 없습니다. 다시 시도해 주세요.");
+                console.error("데이터를 불러오는 데 실패했습니다:", error);
+                alert("데이터를 불러올 수 없습니다. 다시 시도해 주세요.");
                 navigate(`/challenge/challengeDetail/${challengeId}`);
             } finally {
                 setIsLoading(false);
@@ -74,6 +88,7 @@ export default function GroupChatRoom() {
             fetchChatData();
         }
     }, [challengeId, navigate, token, userId]);
+
     // WebSocket 연결 및 구독
     useEffect(() => {
         if (!token) {
@@ -154,7 +169,7 @@ export default function GroupChatRoom() {
         <div className="group-chat-room-container">
             <header className="group-chat-room-header">
                 <button onClick={() => navigate(-1)} className="group-chat-room-back-button">&lt;</button>
-                <h2>챌린지 채팅방</h2>
+                <h2>{challengeTitle}</h2> {/* 동적으로 챌린지 이름 표시 */}
                 <div></div>
             </header>
             <div className="group-chat-room-messages">
