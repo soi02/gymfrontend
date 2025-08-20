@@ -22,12 +22,12 @@ export default function ChallengeList() {
   useEffect(() => {
     fetchKeywordTree();
 
-    // 페이지 진입 시 바디 스크롤 잠금
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = prevOverflow || 'auto';
-    };
+    // // 페이지 진입 시 바디 스크롤 잠금
+    // const prevOverflow = document.body.style.overflow;
+    // document.body.style.overflow = 'hidden';
+    // return () => {
+    //   document.body.style.overflow = prevOverflow || 'auto';
+    // };
   }, [fetchKeywordTree]);
 
   
