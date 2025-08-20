@@ -459,11 +459,11 @@ export default function MarketMyLikedProductsPage() {
             
             if (sellEnded == 1) {
                 
-                return "완료";
+                return "거래 완료";
                 
             } else if (sellEnded == 0) {
                 
-                return "미완료";
+                return "거래 미완료";
                 
             }
             

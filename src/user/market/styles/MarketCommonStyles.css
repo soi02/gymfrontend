@@ -66,6 +66,20 @@
   
 }
 
+.buttonDefault:disabled {
+  
+  opacity : 1;
+  background-color: #dddddd !important;
+  color: #6b7280 !important;
+  font-weight: normal !important;
+  border-radius: var(--var-ft-radius) !important;
+  border: var(--var-border) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  
+}
+
 .buttonCancellationDefault {
   
   --var-bg-color : #f2a766;

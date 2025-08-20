@@ -22,7 +22,7 @@ function MarketArticleElement({marketArticleElem1}) {
             
             return (
                 <>
-                    완료
+                    거래 완료
                 </>
             );
             
@@ -30,7 +30,7 @@ function MarketArticleElement({marketArticleElem1}) {
             
             return (
                 <>
-                    미완료
+                    거래 미완료
                 </>
             );
             
