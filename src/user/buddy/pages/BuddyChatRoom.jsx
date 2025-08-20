@@ -59,6 +59,7 @@ const BuddyChatRoom = () => {
       await axios.post(`http://localhost:8080/api/buddy/chat/read/${matchingId}`, null, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      console.log('✅ 메시지 읽음 처리 서버 요청 성공');
     } catch (error) {
       console.error("메시지 읽음 처리 실패:", error);
     }
@@ -81,7 +82,7 @@ const BuddyChatRoom = () => {
 
     fetchOtherBuddyInfo();
     fetchChats();
-    markChatsAsRead();
+    markChatsAsRead(); // 페이지 진입 시점에 전체 읽음 처리
 
     stompClient.current = new Client({
       brokerURL: `ws://localhost:8080/ws/chat`,
@@ -102,15 +103,24 @@ const BuddyChatRoom = () => {
             const receivedChat = JSON.parse(message.body);
             console.log('서버에서 받은 메시지:', receivedChat);
 
-            // ✅ 'message' 필드가 있는 유효한 채팅 메시지만 추가
             if (receivedChat.message !== undefined && receivedChat.message !== null) {
               setChats(prev => [...prev, receivedChat]);
+              
+              // ✅ 새로 도착한 메시지가 상대방이 보낸 메시지인 경우
               if (receivedChat.sendBuddyId !== loggedInUserId) {
-                markChatsAsRead();
+                // 메시지를 받는 즉시 읽음 처리 요청
+                markChatsAsRead(); 
               }
             } else if (receivedChat.type === 'READ_STATUS') {
-              // 'READ_STATUS' 메시지는 채팅 목록에 추가하지 않고 로그만 출력
-              console.log('읽음 상태 메시지 수신 (채팅 목록에 미추가):', receivedChat);
+              // 'READ_STATUS' 메시지 처리 로직
+              // `read` 필드를 업데이트하여 읽음 상태를 UI에 반영
+              setChats(prev => prev.map(chat => {
+                if (receivedChat.readChatIds.includes(chat.id)) {
+                  return { ...chat, read: true };
+                }
+                return chat;
+              }));
+              console.log('읽음 상태 메시지 수신:', receivedChat);
             }
           } catch (error) {
             console.error('메시지 파싱 오류:', error);
@@ -150,15 +160,6 @@ const BuddyChatRoom = () => {
         sendBuddyId: loggedInUserId,
         message,
       };
-
-      // 낙관적 업데이트 로직을 주석 처리하여 메시지 중복 문제를 방지
-      // const tempMessage = {
-      //   ...chatMessage,
-      //   isOptimistic: true,
-      //   read: false,
-      //   sentAt: new Date().toISOString(),
-      // };
-      // setChats(prev => [...prev, tempMessage]);
 
       stompClient.current.publish({
         destination: `/app/chat/send`,
