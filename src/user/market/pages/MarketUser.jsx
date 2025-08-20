@@ -447,7 +447,7 @@ export default function MarketUserPage() {
                                             
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                            판매한 물품이 없다오.
+                                                            판매한 물품이 없소.
                                                         </div>
                                                     </div>
                                             
@@ -491,7 +491,7 @@ export default function MarketUserPage() {
                                             
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                            판매한 물품이 없다오.
+                                                            판매한 물품이 없소.
                                                         </div>
                                                     </div>
                                             
@@ -541,7 +541,7 @@ export default function MarketUserPage() {
                                             
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                            구매한 물품이 없다오.
+                                                            구매한 물품이 없소.
                                                         </div>
                                                     </div>
                                             
@@ -585,7 +585,7 @@ export default function MarketUserPage() {
                                             
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                            구매한 물품이 없다오.
+                                                            구매한 물품이 없소.
                                                         </div>
                                                     </div>
                                             
@@ -635,7 +635,7 @@ export default function MarketUserPage() {
                                                 
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                            남겨진 평가말이 없다오.
+                                                            남겨진 평가말이 없소.
                                                         </div>
                                                     </div>
                                                 
@@ -679,7 +679,7 @@ export default function MarketUserPage() {
                                                 
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                            남겨진 평가말이 없다오.
+                                                            남겨진 평가말이 없소.
                                                         </div>
                                                     </div>
                                                 

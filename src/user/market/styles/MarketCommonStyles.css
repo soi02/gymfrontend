@@ -29,7 +29,7 @@
 
 .buttonDefault {
   
-  --var-bg-color : rgb(116, 78, 9);
+  --var-bg-color : #7c1d0d;
   --var-color : rgb(255, 255, 255);
   --var-ft-weight : bold;
   --var-ft-radius : 1.25vh;
@@ -68,7 +68,7 @@
 
 .buttonCancellationDefault {
   
-  --var-bg-color : rgb(219, 184, 142);
+  --var-bg-color : #f2a766;
   --var-color : rgb(255, 255, 255);
   --var-ft-weight : bold;
   --var-ft-radius : 1.25vh;

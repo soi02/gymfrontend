@@ -11,7 +11,7 @@ function MarketWriteArticleFloatingFixedButton() {
           right: "20px",
           width: "65px",
           height: "65px",
-          backgroundColor: "#afacacff",
+          backgroundColor: "#001439",
           color: "#fff",
           display: "flex",
           justifyContent: "center",

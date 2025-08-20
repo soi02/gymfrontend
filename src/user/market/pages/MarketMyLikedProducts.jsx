@@ -627,7 +627,7 @@ export default function MarketMyLikedProductsPage() {
                                                                 
                                                                     <div className = "row">
                                                                         <div className = "col" style = {{fontSize : "2vh"}}>
-                                                                            탐낸 물품이 없다오.
+                                                                            탐낸 물품이 없소.
                                                                         </div>
                                                                     </div>
                                                     
@@ -642,7 +642,7 @@ export default function MarketMyLikedProductsPage() {
                                             </div>
                                             <div className = "row">
                                                 <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                    <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있다오.
+                                                    <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있소.
                                                 </div>
                                             </div>
                                         </div>
