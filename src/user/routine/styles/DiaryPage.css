@@ -1,4 +1,25 @@
 /* ===== DiaryFlip: 카드 앞/뒤 전환 전용 ===== */
+/* 페이지 자체가 스크롤을 맡도록 */
+.pf-page {
+  /* 최신 뷰포트 단위 먼저 */
+  height: 100dvh;          /* 크롬/안드 신형 */
+  height: 100svh;          /* iOS 16+ */
+  /* 폴백들 */
+  height: 100vh;
+  height: -webkit-fill-available;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;                 /* ✅ flex 스크롤 핵심 */
+  overflow-y: auto;              /* ✅ 실제 스크롤 주체 */
+  -webkit-overflow-scrolling: touch; /* ✅ iOS 모멘텀 */
+  overscroll-behavior: contain;       /* 뒤로가기 제스처/바운스 완화 */
+  touch-action: pan-y;                /* 수직 스와이프 보장 */
+
+  /* 하단 고정 네비/홈바 대비 */
+  padding-bottom: calc( env(safe-area-inset-bottom, 0px) );
+}
 
 /* 3D 원근감 */
 .flip {

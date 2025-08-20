@@ -5,10 +5,19 @@
 .app-shell {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%;  ⛔ 제거 */
+  /* 뷰포트 신형 단위 우선 */
+  height: 100dvh;
+  height: 100svh;
+  /* 폴백 */
+  height: 100vh;
+
   box-sizing: border-box;
   position: relative;
   min-width: 375px;
+
+  /* ✅ 스크롤 자식 위해 */
+  min-height: 0;
 }
 
 /* PC 화면 (768px 이상)에서만 적용될 스타일 */
