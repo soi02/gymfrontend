@@ -15,7 +15,7 @@ export default function MarketArticlePageTest() {
     
     const {id : loadedId} = useParams();
     
-    const checkUserStatus = 1;
+    const checkUserStatus = 2;
     const checkArticleId = Number(loadedId);
     console.log("checkArticleId");
     console.log(checkArticleId);
@@ -66,6 +66,9 @@ export default function MarketArticlePageTest() {
     
     const [ dealerCheckDivisionActivate, setDealerCheckDivisionActivate ] = useState(true);
     // const [] = useState();
+    
+    console.log("dealerCheckDivisionActivate");
+    console.log(dealerCheckDivisionActivate);
     
     const constMarketArticleElement = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
@@ -130,6 +133,7 @@ export default function MarketArticlePageTest() {
     const [reloadingProductInterestedLogWhenUserAndArticleInfo, setReloadingProductInterestedLogWhenUserAndArticleInfo] = useState(false);
     const [commentOnArticleLoading, setCommentOnArticleLoading] = useState(true);
     const [commentOnArticleReloading, setCommentOnArticleReloading] = useState(false);
+    const [reloadingDealerCheckDivisionActivate, setReloadingDealerCheckDivisionActivate] = useState(false);
     
     //
     
@@ -288,13 +292,16 @@ export default function MarketArticlePageTest() {
                 console.log("Loading Test Start") // Reload 코드 그대로 불러와서... (Finally 시 처리는 다른데...) 수정해야 됨....
                 
                 const [ constGetSelectSpecificMarketArticleInfo, constGetSelectMarketUserInfo, constGetSelectMarketCommentOnArticle, constGetSelectCountMarketProductInterestedLogWhenArticleInfo, 
-                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo, constGetSelectSpecificMarketDealedLog ] = await Promise.all([
+                    constGetSelectCountMarketCommentOnArticle, constGetSelectMarketProductInterestedLogWhenUserAndArticleInfo, 
+                    constGetSelectSpecificMarketDealedLogCheckedBySeller, constGetSelectSpecificMarketDealedLogCheckedByBuyer, constGetSelectSpecificMarketDealedLog ] = await Promise.all([
                     marketAPI.getSelectSpecificMarketArticleInfo(checkArticleId),
                     marketAPI.getSelectMarketUserInfo(checkUserStatus),
                     marketAPI.getSelectMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectCountMarketProductInterestedLogWhenArticleInfo(checkArticleId),
                     marketAPI.getSelectCountMarketCommentOnArticle(checkArticleId),
                     marketAPI.getSelectMarketProductInterestedLogWhenUserAndArticleInfo(checkUserStatus, checkArticleId),
+                    marketAPI.getSelectSpecificMarketDealedLogCheckedBySeller(checkUserStatus, checkArticleId),
+                    marketAPI.getSelectSpecificMarketDealedLogCheckedByBuyer(checkUserStatus, checkArticleId),
                     marketAPI.getSelectSpecificMarketDealedLog(checkArticleId) // 별도로 사이트에 기록하지는 않는 로드 데이터
                 ]) 
                 
@@ -324,14 +331,33 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                    
+                console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
+                console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
+                console.log("constGetSelectSpecificMarketDealedLogCheckedByBuyer");
+                console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
+                console.log("constGetSelectSpecificMarketDealedLog");
+                console.log(constGetSelectSpecificMarketDealedLog);
                 
                 if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId) {
                     
                     setCheckUserDealerStatus(1);
                     
+                    if (constGetSelectSpecificMarketDealedLogCheckedBySeller) {
+                        
+                        setDealerCheckDivisionActivate(false);
+                        
+                    }
+                    
                 } else {
                     
                     setCheckUserDealerStatus(2);
+                    
+                    if (constGetSelectSpecificMarketDealedLogCheckedByBuyer) {
+                        
+                        setDealerCheckDivisionActivate(false);
+                        
+                    }
                     
                 }
                 
@@ -350,6 +376,7 @@ export default function MarketArticlePageTest() {
                     setReloadingProductInterestedLogWhenUserAndArticleInfo(false);
                     setCommentOnArticleReloading(false);
                     setCommentOnArticleLoading(false);
+                    setReloadingDealerCheckDivisionActivate(false);
                     console.log("Reloading Test End")
                     
                 }
@@ -389,7 +416,9 @@ export default function MarketArticlePageTest() {
         
         const constUseEffect = async () => {
             
-            if (commentOnArticleReloading || reloadingProductInterestedLogWhenUserAndArticleInfo) {
+            if (commentOnArticleReloading || reloadingProductInterestedLogWhenUserAndArticleInfo ||
+                reloadingDealerCheckDivisionActivate
+            ) {
             
                 try {
                     
@@ -435,6 +464,13 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                    
+                console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
+                console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
+                console.log("constGetSelectSpecificMarketDealedLogCheckedByBuyer");
+                console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
+                console.log("constGetSelectSpecificMarketDealedLog");
+                console.log(constGetSelectSpecificMarketDealedLog);
                 
                 if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId) {
                     
@@ -473,6 +509,7 @@ export default function MarketArticlePageTest() {
                     setReloadingProductInterestedLogWhenUserAndArticleInfo(false);
                     setCommentOnArticleReloading(false);
                     setCommentOnArticleLoading(false);
+                    setReloadingDealerCheckDivisionActivate(false);
                     console.log("Reloading Test End")
                     
                 }
@@ -483,7 +520,7 @@ export default function MarketArticlePageTest() {
         
         constUseEffect();
         
-    }, [commentOnArticleReloading, reloadingProductInterestedLogWhenUserAndArticleInfo]);
+    }, [commentOnArticleReloading, reloadingProductInterestedLogWhenUserAndArticleInfo, reloadingDealerCheckDivisionActivate]);
     
     useEffect(() => {
             
@@ -616,6 +653,10 @@ export default function MarketArticlePageTest() {
                 
             } catch (error) {
                 console.error("로드 실패:", error);
+            } finally {
+                    
+                setReloadingDealerCheckDivisionActivate(true);
+                
             }
             
         }
@@ -833,6 +874,12 @@ export default function MarketArticlePageTest() {
         }
         
         const constButtonToConfirmBuyerBySeller = async () => {
+                
+            console.log("code executed");
+            console.log("checkUserDealerStatus");
+            console.log(checkUserDealerStatus);
+            console.log("checkArticleId");
+            console.log(checkArticleId);
             
             if (checkUserDealerStatus === 1) {
             
@@ -872,6 +919,10 @@ export default function MarketArticlePageTest() {
                     
                 } catch (error) {
                     console.error("로드 실패:", error);
+                } finally {
+                    
+                    setReloadingDealerCheckDivisionActivate(true);
+                    
                 }
                 
             }
@@ -879,6 +930,10 @@ export default function MarketArticlePageTest() {
         }
         
         const constButtonToConfirmSellerByBuyer = async () => {
+                
+            console.log("code executed");
+            console.log("checkUserDealerStatus");
+            console.log(checkUserDealerStatus);
             
             if (checkUserDealerStatus === 2) {
             
@@ -918,6 +973,10 @@ export default function MarketArticlePageTest() {
                     
                 } catch (error) {
                     console.error("로드 실패:", error);
+                } finally {
+                    
+                    setReloadingDealerCheckDivisionActivate(true);
+                    
                 }
                 
             }
@@ -942,7 +1001,7 @@ export default function MarketArticlePageTest() {
             
             if (checkUserStatus == comment.marketUserId) {
                 
-                if (checkUserStatus == checkArticleWriteUser) {
+                if (checkUserStatus === checkArticleWriteUser) {
                 
                     letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
                     
@@ -1043,21 +1102,25 @@ export default function MarketArticlePageTest() {
                 
             } else {
                 
-                if (checkUserStatus == checkArticleWriteUser) {
+                if (checkUserStatus === checkArticleWriteUser) {
                 
-                    letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
+                    // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
                     
-                    (
+                    return (
                         <>
                         
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                    <div className = "row">
+                                    {/* <div className = "row">
                                         <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller}
                                         style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                             구매인으로 선택
                                         </div>
-                                    </div>
+                                    </div> */}
+                                    <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
+                                    constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
+                                    constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer}
+                                    />
                                 </div>
                             </div>
                         
@@ -1068,19 +1131,22 @@ export default function MarketArticlePageTest() {
                     
                     if (comment.marketUserId == checkArticleWriteUser) {
                         
-                        letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
+                        // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
                         
-                        (
+                        return (
                             <>
                             
                                 <div className = "row">
                                     <div className = "col" style = {{fontSize : "1.75vh"}}>
-                                        <div className = "row">
+                                        {/* <div className = "row">
                                             <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
                                             style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                                 판매인으로 선택
                                             </div>
-                                        </div>
+                                        </div> */}
+                                        <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
+                                        constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
+                                        constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer}/>
                                     </div>
                                 </div>
                             
@@ -1089,7 +1155,7 @@ export default function MarketArticlePageTest() {
                         
                     } else {
                         
-                        letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
+                        // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
                         
                         (
                             <>
@@ -1211,15 +1277,167 @@ export default function MarketArticlePageTest() {
         
     }
     
+    function MarketDealerCheckDivisionActivateOnArticleLayout() {
+        
+        let letMarketDealerCheckDivisionActivateOnArticleLayout;
+        
+        if (dealerCheckDivisionActivate) {
+            
+            letMarketDealerCheckDivisionActivateOnArticleLayout = 
+            
+            (
+                <>
+                
+                    <div className = "row">
+                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
+                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                            판매인으로 선택
+                        </div>
+                    </div>
+                
+                </>
+            )
+            
+        } else {
+            
+            letMarketDealerCheckDivisionActivateOnArticleLayout =
+            
+            (
+                <>
+                
+                
+                
+                </>
+            )
+            
+        }
+        
+        return (letMarketDealerCheckDivisionActivateOnArticleLayout)
+        
+    }
+    
+    function MarketDealerCheckDivisionActivateOnCommentOnArticleLayout({constButtonToConfirmBuyerBySeller1, constButtonToConfirmSellerByBuyer1}) {
+        
+        // let letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout;
+        
+        if (checkUserDealerStatus === 1) {
+            
+            if (dealerCheckDivisionActivate) {
+                
+                // letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout = 
+                
+                return (
+                    <>
+
+                        <div className = "row">
+                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller1}
+                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                구매인으로 선택
+                            </div>
+                        </div>
+                    
+                    </>
+                )
+                
+            } else {
+                
+                // letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout =
+                
+                return (
+                    <>
+                    
+                    
+                    
+                    </>
+                )
+                
+            }
+            
+        } else
+            // checkUserDealerStatus 가 2인 경우도 포함
+        {
+            
+            if (dealerCheckDivisionActivate) {
+                
+                // letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout = 
+                
+                return (
+                    <>
+
+                        <div className = "row">
+                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer1}
+                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                판매인으로 선택
+                            </div>
+                        </div>
+                    
+                    </>
+                )
+                
+            } else {
+                
+                // letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout =
+                
+                return (
+                    <>
+                    
+                    
+                    
+                    </>
+                )
+                
+            }
+            
+        }
+        
+        //
+        
+        // if (dealerCheckDivisionActivate) {
+            
+        //     letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout = 
+            
+        //     (
+        //         <>
+
+        //             <div className = "row">
+        //                 <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
+        //                 style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+        //                     판매인으로 선택
+        //                 </div>
+        //             </div>
+                
+        //         </>
+        //     )
+            
+        // } else {
+            
+        //     letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout =
+            
+        //     (
+        //         <>
+                
+                
+                
+        //         </>
+        //     )
+            
+        // }
+        
+        // ▲ 중복 코드
+        
+        // return (letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout)
+        
+    }
+    
     function MarketArticleUpdateOrDeleteDivisionPageLayout({marketArticleElem1}) {
         
         const { article, userInfo } = marketArticleElem1;
         
-        let MarketArticleUpdateOrDeleteDivisionPageLayout;
+        let letMarketArticleUpdateOrDeleteDivisionPageLayout;
         
         if (checkUserStatus == article.marketUserId) {
             
-            MarketArticleUpdateOrDeleteDivisionPageLayout =
+            letMarketArticleUpdateOrDeleteDivisionPageLayout =
             
             (
                 <>
@@ -1248,19 +1466,20 @@ export default function MarketArticlePageTest() {
             
         } else {
             
-            MarketArticleUpdateOrDeleteDivisionPageLayout =
+            letMarketArticleUpdateOrDeleteDivisionPageLayout =
             
             (
                 <>
                 
                     <div className = "row">
                         <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", fontSize : "2.25vh"}}>
-                            <div className = "row">
+                            {/* <div className = "row">
                                 <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
                                 style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                     판매인으로 선택
                                 </div>
-                            </div>
+                            </div> */}
+                            <MarketDealerCheckDivisionActivateOnArticleLayout />
                         </div>
                     </div>
                 
@@ -1269,7 +1488,7 @@ export default function MarketArticlePageTest() {
             
         }
         
-        return(MarketArticleUpdateOrDeleteDivisionPageLayout);
+        return(letMarketArticleUpdateOrDeleteDivisionPageLayout);
         
     }
     
