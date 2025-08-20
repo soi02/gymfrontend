@@ -64,14 +64,12 @@ const BuddyChatRoom = () => {
     }
   };
 
-  // 새 메시지 올 때 스크롤 하단으로
   useEffect(() => {
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [chats]);
 
-  // 웹소켓 연결 + 초기 데이터
   useEffect(() => {
     if (!matchingId || !loggedInUserId) return;
 
@@ -85,7 +83,6 @@ const BuddyChatRoom = () => {
     fetchChats();
     markChatsAsRead();
 
-    // ✅ 순수 WebSocket로 접속 (서버가 withSockJS 사용 안 함)
     stompClient.current = new Client({
       brokerURL: `ws://localhost:8080/ws/chat`,
       connectHeaders: { Authorization: `Bearer ${token}` },
@@ -96,17 +93,27 @@ const BuddyChatRoom = () => {
     });
 
     stompClient.current.onConnect = () => {
-      // 중복 구독 방지
       if (subscriptionRef.current) subscriptionRef.current.unsubscribe();
 
-      // ✅ 서버 convertAndSend("/topic/{matchingId}", ...)
       subscriptionRef.current = stompClient.current.subscribe(
         `/topic/${matchingId}`,
         (message) => {
-          const receivedChat = JSON.parse(message.body);
-          setChats(prev => [...prev, receivedChat]);
-          if (receivedChat.sendBuddyId !== loggedInUserId) {
-            markChatsAsRead();
+          try {
+            const receivedChat = JSON.parse(message.body);
+            console.log('서버에서 받은 메시지:', receivedChat);
+
+            // ✅ 'message' 필드가 있는 유효한 채팅 메시지만 추가
+            if (receivedChat.message !== undefined && receivedChat.message !== null) {
+              setChats(prev => [...prev, receivedChat]);
+              if (receivedChat.sendBuddyId !== loggedInUserId) {
+                markChatsAsRead();
+              }
+            } else if (receivedChat.type === 'READ_STATUS') {
+              // 'READ_STATUS' 메시지는 채팅 목록에 추가하지 않고 로그만 출력
+              console.log('읽음 상태 메시지 수신 (채팅 목록에 미추가):', receivedChat);
+            }
+          } catch (error) {
+            console.error('메시지 파싱 오류:', error);
           }
         }
       );
@@ -144,19 +151,19 @@ const BuddyChatRoom = () => {
         message,
       };
 
-      // 낙관적 업데이트
-      const tempMessage = {
-        ...chatMessage,
-        isOptimistic: true,
-        read: false,
-        sentAt: new Date().toISOString(),
-      };
-      setChats(prev => [...prev, tempMessage]);
+      // 낙관적 업데이트 로직을 주석 처리하여 메시지 중복 문제를 방지
+      // const tempMessage = {
+      //   ...chatMessage,
+      //   isOptimistic: true,
+      //   read: false,
+      //   sentAt: new Date().toISOString(),
+      // };
+      // setChats(prev => [...prev, tempMessage]);
 
       stompClient.current.publish({
         destination: `/app/chat/send`,
         body: JSON.stringify(chatMessage),
-        headers: { 'content-type': 'application/json' }, // ✅ 중요
+        headers: { 'content-type': 'application/json' },
       });
 
       setMessage('');
@@ -165,12 +172,18 @@ const BuddyChatRoom = () => {
       alert('메시지를 보낼 수 없습니다. 연결 상태를 확인하세요.');
     }
   };
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+      sendMessage();
+    }
+  };
 
   const formatTime = (isoString) => {
     if (!isoString) return '';
     const date = new Date(isoString);
     return `${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
-    };
+  };
 
   const formatDateDivider = (isoString) => {
     if (!isoString) return '';
@@ -239,7 +252,7 @@ const BuddyChatRoom = () => {
           placeholder="메시지를 입력하세요"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()} // onKeyPress 대신 onKeyDown 권장
+          onKeyDown={handleKeyDown}
         />
         <button className="send-button" onClick={sendMessage}>
           <i className="bi bi-send"></i>
