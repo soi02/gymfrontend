@@ -1297,7 +1297,7 @@ export default function MarketArticlePageTest() {
                                                                         <div className = "col" style = {{fontSize : "2.25vh", paddingLeft : "3vh", paddingRight : "3vh",
                                                                             marginBottom : "4vh"
                                                                         }}>
-                                                                            게시글에 쓰인 댓글이 없다오.
+                                                                            게시글에 쓰인 댓글이 없소.
                                                                         </div>
                                                                     </div>
                                                                 
