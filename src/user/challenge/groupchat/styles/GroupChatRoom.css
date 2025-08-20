@@ -1,110 +1,200 @@
-/* .group-chat-room-container {
+/* src/styles/GroupChatRoom.css */
+
+/* 전체 채팅방 컨테이너 */
+.group-chat-room-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    max-width: 800px;
+    background-color: #f6f6f6;
+    max-width: 600px;
     margin: 0 auto;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 헤더 스타일 */
 .group-chat-room-header {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .group-chat-room-header h2 {
+    flex-grow: 1;
+    text-align: center;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
 }
 
 .group-chat-room-back-button {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    font-size: 24px;
+    color: #7c1d0d;
     cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 15px;
 }
 
+/* 메시지 목록 컨테이너 */
 .group-chat-room-messages {
-    flex: 1;
+    height: 0;
+    flex-grow: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 10px 15px;
+    background-color: #f6f6f6;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #e9ecef;
 }
 
-.group-chat-room-message {
-    padding: 0.7rem 1rem;
-    border-radius: 20px;
-    max-width: 70%;
-    word-wrap: break-word;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
-    font-size: 0.9rem;
+/* 메시지 행 컨테이너 */
+.group-chat-room-message-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
 }
 
+/* 프로필 이미지의 공간을 차지하는 placeholder */
+.group-chat-room-profile-placeholder {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+/* 연속 메시지 간의 간격 조정 */
+.group-chat-room-message-row + .group-chat-room-message-row:not(.first-message) {
+    margin-top: -5px; /* 연속된 메시지 간의 간격 줄이기 */
+}
+
+/* 내 메시지 스타일 */
 .group-chat-room-my-message {
     align-self: flex-end;
-    background-color: #4CAF50;
-    color: white;
-    text-align: right;
+    flex-direction: row-reverse;
 }
 
-.group-chat-room-other-message {
-    align-self: flex-start;
-    background-color: #ffffff;
-    color: #333;
-    text-align: left;
+/* 프로필 이미지 스타일 */
+.group-chat-room-profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
+/* 이름, 버블, 시간/숫자를 묶는 그룹 */
+.group-chat-room-message-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    max-width: 70%;
+}
+
+.group-chat-room-my-message .group-chat-room-message-group {
+    align-items: flex-end;
+}
+
+/* 버블과 시간/숫자를 묶는 그룹 */
+.group-chat-room-message-and-info {
+    display: flex;
+    align-items: flex-end; /* 버블과 시간을 아래쪽에 정렬 */
+    gap: 5px;
+}
+
+.group-chat-room-my-message .group-chat-room-message-and-info {
+    flex-direction: row-reverse; /* 내 메시지는 시간/숫자가 왼쪽에 오도록 순서 반전 */
+}
+
+/* 메시지 발신자 이름 */
 .group-chat-room-message-sender {
-    display: block;
-    font-size: 0.7rem;
-    font-weight: bold;
+    font-size: 13px;
     color: #555;
-    margin-bottom: 5px;
-}
-
-.group-chat-room-my-message .group-chat-room-message-sender {
-    color: #eee;
-}
-
-.group-chat-room-message-time {
+    font-weight: bold;
     display: block;
-    font-size: 0.6rem;
-    color: #888;
-    margin-top: 5px;
 }
 
+/* 메시지 내용 (버블) */
+.group-chat-room-message-content {
+    padding: 9px 12px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+    line-height: 1.4;
+    max-width: 110%; /* 메시지 버블이 차지할 수 있는 최대 너비 */
+}
+
+
+
+/* 내 메시지 버블 스타일 */
+.group-chat-room-my-message .group-chat-room-message-content {
+    background-color: #7c1d0d;
+    color: #fff;
+    border-bottom-right-radius: 2px;
+}
+
+/* 상대방 메시지 버블 스타일 */
+.group-chat-room-other-message .group-chat-room-message-content {
+    background-color: #e5e5ea;
+    color: #000;
+    border-bottom-left-radius: 2px;
+}
+
+/* 메시지 정보 (시간, 읽음 수) */
+.group-chat-room-message-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 11px;
+    color: #8e8e93;
+    white-space: nowrap;
+    gap: 2px;
+}
+
+/* 읽지 않은 사람 수 */
+.group-chat-room-unread-count {
+    font-weight: bold;
+}
+
+/* 입력 폼 */
 .group-chat-room-input-form {
     display: flex;
-    padding: 1rem;
-    border-top: 1px solid #ddd;
-    background-color: #f8f9fa;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #fff;
+    border-top: 1px solid #e5e5e5;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .group-chat-room-input {
-    flex: 1;
-    padding: 0.7rem;
+    flex-grow: 1;
+    border: 1px solid #e5e5ea;
+    padding: 8px 12px;
     border-radius: 20px;
-    border: 1px solid #ccc;
-    margin-right: 0.5rem;
+    background-color: #f9f9f9;
+    margin-right: 10px;
+    font-size: 15px;
+    outline: none;
 }
 
 .group-chat-room-send-button {
-    background-color: #007bff;
-    color: white;
+    background-color: #7c1d0d;
+    color: #fff;
     border: none;
-    padding: 0.7rem 1.5rem;
+    padding: 8px 15px;
     border-radius: 20px;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
-} */
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+.group-chat-room-send-button:hover {
+    background-color: #a42c16;
+}

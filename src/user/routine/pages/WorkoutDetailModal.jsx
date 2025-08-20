@@ -64,50 +64,50 @@ export default function WorkoutDetailModal({ open, onClose, rows = [] }) {
               </div>
             ))}
           </div>
-
         </div>
-          <div className="wdm-metrics">
-            <div className="wdm-metric">
-              <span className="wdm-metric-ico">💪</span>
-              <span className="wdm-metric-text">{exerciseCount}운동</span>
-            </div>
-            <div className="wdm-metric">
-              <span className="wdm-metric-ico">🏋️</span>
-              <span className="wdm-metric-text">{totalSets}세트</span>
-            </div>
-            <div className="wdm-metric">
-              <span className="wdm-metric-ico">🔥</span>
-              <span className="wdm-metric-text">
-                {calories ? `${calories}kcal` : "—"}
-              </span>
-            </div>
+        <div className="wdm-metrics">
+          <div className="wdm-metric">
+            <span className="wdm-metric-ico">💪</span>
+            <span className="wdm-metric-text">{exerciseCount}운동</span>
           </div>
+          <div className="wdm-metric">
+            <span className="wdm-metric-ico">🏋️</span>
+            <span className="wdm-metric-text">{totalSets}세트</span>
+          </div>
+          <div className="wdm-metric">
+            <span className="wdm-metric-ico">🔥</span>
+            <span className="wdm-metric-text">
+              {calories ? `${calories}kcal` : "—"}
+            </span>
+          </div>
+        </div>
 
         <hr className="wdm-divider" />
 
         {/* 자세히 보기 */}
         <h5 className="wdm-section-title">자세히 보기</h5>
-<div className="wdm-details">
-  {groups.map((g, gi) => (
-    <div className="wdm-exbox" key={g.key ?? gi}>
-      {/* 상단 제목 필 */}
-      <div className="wdm-exbox-head">
-        <span className="wdm-exbox-title">{gi + 1} {g.name}</span>
-      </div>
+        <div className="wdm-details">
+          {groups.map((g, gi) => (
+            <div className="wdm-exbox" key={g.key ?? gi}>
+              {/* 상단 제목 필 */}
+              <div className="wdm-exbox-head">
+                <span className="wdm-exbox-title">
+                  {/* {gi + 1} {g.name} */}
+                  ✗ {g.name}
+                </span>
+              </div>
 
-      {/* 세트 2×2 그리드 */}
-      <div className="wdm-setgrid-2">
-        {g.sets.map((s, si) => (
-          <div className="wdm-setpill" key={si}>
-            {s.kg}kg × {s.reps}회
-          </div>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
-
-
+              {/* 세트 2×2 그리드 */}
+              <div className="wdm-setgrid-2">
+                {g.sets.map((s, si) => (
+                  <div className="wdm-setpill" key={si}>
+                    {s.kg}kg × {s.reps}회
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

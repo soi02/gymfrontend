@@ -76,22 +76,22 @@ export default function GuidePage() {
 
 
 // 상단의 state들 아래에 추가
-const [videos, setVideos] = useState([]);
+// const [videos, setVideos] = useState([]);
 
 // 운동명(meta.elementName) 세팅된 뒤 검색
-useEffect(() => {
-  const run = async () => {
-    if (!meta.elementName) return;
-    try {
-      const query = `${meta.elementName} 운동 방법`; // 예: 벤치 프레스 운동 방법
-      const list = await routineService.youtubeSearch(query);
-      setVideos((list || []).slice(0, 3)); // 3개만
-    } catch (e) {
-      console.error("유튜브 검색 실패", e);
-    }
-  };
-  run();
-}, [meta.elementName]);
+// useEffect(() => {
+//   const run = async () => {
+//     if (!meta.elementName) return;
+//     try {
+//       const query = `${meta.elementName} 운동 방법`; // 예: 벤치 프레스 운동 방법
+//       const list = await routineService.youtubeSearch(query);
+//       setVideos((list || []).slice(0, 3)); // 3개만
+//     } catch (e) {
+//       console.error("유튜브 검색 실패", e);
+//     }
+//   };
+//   run();
+// }, [meta.elementName]);
 
 
 
@@ -195,7 +195,7 @@ useEffect(() => {
           </div>
         )}
       </div>
-
+{/* 
       <h5 style={{ marginTop: "1rem" }}>∙ 운동 영상</h5>
         <div
           className="youtube-grid"
@@ -219,7 +219,7 @@ useEffect(() => {
               <p style={{ margin: '0.3rem 0 0', fontSize: '0.9rem' }}>{v.title}</p>
             </div>
           ))}
-        </div>
+        </div> */}
 
     </div>
 

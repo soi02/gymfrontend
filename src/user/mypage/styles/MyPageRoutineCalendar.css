@@ -480,14 +480,14 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  color: #666;
+  color: #1e3a67;
   font-size: 0.85rem;
   gap: 2px;
 }
 
 .summary-item i {
   font-size: 1.3rem; /* 아이콘 크기 */
-  color: #888;
+  color: #1e3a67;
 }
 
 .summary-item span {
@@ -496,7 +496,7 @@
 
 /* 일지보기 버튼 */
 .view-diary-button {
-  width: 7rem; 
+  width: 5rem; 
   height: 4rem;
   margin-top: 0.5rem;
   background-color: #1e3a67;
