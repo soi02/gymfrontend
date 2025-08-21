@@ -155,7 +155,7 @@ const EmotionalDiaryCalendar = () => {
                 <span className="diary-day-number">{day.date.getDate()}</span>
                 {day.hasEntry && day.emotion && (
                   <img
-                    src={`http://localhost:8080/uploadFiles/${day.emotion.emoji_image}`}
+                    src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
                     alt={day.emotion.name}
                     className="diary-emotion-indicator"
                   />
