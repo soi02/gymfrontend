@@ -279,7 +279,7 @@ export default function MarketMyLikedProductsPage() {
                 <div className = "row">
                     <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "1.5vh"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
-                        <i className="ri-heart-3-line"></i>
+                        <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
                     </div>
                 </div>
                 
@@ -296,7 +296,7 @@ export default function MarketMyLikedProductsPage() {
                 <div className = "row">
                     <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "1.5vh"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
-                        <i className="ri-heart-3-fill"></i>
+                        <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
                     </div>
                 </div>
                 
@@ -338,7 +338,14 @@ export default function MarketMyLikedProductsPage() {
         
         try {
             
-            const constPostInsertMarketProductInterestedLog = await MarketAPI.postInsertMarketProductInterestedLog(2, 1)
+            //
+            
+            // const constPostInsertMarketProductInterestedLog = await MarketAPI.postInsertMarketProductInterestedLog(2, 1)
+            
+            // ▲ 언제 쓸 가능성이 있으려나...?? 
+            
+            console.log("errorcode??");
+            
             setReloadLikeDivision(true);
             
         } catch (error) {
@@ -385,7 +392,13 @@ export default function MarketMyLikedProductsPage() {
         
         try {
             
-            const constPostDeleteMarketProductInterestedLog = await MarketAPI.postDeleteMarketProductInterestedLog(2, 1);
+            //
+            
+            // const constPostDeleteMarketProductInterestedLog = await MarketAPI.postDeleteMarketProductInterestedLog(2, 1);
+            
+            // ▲ 언제 쓸 가능성이 있으려나...?? 
+            
+            console.log("errorcode??");
             
             setReloadLikeDivision(true);
             
@@ -429,7 +442,7 @@ export default function MarketMyLikedProductsPage() {
             {id : 1, marketUserId : checkUserStatus, specificArticleId : article.id, createdAt : new Date("1970-01-01T00:00:03")}
         )
         
-        function clickPossibleWhenLikeChecked({marketUserId, specificArticleId}) {
+        function clickPossibleWhenLikeChecked(event, {marketUserId, specificArticleId}) {
             
             console.log("deleteLike");
             MarketAPI.postDeleteMarketProductInterestedLog(marketUserId, specificArticleId);
@@ -437,7 +450,7 @@ export default function MarketMyLikedProductsPage() {
             
         }
         
-        function clickPossibleWhenLikeUnchecked({insertMarketProductInterestedLog}) {
+        function clickPossibleWhenLikeUnchecked(event, {insertMarketProductInterestedLog}) {
             
             console.log("insertLike");
             MarketAPI.postInsertMarketProductInterestedLog(insertMarketProductInterestedLog);
@@ -513,7 +526,8 @@ export default function MarketMyLikedProductsPage() {
                                             <div className = "row h-100">
                                                 <div className = "col-auto" style = {{paddingLeft : "1.5vh", paddingRight : "1.5vh", display : "flex", alignItems : "center"}}>
                                                     
-                                                    {
+                                                    
+                                                    {/* {
                                                     likeChecked ? 
                                                     (<>
                                                     
@@ -536,7 +550,8 @@ export default function MarketMyLikedProductsPage() {
                                                         </div>
                                                     
                                                     </>)
-                                                    }
+                                                    } */}
+                                                    
                                                     
                                                     {/* {funcLikeChecked(likeChecked)} */}
                                                     
@@ -569,8 +584,56 @@ export default function MarketMyLikedProductsPage() {
                                                     <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                         <div className = "row">
                                                             <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                                paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>
-                                                                <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                            paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                                <div className = "row h-100">
+                                                                    <div className = "col" style = {{width : "100%", height : "100%"}}>
+                                                                        <div className = "row gx-0" style = {{top : "0px", left : "0px", width : "100%", height : "100%", position : "absolute", zIndex: "5"}}>
+                                                                            <div className = "col-auto" style = {{width : "50%", height : "50%"}}>
+                                                                                
+                                                                                {
+                                                                                likeChecked ? 
+                                                                                (<>
+                                                                                
+                                                                                    <div className = "row gx-0" style = {{height : "100%"}}>
+                                                                                        <div className = "col basicDivisionOnClickStyle" 
+                                                                                        onClick = {(event) => {
+                                                                                            event.preventDefault();
+                                                                                            event.stopPropagation();
+                                                                                            clickPossibleWhenLikeChecked(event, {marketUserId : checkUserStatus, specificArticleId : article.id})}} 
+                                                                                        style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
+                                                                                        fontSize : "5vh", color : "#c0392b", pointerEvents : "none"}}>
+                                                                                            <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                
+                                                                                </>):
+                                                                                (<>
+                                                                                
+                                                                                    <div className = "row gx-0" style = {{height : "100%"}}>
+                                                                                        <div className = "col basicDivisionOnClickStyle" onClick = {(event) => {
+                                                                                            event.preventDefault();
+                                                                                            event.stopPropagation();
+                                                                                            clickPossibleWhenLikeUnchecked(event, {insertMarketProductInterestedLog})}} 
+                                                                                        style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
+                                                                                        fontSize : "5vh", color : "#f2a766", pointerEvents : "none"}}>
+                                                                                            <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                
+                                                                                </>)
+                                                                                }
+                                                                                
+                                                                            </div>
+                                                                            {/* <div className = "col">
+                                                                                
+                                                                            </div> */}
+                                                                        </div>
+                                                                        <div style = {{position: "absolute", zIndex: "2"}}>
+                                                                            <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                             <div className = "col" style = {{position : "relative"}}>
                                                                 <div className = "row">
@@ -672,7 +735,7 @@ export default function MarketMyLikedProductsPage() {
                                                                         <>
                                                                         
                                                                             <div className = "row">
-                                                                                <div className = "col" style = {{fontSize : "2vh"}}>
+                                                                                <div className = "col" style = {{fontSize : "2vh", marginBottom : "2vh"}}>
                                                                                     탐낸 물품이 없소.
                                                                                 </div>
                                                                             </div>

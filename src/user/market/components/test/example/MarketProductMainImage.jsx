@@ -16,7 +16,8 @@ export default function MarketProductMainImage({imageLinkURL}) {
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                             height: "100%",
-                            objectFit: "cover"
+                            objectFit: "cover",
+                            zIndex : "2"
                         }}/>
                     </div>
                 </div>
