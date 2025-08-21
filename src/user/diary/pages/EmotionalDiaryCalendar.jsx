@@ -16,6 +16,13 @@ const EmotionalDiaryCalendar = () => {
   const [error, setError] = useState(null);
   const [isMonthPickerOpen, setIsMonthPickerOpen] = useState(false);
 
+  // 로그를 위한 상태 추가
+  const [debugInfo, setDebugInfo] = useState({
+    loaded: false,
+    diariesCount: 0,
+    emotionsCount: 0
+  });
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', { state: { from: '/diary/calendar' } });
@@ -46,10 +53,12 @@ const EmotionalDiaryCalendar = () => {
   }, [isAuthenticated, id]);
 
   const getFormattedLocalDate = (date) => {
+    if (!date) return '';
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
   };
 
   const getDaysInMonth = () => {
@@ -60,6 +69,14 @@ const EmotionalDiaryCalendar = () => {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
 
+    // 로그: 현재 달의 일기 데이터 확인
+    console.log('현재 달의 일기 데이터:', {
+      년: year,
+      월: month + 1,
+      일기목록: diaries,
+      감정목록: emotions
+    });
+
     // 캘린더 시작점을 월요일로 맞춤
     const firstDayIndex = (firstDay.getDay() + 6) % 7; // 0(월) ~ 6(일)
     for (let i = 0; i < firstDayIndex; i++) {
@@ -67,7 +84,8 @@ const EmotionalDiaryCalendar = () => {
         days.push({
             date: prevMonthDay,
             isCurrentMonth: false,
-            hasEntry: false
+            hasEntry: false,
+            emotion: null
         });
     }
 
@@ -75,7 +93,22 @@ const EmotionalDiaryCalendar = () => {
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const date = new Date(year, month, i);
       const dateString = getFormattedLocalDate(date);
-      const diaryEntry = diaries.find(d => d.created_at.startsWith(dateString));
+      
+      // 날짜를 비교하여 해당 날짜의 일기를 찾습니다.
+      const diaryEntry = diaries.find(diary => {
+        // 서버에서 받은 UTC 날짜 문자열을 로컬 시간대 Date 객체로 변환합니다.
+        const localDiaryDate = new Date(diary.created_at);
+        // 로컬 Date 객체를 'YYYY-MM-DD' 형식의 문자열로 변환합니다.
+        const diaryDateString = getFormattedLocalDate(localDiaryDate);
+        // 캘린더의 날짜 문자열과 비교합니다.
+        return diaryDateString === dateString;
+      });
+
+      console.log(`${dateString} 일기 확인:`, {
+        있음: !!diaryEntry,
+        일기: diaryEntry,
+        감정: diaryEntry ? emotions.find(e => e.id === diaryEntry.emoji_id) : null
+      });
 
       days.push({
         date: date,
@@ -183,19 +216,20 @@ const EmotionalDiaryCalendar = () => {
                            ${day.hasEntry ? 'has-entry' : ''}`}
                 onClick={() => handleDayClick(day)}
               >
-                {day.hasEntry ? (
-                    day.emotion && (
-                        <img
-                          src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
-                          alt={day.emotion.name}
-                          className="diary-emotion-indicator"
-                          onError={(e) => {
-                              console.error(`이미지 로드 실패: ${e.target.src}`);
-                          }}
-                        />
-                    )
-                ) : (
-                    <span className="diary-day-number">{day.date.getDate()}</span>
+                <span className="diary-day-number">{day.date.getDate()}</span>
+                {day.isCurrentMonth && day.hasEntry && day.emotion && (
+                  <img
+                    src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
+                    alt={day.emotion.name}
+                    className="diary-emotion-indicator"
+                    onError={(e) => {
+                      console.error(`이미지 로드 실패: ${e.target.src}`, {
+                        날짜: getFormattedLocalDate(day.date),
+                        감정: day.emotion
+                      });
+                      e.target.style.display = 'none';
+                    }}
+                  />
                 )}
               </div>
             ))}
