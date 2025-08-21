@@ -21,7 +21,7 @@
 }
 
 .logo-animated {
-  width: 250px;
+  width: 220px;
   max-width: 100%;
 }
 
@@ -67,6 +67,7 @@
   gap: 14px;
   width: 100%;
   max-width: 400px;
+  margin-top: 60px;
   padding: 0;
   box-sizing: border-box;
   opacity: 0;
