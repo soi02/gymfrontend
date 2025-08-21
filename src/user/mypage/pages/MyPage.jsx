@@ -165,7 +165,7 @@ export default function MyPage() {
                         <span>공지사항</span>
                         <span>{">"}</span>
                     </div>
-                    <div className="mp-menu-item" onClick={() => navigate("/errorPage")}>
+                    <div className="mp-menu-item">
                         <span>앱 버전</span>
                         <span>1.0.0</span>
                     </div>
