@@ -27,7 +27,7 @@ import silverNorigaeImage from '/src/assets/img/challenge/norigae/silver.png';
 import bronzeNorigaeImage from '/src/assets/img/challenge/norigae/bronze.png';
 
 import badExam from '/src/assets/img/challenge/attendance/bad_exam.png';
-import goodExam from '/src/assets/img/challenge/attendance/bad_exam.png';
+import goodExam from '/src/assets/img/challenge/attendance/good_exam.png';
 
 
 
