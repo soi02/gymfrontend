@@ -117,10 +117,19 @@ export default function MyPageRoutineCalendar() {
 
   return (
     <>
-      <div className="divider-line"></div>
+      {/* <div className="divider-line"></div> */}
 
-      <div className="mypage-container">
+      <div className="mpc-container">
+        <div className="mpc-header-wrapper">
+          <button className="mpc-back-btn" onClick={() => navigate('/mypage')}>
+            &lt; 나의 처소
+          </button>
         {/* 캘린더 */}
+        {/* 헤더 */}
+        </div>
+        {/* 구분선: 헤더 아래 */}
+        <div className="mpc-hairline" />
+
         <div className="calendar-card">
           <Calendar
             className="routine-calendar"
@@ -131,37 +140,40 @@ export default function MyPageRoutineCalendar() {
           />
         </div>
 
-        {/* 새로운 운동 기록 요약 섹션 */}
+        {/* 운동 기록 요약 */}
         <div className="workout-summary-container">
-          <div className="workout-summary-title">
+          <div className="ws-title">
             {value.getMonth() + 1}월 {value.getDate()}일 운동기록
           </div>
-          <div className="workout-summary-content">
-            {/* 요약 카드 */}
-            <div className="summary-card">
-              <div className="summary-item">
-                <i className="ri-heart-line" />
-                <span>{workoutSummary?.workoutCount ?? 0}개 운동</span>
-              </div>
-              <div className="summary-item">
-                <i className="ri-timer-line" />
-                <span>{workoutSummary?.setCount ?? 0}세트</span>
-              </div>
-              <div className="summary-item">
-                <i className="ri-fire-line" />
-                <span>{workoutSummary?.calories ?? 0}kcal</span>
-              </div>
+
+          <div className="ws-stats">
+            <div className="ws-item">
+              <i className="ri-heart-line" aria-hidden="true" />
+              <span className="ws-number">
+                {workoutSummary?.workoutCount ?? 0}
+              </span>
+              <span className="ws-label">운동</span>
             </div>
-            {/* 일지보기 버튼 */}
-            <button
-              className="view-diary-button"
-              onClick={() =>
-                navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)
-              }
-            >
-              일지
-            </button>
+            <div className="ws-item">
+              <i className="ri-timer-line" aria-hidden="true" />
+              <span className="ws-number">{workoutSummary?.setCount ?? 0}</span>
+              <span className="ws-label">세트</span>
+            </div>
+            <div className="ws-item">
+              <i className="ri-fire-line" aria-hidden="true" />
+              <span className="ws-number">{workoutSummary?.calories ?? 0}</span>
+              <span className="ws-label">kcal</span>
+            </div>
           </div>
+
+          <button
+            className="ws-diary-btn"
+            onClick={() =>
+              navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)
+            }
+          >
+            일지보기
+          </button>
         </div>
       </div>
     </>

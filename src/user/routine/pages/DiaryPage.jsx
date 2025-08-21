@@ -147,7 +147,7 @@ export default function DiaryPage() {
 
         <button
           className="pf-date-pill-btn"
-          onClick={() => navigate("/routineCalendar")}
+          onClick={() => navigate("/mypage/routineCalendar")}
           aria-label="날짜 선택"
         >
           {date}

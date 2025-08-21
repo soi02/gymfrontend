@@ -6,6 +6,7 @@ function MarketWriteArticleFloatingFixedButton() {
       <Link
         to="/market/writeArticle"
         style={{
+          pointerEvents : "auto",
           position: "absolute",
           bottom: "20px",
           right: "20px",

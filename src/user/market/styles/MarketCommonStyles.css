@@ -126,7 +126,20 @@
   padding-left : 2vh;
   padding-top : 1.25vh;
   padding-bottom : 1.25vh;
-  border: 0.25vh solid rgb(192, 192, 192);
+  border: 1px solid #cccccc;
+  
+}
+
+.searchBarDefault:focus {
+  
+  border-radius : 1.25vh;
+  padding-left : 2vh;
+  padding-left : 2vh;
+  padding-top : 1.25vh;
+  padding-bottom : 1.25vh;
+  border: 1px solid #7c1d0d;
+  box-shadow : none;
+  outline: none;
   
 }
 
@@ -137,7 +150,20 @@
   padding-left : 2vh;
   padding-top : 0.75vh;
   padding-bottom : 0.75vh;
-  border: 0.25vh solid rgb(192, 192, 192);
+  border: 1px solid #cccccc;
+  
+}
+
+.writeArticleTextDivisionDefault:focus {
+  
+  border-radius : 1.25vh;
+  padding-left : 2vh;
+  padding-left : 2vh;
+  padding-top : 0.75vh;
+  padding-bottom : 0.75vh;
+  border: 1px solid #7c1d0d;
+  box-shadow : none;
+  outline: none;
   
 }
 
@@ -147,11 +173,19 @@
   
 }
 
+.firstCategorizingDivisionDefault {
+  
+  border-radius : 1.25vh;
+  border: 1px solid #cccccc;
+  background-color : #f9f9f9;
+  
+}
+
 .secondaryDivisionDefault {
   
   border-radius : 1.25vh;
-  border: 0.0625vh solid rgb(192, 192, 192);
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+  border: 1px solid #cccccc;
+  /* box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25); */
   
 }
 
@@ -171,5 +205,21 @@
 .basicDivisionOnClickStyle {
   
   cursor: pointer;
+  
+}
+
+.badgeStyleAboutUnconfirmedDeal {
+  
+  background-color : #9faac0;
+  border-radius : 0.5rem;
+  color : white;
+  
+}
+
+.badgeStyleAboutConfirmedDeal {
+  
+  background-color : #22BF4F;
+  border-radius : 0.5rem;
+  color : white;
   
 }

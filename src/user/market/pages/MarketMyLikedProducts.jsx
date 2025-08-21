@@ -5,7 +5,7 @@ import useMarketAPI from "../service/MarketService";
 
 export default function MarketMyLikedProductsPage() {
     
-    const checkUserStatus = 1;
+    const checkUserStatus = 2;
     const defaultUserStatus = 1004;
     
     const [countOfInterestedLogsOnUser, setCountOfInterestedLogsOnUser] = useState(-1);
@@ -405,6 +405,24 @@ export default function MarketMyLikedProductsPage() {
         
         const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
         
+        const formatDate = (dateString) => {
+            
+            const date = new Date(dateString);
+            
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+        
+            return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+        };
+        
+        const formatProductCost = (productCost) => {
+            return productCost.toLocaleString('Ko-KR');
+        };
+        
         const [ likeChecked, setLikeChecked ] = useState(true);
         
         const [insertMarketProductInterestedLog, setInsertMarketProductInterestedLog] = useState(
@@ -459,11 +477,19 @@ export default function MarketMyLikedProductsPage() {
             
             if (sellEnded == 1) {
                 
-                return "거래 완료";
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 완료</span>
+                    </>
+                );
                 
-            } else if (sellEnded == 0) {
+            } else {
                 
-                return "거래 미완료";
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 미완료</span>
+                    </>
+                );
                 
             }
             
@@ -473,14 +499,14 @@ export default function MarketMyLikedProductsPage() {
             <>
             
                 <div className = "row">
-                    <div className = "widthDefault">
+                    {/* <div className = "widthDefault"> */}
                         <div className = "col">
                             {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
                             {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
                             {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                             
                             { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                            <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
+                            <div className = "row" style = {{height : "12.5vh", marginBottom : "2.5vh"}}>
                                 <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "1vh", marginRight : "1vh"}}>
@@ -553,23 +579,40 @@ export default function MarketMyLikedProductsPage() {
                                                                     </div>
                                                                 </div>
                                                                 <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                                    <div className = "col" style = {{fontSize : "2.375vh"}}>
                                                                         {article.title}
                                                                     </div>
                                                                 </div>
-                                                                <div className = "row">
+                                                                {/* <div className = "row">
                                                                     <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                                        {article.createdAt.toLocaleString()}
+                                                                        {formatDate(article.createdAt)}
+                                                                    </div>
+                                                                </div> */}
+                                                                <div className = "row">
+                                                                    <div className = "col">
+                                                                        <div className = "row align-items-center">
+                                                                            <div className = "col-auto" 
+                                                                            style = {{
+                                                                            // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
+                                                                                fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1.5vh", marginRight : "0.75vh"}}
+                                                                                >
+                                                                                {/* <MarketAnonymousUserMiniProfileImage /> */}
+                                                                                <i className = "ri-user-3-fill"></i>
+                                                                            </div>
+                                                                            <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
+                                                                                {userInfo.nickname}
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                                {/* <div className = "row">
+                                                                    <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
                                                                         {userInfo.nickname}
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
                                                                 <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                                        ￦ {article.productCost}
+                                                                    <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                                        ￦ {formatProductCost(article.productCost)}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -582,7 +625,7 @@ export default function MarketMyLikedProductsPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             
             </>
@@ -596,53 +639,58 @@ export default function MarketMyLikedProductsPage() {
             <div className = "container-fluid">
         
                 <div className = "row">
-                    <div className = "widthDefault">
+                    {/* <div className = "widthDefault"> */}
                         <div className = "col">
                             <div className = "row">
                                 <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                                        <div className = "col firstCategorizingDivisionDefault" style = {{marginTop : "2vh", marginLeft : "1.5vh", marginRight : "1.5vh", paddingTop : "4vh"}}>
                                             <div className = "row">
-                                                <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                                <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.875vh"}}>
-                                                            내가 탐낸 물품 개수
+                                                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                                                    내가 탐낸 물품 개수
+                                                                </div>
+                                                            </div>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                                                    {countOfInterestedLogsOnUser} 개
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
-                                                            {countOfInterestedLogsOnUser} 개
+                                                        <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", marginBottom : "0.5vh", paddingTop : "3vh", paddingBottom : "1vh", 
+                                                            paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                                    {
+                                                                        constmarketuserLikedProductElementList.length > 0 ? 
+                                                                        constmarketuserLikedProductElementList : 
+                                                                        <>
+                                                                        
+                                                                            <div className = "row">
+                                                                                <div className = "col" style = {{fontSize : "2vh"}}>
+                                                                                    탐낸 물품이 없소.
+                                                                                </div>
+                                                                            </div>
+                                                            
+                                                                        </>
+                                                                    }
+                                                                    {/*
+                                                                        * 해당 const 리스트의 제일 왼쪽에 하트 활성화, 비활성화로 물품의 탐냄 상태를 반영함. (새로고침 시 하트를 비활성화한 물품 상세 글은, 내가 탐낸 물품 목록에서 사라짐)
+                                                                    */}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className = "row gx-0">
-                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", marginBottom : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
-                                                            {
-                                                                constmarketuserLikedProductElementList.length > 0 ? 
-                                                                constmarketuserLikedProductElementList : 
-                                                                <>
-                                                                
-                                                                    <div className = "row">
-                                                                        <div className = "col" style = {{fontSize : "2vh"}}>
-                                                                            탐낸 물품이 없소.
-                                                                        </div>
-                                                                    </div>
-                                                    
-                                                                </>
-                                                            }
-                                                            {/*
-                                                                * 해당 const 리스트의 제일 왼쪽에 하트 활성화, 비활성화로 물품의 탐냄 상태를 반영함. (새로고침 시 하트를 비활성화한 물품 상세 글은, 내가 탐낸 물품 목록에서 사라짐)
-                                                            */}
+                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                            <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있소.
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                    <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있소.
                                                 </div>
                                             </div>
                                         </div>
@@ -650,7 +698,7 @@ export default function MarketMyLikedProductsPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
                 
             </div>

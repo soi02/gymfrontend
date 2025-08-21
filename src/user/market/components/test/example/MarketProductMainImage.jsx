@@ -7,7 +7,8 @@ export default function MarketProductMainImage({imageLinkURL}) {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col">
+                    <div className = "col" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden", 
+                        border : "1px solid #cccccc", borderRadius : "1.25vh", display: "flex", justifyContent: "center", padding : "0vh", alignItems: "center",}}>
                         <img src = {imageLinkURL}
                         style = {{
                             position: "absolute",

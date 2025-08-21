@@ -6,7 +6,7 @@ export default function MarketUserInfosOnUserPage({marketUserInfoElem1}) {
     return(
         <>
         
-            <div className = "row" style = {{height : "15vh"}}>
+            <div className = "row" style = {{height : "14vh"}}>
                 <div className = "widthDefault">
                     <div className = "col">
                         <div className = "row">
