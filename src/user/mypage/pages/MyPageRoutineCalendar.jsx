@@ -159,7 +159,7 @@ export default function MyPageRoutineCalendar() {
                 navigate(`/routine/diary?date=${toLocalYYYYMMDD(value)}`)
               }
             >
-              일지<br/>보기
+              일지
             </button>
           </div>
         </div>

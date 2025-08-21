@@ -43,6 +43,7 @@
   /* 수정된 스타일 */
   max-height: calc(100vh - 78px);
   overflow-y: auto;
+  padding-bottom: 98px;
 }
 
 .chat-room-item {

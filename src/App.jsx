@@ -78,6 +78,7 @@ import NorigaeListPage from './user/challenge/components/NorigaeListPage';
 import GroupChatList from './user/challenge/groupchat/pages/GroupChatList';
 import EmotionalDiary from './user/diary/pages/EmotionalDiary';
 import EmotionalDiaryCalendar from './user/diary/pages/EmotionalDiaryCalendar';
+import MypageNoticePage from './user/mypage/pages/MyPageNoticePage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -218,8 +219,9 @@ function AppContent() {
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/home" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/routineCalendar" element={<MyPageRoutineCalendar />} />
-            <Route path="/myUserInformation" element={<MyUserInformation />} />
+            <Route path="/mypage/routineCalendar" element={<MyPageRoutineCalendar />} />
+            <Route path="/mypage/myUserInformation" element={<MyUserInformation />} />
+            <Route path="/mypage/notice" element={<MypageNoticePage />} />
 
             {/* 루틴 */}
             <Route path='/routine' element={<RoutineHomePage />} />

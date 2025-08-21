@@ -9,8 +9,9 @@
     border-radius: 0;
     box-shadow: none; /* ✅ 그림자 제거 */
     position: relative;
-    overflow-y: hidden;
-    padding-bottom: 50px;
+    overflow-y: auto;
+    padding-bottom: 110px;
+    min-height: 100vh; /* ✅ 화면 높이만큼 최소 높이 설정 */
 }
 
 /* --- 상단 헤더 섹션 (뒤로가기, 제목, 저장 버튼) --- */
@@ -200,10 +201,10 @@
 .mpInfo-input {
     width: 70%;
     padding: 10px 0;
-    border: none; 
+    border: none;
     background-color: transparent;
     font-size: 16px;
-    padding-right: 40px; 
+    padding-right: 40px;
 }
 
 /* 인풋 필드에 포커스될 때 부모 컨테이너의 밑줄 색 변경 */
