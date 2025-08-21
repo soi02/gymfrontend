@@ -486,7 +486,7 @@
 }
 
 .summary-item i {
-  font-size: 1.3rem; /* 아이콘 크기 */
+  font-size: 1.3rem; 
   color: #1e3a67;
 }
 
@@ -494,7 +494,6 @@
   white-space: nowrap;
 }
 
-/* 일지보기 버튼 */
 .view-diary-button {
   width: 5rem; 
   height: 4rem;
@@ -517,21 +516,19 @@
   color: #333;
 }
 
-/* 새로운 헤더 컨테이너 스타일 */
 .mpc-header-wrapper {
-  position: sticky;        /* ← 필요 없으면 'static'으로 */
-  top: 0;                  /* sticky 사용할 때 상단 고정 */
+  position: sticky;       
+  top: 0;              
   z-index: 10;
   display: flex;
   align-items: center;
   height: 44px;
   padding: 0 12px;
   background: #fff;
-  border-bottom: 0.5px solid rgba(0,0,0,0.12);  /* ← 얇은 구분선 */
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
 }
-/* 새로운 뒤로가기 버튼 스타일 */
 .mpc-back-btn {
-  position: static;        /* ← absolute 제거 */
+  position: static;   
   font-size: 1rem;
   background: none;
   color: #8e8e8e;
@@ -545,7 +542,6 @@
 
 
 
-/* ===== 요약 카드 새 레이아웃 ===== */
 .workout-summary-container {
   max-width: 22rem;
   
@@ -574,9 +570,7 @@
 }
 
 .ws-item {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
+
   gap: 2px;
   color: #1e3a67;
 }
@@ -588,25 +582,21 @@
 }
 
 .ws-number {
-  /* font-size: 1.05rem; */
   margin-left: 0.3rem;
   font-weight: 700;
 }
 
 .ws-label {
-  /* font-size: 0.8rem; */
   opacity: 0.9;
 }
 
-/* 버튼 단독 */
 .ws-diary-btn {
-  display: flex;                /* 안의 텍스트도 센터 잡으려면 flex 추천 */
+  display: flex;              
   justify-content: center;
   align-items: center;
-
   width: 60%;
   height: 42px;
-  margin: 8px auto 0;           /* ✅ 가로 가운데 */
+  margin: 8px auto 0;     
   border: 1px solid #d0d7e2;
   border-radius: 10px;
   background: #1e3a67;

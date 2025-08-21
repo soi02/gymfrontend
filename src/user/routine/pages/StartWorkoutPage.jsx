@@ -78,8 +78,7 @@ const [restDuration, setRestDuration] = useState(60);
     };
 
     try {
-      const res = await saveActualWorkout(payload); // 백엔드에서 workout + detail + set + log까지 처리!
-      console.log("응답: ", res);
+      const res = await saveActualWorkout(payload);
       alert("운동 완료! 기록이 저장되었소.");
       navigate(`/routine/result/${res.data.workoutId}`);
     } catch (err) {
@@ -159,7 +158,7 @@ const [restDuration, setRestDuration] = useState(60);
 
 
 
-  const [showMenu, setShowMenu] = useState(false); // ✅ 이거 추가!
+  const [showMenu, setShowMenu] = useState(false); 
   const [showTimerMenu, setShowTimerMenu] = useState(false);
 
   // 기본 60초
