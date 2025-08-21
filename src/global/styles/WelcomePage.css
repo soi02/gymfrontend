@@ -21,7 +21,7 @@
 }
 
 .logo-animated {
-  width: 250px;
+  width: 220px;
   max-width: 100%;
 }
 
@@ -38,8 +38,8 @@
 
 /* 추가된 이미지 컨테이너 (absolute 제거) */
 .welcome-image-container {
-    width: 80%;
-    max-width: 350px;
+    width: 100%;
+    max-width: 400px;
     opacity: 0;
     margin-bottom: 2rem; /* 버튼 그룹과의 간격 조정 */
     animation: imageFadeIn 0.6s forwards ease-out 0.8s;
@@ -67,6 +67,7 @@
   gap: 14px;
   width: 100%;
   max-width: 400px;
+  margin-top: 60px;
   padding: 0;
   box-sizing: border-box;
   opacity: 0;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import VideoStream from './VideoStream'
-import '../styles/AutoJoinRoom.css'; // 새로운 CSS 파일을 사용합니다.
+import '../styles/AutoJoinRoom.css';
 
 const AutoJoinRoom = () => {
   const { roomNumber } = useParams();
@@ -304,13 +304,37 @@ const AutoJoinRoom = () => {
       }
     })
   }
-
+  
+  // ✅ 통화 종료 시 미디어 스트림을 중지하는 로직
   const handleEndCall = () => {
-    if (janus) {
-      janus.destroy(); // Janus 세션 종료
+    // 로컬 스트림의 모든 트랙을 중지
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop());
+      setLocalStream(null);
     }
-    navigate(-1); // 이전 페이지로 돌아가기 (채팅방)
+    
+    // Janus 세션 종료
+    if (janus) {
+      janus.destroy();
+    }
+    
+    // 페이지 이동
+    navigate(-1);
   };
+  
+  // ✅ 컴포넌트 언마운트 시 스트림 및 Janus 세션 정리
+  useEffect(() => {
+    return () => {
+      console.log('컴포넌트 언마운트: 스트림 및 Janus 세션 정리');
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+        setLocalStream(null);
+      }
+      if (janus) {
+        janus.destroy();
+      }
+    };
+  }, [localStream, janus]);
 
   useEffect(() => {
     const isSecureProtocol = window.location.protocol === 'https:';
@@ -334,9 +358,7 @@ const AutoJoinRoom = () => {
     initJanus()
     
     return () => {
-      if (janus) {
-        janus.destroy()
-      }
+      // 이 return 함수는 이미 위에서 정리했으므로 중복 코드를 제거해도 됩니다.
     }
   }, [roomNumber])
 

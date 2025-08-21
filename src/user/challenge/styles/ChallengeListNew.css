@@ -1,0 +1,203 @@
+/* 컨테이너 */
+.cl-new-container {
+  max-width: 100%;
+  padding: 1.75rem 1rem;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* background-color: #f0f2f5; */
+  color: #333;
+}
+
+/* 헤더 */
+.cl-new-header { margin-bottom: 1.5rem; text-align: left; }
+.cl-new-title { font-size: 1.4rem; font-weight: bold; margin: 0; color: #2c3e50; }
+.cl-new-subtitle { font-size: 0.8rem; color: #7f8c8d; margin-top: 0.5rem; }
+
+:root {
+  --cl-gap: 14px;
+  --cl-offset: 18px;           /* 지그재그 한 층 높이 */
+  --cl-card-radius: 16px;
+  --cl-first-card-extra: 18px; /* 왼쪽 첫 카드 추s가 높이 */
+}
+
+/* 2-컬럼 래퍼 */
+.cl-new-grid-2col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:var(--cl-gap);
+  row-gap:0;
+  align-items:start;
+}
+
+/* 컬럼 스택: 간격은 gap만 사용 */
+.cl-new-col{
+  display:flex;
+  flex-direction:column;
+  gap:var(--cl-gap);
+}
+
+/* -------------------------------
+   지그재그 핵심:
+   1) 왼쪽 컬럼 맨 위에 '보이지 않는 스페이서' 추가
+   2) 첫 카드만 위로 끌어올려 첫 줄 라인 맞춤
+   → 이후 카드들은 스페이서 만큼 아래로 내려가 지그재그 유지
+-------------------------------- */
+
+/* 왼쪽 컬럼을 한 층 내리되… */
+.cl-new-col-left {
+  padding-top: var(--cl-offset);
+}
+
+/* …첫 카드만 위로 당겨서 '오른쪽 첫 카드와 윗라인 동일' + '왼쪽 첫 카드만 길게' */
+.cl-new-col-left > .cl-new-card:first-of-type {
+  margin-top: calc(-1 * var(--cl-offset)) !important;       /* 윗줄 라인 동일 */
+  min-height: calc(132px + var(--cl-first-card-extra)) !important; /* 왼쪽 첫 카드만 더 길게 */
+}
+
+
+/* 오른쪽 마지막 카드 */
+/* .cl-new-col-right > .cl-new-card:last-of-type {
+  min-height: calc(152px + var(--cl-last-card-extra)) !important;
+} */
+
+
+/* 카드 공통 */
+.cl-new-card {
+  position: relative; /* 아이콘을 오른쪽 상단에 올리기 위해 */
+  background-color: #fff;
+  border-radius: var(--cl-card-radius);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  padding: 1.25rem;
+  transition: transform .25s, box-shadow .25s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 132px;
+}
+
+.cl-new-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.12);
+}
+
+
+/* 텍스트 영역 좌측 정렬 */
+.cl-new-card-content {
+  flex: 1;
+  text-align: left; /* 좌측 정렬 */
+}
+
+.cl-new-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 .4rem;
+  color: #34495e;
+}
+
+.cl-new-card-description {
+  margin-top: .35rem;
+  font-size: .75rem;
+  color: #7f8c8d;
+  line-height: 1.4;
+}
+
+/* ── 카드 버튼 ( > 만 표시) ── */
+/* .cl-new-card-button {
+  font-size: 1rem;        
+  color: #3498db;      
+  margin-top: 0.6rem;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;       
+  border-radius: 4px;   
+  background: none; 
+} */
+/* 
+.cl-new-card-button:hover {
+  color: #2176bd;        
+} */
+
+/* Create 카드: 전체 폭 */
+.cl-new-create-card {
+  grid-column: 1 / -1;
+  margin-top: calc(var(--cl-gap) + var(--cl-offset)); /* 위 지그재그와 간격 정렬 */
+  background: linear-gradient(135deg, #001439, #000b1f);
+  color: #fff;
+  border-radius: var(--cl-card-radius);
+  padding: 1.6rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cl-new-create-card .cl-new-card-title { color: #fff; font-size: 1.45rem; margin-top: 0; }
+.cl-new-create-card .cl-new-card-description { color: rgba(255,255,255,.85); }
+.cl-new-card-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background-color: rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1rem;
+}
+.cl-new-plus-icon { font-size: 2.3rem; color: #fff; font-weight: 300; }
+
+/* ── 색상: 기존 팔레트 그대로 유지 (카드 배경만 지정) ──
+   ※ API 데이터 순서/갯수 변동에도 안정적으로 적용되도록
+   왼/오 컬럼 분리 후 각 카드에 붙인 cl-new-color-N 클래스로 지정 */
+.cl-new-color-1 { background-color: #ecf0f1; }
+.cl-new-color-2 { background-color: #e0e6ff; }
+.cl-new-color-3 { background-color: #fde8e8; }
+.cl-new-color-4 { background-color: #e6f7ff; }
+.cl-new-color-5 { background-color: #f7f1e3; }
+.cl-new-color-6 { background-color: #e8f5e9; }
+/* 7번 이후에도 돌아가게 반복 */
+.cl-new-color-7 { background-color: #ecf0f1; }
+.cl-new-color-8 { background-color: #e0e6ff; }
+
+/* 아이폰 SE 최적화 */
+@media (max-width: 375px) {
+  :root { --cl-gap: 12px; --cl-offset: 16px; }
+  .cl-new-container { padding: 1.25rem .75rem; }
+  .cl-new-title { font-size: 1.6rem; }
+  .cl-new-card { padding: 1rem; min-height: 120px; }
+  .cl-new-card-title { font-size: 1.05rem; }
+  .cl-new-card-description { font-size: .86rem; }
+}
+
+
+/* ── 아이콘: 우측 하단 고정 ── */
+.cl-new-card-icon-right {
+  position: absolute;
+  bottom: .1rem;
+  right: .1rem;
+  width: 65px;   /* 기존보다 확대 */
+  height: 65px;
+  object-fit: contain;
+  opacity: 0.95;
+}
+
+/* 아이콘 + 제목 줄 */
+.cl-new-card-head{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px; /* 제목 위 마진 대체 */
+}
+
+/* 아이콘 크기 (이미지 비율 유지) */
+.cl-new-card-icon{
+  width: 44px;   /* 26~36px 사이 취향껏 */
+  height: 44px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+/* 제목은 한 줄로 자연스럽게 */
+.cl-new-card-title{
+  margin: 0;               /* 기존 선언 있다면 우선순위 상위여도 동일 */
+  line-height: 1.2;
+}

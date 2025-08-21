@@ -1,9 +1,8 @@
 // src/pages/ChallengeList.jsx
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../../global/api/apiClient';
-import '../styles/ChallengeList.css';
-import CategoryGrid from './CategoryGrid';
+import '../styles/ChallengeListNew.css';
 
 export default function ChallengeList() {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ export default function ChallengeList() {
   const fetchKeywordTree = useCallback(async () => {
     try {
       const res = await apiClient.get('http://localhost:8080/api/challenge/keywords/tree');
-      setKeywordTree(res.data || []);
+      setKeywordTree(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error('키워드 트리 불러오기 실패', err);
       setKeywordTree([]);
@@ -21,51 +20,133 @@ export default function ChallengeList() {
 
   useEffect(() => {
     fetchKeywordTree();
-
-    // 페이지 진입 시 바디 스크롤 잠금
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = prevOverflow || 'auto';
-    };
   }, [fetchKeywordTree]);
 
-  
-
-  // handleCategoryClick 함수 수정
   const handleCategoryClick = (categoryId) => {
-    if (categoryId === null) {
-      // '전체' 버튼을 눌렀을 때, 챌린지 목록 페이지로 이동 (필터 없이)
-      navigate(`/challenge/challengeAllList`);
-    } else {
-      // 카테고리를 눌렀을 때, 해당 카테고리 페이지로 이동
-      navigate(`/challenge/category/${categoryId}`);
-    }
+    navigate(`/challenge/category/${categoryId}`);
   };
 
   const handleCreateClick = () => {
     navigate('/challenge/challengeCreate');
   };
 
+  // 왼/오 컬럼 분리 (0,2,4… 좌 / 1,3,5… 우)
+  const [leftItems, rightItems] = useMemo(() => {
+    const left = [], right = [];
+    (keywordTree || []).forEach((item, i) => (i % 2 === 0 ? left : right).push(item));
+    return [left, right];
+  }, [keywordTree]);
+
+  // 카테고리명 → 아이콘 매핑 (이미지 경로는 프로젝트에 맞게 유지)
+  const iconMap = {
+    '루틴': '/src/assets/img/challenge/categoryIconNew/routine_new.png',
+    '회복': '/src/assets/img/challenge/categoryIconNew/recovery_new.png',
+    '소통': '/src/assets/img/challenge/categoryIconNew/comm.png',
+    '정보': '/src/assets/img/challenge/categoryIconNew/info_new.png',
+    '습관': '/src/assets/img/challenge/categoryIconNew/habit_new.png',
+    '동기부여': '/src/assets/img/challenge/categoryIconNew/motivation_new.png',
+    '자기관리': '/src/assets/img/challenge/categoryIconNew/self.png',
+    '분위기': '/src/assets/img/challenge/categoryIconNew/vibe.png',
+  };
+
+
+  const getIconSrc = (name, idx) => iconMap[name] || fallbackIcons[idx % fallbackIcons.length];
+
+  // 카테고리명 → 설명 매핑 (서버에 설명 없을 때 사용)
+// 카테고리명 → 단락 설명 매핑
+const descMap = {
+  '루틴': '꾸준히 지켜가는 <br/>나만의 루틴',
+  '회복': '지친 몸과 마음을<br/>회복하는 시간',
+  '소통': '함께 교류하는 <br/> 소통의 즐거움',
+  '정보': '유용한 정보를 배우고<br/>공유하는 공간',
+  '습관': '작은 행동을 모아<br/>만들어가는 습관',
+  '동기부여': '서로의 열정을<br/>북돋아주는 힘',
+  '자기관리': '스스로 다듬어가는<br/>자기 관리',
+  '분위기': '즐거운 기운을<br/>함께 나누는 곳',
+};
+
+
+  const getDesc = (category) =>
+    descMap[category?.keywordCategoryName] ||
+    (typeof category?.description === 'string' && category.description.trim()) ||
+    '이 카테고리에 대한 설명이 없습니다.';
 
   return (
-    <div className="challenge-list-wrapper clean">
-      <div className="challenge-list-container">
-        <div className="filter-header-section">
-          <h2>수련 목록</h2>
-          <p>분야별 수련을 찾아보거나, 새로운 수련을 만들어 보시오.</p>
-        </div>
-
-        <CategoryGrid
-          categories={keywordTree}
-          onCategoryClick={handleCategoryClick}
-          onCreateClick={handleCreateClick} 
-          selectedCategoryId={null}
-        />
+    <div className="cl-new-container">
+      <div className="cl-new-header">
+        <h1 className="cl-new-title">수련 목록</h1>
+        <p className="cl-new-subtitle">분야별 수련을 찾아보거나, 새로운 수련을 만들어 보시오.</p>
       </div>
 
-      {/* 플로팅 버튼 계속 쓰고 싶으면 남기고, 카드로만 쓰면 제거해도 됨 */}
-      {/* <button className="challenge-list-floating-button fab" onClick={handleCreateClick} aria-label="챌린지 생성">＋</button> */}
+      <div className="cl-new-grid-2col">
+        {/* Left column */}
+        <div className="cl-new-col cl-new-col-left">
+          {leftItems.map((category, idx) => (
+            <div
+              key={category.keywordCategoryId ?? `${category.keywordCategoryName}-${idx}`}
+              className={`cl-new-card cl-new-color-${(idx * 2) + 1}`}
+              onClick={() => handleCategoryClick(category.keywordCategoryId)}
+            >
+              {/* 아이콘: 카드 우측 하단 고정 (CSS: .cl-new-card-icon-right) */}
+              <img
+                className="cl-new-card-icon-right"
+                src={getIconSrc(category.keywordCategoryName, idx)}
+                alt=""
+                loading="lazy"
+              />
+
+              {/* 텍스트: 좌측 정렬 */}
+              <div className="cl-new-card-content">
+                <h2 className="cl-new-card-title">{category.keywordCategoryName}</h2>
+                <p
+                  className="cl-new-card-description"
+                  dangerouslySetInnerHTML={{ __html: getDesc(category) }}
+                />
+              </div>
+
+              {/* 심플 버튼: > */}
+              {/* <div className="cl-new-card-button">&gt;</div> */}
+            </div>
+          ))}
+        </div>
+
+        {/* Right column */}
+        <div className="cl-new-col cl-new-col-right">
+          {rightItems.map((category, idx) => (
+            <div
+              key={category.keywordCategoryId ?? `${category.keywordCategoryName}-${idx}`}
+              className={`cl-new-card cl-new-color-${(idx * 2) + 2}`}
+              onClick={() => handleCategoryClick(category.keywordCategoryId)}
+            >
+              <img
+                className="cl-new-card-icon-right"
+                src={getIconSrc(category.keywordCategoryName, idx)}
+                alt=""
+                loading="lazy"
+              />
+              <div className="cl-new-card-content">
+                <h2 className="cl-new-card-title">{category.keywordCategoryName}</h2>
+                <p
+                  className="cl-new-card-description"
+                  dangerouslySetInnerHTML={{ __html: getDesc(category) }}
+                />
+              </div>
+              {/* <div className="cl-new-card-button">&gt;</div> */}
+            </div>
+          ))}
+        </div>
+
+        {/* 가로 전체폭 Create 카드 */}
+        <div className="cl-new-create-card" onClick={handleCreateClick}>
+          <div className="cl-new-card-content" style={{ textAlign: 'left' }}>
+            <h2 className="cl-new-card-title">새로운 수련 만들기</h2>
+            <p className="cl-new-card-description">나만의 수련을 시작하고 공유해 보세요!</p>
+          </div>
+          <div className="cl-new-card-icon">
+            <span className="cl-new-plus-icon">+</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

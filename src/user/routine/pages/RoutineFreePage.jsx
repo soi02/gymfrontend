@@ -116,13 +116,11 @@ export default function RoutineFreePage() {
     
 
     useEffect(() => {
-        console.log("RoutineAddPage 컴포넌트가 마운트 되었습니다.");
 
         const getWorkouts = async () => {
             try {
                 const json = await routineService.getWorkoutList();
                 setWorkoutList(json);
-                console.table(json);
             } catch (error) {
                 console.error(error);
             }

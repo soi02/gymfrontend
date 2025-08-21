@@ -32,7 +32,6 @@ import RoutineAddPage from './user/routine/pages/RoutineAddPage';
 import RoutineFreePage from './user/routine/pages/RoutineFreePage';
 import MyPage from './user/mypage/pages/MyPage';
 import MyRoutinePage from './user/routine/pages/MyRoutinePage';
-import WorkoutPage from './user/routine/pages/WorkoutPage';
 import GuidePage from './user/routine/pages/GuidePage';
 import DiaryPage from './user/routine/pages/DiaryPage.Jsx';
 import ResultPage from './user/routine/pages/ResultPage';
@@ -78,6 +77,7 @@ import NorigaeListPage from './user/challenge/components/NorigaeListPage';
 import GroupChatList from './user/challenge/groupchat/pages/GroupChatList';
 import EmotionalDiary from './user/diary/pages/EmotionalDiary';
 import EmotionalDiaryCalendar from './user/diary/pages/EmotionalDiaryCalendar';
+import MypageNoticePage from './user/mypage/pages/MyPageNoticePage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -218,8 +218,9 @@ function AppContent() {
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/home" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/routineCalendar" element={<MyPageRoutineCalendar />} />
-            <Route path="/myUserInformation" element={<MyUserInformation />} />
+            <Route path="/mypage/routineCalendar" element={<MyPageRoutineCalendar />} />
+            <Route path="/mypage/myUserInformation" element={<MyUserInformation />} />
+            <Route path="/mypage/notice" element={<MypageNoticePage />} />
 
             {/* 루틴 */}
             <Route path='/routine' element={<RoutineHomePage />} />
@@ -230,7 +231,6 @@ function AppContent() {
             <Route path='/routine/list/:routineId' element={<MyRoutineListPage />} />
             <Route path='/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
             <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
-            <Route path='/routine/workout' element={<WorkoutPage />} />
             <Route path='/routine/guide/:id' element={<GuidePage />} />
             <Route path='/routine/diary' element={<DiaryPage />} />
             <Route path='/routine/result/:workoutId' element={<ResultPage />} />

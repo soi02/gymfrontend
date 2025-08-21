@@ -3,6 +3,23 @@
   /* margin: 0 auto; */
   padding: 24px;
   min-height: 100vh;
+  overflow: auto;
+  
+}
+
+/* 바텀바에 가려지지 않게 스크롤 여백을 추가하는 클래스 */
+@media (max-width: 768px), (pointer: coarse) {
+  .buddy-scroll-container {
+    padding-bottom: calc(var(--bottombar-h) + var(--cta-h) + 12px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(var(--bottombar-h) + var(--cta-h) + 12px + env(safe-area-inset-bottom));
+  }
+}
+
+/* 💻 데스크탑(폭 769px 이상)에서는 여분 스크롤 안 생기도록 최소만 */
+@media (min-width: 769px) {
+  .buddy-scroll-container {
+    padding-bottom: 150px;
+  }
 }
 
 .buddy-title {
@@ -148,7 +165,6 @@
 }
 
 /* src/styles/BuddyNotification.css 파일에 추가 */
-
 .no-notification-container {
     display: flex;
     flex-direction: column;
@@ -190,4 +206,11 @@
 
 .find-buddy-button:hover {
     background-color: #5f180a;
+}
+
+.rejected-status {
+    color: #C0392B;
+    font-size: 0.85rem;
+    font-weight: bold;
+    align-self: center;
 }

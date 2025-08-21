@@ -1,95 +1,256 @@
-.mypage-container {
-  /* padding: 1.5rem; */
-  /* background-color: #f9f9f9; */
+/* body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+} */
+
+.mp-container {
+  padding: 1.5rem 1rem;
+  /* background-color: #f8f9fa; */
   min-height: 100vh;
-  font-family: 'Gowun Dodum', sans-serif;
+  /* font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Malgun Gothic', '맑은 고딕', sans-serif; */
+  color: #333;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 130px;
 }
 
-.profile-box {
-  background: rgb(255, 255, 255);
-  border-radius: 1rem;
-  border: #88888837 1px solid;
-  margin-top: 1rem;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  margin-bottom: 1rem;
+.mp-header {
+  margin-bottom: 2rem;
 }
 
+/* .mp-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #111;
+} */
 
-.profile-info-wrapper {
+.mp-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mp-profile-section,
+.mp-workout-section,
+.mp-quick-link-item {
+  background-color: #ffffff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 1.2rem;
+  transition: transform 0.2s;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.mp-profile-section:active,
+.mp-workout-section:active,
+.mp-quick-link-item:active {
+  transform: scale(0.98);
+}
+
+.mp-go-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.mp-go-arrow svg {
+  color: #ccc;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* 프로필 섹션 */
+.mp-profile-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.profile-info {
+.mp-profile-info {
   display: flex;
   align-items: center;
-  gap: 1rem; /* 아이콘이랑 텍스트 간격 */
+  gap: 1rem;
 }
 
-.go-arrow {
-  font-size: 1.3rem;
-  color: #999;
-}
-
-
-
-.profile-img {
-  width: 56px;
-  height: 56px;
+.mp-profile-img {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: #eee;
-  margin-right: 0.3rem;
+  background-color: #e0e0e0;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
 }
 
-.profile-text .username {
+.mp-profile-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+
+.mp-username {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
-.profile-text .greeting {
+.mp-greeting {
+  font-size: 1.1rem;
+  color: #777;
+  font-weight: 500;
+}
+
+.mp-signup-days {
   font-size: 0.9rem;
-  color: #888;
+  font-weight: bold;
+  color: #5630ff;
+  margin-top: 0.2rem;
 }
 
-
-
-
-
-.each-box {
-  background: white;
-  border-radius: 1rem;
-  border: #88888837 1px solid;
-  /* padding: 1rem; */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  margin-bottom: 1rem;
+/* 운동 기록 섹션 */
+.mp-workout-section {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 }
 
-.box-header {
-  background-color: #efefef; /* 밝은 회색 */
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #e0e0e0;
+.mp-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  margin-bottom: 1rem;
+  padding: 0 0.2rem;
 }
 
-.box-body {
-  padding: 0.8rem 1rem;
+.mp-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
 }
 
+/* 수정된 캘린더 레이아웃 */
+.mp-week-preview {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
 
+.mp-week-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: calc(100% / 7 - 0.2rem); /* 7개 아이템이 한 줄에 들어가도록 너비 조정 */
+}
 
+.mp-day-name {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
 
-.week-preview{
+.mp-day-number {
+  position: relative;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
-  gap: 0.1rem;
-  margin-top: 0.3rem;
-  padding-left: 0.5rem;
-  font-size: 1.2rem;
-  color: #7c7c7c;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.mp-day-number.mp-workout {
+  background-color: transparent;
+  color: #333;
+}
+
+/* 불꽃 아이콘 위치 조정 */
+.mp-day-number.mp-workout .mp-fire-icon {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
+  opacity: 0.9;
+}
+.mp-day-number .mp-day-text {
+  position: relative;
+  z-index: 1;
+  font-weight: 700;
+}
+
+/* 빠른 링크 섹션 */
+.mp-quick-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.mp-quick-link-item {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.mp-quick-link-item:active {
+  transform: scale(0.98);
+}
+
+.mp-link-icon {
+  font-size: 1.8rem;
+}
+
+.mp-link-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+}
+
+/* 추가된 하단 메뉴 스타일 */
+.mp-more-menu-container {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 1rem;
+    border: #88888837 1px solid;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.mp-menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.mp-menu-item:last-child {
+    border-bottom: none;
+}
+
+.mp-menu-item.mp-delete span {
+    color: #d04343;
+    font-weight: 500;
 }

@@ -1,17 +1,17 @@
-.mypage-container {
+.mpc-container {
   padding: 1rem;
   padding-top: 0;
   height: 100vh;
   overflow-y: auto; /* 스크롤 추가 */
 }
 /* 스크롤 되지만 스크롤바는 숨김 (크롬/사파리/엣지/파폭/IE용) */
-.mypage-container {
+.mpc-container {
   overflow-y: auto;               /* 기존 유지 */
   -ms-overflow-style: none;       /* IE/Edge(레거시) */
   scrollbar-width: none;          /* Firefox */
   -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
 }
-.mypage-container::-webkit-scrollbar {
+.mpc-container::-webkit-scrollbar {
   width: 0;                       /* Chrome/Safari/Edge */
   height: 0;
   background: transparent;
@@ -486,7 +486,7 @@
 }
 
 .summary-item i {
-  font-size: 1.3rem; /* 아이콘 크기 */
+  font-size: 1.3rem; 
   color: #1e3a67;
 }
 
@@ -494,7 +494,6 @@
   white-space: nowrap;
 }
 
-/* 일지보기 버튼 */
 .view-diary-button {
   width: 5rem; 
   height: 4rem;
@@ -516,3 +515,97 @@
   background-color: #e6e6e6;
   color: #333;
 }
+
+.mpc-header-wrapper {
+  position: sticky;       
+  top: 0;              
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin-top: 1px;
+  padding: 0px;
+  background: #fff;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+}
+.mpc-back-btn {
+  position: static;   
+  font-size: 1rem;
+  background: none;
+  color: #8e8e8e;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  margin-left: 4px;
+}
+
+
+
+
+.workout-summary-container {
+  max-width: 22rem;
+  
+  margin: 0.6rem auto 1rem;
+  padding: 12px 12px 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: #f7f8fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+}
+
+.ws-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2b3a67;
+  margin-bottom: 10px;
+}
+
+.ws-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ws-item {
+
+  gap: 2px;
+  color: #1e3a67;
+}
+
+.ws-item i {
+  font-size: 1.25rem;
+  color: #1e3a67;
+  line-height: 1;
+}
+
+.ws-number {
+  margin-left: 0.3rem;
+  font-weight: 700;
+}
+
+.ws-label {
+  opacity: 0.9;
+}
+
+.ws-diary-btn {
+  display: flex;              
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 42px;
+  margin: 8px auto 0;     
+  border: 1px solid #d0d7e2;
+  border-radius: 10px;
+  background: #1e3a67;
+  color: #eaf0ff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+.ws-diary-btn:hover { filter: brightness(1.05); }
+.ws-diary-btn:active { filter: brightness(0.96); }
