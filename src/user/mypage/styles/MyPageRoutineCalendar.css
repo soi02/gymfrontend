@@ -1,17 +1,17 @@
-.mypage-container {
+.mpc-container {
   padding: 1rem;
   padding-top: 0;
   height: 100vh;
   overflow-y: auto; /* 스크롤 추가 */
 }
 /* 스크롤 되지만 스크롤바는 숨김 (크롬/사파리/엣지/파폭/IE용) */
-.mypage-container {
+.mpc-container {
   overflow-y: auto;               /* 기존 유지 */
   -ms-overflow-style: none;       /* IE/Edge(레거시) */
   scrollbar-width: none;          /* Firefox */
   -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
 }
-.mypage-container::-webkit-scrollbar {
+.mpc-container::-webkit-scrollbar {
   width: 0;                       /* Chrome/Safari/Edge */
   height: 0;
   background: transparent;
@@ -516,3 +516,105 @@
   background-color: #e6e6e6;
   color: #333;
 }
+
+/* 새로운 헤더 컨테이너 스타일 */
+.mpc-header-wrapper {
+  position: sticky;        /* ← 필요 없으면 'static'으로 */
+  top: 0;                  /* sticky 사용할 때 상단 고정 */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 12px;
+  background: #fff;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);  /* ← 얇은 구분선 */
+}
+/* 새로운 뒤로가기 버튼 스타일 */
+.mpc-back-btn {
+  position: static;        /* ← absolute 제거 */
+  font-size: 1rem;
+  background: none;
+  color: #8e8e8e;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  margin-left: 4px;
+}
+
+
+
+
+/* ===== 요약 카드 새 레이아웃 ===== */
+.workout-summary-container {
+  max-width: 22rem;
+  
+  margin: 0.6rem auto 1rem;
+  padding: 12px 12px 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: #f7f8fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+}
+
+.ws-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2b3a67;
+  margin-bottom: 10px;
+}
+
+.ws-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ws-item {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
+  gap: 2px;
+  color: #1e3a67;
+}
+
+.ws-item i {
+  font-size: 1.25rem;
+  color: #1e3a67;
+  line-height: 1;
+}
+
+.ws-number {
+  /* font-size: 1.05rem; */
+  margin-left: 0.3rem;
+  font-weight: 700;
+}
+
+.ws-label {
+  /* font-size: 0.8rem; */
+  opacity: 0.9;
+}
+
+/* 버튼 단독 */
+.ws-diary-btn {
+  display: flex;                /* 안의 텍스트도 센터 잡으려면 flex 추천 */
+  justify-content: center;
+  align-items: center;
+
+  width: 60%;
+  height: 42px;
+  margin: 8px auto 0;           /* ✅ 가로 가운데 */
+  border: 1px solid #d0d7e2;
+  border-radius: 10px;
+  background: #1e3a67;
+  color: #eaf0ff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: filter .15s ease;
+}
+.ws-diary-btn:hover { filter: brightness(1.05); }
+.ws-diary-btn:active { filter: brightness(0.96); }
