@@ -16,7 +16,7 @@ export default function MarketUserPage() {
     
     const checkUserStatus = 1;
     const checkUserId = Number(loadedId);
-    const defaultUserStatus = 1004;
+    const defaultUserStatus = Number(loadedId);
     
     const [countOfSoldLogsOnUser, setCountOfSoldLogsOnUser] = useState(-1);
     const [countOfBoughtLogsOnUser, setCountOfBoughtLogsOnUser] = useState(-1);
@@ -223,11 +223,19 @@ export default function MarketUserPage() {
             
             if (sellEnded == 1) {
                 
-                return "거래 완료";
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 완료</span>
+                    </>
+                );
                 
             } else if (sellEnded == 0) {
                 
-                return "거래 미완료";
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 미완료</span>
+                    </>
+                );
                 
             }
             
@@ -244,7 +252,7 @@ export default function MarketUserPage() {
                             {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                             
                             { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                            <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
+                            <div className = "row" style = {{height : "12.5vh", marginBottom : "2.5vh"}}>
                                 <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
@@ -261,22 +269,39 @@ export default function MarketUserPage() {
                                                             </div>
                                                         </div>
                                                         <div className = "row">
-                                                            <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                            <div className = "col" style = {{fontSize : "2.375vh"}}>
                                                                 {article.title}
                                                             </div>
                                                         </div>
-                                                        <div className = "row">
+                                                        {/* <div className = "row">
                                                             <div className = "col" style = {{fontSize : "1.25vh"}}>
                                                                 {formatDate(article.createdAt)}
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className = "row">
+                                                            <div className = "col">
+                                                                <div className = "row align-items-center">
+                                                                    <div className = "col-auto" 
+                                                                    style = {{
+                                                                    // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
+                                                                        fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1.5vh", marginRight : "0.75vh"}}
+                                                                        >
+                                                                        {/* <MarketAnonymousUserMiniProfileImage /> */}
+                                                                        <i className = "ri-user-3-fill"></i>
+                                                                    </div>
+                                                                    <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
+                                                                        {userInfo.nickname}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {/* <div className = "row">
                                                             <div className = "col" style = {{fontSize : "1.5vh"}}>
                                                                 {userInfo.nickname}
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className = "row">
-                                                            <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                            <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
                                                                 ￦ {formatProductCost(article.productCost)}
                                                             </div>
                                                         </div>
@@ -328,11 +353,19 @@ export default function MarketUserPage() {
             
             if (sellEnded == 1) {
                 
-                return "완료";
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 완료</span>
+                    </>
+                );
                 
             } else if (sellEnded == 0) {
                 
-                return "미완료";
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 미완료</span>
+                    </>
+                );
                 
             }
             
@@ -349,7 +382,7 @@ export default function MarketUserPage() {
                             {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                             
                             { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                            <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
+                            <div className = "row" style = {{height : "12.5vh", marginBottom : "2.5vh"}}>
                                 <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
@@ -366,22 +399,39 @@ export default function MarketUserPage() {
                                                             </div>
                                                         </div>
                                                         <div className = "row">
-                                                            <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                            <div className = "col" style = {{fontSize : "2.375vh"}}>
                                                                 {article.title}
                                                             </div>
                                                         </div>
-                                                        <div className = "row">
+                                                        {/* <div className = "row">
                                                             <div className = "col" style = {{fontSize : "1.25vh"}}>
                                                                 {formatDate(article.createdAt)}
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className = "row">
+                                                            <div className = "col">
+                                                                <div className = "row align-items-center">
+                                                                    <div className = "col-auto" 
+                                                                    style = {{
+                                                                    // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
+                                                                        fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1.5vh", marginRight : "0.75vh"}}
+                                                                        >
+                                                                        {/* <MarketAnonymousUserMiniProfileImage /> */}
+                                                                        <i className = "ri-user-3-fill"></i>
+                                                                    </div>
+                                                                    <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
+                                                                        {userInfo.nickname}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {/* <div className = "row">
                                                             <div className = "col" style = {{fontSize : "1.5vh"}}>
                                                                 {userInfo.nickname}
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className = "row">
-                                                            <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                            <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
                                                                 ￦ {formatProductCost(article.productCost)}
                                                             </div>
                                                         </div>
@@ -473,7 +523,7 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", 
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "3vh", paddingBottom : "1vh", 
                                     paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
@@ -518,7 +568,7 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", 
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "3vh", paddingBottom : "1vh", 
                                     paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
@@ -569,7 +619,7 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", 
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "3vh", paddingBottom : "1vh", 
                                     paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
@@ -614,7 +664,7 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", 
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "3vh", paddingBottom : "1vh", 
                                     paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
