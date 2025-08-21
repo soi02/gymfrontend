@@ -14,28 +14,41 @@
 .market { bottom: 5%; left: 5%; width: 40%; height: 40%; }
 .buddy { bottom: 5%; right: 5%; width: 40%; height: 40%; }
 
-/* --- 가이드 오버레이 --- */
+/* --- 가이드 오버레이: 딱 한 번만 선언 --- */
 .guide-overlay {
-  position: absolute;
+  position: fixed !important; 
   inset: 0;
-  z-index: 20;
+  z-index: 9999;
   pointer-events: auto;
   font-family: inherit;
-}
-.guide-dim {
-  position: absolute; inset: 0;
-  background: none;
+  transform: translateZ(0); 
 }
 
-.guide-overlay { position: absolute; inset: 0; z-index: 20; }
-.guide-dim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.442); }
+/* 가림막 */
+.shade {
+  position: absolute;
+  background: rgba(0,0,0,0.45);
+  pointer-events: none;
+}
+
+/* 선택 영역 하이라이트 */
+.guide-spot {
+  position: absolute;
+  border-radius: 16px;
+  -webkit-backdrop-filter: brightness(1.15);
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
 .guide-ring {
   position: absolute;
   border-radius: 16px;
   outline: 3px solid rgba(255,255,255,0.95);
   box-shadow: 0 0 0 8px rgba(255,255,255,0.25), 0 0 24px rgba(0,0,0,0.5);
   animation: pulse 1.4s ease-in-out infinite;
+  pointer-events: none;
 }
+
 @keyframes pulse {
   0% { box-shadow: 0 0 0 8px rgba(255,255,255,0.25), 0 0 24px rgba(0,0,0,0.5); }
   50% { box-shadow: 0 0 0 12px rgba(255,255,255,0.35), 0 0 36px rgba(0,0,0,0.6); }
@@ -43,8 +56,8 @@
 }
 .guide-bubble {
   position: absolute;
-  max-width: 80%;       /* ✅ 넉넉하게 */
-  min-width: 200px;     /* ✅ 최소 크기 */
+  max-width: 80%;     
+  min-width: 200px; 
   background: #fff3cd;
   color: #222;
   border-radius: 14px;
@@ -57,31 +70,45 @@
   word-break: keep-all;
 }
 
+/* 오버레이는 클릭 통과 */
+.guide-overlay {
+  position: fixed !important;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;    /* ✅ 핵심 */
+  font-family: inherit;
+  transform: translateZ(0);
+}
 
-/* 가림막: 나머지 영역만 어둡게 */
+/* 가림막만 클릭 받기 → 닫힘 */
 .shade {
   position: absolute;
   background: rgba(0,0,0,0.45);
-  pointer-events: none;
+  pointer-events: auto;    /* ✅ 닫힘 트리거 */
 }
 
-/* 선택 영역 안쪽만 은은하게 밝게 */
-.guide-spot {
-  position: absolute;
-  border-radius: 16px;
-  /* 살짝 밝게 (iOS/크롬 지원) */
-  backdrop-filter: brightness(1.15);
-  -webkit-backdrop-filter: brightness(1.15);
-  background: rgba(255,255,255,0.06); /* 아주 약한 흰막 */
-  pointer-events: none;
-}
-
-/* 기존 반짝 테두리 유지 */
+/* 하이라이트는 클릭 통과 → 아래 Link가 클릭됨 */
+.guide-spot,
 .guide-ring {
   position: absolute;
   border-radius: 16px;
-  outline: 3px solid rgba(255,255,255,0.95);
-  box-shadow: 0 0 0 8px rgba(255,255,255,0.25), 0 0 24px rgba(0,0,0,0.5);
-  animation: pulse 1.4s ease-in-out infinite;
-  pointer-events: none;
+  pointer-events: none;    /* ✅ 통과 */
+}
+
+/* 말풍선은 클릭 받아 닫힘 */
+.guide-bubble {
+  position: absolute;
+  max-width: 80%;
+  min-width: 200px;
+  background: #fff3cd;
+  color: #222;
+  border-radius: 14px;
+  padding: 16px 0 2px;
+  box-shadow: 0 6px 22px rgba(0,0,0,.35);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: center;
+  word-break: keep-all;
+  pointer-events: auto;    /* ✅ 닫힘 가능 */
 }
