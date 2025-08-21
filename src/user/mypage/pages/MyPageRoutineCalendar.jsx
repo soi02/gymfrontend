@@ -117,11 +117,11 @@ export default function MyPageRoutineCalendar() {
 
   return (
     <>
-      <div className="divider-line"></div>
+      {/* <div className="divider-line"></div> */}
 
       <div className="mpc-container">
         <div className="mpc-header-wrapper">
-          <button className="mpc-back-btn" onClick={() => navigate(-1)}>
+          <button className="mpc-back-btn" onClick={() => navigate('/mypage')}>
             &lt; 나의 처소
           </button>
         {/* 캘린더 */}

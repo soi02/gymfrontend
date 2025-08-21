@@ -176,12 +176,12 @@
 /* 불꽃 아이콘 위치 조정 */
 .mp-day-number.mp-workout .mp-fire-icon {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 43px;
-  height: 43px;
-  opacity: 1;
+  width: 35px;
+  height: 35px;
+  opacity: 0.9;
 }
 .mp-day-number .mp-day-text {
   position: relative;
