@@ -5,8 +5,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* padding: 2rem; */
-    background-color: #f5f0e6;
+    padding: 0;
+    background-color: #f7f3e9;
     min-height: 100vh;
     box-sizing: border-box;
 }
@@ -17,17 +17,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
-    margin-bottom: 2rem;
+    padding: 1rem 1.5rem;
     margin-top: 1rem;
-}
-
-.diary-back-btn {
-    background: none;
-    border: none;
-    color: #555;
-    font-size: 16px;
-    cursor: pointer;
 }
 
 .diary-calendar-title {
@@ -37,35 +28,83 @@
     margin: 0;
 }
 
-/* 캘린더 내비게이션 (월 변경) */
+.header-icons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* 캘린더 내비게이션 (월 선택기) */
 .diary-calendar-navigation {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 400px;
-    margin-bottom: 2rem;
+    margin: 2rem 0 1.5rem;
 }
 
-.diary-calendar-navigation button {
+.month-picker-container {
+    position: relative;
+    display: inline-block;
+}
+
+.month-picker-btn {
     background: none;
     border: none;
     font-size: 1.2rem;
-    color: #666;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.diary-calendar-navigation button:hover {
-    color: #000;
-}
-
-.diary-calendar-navigation h3 {
-    font-size: 1.2rem;
     font-weight: 600;
     color: #333;
-    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
+
+.month-picker-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem; /* 패딩 증가 */
+    margin-top: 0.5rem;
+    z-index: 1000;
+    width: 280px; /* 고정 너비 추가 */
+}
+
+.year-selector select {
+    width: 100%;
+    padding: 0.75rem; /* 패딩 증가 */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1.5rem; /* 마진 증가 */
+    font-size: 1.1rem; /* 폰트 크기 증가 */
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열로 변경 */
+    gap: 15px; /* 간격 증가 */
+}
+
+.month-btn {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 10px; /* 모서리 둥글게 */
+    padding: 1rem 0.5rem; /* 패딩 증가 */
+    font-size: 1rem; /* 폰트 크기 증가 */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.month-btn.active {
+    background-color: #e2e2e2;
+    font-weight: bold;
+}
+
 
 /* 캘린더 그리드 */
 .diary-calendar-grid {
@@ -73,8 +112,8 @@
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     padding: 1rem;
-    width: 100%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 350px;
 }
 
 /* 요일 표시 */
@@ -82,19 +121,22 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
-    font-weight: bold;
+    font-weight: 500;
     color: #888;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
+
 .diary-calendar-weekdays div {
     padding: 0.5rem 0;
 }
+.diary-calendar-weekdays div:first-child { color: #d9534f; } /* 월요일 (임시) */
+.diary-calendar-weekdays div:last-child { color: #5bc0de; } /* 일요일 (임시) */
 
 /* 날짜 셀 */
 .diary-calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+    gap: 5px;
 }
 
 .diary-calendar-day {
@@ -102,37 +144,48 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    border-radius: 50%; /* 원형으로 변경 */
-    transition: transform 0.2s;
+    height: 40px;
+    width: 40px;
+    margin: auto;
+    border-radius: 50%;
     cursor: pointer;
     position: relative;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #333;
-    padding-top: 5px; /* 날짜 위치 조정 */
+    transition: transform 0.2s, background-color 0.2s;
 }
 
 .diary-calendar-day:hover {
-    transform: translateY(-3px);
+    transform: scale(1.05);
 }
 
-.diary-calendar-day.other-month {
+.diary-day-number {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    z-index: 10;
+    position: relative;
+}
+
+.diary-calendar-day.other-month .diary-day-number {
     color: #ccc;
-    background-color: transparent; /* 배경색 제거 */
 }
 
-.diary-emotion-indicator {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-top: 5px; /* 이모지 위치 조정 */
-}
-
-/* 이모지가 없는 날짜 셀 */
 .diary-calendar-day:not(.has-entry) {
+    background-color: #f0f0f0;
+}
+
+.diary-calendar-day.has-entry {
     background-color: transparent;
+}
+
+/* 이모지 */
+.diary-emotion-indicator {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* 에러 및 로딩 메시지 */

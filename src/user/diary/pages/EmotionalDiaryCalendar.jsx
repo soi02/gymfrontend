@@ -14,6 +14,7 @@ const EmotionalDiaryCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isMonthPickerOpen, setIsMonthPickerOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -54,19 +55,23 @@ const EmotionalDiaryCalendar = () => {
   const getDaysInMonth = () => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
     const days = [];
 
-    const firstDayIndex = firstDay.getDay();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    // 캘린더 시작점을 월요일로 맞춤
+    const firstDayIndex = (firstDay.getDay() + 6) % 7; // 0(월) ~ 6(일)
     for (let i = 0; i < firstDayIndex; i++) {
+        const prevMonthDay = new Date(year, month, i - firstDayIndex + 1);
         days.push({
-            date: new Date(year, month, -firstDayIndex + i + 1),
+            date: prevMonthDay,
             isCurrentMonth: false,
             hasEntry: false
         });
     }
 
+    // 현재 달의 날짜 추가
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const date = new Date(year, month, i);
       const dateString = getFormattedLocalDate(date);
@@ -80,10 +85,13 @@ const EmotionalDiaryCalendar = () => {
       });
     }
 
-    const remainingDays = 42 - days.length;
+    // 다음 달의 날짜를 추가하여 캘린더 그리드를 6x7 = 42개로 채움
+    const totalDays = days.length;
+    const remainingDays = 42 - totalDays;
     for (let i = 1; i <= remainingDays; i++) {
+        const nextMonthDay = new Date(year, month + 1, i);
         days.push({
-            date: new Date(year, month + 1, i),
+            date: nextMonthDay,
             isCurrentMonth: false,
             hasEntry: false
         });
@@ -92,12 +100,9 @@ const EmotionalDiaryCalendar = () => {
     return days;
   };
 
-  const prevMonth = () => {
-    setCurrentDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1));
-  };
-
-  const nextMonth = () => {
-    setCurrentDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1));
+  const handleMonthChange = (year, month) => {
+    setCurrentDate(new Date(year, month));
+    setIsMonthPickerOpen(false);
   };
 
   const handleDayClick = (day) => {
@@ -109,20 +114,50 @@ const EmotionalDiaryCalendar = () => {
 
   const days = getDaysInMonth();
   const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+  const years = Array.from({ length: 20 }, (_, i) => new Date().getFullYear() - 10 + i);
 
-return (
+  return (
     <div className="diary-calendar">
       <div className="diary-calendar-header">
-        <button className="diary-back-btn" onClick={() => navigate('/diary')}>
-          <i className="bi bi-chevron-left"></i>
-        </button>
-        <h2 className="diary-calendar-title">감정 일기 캘린더</h2>
+        <h2 className="diary-calendar-title">무드 캘린더</h2>
+        <div className="header-icons">
+          <i className="bi bi-search"></i>
+          <i className="bi bi-upload"></i>
+        </div>
       </div>
 
       <div className="diary-calendar-navigation">
-        <button onClick={prevMonth}><i className="bi bi-chevron-left"></i></button>
-        <h3>{currentDate.getFullYear()}년 {monthNames[currentDate.getMonth()]}</h3>
-        <button onClick={nextMonth}><i className="bi bi-chevron-right"></i></button>
+        <div className="month-picker-container">
+          <button className="month-picker-btn" onClick={() => setIsMonthPickerOpen(!isMonthPickerOpen)}>
+            {currentDate.getFullYear()}년 {monthNames[currentDate.getMonth()]}
+            <i className="bi bi-caret-down-fill"></i>
+          </button>
+          {isMonthPickerOpen && (
+            <div className="month-picker-dropdown">
+              <div className="year-selector">
+                <select
+                  value={currentDate.getFullYear()}
+                  onChange={(e) => setCurrentDate(new Date(e.target.value, currentDate.getMonth()))}
+                >
+                  {years.map(year => (
+                    <option key={year} value={year}>{year}년</option>
+                  ))}
+                </select>
+              </div>
+              <div className="month-grid">
+                {monthNames.map((monthName, index) => (
+                  <button
+                    key={index}
+                    className={`month-btn ${index === currentDate.getMonth() ? 'active' : ''}`}
+                    onClick={() => handleMonthChange(currentDate.getFullYear(), index)}
+                  >
+                    {monthName}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {error && <div className="diary-error-message">{error}</div>}
@@ -136,33 +171,31 @@ return (
       ) : (
         <div className="diary-calendar-grid">
           <div className="diary-calendar-weekdays">
-            <div>일</div>
-            <div>월</div>
-            <div>화</div>
-            <div>수</div>
-            <div>목</div>
-            <div>금</div>
-            <div>토</div>
+            {['월', '화', '수', '목', '금', '토', '일'].map(day => (
+              <div key={day}>{day}</div>
+            ))}
           </div>
           <div className="diary-calendar-days">
             {days.map((day, index) => (
               <div
                 key={index}
-                className={`diary-calendar-day ${!day.isCurrentMonth ? 'other-month' : ''}`}
+                className={`diary-calendar-day ${!day.isCurrentMonth ? 'other-month' : ''} 
+                           ${day.hasEntry ? 'has-entry' : ''}`}
                 onClick={() => handleDayClick(day)}
               >
-                <span className="diary-day-number">{day.date.getDate()}</span>
-                {day.hasEntry && day.emotion && (
-                  <img
-                    src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
-                    alt={day.emotion.name}
-                    className="diary-emotion-indicator"
-                    onError={(e) => { // 이미지 로드 실패 시 에러 처리
-                      e.target.style.display = 'none';
-                      console.error(`이미지 로드 실패: ${e.target.src}`);
-                      // 사용자에게는 보이지 않게 처리하고, 에러는 콘솔에 출력
-                    }}
-                  />
+                {day.hasEntry ? (
+                    day.emotion && (
+                        <img
+                          src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
+                          alt={day.emotion.name}
+                          className="diary-emotion-indicator"
+                          onError={(e) => {
+                              console.error(`이미지 로드 실패: ${e.target.src}`);
+                          }}
+                        />
+                    )
+                ) : (
+                    <span className="diary-day-number">{day.date.getDate()}</span>
                 )}
               </div>
             ))}
