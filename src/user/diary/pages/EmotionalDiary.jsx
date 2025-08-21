@@ -20,6 +20,9 @@ const EmotionalDiary = () => {
   const [isSaved, setIsSaved] = useState(false);
   const textareaRef = useRef(null);
 
+  // OpenWeatherMap API 키 (사용자가 직접 발급받아 입력해야 함)
+  const WEATHER_API_KEY = "YOUR_OPENWEATHERMAP_API_KEY";
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', { state: { from: '/diary' } });
@@ -95,6 +98,64 @@ const EmotionalDiary = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleLocationInsert = () => {
+    if (isSaved) return;
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      try {
+        // Nominatim API를 사용한 역 지오코딩 (좌표 -> 주소)
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+        const data = await response.json();
+        const address = data.display_name;
+        if (address) {
+          const locationText = `\n[위치: ${address}]\n`;
+          setDiaryContent(prev => prev + locationText);
+        } else {
+          alert('현재 주소를 가져올 수 없습니다.');
+        }
+      } catch (error) {
+        console.error("역 지오코딩 실패:", error);
+        alert('위치 정보를 주소로 변환하는 데 실패했습니다.');
+      }
+    }, (error) => {
+      console.error("Geolocation 에러:", error);
+      alert('위치 정보 접근이 거부되었습니다. 브라우저 설정을 확인해주세요.');
+    });
+  };
+
+  const handleWeatherInsert = () => {
+    if (isSaved) return;
+
+    if (WEATHER_API_KEY === "YOUR_OPENWEATHERMAP_API_KEY") {
+        alert("날씨 정보를 가져오려면 OpenWeatherMap API 키가 필요합니다.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      try {
+        // OpenWeatherMap API를 사용한 날씨 정보 조회
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric&lang=kr`);
+        const data = await response.json();
+        if (data.weather && data.main) {
+          const weatherDescription = data.weather[0].description;
+          const temperature = data.main.temp;
+          const weatherText = `\n[날씨: ${weatherDescription}, ${temperature.toFixed(1)}°C]\n`;
+          setDiaryContent(prev => prev + weatherText);
+        } else {
+          alert('날씨 정보를 가져올 수 없습니다.');
+        }
+      } catch (error) {
+        console.error("날씨 정보 조회 실패:", error);
+        alert('날씨 정보를 가져오는 데 실패했습니다.');
+      }
+    }, (error) => {
+      console.error("Geolocation 에러:", error);
+      alert('날씨 정보를 가져오려면 위치 정보 접근이 필요합니다.');
+    });
   };
 
   const handleTimeInsert = () => {
@@ -235,11 +296,11 @@ const EmotionalDiary = () => {
                 {!isSaved && (
                     <div className="diary-toolbar">
                         <div className="diary-env-icons">
-                            <div className="diary-env-icon-wrapper" onClick={handleTimeInsert}>
+                            <div className="diary-env-icon-wrapper" onClick={handleLocationInsert}>
                                 <i className="bi bi-geo-alt diary-env-icon"></i>
                                 <span className="diary-env-label">위치</span>
                             </div>
-                            <div className="diary-env-icon-wrapper">
+                            <div className="diary-env-icon-wrapper" onClick={handleWeatherInsert}>
                                 <i className="bi bi-cloud-lightning-rain diary-env-icon"></i>
                                 <span className="diary-env-label">날씨</span>
                             </div>
