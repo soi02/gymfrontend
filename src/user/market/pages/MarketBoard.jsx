@@ -5,6 +5,7 @@ import MarketWriteArticleFloatingFixedButton from "../components/MarketWriteArti
 import MarketSearchDivision from "../commons/test/example/MarketSearchDivision";
 import { Link, useNavigate } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
+import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -16,13 +17,31 @@ function MarketArticleElement({marketArticleElem1}) {
     
     const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
     
+    const formatDate = (dateString) => {
+        
+        const date = new Date(dateString);
+        
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+        return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+    };
+    
+    const formatProductCost = (productCost) => {
+        return productCost.toLocaleString('Ko-KR');
+    };
+    
     function funcSellEnded(sellEnded) {
         
         if (sellEnded == 1) {
             
             return (
                 <>
-                    거래 완료
+                    <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 완료</span>
                 </>
             );
             
@@ -30,7 +49,7 @@ function MarketArticleElement({marketArticleElem1}) {
             
             return (
                 <>
-                    거래 미완료
+                    <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 미완료</span>
                 </>
             );
             
@@ -38,27 +57,27 @@ function MarketArticleElement({marketArticleElem1}) {
         
     }
     
-        function funcFreeShare(productCost) {
+    function funcFreeShare(productCost) {
+        
+        if (productCost == 0) {
             
-            if (productCost == 0) {
-                
-                return (
-                    <>
-                        나눔
-                    </>
-                );
-                
-            } else {
-                
-                return (
-                    <>
-                        ￦ {productCost}
-                    </>
-                );
-                
-            }
+            return (
+                <>
+                    나눔
+                </>
+            );
+            
+        } else {
+            
+            return (
+                <>
+                    ￦ {formatProductCost(productCost)}
+                </>
+            );
             
         }
+        
+    }
     
     return ( 
         <>
@@ -71,7 +90,7 @@ function MarketArticleElement({marketArticleElem1}) {
                         {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                         
                         { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
+                        <div className = "row" style = {{height : "12.5vh", marginBottom : "2.5vh"}}>
                             <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
@@ -88,22 +107,35 @@ function MarketArticleElement({marketArticleElem1}) {
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                        <div className = "col" style = {{fontSize : "2.375vh"}}>
                                                             {article.title}
                                                         </div>
                                                     </div>
-                                                    <div className = "row">
+                                                    {/* <div className = "row">
                                                         <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                            {article.createdAt.toLocaleString()}
+                                                            {formatDate(article.createdAt)}
+                                                        </div>
+                                                    </div> */}
+                                                    <div className = "row">
+                                                        <div className = "col">
+                                                            <div className = "row align-items-center">
+                                                                <div className = "col-auto" 
+                                                                style = {{
+                                                                // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
+                                                                    fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1.5vh", marginRight : "0.75vh"}}
+                                                                    >
+                                                                    {/* <MarketAnonymousUserMiniProfileImage /> */}
+                                                                    <i className = "ri-user-3-fill"></i>
+                                                                </div>
+                                                                <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
+                                                                    {userInfo.nickname}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
-                                                            {userInfo.nickname}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                        <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
                                                             {funcFreeShare(article.productCost)}
                                                         </div>
                                                     </div>
@@ -242,17 +274,27 @@ export default function MarketBoardPage() {
         
             <div className = "container-fluid">
                 
-                <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "75vh", overflowX : "hidden"}}>
+                <div className = "row" style = {{height : "75vh"}}>
+                    <div className = "col h-100" style = {{position : "relative"}}>
                         
-                        <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
-                        constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
+                        <div className = "row" style = {{height : "75vh"}}>
+                            <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
+                                
+                                <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
+                                constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
+                                
+                                {
+                                    constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
+                                }
+                                
+                            </div>
+                            
+                        </div>
                         
-                        {
-                            constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
-                        }
-                        
-                        <MarketWriteArticleFloatingFixedButton />
+                        <div style = {{position : "absolute", top : "0px", left : "0px", width : "100%", height : "100%",
+                        zIndex : 2000, display: "flex", justifyContent: "center", alignItems: "center", pointerEvents : "none"}}>
+                            <MarketWriteArticleFloatingFixedButton />
+                        </div>
                         
                     </div>
                 </div>

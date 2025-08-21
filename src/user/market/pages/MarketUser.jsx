@@ -201,6 +201,24 @@ export default function MarketUserPage() {
         
         const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
         
+        const formatDate = (dateString) => {
+            
+            const date = new Date(dateString);
+            
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+        
+            return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+        };
+    
+        const formatProductCost = (productCost) => {
+            return productCost.toLocaleString('Ko-KR');
+        };
+        
         function funcSellEnded(sellEnded) {
             
             if (sellEnded == 1) {
@@ -219,7 +237,7 @@ export default function MarketUserPage() {
             <>
             
                 <div className = "row">
-                    <div className = "widthDefault">
+                    {/* <div className = "widthDefault"> */}
                         <div className = "col">
                             {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
                             {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
@@ -249,7 +267,7 @@ export default function MarketUserPage() {
                                                         </div>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                                {article.createdAt.toLocaleString()}
+                                                                {formatDate(article.createdAt)}
                                                             </div>
                                                         </div>
                                                         <div className = "row">
@@ -259,7 +277,7 @@ export default function MarketUserPage() {
                                                         </div>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                                ￦ {article.productCost}
+                                                                ￦ {formatProductCost(article.productCost)}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -270,7 +288,7 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             
             </>
@@ -287,6 +305,24 @@ export default function MarketUserPage() {
         const imageLinkPath = article.imageLink;
         
         const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
+        
+        const formatDate = (dateString) => {
+            
+            const date = new Date(dateString);
+            
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+        
+            return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+        };
+    
+        const formatProductCost = (productCost) => {
+            return productCost.toLocaleString('Ko-KR');
+        };
         
         function funcSellEnded(sellEnded) {
             
@@ -306,7 +342,7 @@ export default function MarketUserPage() {
             <>
             
                 <div className = "row">
-                    <div className = "widthDefault">
+                    {/* <div className = "widthDefault"> */}
                         <div className = "col">
                             {/* {marketArticleElem1.id}, {marketArticleElem1.marketUserId}, {marketArticleElem1.marketUserNickname}, {marketArticleElem1.imageLink}, {marketArticleElem1.mainImageLink}, 
                             {marketArticleElem1.articleTitle}, {marketArticleElem1.articleContent}, {marketArticleElem1.productCostOption}, {marketArticleElem1.productCost},
@@ -336,7 +372,7 @@ export default function MarketUserPage() {
                                                         </div>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "1.25vh"}}>
-                                                                {article.createdAt.toLocaleString()}
+                                                                {formatDate(article.createdAt)}
                                                             </div>
                                                         </div>
                                                         <div className = "row">
@@ -346,7 +382,7 @@ export default function MarketUserPage() {
                                                         </div>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
-                                                                ￦ {article.productCost}
+                                                                ￦ {formatProductCost(article.productCost)}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -357,7 +393,7 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             
             </>
@@ -437,7 +473,8 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", 
+                                    paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                             {
@@ -481,7 +518,8 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", 
+                                    paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                             {
@@ -531,7 +569,8 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", 
+                                    paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                             {
@@ -575,7 +614,8 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "2vh", 
+                                    paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
                                             {
@@ -712,9 +752,18 @@ export default function MarketUserPage() {
                             constMarketUserInfoElement.length  > 0 ? constMarketUserInfoElement : <></>
                         }
                         
-                        {<MarketUserBoughtProductPageLayout />}
+                        <div className = "row">
+                            <div className = "col firstCategorizingDivisionDefault" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", paddingTop : "4vh"}}>
                         
-                        {<MarketUserSoldProductPageLayout />}
+                                {<MarketUserBoughtProductPageLayout />}
+                                
+                                {<MarketUserSoldProductPageLayout />}
+                        
+                            </div>
+                        </div>
+
+                        
+                        
                         
                         {/* 시간 여유 시 구현 목표로 하는 코드 */}
                         {/* {<MarketUserRatePageLayout />} */}

@@ -222,7 +222,7 @@ export default function MarketUpdateArticlePage() {
                                         <div className = "col" style = {{marginBottom : "2vh"}}>
                                             <div className = "row gx-0">
                                                 <div className = "col-auto" style = {{width : "15vh", height : "15vh", overflow : "hidden", position : "relative",
-                                                paddingLeft : "0vh", paddingRight : "0vh", border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
+                                                paddingLeft : "0vh", paddingRight : "0vh", border : "1px solid #cccccc", borderRadius : "1.25vh"}}>
                                                     <input type = "file" style = {{display : "none"}} accept = "image*" onChange = {constApplyImageLink} ref = {imageLinkRef} />
                                                         <div className = "row">
                                                             <div className = "col basicDivisionOnClickStyle" onClick = {handleDivisionClick}>
@@ -230,12 +230,12 @@ export default function MarketUpdateArticlePage() {
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div className = "col" style = {{padding : "0vh", marginLeft : "2vh", marginRight : "2vh", 
-                                                border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh", overflow : "hidden"}}> 
+                                                <div className = "col" style = {{padding : "0vh", marginLeft : "2vh",
+                                                border : "1px solid #cccccc", borderRadius : "1.25vh", overflow : "hidden"}}> 
                                                     <div className = "row gx-0 flex-nowrap">
                                                         <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden",
                                                             display: "flex", justifyContent: "center", padding : "0vh", alignItems: "center", marginBottom : "2.5vh", 
-                                                            border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
+                                                            border : "1px solid #cccccc", borderRadius : "1.25vh"}}>
                                                             <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
                                                         </div>
                                                         <div className = "col" style = {{fontSize : "1.75vh"}}>
@@ -243,9 +243,9 @@ export default function MarketUpdateArticlePage() {
                                                                 <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
                                                                 </div>
                                                                 <div className = "col" style = {{flexGrow : "8", padding : "0vh"}}>
-                                                                    대표 사진으로 
+                                                                    대표로 표시되는 
                                                                     <br />
-                                                                    표시됩니다.
+                                                                    사진이오.
                                                                 </div>
                                                                 <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
                                                                 </div>
@@ -257,7 +257,8 @@ export default function MarketUpdateArticlePage() {
                                         </div>
                                     </div>
                                     <div className = "row gx-0">
-                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", 
+                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", 
+                                        paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#f9f9f9",
                                         marginBottom : "1vh", height : "9.5vh", overflowY : "auto"}}>
                                             {/* {
                                                 updateImageLink ?
@@ -373,7 +374,7 @@ export default function MarketUpdateArticlePage() {
                                             <textarea className = "form-control writeArticleTextDivisionDefault" rows = "4"
                                             id = "content" name = "content" value = {updateMarketArticleElement.content}
                                             onChange = {constApplyTextContent} ref = {contentRef}
-                                            style = {{fontSize : "1.75vh"}}/>
+                                            style = {{fontSize : "1.75vh", resize : "none"}}/>
                                         </div>
                                     </div>
                                 </div>
