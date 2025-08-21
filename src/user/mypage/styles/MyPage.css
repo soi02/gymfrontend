@@ -7,9 +7,9 @@
 
 .mp-container {
   padding: 1.5rem 1rem;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   min-height: 100vh;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Malgun Gothic', '맑은 고딕', sans-serif;
+  /* font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Malgun Gothic', '맑은 고딕', sans-serif; */
   color: #333;
 }
 

@@ -105,7 +105,7 @@ export default function MyPage() {
                 <h1>마이페이지</h1>
             </header> */}
             <div className="mp-section-container">
-                <section className="mp-profile-section" onClick={() => navigate("/myUserInformation")}>
+                <section className="mp-profile-section" onClick={() => navigate("/mypage/myUserInformation")}>
                     <div className="mp-profile-info">
                         <div className="mp-profile-img" style={{ backgroundImage: `url(${getProfileImageUrl()})` }} />
                         <div className="mp-profile-text">
@@ -127,7 +127,7 @@ export default function MyPage() {
                     </div>
                 </section>
                 <section className="mp-workout-section">
-                    <div className="mp-section-header" onClick={() => navigate("/routineCalendar")}>
+                    <div className="mp-section-header" onClick={() => navigate("/mypage/routineCalendar")}>
                         <h2 className="mp-section-title">이번주 운동 기록</h2>
                         <div className="mp-go-arrow">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -161,7 +161,7 @@ export default function MyPage() {
                     </div>
                 </div>
                 <div className="mp-more-menu-container">
-                    <div className="mp-menu-item" onClick={() => navigate("/errorPage")}>
+                    <div className="mp-menu-item" onClick={() => navigate("/mypage/notice")}>
                         <span>공지사항</span>
                         <span>{">"}</span>
                     </div>
