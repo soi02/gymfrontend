@@ -1,10 +1,11 @@
-/* src/styles/MypageNoticePage.css */
+/* src/styles/NoticePage.css */
 
 .notice-container {
     padding: 1.5rem 1rem;
     background-color: #f8f9fa;
     min-height: 100vh;
-    font-family: 'Pretendard', sans-serif;
+    overflow-y: auto;
+    /* font-family: 'Pretendard', sans-serif; */
     color: #333;
 }
 
@@ -86,6 +87,8 @@
 .notice-arrow {
     font-size: 1rem;
     color: #888;
+    display: flex;
+    align-items: center;
 }
 
 .notice-content {
@@ -102,6 +105,7 @@
     margin-bottom: 0.5rem;
 }
 
-.notice-content strong {
+/* <strong> 태그에 대한 스타일 제거 */
+/* .notice-content strong {
     font-weight: 700;
-}
+} */
