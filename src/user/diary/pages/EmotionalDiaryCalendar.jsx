@@ -110,7 +110,7 @@ const EmotionalDiaryCalendar = () => {
   const days = getDaysInMonth();
   const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 
-  return (
+return (
     <div className="diary-calendar">
       <div className="diary-calendar-header">
         <button className="diary-back-btn" onClick={() => navigate('/diary')}>
@@ -148,8 +148,7 @@ const EmotionalDiaryCalendar = () => {
             {days.map((day, index) => (
               <div
                 key={index}
-                className={`diary-calendar-day ${!day.isCurrentMonth ? 'other-month' : ''} 
-                           ${day.hasEntry ? 'has-entry' : ''}`}
+                className={`diary-calendar-day ${!day.isCurrentMonth ? 'other-month' : ''}`}
                 onClick={() => handleDayClick(day)}
               >
                 <span className="diary-day-number">{day.date.getDate()}</span>
@@ -158,6 +157,11 @@ const EmotionalDiaryCalendar = () => {
                     src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
                     alt={day.emotion.name}
                     className="diary-emotion-indicator"
+                    onError={(e) => { // 이미지 로드 실패 시 에러 처리
+                      e.target.style.display = 'none';
+                      console.error(`이미지 로드 실패: ${e.target.src}`);
+                      // 사용자에게는 보이지 않게 처리하고, 에러는 콘솔에 출력
+                    }}
                   />
                 )}
               </div>
