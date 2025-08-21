@@ -117,7 +117,7 @@ export default function BuddyNotification() {
     };
 
     return (
-        <div className="buddy-container">
+        <div className="buddy-container buddy-scroll-container">
             {/* <h4 className="buddy-title">버디 알림</h4> */}
             {notifications.length === 0 ? (
                 <div className="no-notification-container">
