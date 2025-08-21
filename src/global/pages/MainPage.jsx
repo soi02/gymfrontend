@@ -14,40 +14,54 @@ export default function MainPage() {
     []
   );
 
-  // 랜덤 타겟 1개 선택해서 위치 계산
-  useEffect(() => {
-    if (!showGuide) return;
+useEffect(() => {
+  if (!showGuide) return;
 
-    const pick = () => {
-      const container = containerRef.current;
-      if (!container) return;
+  const pick = () => {
+    const container = containerRef.current;
+    if (!container) return;
 
-      const elements = targets
-        .map(sel => container.querySelector(sel))
-        .filter(Boolean);
+    const elements = targets
+      .map(sel => container.querySelector(sel))
+      .filter(Boolean);
 
-      if (elements.length === 0) return;
+    if (elements.length === 0) return;
 
-      const el = elements[Math.floor(Math.random() * elements.length)];
-      const r = el.getBoundingClientRect();
-      const c = container.getBoundingClientRect();
-      setRect({ x: r.left - c.left, y: r.top - c.top, w: r.width, h: r.height });
-    };
+    const el = elements[Math.floor(Math.random() * elements.length)];
+    const r = el.getBoundingClientRect(); // ✅ 뷰포트 기준
+    setRect({ x: r.left, y: r.top, w: r.width, h: r.height }); // ✅ 보정 삭제
+  };
 
-    pick();
+  const update = () => pick();
 
-    const update = () => pick();
-    const ro = new ResizeObserver(update);
-    ro.observe(document.body);
-    window.addEventListener("resize", update);
-    window.addEventListener("orientationchange", update);
+  pick();
 
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", update);
-      window.removeEventListener("orientationchange", update);
-    };
-  }, [showGuide, targets]);
+  const ro = new ResizeObserver(update);
+  ro.observe(document.body);
+
+  window.addEventListener("resize", update);
+  window.addEventListener("orientationchange", update);
+  window.addEventListener("scroll", update, { passive: true });
+
+  // ✅ iOS 사파리 주소창 변화 대응
+  const vv = window.visualViewport;
+  if (vv) {
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update, { passive: true });
+  }
+
+  return () => {
+    ro.disconnect();
+    window.removeEventListener("resize", update);
+    window.removeEventListener("orientationchange", update);
+    window.removeEventListener("scroll", update);
+    if (vv) {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+    }
+  };
+}, [showGuide, targets]);
+
 
   const close = () => {
     localStorage.setItem("mainGuideSeen", "1");
@@ -66,23 +80,30 @@ export default function MainPage() {
 
       {/* 랜덤 가이드 오버레이 */}
 {showGuide && rect && (
-  <div className="guide-overlay" onClick={close} role="dialog" aria-live="polite">
-    {/* 4면 가림막: 선택 영역을 제외한 부분만 어둡게 */}
-    <div className="shade top"    style={{ top: 0, left: 0, width: "100%", height: rect.y }} />
-    <div className="shade bottom" style={{ top: rect.y + rect.h, left: 0, width: "100%", bottom: 0, position: "absolute" }} />
-    <div className="shade left"   style={{ top: rect.y, left: 0, width: rect.x, height: rect.h }} />
-    <div className="shade right"  style={{ top: rect.y, left: rect.x + rect.w, right: 0, height: rect.h, position: "absolute" }} />
+  <div className="guide-overlay" role="dialog" aria-live="polite">
+    {/* 4면 가림막: 눌렀을 때만 닫힘 */}
+    <div className="shade top"    onClick={close}
+         style={{ top: 0, left: 0, width: "100%", height: rect.y }} />
+    <div className="shade bottom" onClick={close}
+         style={{ top: rect.y + rect.h, left: 0, width: "100%", bottom: 0, position: "absolute" }} />
+    <div className="shade left"   onClick={close}
+         style={{ top: rect.y, left: 0, width: rect.x, height: rect.h }} />
+    <div className="shade right"  onClick={close}
+         style={{ top: rect.y, left: rect.x + rect.w, right: 0, height: rect.h, position: "absolute" }} />
 
-    {/* 안쪽만 살짝 밝게 + 테두리 펄스 */}
+    {/* 하이라이트: 클릭 통과 */}
     <div className="guide-spot" style={{ top: rect.y, left: rect.x, width: rect.w, height: rect.h }} />
-    <div className="guide-ring" style={{ top: rect.y, left: rect.x, width: rect.w, height: rect.h }} />
+    <div className="guide-ring"  style={{ top: rect.y, left: rect.x, width: rect.w, height: rect.h }} />
 
-    {/* 중앙 안내 버블 */}
-    <div className="guide-bubble" style={{ top: "40%", left: "50%", transform: "translateX(-50%)" }}>
+    {/* 말풍선: 누르면 닫힘 */}
+    <div className="guide-bubble"
+         onClick={close}
+         style={{ top: "40%", left: "50%", transform: "translateX(-50%)" }}>
       <p>마당의 곳곳을 짚으면 <br />원하는 장소로 <br />이동할 수 있소.</p>
     </div>
   </div>
 )}
+
 
     </div>
   );
