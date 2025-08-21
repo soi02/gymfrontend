@@ -32,7 +32,6 @@ import RoutineAddPage from './user/routine/pages/RoutineAddPage';
 import RoutineFreePage from './user/routine/pages/RoutineFreePage';
 import MyPage from './user/mypage/pages/MyPage';
 import MyRoutinePage from './user/routine/pages/MyRoutinePage';
-import WorkoutPage from './user/routine/pages/WorkoutPage';
 import GuidePage from './user/routine/pages/GuidePage';
 import DiaryPage from './user/routine/pages/DiaryPage.Jsx';
 import ResultPage from './user/routine/pages/ResultPage';
@@ -232,7 +231,6 @@ function AppContent() {
             <Route path='/routine/list/:routineId' element={<MyRoutineListPage />} />
             <Route path='/routine/startWorkout/:routineId' element={<StartWorkoutPage />} />
             <Route path='/routine/startFreeWorkout' element={<StartFreeWorkoutPage />} />
-            <Route path='/routine/workout' element={<WorkoutPage />} />
             <Route path='/routine/guide/:id' element={<GuidePage />} />
             <Route path='/routine/diary' element={<DiaryPage />} />
             <Route path='/routine/result/:workoutId' element={<ResultPage />} />

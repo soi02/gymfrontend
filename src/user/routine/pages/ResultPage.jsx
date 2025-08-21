@@ -268,7 +268,7 @@ export default function ResultPage() {
 
         </div>
         <div className="pf-action-2">
-          <button className="pf-btn-2" onClick={() => navigate("/routineCalendar")}>
+          <button className="pf-btn-2" onClick={() => navigate("/mypage/routineCalendar")}>
             나의 기록들을 보러가겠소
           </button>
         </div>
