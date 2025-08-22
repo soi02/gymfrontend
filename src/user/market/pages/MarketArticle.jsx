@@ -1605,11 +1605,13 @@ export default function MarketArticlePageTest() {
         
             <div className = "container-fluid">
                 
-                <div className = "row">
-                    <div className = "widthDefault">
-                        <div className = "col">
-                            <div className = "row">
-                                <div className = "col primaryDivisionDefault" style = {{height : "30rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem", overflowX : "hidden"}}>
+                <div className = "row" style = {{height : "100vh"}}>
+                    {/* <div className = "widthDefault"> */}
+                    <div className = "col h-100" style = {{position : "relative"}}>
+                        <div className = "primaryDivisionSizeDefault">
+                            <div className = "row" style = {{height : "100%"}}>
+                                <div className = "col primaryDivisionDefault h-100"
+                                style = {{position : "relative", paddingLeft : "0.8125rem", paddingRight : "0.8125rem", overflowX : "hidden", overflowY : "auto"}}>
                                     <div className = "row">
                                         <div className = "col gx-0" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", marginBottom : "0.6125rem"}}>
                                             
@@ -1735,6 +1737,7 @@ export default function MarketArticlePageTest() {
                             </div>
                         </div>
                     </div>
+                    {/* </div> */}
                 </div>
                 
             </div>

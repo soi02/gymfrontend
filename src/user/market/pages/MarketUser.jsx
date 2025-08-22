@@ -795,31 +795,39 @@ export default function MarketUserPage() {
         
             <div className = "container-fluid">
                 
-                <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{ height : "30rem", overflowX : "hidden"}}>
-                        
-                        {
-                            constMarketUserInfoElement.length  > 0 ? constMarketUserInfoElement : <></>
-                        }
-                        
-                        <div className = "row">
-                            <div className = "col firstCategorizingDivisionDefault" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", paddingTop : "1.625rem"}}>
-                        
-                                {<MarketUserBoughtProductPageLayout />}
-                                
-                                {<MarketUserSoldProductPageLayout />}
-                        
-                            </div>
-                        </div>
+                <div className = "row" style = {{height : "100vh"}}>
+                    <div className = "col h-100" style = {{position : "relative"}}>
+                        <div className = "primaryDivisionSizeDefault">
+                            
+                            <div className = "row" style = {{height : "100%"}}>
+                                <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
+                                    
+                                    {
+                                        constMarketUserInfoElement.length  > 0 ? constMarketUserInfoElement : <></>
+                                    }
+                                    
+                                    <div className = "row">
+                                        <div className = "col firstCategorizingDivisionDefault" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", paddingTop : "1.625rem"}}>
+                                    
+                                            {<MarketUserBoughtProductPageLayout />}
+                                            
+                                            {<MarketUserSoldProductPageLayout />}
+                                    
+                                        </div>
+                                    </div>
 
-                        
-                        
-                        
-                        {/* 시간 여유 시 구현 목표로 하는 코드 */}
-                        {/* {<MarketUserRatePageLayout />} */}
-                        
+                                    
+                                    
+                                    
+                                    {/* 시간 여유 시 구현 목표로 하는 코드 */}
+                                    {/* {<MarketUserRatePageLayout />} */}
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
-                </div>
+                </div>  
                 
             </div>
         

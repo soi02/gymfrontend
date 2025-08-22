@@ -701,11 +701,12 @@ export default function MarketMyLikedProductsPage() {
         
             <div className = "container-fluid">
         
-                <div className = "row">
+                <div className = "row" style = {{height : "100vh"}}>
                     {/* <div className = "widthDefault"> */}
-                        <div className = "col">
-                            <div className = "row">
-                                <div className = "col primaryDivisionDefault" style = {{ height : "30rem", overflowX : "hidden"}}>
+                    <div className = "col h-100" style = {{position : "relative"}}>
+                        <div className = "primaryDivisionSizeDefault">
+                            <div className = "row" style = {{height : "100%"}}>
+                                <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
                                     <div className = "row">
                                         <div className = "col firstCategorizingDivisionDefault" style = {{marginTop : "0.8125rem", marginLeft : "0.6125rem", marginRight : "0.6125rem", paddingTop : "1.625rem"}}>
                                             <div className = "row">
@@ -761,6 +762,7 @@ export default function MarketMyLikedProductsPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     {/* </div> */}
                 </div>
                 

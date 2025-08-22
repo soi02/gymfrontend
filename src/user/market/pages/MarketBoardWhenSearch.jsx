@@ -16,13 +16,17 @@ function MarketArticleElement({marketArticleElem1}) {
     
     const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
     
+    const formatProductCost = (productCost) => {
+        return productCost.toLocaleString('Ko-KR');
+    };
+    
     function funcSellEnded(sellEnded) {
         
         if (sellEnded == 1) {
             
             return (
                 <>
-                    거래 완료
+                    <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 완료</span>
                 </>
             );
             
@@ -30,7 +34,7 @@ function MarketArticleElement({marketArticleElem1}) {
             
             return (
                 <>
-                    거래 미완료
+                    <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 미완료</span>
                 </>
             );
             
@@ -38,27 +42,27 @@ function MarketArticleElement({marketArticleElem1}) {
         
     }
     
-        function funcFreeShare(productCost) {
+    function funcFreeShare(productCost) {
+        
+        if (productCost == 0) {
             
-            if (productCost == 0) {
-                
-                return (
-                    <>
-                        나눔
-                    </>
-                );
-                
-            } else {
-                
-                return (
-                    <>
-                        ￦ {productCost}
-                    </>
-                );
-                
-            }
+            return (
+                <>
+                    나눔
+                </>
+            );
+            
+        } else {
+            
+            return (
+                <>
+                    ￦ {formatProductCost(productCost)}
+                </>
+            );
             
         }
+        
+    }
     
     return ( 
         <>
@@ -88,22 +92,26 @@ function MarketArticleElement({marketArticleElem1}) {
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                                        <div className = "col" style = {{fontSize : "1rem"}}>
                                                             {article.title}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.5rem"}}>
-                                                            {article.createdAt.toLocaleString()}
+                                                        <div className = "col">
+                                                            <div className = "row align-items-center">
+                                                                <div className = "col-auto" 
+                                                                style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
+                                                                    >
+                                                                    <i className = "ri-user-3-fill"></i>
+                                                                </div>
+                                                                <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
+                                                                    {userInfo.nickname}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.6125rem"}}>
-                                                            {userInfo.nickname}
-                                                        </div>
-                                                    </div>
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.8125rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
+                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
                                                             {funcFreeShare(article.productCost)}
                                                         </div>
                                                     </div>
@@ -271,45 +279,56 @@ export default function MarketBoardPageWhenSearch() {
         
             <div className = "container-fluid">
                 
-                <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "30rem", overflowX : "hidden"}}>
-                        
-                        <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
-                        constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
-                        
-                        {
-                            (checkSearchWord != '') ?
-                            (
-                                <>
-                                            
-                                    <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "0.8125rem"}}>
-                                            <span>"</span>
-                                            <span style = {{fontWeight : "bold"}}>{checkSearchWord}</span>
-                                            <span>"</span>
-                                            <span> 단어로 게시글을 찾았소.</span>
-                                        </div>
-                                    </div>
-                                            
-                                </>
-                            )
-                            :
-                            (
-                                <>
-                                </>
-                            )
-                        }
-                        
+                <div className = "row" style = {{height : "100vh"}}>
+                    <div className = "col h-100" style = {{position : "relative"}}>
+                        <div className = "primaryDivisionSizeDefault" style = {{marginTop : "0.125rem"}}>
+                            
+                            <div className = "row" style = {{height : "100%"}}>
+                                <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
+                                    
+                                    <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
+                                    constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
+                                    
+                                    {
+                                        (checkSearchWord != '') ?
+                                        (
+                                            <>
+                                                        
+                                                <div className = "row">
+                                                    <div className = "col" style = {{marginBottom : "0.8125rem", color : "#6d6d6d"}}>
+                                                        <span>"</span>
+                                                        <span style = {{fontWeight : "bold", color : "black"}}>{checkSearchWord}</span>
+                                                        <span>"</span>
+                                                        <span> 단어로 게시글을 찾았소.</span>
+                                                    </div>
+                                                </div>
+                                                        
+                                            </>
+                                        )
+                                        :
+                                        (
+                                            <>
+                                            </>
+                                        )
+                                    }
+                                    
 
-                        
-                        {
-                            constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
-                        }
-                        
-                        <MarketWriteArticleFloatingFixedButton />
-                        
+                                    
+                                    {
+                                        constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
+                                    }
+                                    
+                                </div>
+                            </div>
+                                    
+                            <div style = {{position : "absolute", top : "0px", left : "0px", width : "100%", height : "100%",
+                            zIndex : 2000, display: "flex", justifyContent: "center", alignItems: "center", pointerEvents : "none"}}>
+                                <MarketWriteArticleFloatingFixedButton />
+                            </div>
+                            
+                        </div>
                     </div>
-                </div>
+                </div>  
                 
             </div>
         
