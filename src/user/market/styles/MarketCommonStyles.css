@@ -1,14 +1,14 @@
 .marketTopFixed {
     
   background-color: white;
-  border-bottom: 1vh solid black;
+  border-bottom: 0.4375rem solid black;
     
 }
 
 .marketBottomFixed {
     
   background-color: white;
-  border-top: 1vh solid black;
+  border-top: 0.4375rem solid black;
     
 }
 
@@ -32,8 +32,8 @@
   --var-bg-color : #7c1d0d;
   --var-color : rgb(255, 255, 255);
   --var-ft-weight : bold;
-  --var-ft-radius : 1.25vh;
-  --var-border : 0vh;
+  --var-ft-radius : 0.5rem;
+  --var-border : 0rem;
   
   background-color: var(--var-bg-color);
   color: var(--var-color);
@@ -85,8 +85,8 @@
   --var-bg-color : #f2a766;
   --var-color : rgb(255, 255, 255);
   --var-ft-weight : bold;
-  --var-ft-radius : 1.25vh;
-  --var-border : 0vh;
+  --var-ft-radius : 0.5rem;
+  --var-border : 0rem;
   
   background-color: var(--var-bg-color);
   color: var(--var-color);
@@ -121,22 +121,22 @@
 
 .searchBarDefault {
   
-  border-radius : 1.25vh;
-  padding-left : 2vh;
-  padding-left : 2vh;
-  padding-top : 1.25vh;
-  padding-bottom : 1.25vh;
+  border-radius : 0.5rem;
+  padding-left : 0.8125rem;
+  padding-left : 0.8125rem;
+  padding-top : 0.5rem;
+  padding-bottom : 0.5rem;
   border: 1px solid #cccccc;
   
 }
 
 .searchBarDefault:focus {
   
-  border-radius : 1.25vh;
-  padding-left : 2vh;
-  padding-left : 2vh;
-  padding-top : 1.25vh;
-  padding-bottom : 1.25vh;
+  border-radius : 0.5rem;
+  padding-left : 0.8125rem;
+  padding-left : 0.8125rem;
+  padding-top : 0.5rem;
+  padding-bottom : 0.5rem;
   border: 1px solid #7c1d0d;
   box-shadow : none;
   outline: none;
@@ -145,22 +145,22 @@
 
 .writeArticleTextDivisionDefault {
   
-  border-radius : 1.25vh;
-  padding-left : 2vh;
-  padding-left : 2vh;
-  padding-top : 0.75vh;
-  padding-bottom : 0.75vh;
+  border-radius : 0.5rem;
+  padding-left : 0.8125rem;
+  padding-left : 0.8125rem;
+  padding-top : 0.3125rem;
+  padding-bottom : 0.3125rem;
   border: 1px solid #cccccc;
   
 }
 
 .writeArticleTextDivisionDefault:focus {
   
-  border-radius : 1.25vh;
-  padding-left : 2vh;
-  padding-left : 2vh;
-  padding-top : 0.75vh;
-  padding-bottom : 0.75vh;
+  border-radius : 0.5rem;
+  padding-left : 0.8125rem;
+  padding-left : 0.8125rem;
+  padding-top : 0.3125rem;
+  padding-bottom : 0.3125rem;
   border: 1px solid #7c1d0d;
   box-shadow : none;
   outline: none;
@@ -175,7 +175,7 @@
 
 .firstCategorizingDivisionDefault {
   
-  border-radius : 1.25vh;
+  border-radius : 0.5rem;
   border: 1px solid #cccccc;
   background-color : #f9f9f9;
   
@@ -183,7 +183,7 @@
 
 .secondaryDivisionDefault {
   
-  border-radius : 1.25vh;
+  border-radius : 0.5rem;
   border: 1px solid #cccccc;
   /* box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25); */
   

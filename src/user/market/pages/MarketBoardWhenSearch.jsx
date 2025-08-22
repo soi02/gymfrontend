@@ -71,39 +71,39 @@ function MarketArticleElement({marketArticleElem1}) {
                         {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                         
                         { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{height : "12.5vh", marginBottom : "1vh"}}>
-                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                        <div className = "row" style = {{height : "5rem", marginBottom : "1rem"}}>
+                            <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                 <div className = "row">
-                                    <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
+                                    <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem"}}>
                                         <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                             <div className = "row">
-                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                    paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                <div className = "col-auto" style = {{width : "5rem", height : "5rem", overflow : "hidden", position : "relative",
+                                                    paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
                                                     <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                 </div>
                                                 <div className = "col" style = {{position : "relative"}}>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.5rem"}}>
                                                             {funcSellEnded(article.sellEnded)}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                             {article.title}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.5rem"}}>
                                                             {article.createdAt.toLocaleString()}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.6125rem"}}>
                                                             {userInfo.nickname}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "2vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.8125rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
                                                             {funcFreeShare(article.productCost)}
                                                         </div>
                                                     </div>
@@ -272,7 +272,7 @@ export default function MarketBoardPageWhenSearch() {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "75vh", overflowX : "hidden"}}>
+                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "30rem", overflowX : "hidden"}}>
                         
                         <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
                         constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
@@ -283,8 +283,11 @@ export default function MarketBoardPageWhenSearch() {
                                 <>
                                             
                                     <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "2vh"}}>
-                                            "{checkSearchWord}" 단어로 게시글을 찾았소.
+                                        <div className = "col" style = {{marginBottom : "0.8125rem"}}>
+                                            <span>"</span>
+                                            <span style = {{fontWeight : "bold"}}>{checkSearchWord}</span>
+                                            <span>"</span>
+                                            <span> 단어로 게시글을 찾았소.</span>
                                         </div>
                                     </div>
                                             

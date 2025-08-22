@@ -90,24 +90,24 @@ function MarketArticleElement({marketArticleElem1}) {
                         {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                         
                         { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{height : "12.5vh", marginBottom : "2.5vh"}}>
-                            <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                        <div className = "row" style = {{height : "5rem", marginBottom : "1rem"}}>
+                            <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                 <div className = "row">
-                                    <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh"}}>
+                                    <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem"}}>
                                         <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                             <div className = "row">
-                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                    paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                <div className = "col-auto" style = {{width : "5rem", height : "5rem", overflow : "hidden", position : "relative",
+                                                    paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
                                                     <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                 </div>
                                                 <div className = "col" style = {{position : "relative"}}>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.5rem"}}>
                                                             {funcSellEnded(article.sellEnded)}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "2.375vh"}}>
+                                                        <div className = "col" style = {{fontSize : "1rem"}}>
                                                             {article.title}
                                                         </div>
                                                     </div>
@@ -122,12 +122,12 @@ function MarketArticleElement({marketArticleElem1}) {
                                                                 <div className = "col-auto" 
                                                                 style = {{
                                                                 // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
-                                                                    fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1.5vh", marginRight : "0.75vh"}}
+                                                                    fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
                                                                     >
                                                                     {/* <MarketAnonymousUserMiniProfileImage /> */}
                                                                     <i className = "ri-user-3-fill"></i>
                                                                 </div>
-                                                                <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
+                                                                <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
                                                                     {userInfo.nickname}
                                                                 </div>
                                                             </div>
@@ -135,7 +135,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                     </div>
 
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
                                                             {funcFreeShare(article.productCost)}
                                                         </div>
                                                     </div>
@@ -274,10 +274,10 @@ export default function MarketBoardPage() {
         
             <div className = "container-fluid">
                 
-                <div className = "row" style = {{height : "75vh"}}>
+                <div className = "row" style = {{height : "30rem"}}>
                     <div className = "col h-100" style = {{position : "relative"}}>
                         
-                        <div className = "row" style = {{height : "75vh"}}>
+                        <div className = "row" style = {{height : "30rem"}}>
                             <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
                                 
                                 <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
