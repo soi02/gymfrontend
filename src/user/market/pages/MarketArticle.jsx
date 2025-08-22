@@ -1723,8 +1723,8 @@ export default function MarketArticlePageTest() {
                                                         <div className = "col d-flex justify-content-end">
                                                             <div className = "row">
                                                                 <div className = "col-auto">
-                                                                    <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)}
-                                                                    style = {{fontSize : "0.75rem", fontWeight : "bold"}}>이전으로</button>
+                                                                    {/* <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)}
+                                                                    style = {{fontSize : "0.75rem", fontWeight : "bold"}}>이전으로</button> */}
                                                                 </div>
                                                             </div>
                                                         </div>

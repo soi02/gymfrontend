@@ -5,18 +5,19 @@ import MarketUserInfosOnUserPage from "../commons/test/example/MarketUserInfosOn
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import '../styles/MarketCommonStyles.css';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 export default function MarketUserPage() {
     
     const {id : loadedId} = useParams();
-    console.log("idParam");
     console.log(loadedId);
     
     const checkUserStatus = 1;
     const checkUserId = Number(loadedId);
     const defaultUserStatus = Number(loadedId);
+    
+    const navigate = useNavigate();
     
     const [countOfSoldLogsOnUser, setCountOfSoldLogsOnUser] = useState(-1);
     const [countOfBoughtLogsOnUser, setCountOfBoughtLogsOnUser] = useState(-1);
@@ -556,7 +557,7 @@ export default function MarketUserPage() {
                 <>
                 
                     <div className = "row">
-                        <div className = "col" style = {{paddingLeft : "1.25remh", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
+                        <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "0.75rem"}}>
                                     판매 물품 개수
@@ -821,6 +822,24 @@ export default function MarketUserPage() {
                                     
                                     {/* 시간 여유 시 구현 목표로 하는 코드 */}
                                     {/* {<MarketUserRatePageLayout />} */}
+                                    
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginTop : "0.8125rem"}}>
+                                            <div className = "row">
+                                                <div className = "col">
+                                                    
+                                                </div>
+                                                <div className = "col d-flex justify-content-end">
+                                                    <div className = "row">
+                                                        <div className = "col-auto">
+                                                            <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)}
+                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>이전으로</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     
                                 </div>
                             </div>
