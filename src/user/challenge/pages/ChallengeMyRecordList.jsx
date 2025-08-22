@@ -21,30 +21,21 @@ export default function ChallengeMyRecordList() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ⚠️ 실제 auth 구조에 맞게 확인: state.auth.id / state.auth.user?.id 등
   const userId = useSelector((s) => s.auth?.id);
   const userName = useSelector((s) => s.auth?.name || '사용자');
 
-  // 실제 데이터
   const [myChallengeList, setMyChallengeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasTried, setHasTried] = useState(false);
   const [error, setError] = useState(null);
 
-  // ── fetch: userId가 준비된 뒤에만 호출
   useEffect(() => {
-    console.log('[DEBUG] userId from redux =', userId);
-
-    if (userId == null) {
-      // 아직 auth 미세팅 상태: 로딩 유지
-      return;
-    }
+    if (userId == null) return;
 
     const fetchMyChallengeList = async () => {
       try {
         setLoading(true);
         setError(null);
-        console.log('[DEBUG] fetching my challenge list with userId =', userId);
 
         const res = await axios.get(
           `${BACKEND_BASE_URL}/api/challenge/getAllMyChallengeListProcess`,
@@ -52,12 +43,9 @@ export default function ChallengeMyRecordList() {
         );
 
         const data = res?.data || [];
-        console.log('[DEBUG] response length =', data.length);
-        if (data.length > 0) console.table(data.slice(0, 5));
-
         setMyChallengeList(data);
       } catch (err) {
-        console.error('[DEBUG] fetch error', err);
+        console.error('[ChallengeMyRecordList] fetch error', err);
         setError('나의 챌린지 목록을 불러오는 데 실패했습니다.');
       } finally {
         setLoading(false);
@@ -68,19 +56,11 @@ export default function ChallengeMyRecordList() {
     fetchMyChallengeList();
   }, [userId]);
 
-  // ── 유틸
-  const ratioOf = (ch) => {
-    const dur = Number(ch.challengeDurationDays) || 0;
-    const done = Number(ch.daysAttended) || 0;
-    return dur > 0 ? Math.min(1, Math.max(0, done / dur)) : 0;
-  };
-
   const thumbOf = (ch) => {
     const p = ch?.challengeThumbnailPath;
     return p ? `${BACKEND_BASE_URL}${p}` : '/images/default-thumbnail.png';
   };
 
-  // ── KPI 요약(실데이터 기반)
   const stats = useMemo(() => {
     const total = myChallengeList.length;
     let inProgress = 0, completed = 0, todayDone = 0, sumRatio = 0;
@@ -100,7 +80,13 @@ export default function ChallengeMyRecordList() {
     return { inProgress, completed, todayDone, avgProgressPct };
   }, [myChallengeList]);
 
-  // ── auth 아직 모를 때: 네트워크 호출 대기
+  const kpiIconMap = {
+    inProgress: '/src/assets/img/challenge/myChallengeIcon/play.png',
+    completed: '/src/assets/img/challenge/myChallengeIcon/congrat.png',
+    todayDone: '/src/assets/img/challenge/myChallengeIcon/today.png',
+    avgProgressPct: '/src/assets/img/challenge/myChallengeIcon/progress.png',
+  };
+
   if (userId == null) {
     return (
       <div className="cmrl-new-page cl-new-container">
@@ -111,21 +97,14 @@ export default function ChallengeMyRecordList() {
 
   return (
     <div className="cmrl-new-page cl-new-container">
-      {/* Header */}
       <header className="cmrl-new-header">
         <div className="cmrl-new-header-top">
           <h2 className="cmrl-new-title">{userName}님의 수련 기록</h2>
-          <button
-            className="cmrl-new-link-btn"
-            onClick={() => navigate('/challenge/create')}
-          >
-            새 수련 만들기 <MdChevronRight />
-          </button>
+
         </div>
         <p className="cmrl-new-sub">오늘 해야 할 일과 진행 상황을 한눈에 확인하세요</p>
       </header>
 
-      {/* Body */}
       <main className="cmrl-new-body">
         {loading ? (
           <div className="cmrl-new-loading">불러오는 중…</div>
@@ -133,7 +112,6 @@ export default function ChallengeMyRecordList() {
           <div className="cmrl-new-error">{error}</div>
         ) : (
           <>
-            {/* 로그인 안 했거나 데이터가 정말 없을 때 안내 */}
             {myChallengeList.length === 0 && hasTried && (
               <div className="cmrl-new-section">
                 <div className="cmrl-new-card">
@@ -142,7 +120,9 @@ export default function ChallengeMyRecordList() {
                     <div style={{ marginTop: 10 }}>
                       <button
                         className="cmrl-new-btn-primary"
-                        onClick={() => navigate('/login', { state: { from: location.pathname } })}
+                        onClick={() =>
+                          navigate('/login', { state: { from: location.pathname } })
+                        }
                       >
                         로그인하기
                       </button>
@@ -155,26 +135,40 @@ export default function ChallengeMyRecordList() {
             {/* KPI 타일 */}
             <section className="cmrl-new-grid4">
               <div className="cmrl-new-tile">
-                <div className="cmrl-new-tile-head">참여 중</div>
-                <div className="cmrl-new-tile-val">{stats.inProgress}</div>
-              </div>
-              <div className="cmrl-new-tile">
-                <div className="cmrl-new-tile-head">참여 완료</div>
-                <div className="cmrl-new-tile-val">{stats.completed}</div>
-              </div>
-              <div className="cmrl-new-tile">
-                <div className="cmrl-new-tile-head">오늘 인증</div>
-                <div className="cmrl-new-tile-val">
-                  {stats.todayDone} <span className="cmrl-new-subtxt">/ {stats.inProgress}</span>
+                <div>
+                  <div className="cmrl-new-tile-head">참여 중</div>
+                  <div className="cmrl-new-tile-val">{stats.inProgress}</div>
                 </div>
+                <img className="cmrl-new-tile-icon" src={kpiIconMap.inProgress} alt="" />
               </div>
+
               <div className="cmrl-new-tile">
-                <div className="cmrl-new-tile-head">평균 진행률</div>
-                <div className="cmrl-new-tile-val">{stats.avgProgressPct}%</div>
+                <div>
+                  <div className="cmrl-new-tile-head">참여 완료</div>
+                  <div className="cmrl-new-tile-val">{stats.completed}</div>
+                </div>
+                <img className="cmrl-new-tile-icon" src={kpiIconMap.completed} alt="" />
+              </div>
+
+              <div className="cmrl-new-tile">
+                <div>
+                  <div className="cmrl-new-tile-head">오늘 인증</div>
+                  <div className="cmrl-new-tile-val">
+                    {stats.todayDone} <span className="cmrl-new-subtxt">/ {stats.inProgress}</span>
+                  </div>
+                </div>
+                <img className="cmrl-new-tile-icon" src={kpiIconMap.todayDone} alt="" />
+              </div>
+
+              <div className="cmrl-new-tile">
+                <div>
+                  <div className="cmrl-new-tile-head">평균 진행률</div>
+                  <div className="cmrl-new-tile-val">{stats.avgProgressPct}%</div>
+                </div>
+                <img className="cmrl-new-tile-icon" src={kpiIconMap.avgProgressPct} alt="" />
               </div>
             </section>
 
-            {/* CTA */}
             <div className="cmrl-new-cta">
               <button
                 className="cmrl-new-btn-primary"
@@ -184,7 +178,6 @@ export default function ChallengeMyRecordList() {
               </button>
             </div>
 
-            {/* ★ 카테고리 미니 도넛 + 8개 레전드 + 클릭 시 리스트(실데이터) */}
             <MyCategoryDonutPanel
               myChallengeList={myChallengeList}
               navigate={navigate}
