@@ -4,11 +4,12 @@
 .emotional-diary {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    background-color: #f7f3e9; /* 부드러운 배경색 */
+    height: 100vh;
+    background-color: #f7f3e9;
     color: #444;
     padding: 20px;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 /* 헤더: 뒤로가기, 캘린더 버튼 */
@@ -18,7 +19,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 10px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .diary-nav {
@@ -167,94 +168,141 @@
     font-weight: 500;
 }
 
-/* 일기 작성 부분 */
+
+/* 일기 작성 부분 - 재구성된 코드 */
 .diary-content-wrapper {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.diary-header-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
-    flex-grow: 1;
-    padding: 0 20px;
+    margin-bottom: 1.5rem;
 }
 
-.diary-selected-emotion {
-    margin-bottom: 30px;
+.diary-title-container {
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
-.diary-selected-emotion:hover {
-    transform: scale(1.05);
-}
-
-.diary-selected-emotion img {
-    width: 80px;
-    height: 80px;
+.diary-title-icon {
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    margin-right: 0.5rem;
 }
 
-.diary-selected-emotion p {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.diary-input-textarea {
-    width: 100%;
-    height: 300px;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    font-size: 1rem;
-    line-height: 1.6;
-    resize: none;
-    font-family: 'Pretendard', sans-serif;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: border-color 0.3s;
-}
-
-.diary-input-textarea:focus {
-    outline: none;
-    border-color: #a0c4ff;
+.diary-content-title {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+  margin: 0;
 }
 
 .diary-save-button {
-    width: 90%;
-    max-width: 400px;
-    padding: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #ff9800;
+  border: 1px solid #ff9800;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .diary-save-button:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
+  background-color: #ff9800;
+  color: white;
 }
 
 .diary-save-button:disabled {
     background-color: #ccc;
+    color: #666;
+    border-color: #ccc;
     cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
 }
 
-/* 애니메이션 */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.diary-content-subtitle {
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+.diary-input-textarea {
+  width: 100%;
+  min-height: 250px;
+  border: none;
+  background-color: transparent;
+  resize: none;
+  font-size: 1.11rem;
+  line-height: 1.5;
+  color: #333;
+  font-family: inherit;
+  outline: none;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.diary-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.diary-env-icons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.diary-env-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.diary-env-icon {
+    font-size: 24px;
+    color: #666;
+}
+
+.diary-env-label {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 0.2rem;
+}
+
+.diary-text-options {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.diary-align-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.diary-align-icon-wrapper {
+    cursor: pointer;
+}
+
+.diary-align-icon {
+    font-size: 20px;
+    color: #666;
 }

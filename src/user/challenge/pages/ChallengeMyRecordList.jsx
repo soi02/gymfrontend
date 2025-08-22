@@ -8,6 +8,8 @@ import '../styles/ChallengeList.css';
 import '../styles/MyChallengeCard.css';
 import '../styles/ChallengeMyRecordList.css';
 
+import '../styles/ChallengeMyRecordListNew.css';
+
 import goldImg from '/src/assets/img/challenge/norigae/gold.png';
 import silverImg from '/src/assets/img/challenge/norigae/silver.png';
 import bronzeImg from '/src/assets/img/challenge/norigae/bronze.png';
@@ -202,213 +204,212 @@ const nearestDeadlineList = useMemo(
 
 
 return (
-  <div className="ccp-page">
-    {/* ===== Header ===== */}
-    <div className="ccp-header">
-      <h2 className="ccp-title">나의 수련 기록</h2>
-      <p className="ccp-sub">참여 현황과 오늘 인증을 한눈에 확인하시오</p>
-    </div>
+<div className="cmrl-new-page">
+  {/* Header */}
+  <div className="cmrl-new-header">
+    <h2 className="cmrl-new-title">나의 수련 기록</h2>
+    <p className="cmrl-new-sub">참여 현황과 오늘 인증을 한눈에 확인하시오</p>
+  </div>
 
-    {/* ccp-body를 스크롤 가능한 콘텐츠 영역으로 사용 */}
-    <div className="ccp-body">
+  {/* Body (스크롤 영역) */}
+  <div className="cmrl-new-body">
 
-      {/* ===== 카드 그룹 1: 3개 ===== */}
-      <section className="grid3">
-        {/* 1. 참여 중 */}
-        <div className="tile dark center">
-          <div className="tile-head">참여 중</div>
-          <div className="tile-body" style={{ flexDirection: 'column', gap: '4px', marginTop: '6px' }}>
-            <span className="big">{stats.inProgress}</span>
-          </div>
-        </div>
-
-        {/* 2. 참여 완료 */}
-        <div className="tile dark center">
-          <div className="tile-head">참여 완료</div>
-          <div className="tile-body" style={{ flexDirection: 'column', gap: '4px', marginTop: '6px' }}>
-            <span className="big">{stats.completed}</span>
-          </div>
-        </div>
-
-      {/* 3. 오늘 인증 */}
-      <div className="tile dark center">
-        <div className="tile-head">오늘 인증</div>
-        <div className="tile-body" style={{ flexDirection: 'column', gap: '4px', marginTop: '6px' }}>
-          <div>
-            <span className="big">{stats.todayDone}</span>
-            <span className="sub"> / {stats.inProgress}</span>
-          </div>
-        </div>
+    {/* 3그리드 */}
+    <section className="cmrl-new-grid3">
+      <div className="cmrl-new-tile">
+        <div className="cmrl-new-tile-head">참여 중</div>
+        <div><span className="cmrl-new-big">{stats.inProgress}</span></div>
       </div>
 
-      </section>
+      <div className="cmrl-new-tile">
+        <div className="cmrl-new-tile-head">참여 완료</div>
+        <div><span className="cmrl-new-big">{stats.completed}</span></div>
+      </div>
 
-      {/* CTA: 오늘 인증하기 (폭 100%, 좌우 20px 여백 안에서 꽉 차게) */}
-      <button
-        className="t-cta primary full"
-        onClick={() => navigate('/challenge/challengeMyList')}
-      >
+      <div className="cmrl-new-tile">
+        <div className="cmrl-new-tile-head">오늘 인증</div>
+        <div>
+          <span className="cmrl-new-big">{stats.todayDone}</span>
+          <span className="cmrl-new-subtxt"> / {stats.inProgress}</span>
+        </div>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <div className="cmrl-new-cta">
+      <button className="cmrl-new-btn-primary" onClick={() => navigate('/challenge/challengeMyList')}>
         오늘의 수련을 인증하겠소
       </button>
-
-      {/* === 노리개 월릿 카드 (기존 섹션 감싸기만 변경) === */}
-      <div className="section-card wallet">
-        <div className="section-head">
-          <h4>보유 노리개 현황</h4>
-          <button className="link-btn" onClick={() => navigate('/challenge/norigae')}>자세히</button>
-        </div>
-        <div className="wallet-row">
-          <div className="wallet-cell">
-            <img src={goldImg} alt="금 노리개" />
-            <div className="wc-title">금</div>
-            <div className="wc-val">{stats.norigae.gold}</div>
-          </div>
-          <div className="wallet-cell">
-            <img src={silverImg} alt="은 노리개" />
-            <div className="wc-title">은</div>
-            <div className="wc-val">{stats.norigae.silver}</div>
-          </div>
-          <div className="wallet-cell">
-            <img src={bronzeImg} alt="동 노리개" />
-            <div className="wc-title">동</div>
-            <div className="wc-val">{stats.norigae.bronze}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* === 섹션: 오늘 인증 가능한 수련 === */}
-      <div className="section-card">
-        <div className="section-head">
-          <h4>오늘 인증 가능한 수련</h4>
-          <button className="link-btn" onClick={() => navigate('/challenge/challengeMyList')}>전체 보기</button>
-        </div>
-        {todayPendingList.length === 0 ? (
-          <div className="empty-row">오늘 인증을 모두 완료했소. 👏</div>
-        ) : (
-          <div className="mini-list">
-            {todayPendingList.map(ch => {
-              const r = ratioOf(ch);
-              const d = ddayOf(ch);
-              return (
-                <button key={ch.challengeId} className="mini-item" onClick={() => navigate(`/challenge/detail/${ch.challengeId}`)}>
-                  <img className="mini-thumb" src={thumbOf(ch)} alt="" />
-                  <div className="mini-main">
-                    <div className="mini-title">{ch.challengeTitle}</div>
-
-                    <div className="mini-bar"><div style={{ width: `${Math.round(r*100)}%` }} /></div>
-                  </div>
-                  <div className="mini-cta">인증</div>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* === 섹션: 마감 임박 === */}
-      <div className="section-card">
-        <div className="section-head">
-          <h4>이 수련들은 고지가 눈 앞이오!</h4>
-        </div>
-        {nearestDeadlineList.length === 0 ? (
-          <div className="empty-row">마감 임박인 수련이 없소.</div>
-        ) : (
-          <div className="mini-list">
-            {nearestDeadlineList.map(ch => {
-              const r = ratioOf(ch);
-              const d = ddayOf(ch);
-              return (
-                <button key={ch.challengeId} className="mini-item" onClick={() => navigate(`/challenge/detail/${ch.challengeId}`)}>
-                  <img className="mini-thumb" src={thumbOf(ch)} alt="" />
-                  <div className="mini-main">
-                    <div className="mini-title">{ch.challengeTitle}</div>
-
-                    <div className="mini-bar"><div style={{ width: `${Math.round(r*100)}%` }} /></div>
-                  </div>
-                  <div className="mini-meta">D-{d}</div>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-
-      {/* === 섹션: 사용 꿀팁(고정) === */}
-      <div className="section-card">
-        <div className="section-head">
-              <h4>수련자들을 위한 조언</h4>
-            </div>
-            <div className="tip-grid">
-              <div className="tip-card">
-                <div className="tip-emoji"><FaFire /></div>
-                <div>
-                  <div className="tip-title">연속 출석을 유지하시오</div>
-                  <div className="tip-desc">꾸준한 인증으로 연속 출석을 이어가면 뱃지뿐 아니라 자신감도 쌓을 수 있소. 멈추지 마시오!</div>
-                </div>
-              </div>
-              <div className="tip-card">
-                <div className="tip-emoji"><FaUsers /></div>
-                <div>
-                  <div className="tip-title">함께하면 더 즐거운 수련</div>
-                  <div className="tip-desc">다른 수련자들의 기록을 보며 서로 격려하고 응원해보시오. 커뮤니티에서 새로운 영감을 얻을 수 있소.</div>
-                </div>
-              </div>
-              <div className="tip-card">
-                <div className="tip-emoji"><FaMapMarkedAlt /></div>
-                <div>
-                  <div className="tip-title">다음 목표를 설정하시오</div>
-                  <div className="tip-desc">완주한 챌린지가 있소? 이제 새로운 카테고리에 도전해 보시오! 짐마당에는 다양한 길이 열려있소.</div>
-                </div>
-              </div>
-              <div className="tip-card">
-                <div className="tip-emoji"><FaLightbulb /></div>
-                <div>
-                  <div className="tip-title">노리개의 비밀</div>
-                  <div className="tip-desc">노리개 뱃지는 당신의 꾸준함에 대한 증표요. 더 높은 등급의 노리개를 모아보시오!</div>
-                </div>
-              </div>
-            </div>
-      </div>
-
-      {/* === 섹션: 자주 묻는 질문 (FAQ) === */}
-      <div className="section-card">
-        <div className="section-head">
-          <h4>수련에 관한 질문과 답변</h4>
-        </div>
-        <div className="faq-list">
-          <div className="faq-item">
-            <div className="faq-q">Q. 수련 인증은 어떻게 하오?</div>
-            <div className="faq-a">
-              <p>매일 정해진 수련을 완료하고, 인증 버튼을 눌러 사진을 등록해주시오. 당일 자정(24시)까지 업로드해야 인정되오.</p>
-            </div>
-          </div>
-          <div className="faq-item">
-            <div className="faq-q">Q. 챌린지를 완주하면 어떤 것이 좋소?</div>
-            <div className="faq-a">
-              <p>챌린지를 완주하면 '참여 완료' 챌린지로 이동하고, 꾸준함에 대한 증표로 노리개 뱃지를 받을 수 있소. 다음 목표를 향해 나아가시오!</p>
-            </div>
-          </div>
-          <div className="faq-item">
-            <div className="faq-q">Q. 진행률이 100%인데 왜 '참여 중'으로 나타나오?</div>
-            <div className="faq-a">
-              <p>챌린지 진행률이 100%를 넘어도, 정해진 챌린지 기간이 끝나야 '참여 완료'로 자동 변경되오. 기간을 끝까지 채워주시오.</p>
-            </div>
-          </div>
-          <div className="faq-item">
-            <div className="faq-q">Q. 문의/피드백은 어떻게 전달하오?</div>
-            <div className="faq-a">
-              <p>앱 내 '설정 → 문의하기' 메뉴를 통해 보내주시면, 빠르게 답변해 드리겠소. 여러분의 목소리는 짐마당을 더욱 성장시키오!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="footer-note">© 짐마당 — 꾸준함이 실력입니다.</div>
-
-
     </div>
+
+    {/* 노리개 월릿 */}
+    <div className="cmrl-new-section">
+      <div className="cmrl-new-section-head">
+        <h4>보유 노리개 현황</h4>
+        <button className="cmrl-new-link-btn" onClick={() => navigate('/challenge/norigae')}>자세히</button>
+      </div>
+      <div className="cmrl-new-wallet">
+        <div className="cmrl-new-wallet-cell">
+          <img src={goldImg} alt="금 노리개" />
+          <div className="cmrl-new-wc-title">금</div>
+          <div className="cmrl-new-wc-val">{stats.norigae.gold}</div>
+        </div>
+        <div className="cmrl-new-wallet-cell">
+          <img src={silverImg} alt="은 노리개" />
+          <div className="cmrl-new-wc-title">은</div>
+          <div className="cmrl-new-wc-val">{stats.norigae.silver}</div>
+        </div>
+        <div className="cmrl-new-wallet-cell">
+          <img src={bronzeImg} alt="동 노리개" />
+          <div className="cmrl-new-wc-title">동</div>
+          <div className="cmrl-new-wc-val">{stats.norigae.bronze}</div>
+        </div>
+      </div>
+    </div>
+
+    {/* 오늘 인증 가능한 수련 */}
+    <div className="cmrl-new-section">
+      <div className="cmrl-new-section-head">
+        <h4>오늘 인증 가능한 수련</h4>
+        <button className="cmrl-new-link-btn" onClick={() => navigate('/challenge/challengeMyList')}>전체 보기</button>
+      </div>
+
+      {todayPendingList.length === 0 ? (
+        <div className="cmrl-new-empty">오늘 인증을 모두 완료했소. 👏</div>
+      ) : (
+        <div className="cmrl-new-mini-list">
+          {todayPendingList.map(ch => {
+            const r = ratioOf(ch);
+            return (
+              <button
+                key={ch.challengeId}
+                className="cmrl-new-mini-item"
+                onClick={() => navigate(`/challenge/detail/${ch.challengeId}`)}
+              >
+                <img className="cmrl-new-mini-thumb" src={thumbOf(ch)} alt="" />
+                <div className="cmrl-new-mini-main">
+                  <div className="cmrl-new-mini-title">{ch.challengeTitle}</div>
+                  <div className="cmrl-new-mini-bar">
+                    <div style={{ width: `${Math.round(r * 100)}%` }} />
+                  </div>
+                </div>
+                <div className="cmrl-new-mini-cta">인증</div>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+
+    {/* 마감 임박 */}
+    <div className="cmrl-new-section">
+      <div className="cmrl-new-section-head">
+        <h4>이 수련들은 고지가 눈 앞이오!</h4>
+      </div>
+
+      {nearestDeadlineList.length === 0 ? (
+        <div className="cmrl-new-empty">마감 임박인 수련이 없소.</div>
+      ) : (
+        <div className="cmrl-new-mini-list">
+          {nearestDeadlineList.map(ch => {
+            const r = ratioOf(ch);
+            const d = ddayOf(ch);
+            return (
+              <button
+                key={ch.challengeId}
+                className="cmrl-new-mini-item"
+                onClick={() => navigate(`/challenge/detail/${ch.challengeId}`)}
+              >
+                <img className="cmrl-new-mini-thumb" src={thumbOf(ch)} alt="" />
+                <div className="cmrl-new-mini-main">
+                  <div className="cmrl-new-mini-title">{ch.challengeTitle}</div>
+                  <div className="cmrl-new-mini-bar">
+                    <div style={{ width: `${Math.round(r * 100)}%` }} />
+                  </div>
+                </div>
+                <div className="cmrl-new-mini-meta">D-{d}</div>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+
+    {/* 팁 */}
+    <div className="cmrl-new-section">
+      <div className="cmrl-new-section-head">
+        <h4>수련자들을 위한 조언</h4>
+      </div>
+      <div className="cmrl-new-tip-grid">
+        {/* 기존 아이콘 로직 그대로, 클래스만 매핑 */}
+        <div className="cmrl-new-tip">
+          <div className="cmrl-new-tip-emoji"><FaFire /></div>
+          <div>
+            <div className="cmrl-new-tip-title">연속 출석을 유지하시오</div>
+            <div className="cmrl-new-tip-desc">꾸준한 인증으로 연속 출석을 이어가면 뱃지뿐 아니라 자신감도 쌓을 수 있소. 멈추지 마시오!</div>
+          </div>
+        </div>
+        <div className="cmrl-new-tip">
+          <div className="cmrl-new-tip-emoji"><FaUsers /></div>
+          <div>
+            <div className="cmrl-new-tip-title">함께하면 더 즐거운 수련</div>
+            <div className="cmrl-new-tip-desc">다른 수련자들의 기록을 보며 서로 격려하고 응원해보시오. 커뮤니티에서 새로운 영감을 얻을 수 있소.</div>
+          </div>
+        </div>
+        <div className="cmrl-new-tip">
+          <div className="cmrl-new-tip-emoji"><FaMapMarkedAlt /></div>
+          <div>
+            <div className="cmrl-new-tip-title">다음 목표를 설정하시오</div>
+            <div className="cmrl-new-tip-desc">완주한 챌린지가 있소? 이제 새로운 카테고리에 도전해 보시오! 짐마당에는 다양한 길이 열려있소.</div>
+          </div>
+        </div>
+        <div className="cmrl-new-tip">
+          <div className="cmrl-new-tip-emoji"><FaLightbulb /></div>
+          <div>
+            <div className="cmrl-new-tip-title">노리개의 비밀</div>
+            <div className="cmrl-new-tip-desc">노리개 뱃지는 당신의 꾸준함에 대한 증표요. 더 높은 등급의 노리개를 모아보시오!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* FAQ */}
+    <div className="cmrl-new-section">
+      <div className="cmrl-new-section-head">
+        <h4>수련에 관한 질문과 답변</h4>
+      </div>
+      <div className="cmrl-new-faq">
+        <div className="cmrl-new-faq-item">
+          <div className="cmrl-new-faq-q">Q. 수련 인증은 어떻게 하오?</div>
+          <div className="cmrl-new-faq-a">
+            <p>매일 정해진 수련을 완료하고, 인증 버튼을 눌러 사진을 등록해주시오. 당일 자정(24시)까지 업로드해야 인정되오.</p>
+          </div>
+        </div>
+        <div className="cmrl-new-faq-item">
+          <div className="cmrl-new-faq-q">Q. 챌린지를 완주하면 어떤 것이 좋소?</div>
+          <div className="cmrl-new-faq-a">
+            <p>완주하면 '참여 완료'로 이동하고, 노리개 뱃지를 받을 수 있소. 다음 목표를 향해 나아가시오!</p>
+          </div>
+        </div>
+        <div className="cmrl-new-faq-item">
+          <div className="cmrl-new-faq-q">Q. 진행률이 100%인데 왜 '참여 중'인가?</div>
+          <div className="cmrl-new-faq-a">
+            <p>정해진 기간이 끝나야 '참여 완료'로 전환되오. 기간을 끝까지 채워주시오.</p>
+          </div>
+        </div>
+        <div className="cmrl-new-faq-item">
+          <div className="cmrl-new-faq-q">Q. 문의/피드백은?</div>
+          <div className="cmrl-new-faq-a">
+            <p>앱 내 '설정 → 문의하기'로 보내주시오. 빠르게 답변드리겠소.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Footer */}
+    <div className="cmrl-new-footer">© 짐마당 — 꾸준함이 실력입니다.</div>
   </div>
+</div>
 
 
   );

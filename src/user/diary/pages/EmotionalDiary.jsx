@@ -1,5 +1,5 @@
 // src/components/EmotionalDiary.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { diaryService } from '../service/diaryService';
@@ -16,6 +16,12 @@ const EmotionalDiary = () => {
   const [emotions, setEmotions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [textAlign, setTextAlign] = useState('left');
+  const [isSaved, setIsSaved] = useState(false);
+  const textareaRef = useRef(null);
+
+  // OpenWeatherMap API 키 (사용자가 직접 발급받아 입력해야 함)
+  const WEATHER_API_KEY = "YOUR_OPENWEATHERMAP_API_KEY";
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -45,10 +51,12 @@ const EmotionalDiary = () => {
         setSelectedEmotion(emotion || null);
         setDiaryContent(diary.content || '');
         setShowModal(false);
+        setIsSaved(true);
       } else {
         setShowModal(true);
         setSelectedEmotion(null);
         setDiaryContent('');
+        setIsSaved(false);
       }
     } catch (error) {
       console.error('일기 조회 실패:', error);
@@ -56,6 +64,7 @@ const EmotionalDiary = () => {
       setShowModal(true);
       setSelectedEmotion(null);
       setDiaryContent('');
+      setIsSaved(false);
     } finally {
       setIsLoading(false);
     }
@@ -82,7 +91,7 @@ const EmotionalDiary = () => {
 
       await diaryService.writeDiary(diaryData);
       alert('일기가 저장되었습니다.');
-      navigate('/diary/calendar');
+      setIsSaved(true);
     } catch (error) {
       setError('일기 저장에 실패했습니다.');
       console.error('일기 저장 에러:', error);
@@ -90,6 +99,87 @@ const EmotionalDiary = () => {
       setIsLoading(false);
     }
   };
+
+  const handleLocationInsert = () => {
+    if (isSaved) return;
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      try {
+        // Nominatim API를 사용한 역 지오코딩 (좌표 -> 주소)
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+        const data = await response.json();
+        const address = data.display_name;
+        if (address) {
+          const locationText = `\n[위치: ${address}]\n`;
+          setDiaryContent(prev => prev + locationText);
+        } else {
+          alert('현재 주소를 가져올 수 없습니다.');
+        }
+      } catch (error) {
+        console.error("역 지오코딩 실패:", error);
+        alert('위치 정보를 주소로 변환하는 데 실패했습니다.');
+      }
+    }, (error) => {
+      console.error("Geolocation 에러:", error);
+      alert('위치 정보 접근이 거부되었습니다. 브라우저 설정을 확인해주세요.');
+    });
+  };
+
+  const handleWeatherInsert = () => {
+    if (isSaved) return;
+
+    if (WEATHER_API_KEY === "YOUR_OPENWEATHERMAP_API_KEY") {
+        alert("날씨 정보를 가져오려면 OpenWeatherMap API 키가 필요합니다.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      try {
+        // OpenWeatherMap API를 사용한 날씨 정보 조회
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric&lang=kr`);
+        const data = await response.json();
+        if (data.weather && data.main) {
+          const weatherDescription = data.weather[0].description;
+          const temperature = data.main.temp;
+          const weatherText = `\n[날씨: ${weatherDescription}, ${temperature.toFixed(1)}°C]\n`;
+          setDiaryContent(prev => prev + weatherText);
+        } else {
+          alert('날씨 정보를 가져올 수 없습니다.');
+        }
+      } catch (error) {
+        console.error("날씨 정보 조회 실패:", error);
+        alert('날씨 정보를 가져오는 데 실패했습니다.');
+      }
+    }, (error) => {
+      console.error("Geolocation 에러:", error);
+      alert('날씨 정보를 가져오려면 위치 정보 접근이 필요합니다.');
+    });
+  };
+
+  const handleTimeInsert = () => {
+    if (!isSaved) {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const currentTime = `\n${hours}:${minutes}\n`;
+      setDiaryContent(prevContent => prevContent + currentTime);
+    }
+  };
+
+  const handleAlignChange = (alignment) => {
+    if (!isSaved) {
+      setTextAlign(alignment);
+    }
+  };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+    }
+  }, [diaryContent]);
 
   useEffect(() => {
     if (isAuthenticated && id) {
@@ -160,7 +250,7 @@ const EmotionalDiary = () => {
                       className="diary-emotion-item"
                       onClick={() => handleEmotionSelect(emotion)}
                     >
-                      <img src={`http://localhost:8080/uploadFiles/${emotion.emoji_image}`} alt={emotion.name} />
+                      <img src={`http://localhost:8080/uploadFiles${emotion.emoji_image}`} alt={emotion.name} />
                       <p>{emotion.name}</p>
                     </div>
                   ))}
@@ -171,26 +261,69 @@ const EmotionalDiary = () => {
 
           {selectedEmotion && (
             <div className="diary-content-wrapper">
-              <div className="diary-selected-emotion" onClick={() => setShowModal(true)}>
-                <img src={`http://localhost:8080/uploadFiles/${selectedEmotion.emoji_image}`} alt={selectedEmotion.name} />
-                <p>{selectedEmotion.name}</p>
-              </div>
-              
-              <textarea
-                className="diary-input-textarea"
-                value={diaryContent}
-                onChange={(e) => setDiaryContent(e.target.value)}
-                placeholder="오늘 하루는 어떠셨나요? 자유롭게 작성해주세요."
-                disabled={isLoading}
-              />
-              
-              <button 
-                className="diary-save-button" 
-                onClick={handleSave}
-                disabled={isLoading}
-              >
-                저장하기
-              </button>
+                <div className="diary-header-buttons">
+                    <div className="diary-title-container" onClick={() => setShowModal(true)}>
+                        <h5 className="diary-content-title">
+                            {isSaved ? "오늘의 일기" : "나의 기분"}
+                        </h5>
+                        <img className="diary-title-icon" src={`http://localhost:8080/uploadFiles${selectedEmotion.emoji_image}`} alt={selectedEmotion.name} />
+                    </div>
+                    {!isSaved && (
+                        <button 
+                            className="diary-save-button" 
+                            onClick={handleSave}
+                            disabled={isLoading}
+                        >
+                            저장
+                        </button>
+                    )}
+                </div>
+                
+                <p className="diary-content-subtitle">
+                    {isSaved ? "오늘의 일기를 확인해보세요" : "오늘의 기분을 작성해주세요"}
+                </p>
+
+                <textarea
+                    ref={textareaRef}
+                    className="diary-input-textarea"
+                    value={diaryContent}
+                    onChange={(e) => setDiaryContent(e.target.value)}
+                    placeholder="오늘 하루는 어떠셨나요? 자유롭게 작성해주세요."
+                    disabled={isLoading || isSaved}
+                    style={{ textAlign: textAlign }}
+                />
+
+                {!isSaved && (
+                    <div className="diary-toolbar">
+                        <div className="diary-env-icons">
+                            <div className="diary-env-icon-wrapper" onClick={handleLocationInsert}>
+                                <i className="bi bi-geo-alt diary-env-icon"></i>
+                                <span className="diary-env-label">위치</span>
+                            </div>
+                            <div className="diary-env-icon-wrapper" onClick={handleWeatherInsert}>
+                                <i className="bi bi-cloud-lightning-rain diary-env-icon"></i>
+                                <span className="diary-env-label">날씨</span>
+                            </div>
+                            <div className="diary-env-icon-wrapper" onClick={handleTimeInsert}>
+                                <i className="bi bi-clock diary-env-icon"></i>
+                                <span className="diary-env-label">시간</span>
+                            </div>
+                        </div>
+                        <div className="diary-text-options">
+                            <div className="diary-align-icons">
+                                <div className="diary-align-icon-wrapper" onClick={() => handleAlignChange('left')}>
+                                    <i className="bi bi-text-left diary-align-icon"></i>
+                                </div>
+                                <div className="diary-align-icon-wrapper" onClick={() => handleAlignChange('center')}>
+                                    <i className="bi bi-text-center diary-align-icon"></i>
+                                </div>
+                                <div className="diary-align-icon-wrapper" onClick={() => handleAlignChange('right')}>
+                                    <i className="bi bi-text-right diary-align-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
           )}
         </>

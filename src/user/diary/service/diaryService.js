@@ -56,16 +56,51 @@ export const diaryService = {
 
     getDiaryByDate: async (userId, date) => {
         try {
-            // 전달받은 날짜가 없으면 오늘 날짜를 포맷하여 사용
-            const targetDate = date || getFormattedLocalDate(new Date());
-            const response = await diaryApi.get(`/date?userId=${userId}&date=${targetDate}`);
+            let targetDate;
+            if (!date) {
+                // 날짜가 제공되지 않은 경우 오늘 날짜 사용
+                targetDate = getFormattedLocalDate(new Date());
+            } else {
+                // 제공된 날짜 문자열을 그대로 사용
+                targetDate = date;
+            }
+            
+            console.log('getDiaryByDate 요청 정보:', {
+                userId,
+                요청날짜: targetDate,
+                요청URL: `${API_BASE_URL}/date?userId=${userId}&date=${targetDate}`
+            });
+
+            const response = await diaryApi.get(`/date?userId=${userId}&date=${targetDate}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            });
+            
+            console.log('getDiaryByDate 응답:', response.data);
+            
+            if (!response.data) {
+                return null;
+            }
+            
             return response.data;
         } catch (error) {
             if (error.response?.status === 404) {
-                console.log('해당 날짜에 일기가 없습니다 (404)');
+                console.log('해당 날짜에 일기가 없습니다 (404)', {
+                    userId,
+                    date: targetDate
+                });
                 return null;
             }
-            console.error('API 에러 상세:', error.response?.data);
+            console.error('API 에러 상세:', {
+                상태: error.response?.status,
+                에러: error.response?.data,
+                요청정보: {
+                    userId,
+                    date: targetDate
+                }
+            });
             throw error;
         }
     },
@@ -76,10 +111,28 @@ export const diaryService = {
             if (!token) {
                 throw new Error('인증 토큰이 없습니다.');
             }
-            const response = await diaryApi.post('/write', diaryData);
+
+            // userId 추가
+            const userId = diaryData.userId || 1;  // 기본값 설정 또는 실제 사용자 ID
+            const today = getFormattedLocalDate(new Date());
+            
+            const requestData = {
+                userId: userId,
+                emoji_id: diaryData.emoji_id,
+                content: diaryData.content,
+                created_at: today
+            };
+
+            console.log('일기 작성 요청 데이터:', requestData);
+            const response = await diaryApi.post('/write', requestData);
+            console.log('일기 작성 응답:', response.data);
             return response.data;
         } catch (error) {
-            console.error('일기 작성 에러:', error.response?.data);
+            console.error('일기 작성 에러:', {
+                응답데이터: error.response?.data,
+                상태코드: error.response?.status,
+                에러메시지: error.message
+            });
             throw error;
         }
     },
