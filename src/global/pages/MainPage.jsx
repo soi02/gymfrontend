@@ -76,7 +76,7 @@ useEffect(() => {
       <Link to="/routine" className="link-area routine" aria-label="운동기록으로 이동" />
       <Link to="/challenge/challengeHome" className="link-area challenge" aria-label="수련장으로 이동" />
       <Link to="/market" className="link-area market" aria-label="장터로 이동" />
-      <Link to="/buddy" className="link-area buddy" aria-label="벗 찾기로 이동" />
+      <Link to="/buddy/buddyHome" className="link-area buddy" aria-label="벗 찾기로 이동" />
 
       {/* 랜덤 가이드 오버레이 */}
 {showGuide && rect && (
