@@ -275,35 +275,40 @@ export default function MarketBoardPage() {
             <div className = "container-fluid">
                 
                 <div className = "row" style = {{height : "100vh"}}>
-                    <div className = "col gx-0 h-100" style = {{position : "relative"}}>
+                    <div className = "col h-100" style = {{position : "relative"}}>
                         
                         <div className = "primaryDivisionSizeDefault" style = {{
                             // height : "100%", 
                             // flex : "1", 
-                            backgroundColor : "aqua"}}>1234</div>
-                        
-                        
-                        
-                        {/* <div className = "row" style = {{height : "100%"}}>
-                            <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
+                            // backgroundColor : "aqua"
+                            }}>
                                 
-                                <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
-                                constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
-                                
-                                {
-                                    constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
-                                }
+                            <div className = "row" style = {{height : "100%"}}>
+                                <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
+                                    
+                                    <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
+                                    constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
+                                    
+                                    {
+                                        constMarketArticleElementList.length  > 0 ? constMarketArticleElementList : <></>
+                                    }
+                                    
+                                </div>
                                 
                             </div>
                             
-                        </div>
+                            <div style = {{position : "absolute", top : "0px", left : "0px", width : "100%", height : "100%",
+                            zIndex : 2000, display: "flex", justifyContent: "center", alignItems: "center", pointerEvents : "none"}}>
+                                <MarketWriteArticleFloatingFixedButton />
+                            </div>
+                            
+                            {/* 길이 테스트를 위해 임시로 생략 */}
+                                
+                            </div>
                         
-                        <div style = {{position : "absolute", top : "0px", left : "0px", width : "100%", height : "100%",
-                        zIndex : 2000, display: "flex", justifyContent: "center", alignItems: "center", pointerEvents : "none"}}>
-                            <MarketWriteArticleFloatingFixedButton />
-                        </div> */}
                         
-                        {/* 길이 테스트를 위해 임시로 생략 */}
+                        
+
                         
                         
                         
