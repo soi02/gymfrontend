@@ -173,7 +173,7 @@
     min-height: 50vh; /* 컨테이너 높이 설정 */
     text-align: center;
     padding: 20px;
-    margin-top: 100px;
+    /* margin-top: 100px; */
     box-sizing: border-box;
     width: 100%;
 }
