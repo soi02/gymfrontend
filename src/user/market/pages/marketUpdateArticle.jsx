@@ -234,7 +234,33 @@ export default function MarketUpdateArticlePage() {
                                                                     </div>
                                                                 </div>
                                                         </div>
-                                                        <div className = "col" style = {{padding : "0rem", marginLeft : "0.8125rem",
+                                                        
+                                                        <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
+                                                        border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden", alignItems : "center",
+                                                        paddingLeft : "2rem", paddingRight : "2rem"}}> 
+                                                        {/* ui 추후 보완 (어차피 갈아엎어야 되고 기능 구현이 우선. ui 정렬 어떻게 하는지 방법 알고 있음) */}
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                                                    이 사진이 대표로 표시되오.
+                                                                </div>
+                                                            </div>
+                                                            <div className = "row h-100 gx-0 flex-nowrap align-items-center">
+                                                                <div className = "col-auto" style = {{width : "4rem", height : "4rem", position : "relative", overflow : "hidden",
+                                                                    display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "0rem", 
+                                                                    marginLeft : "1rem", marginRight : "1rem",
+                                                                    border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
+                                                                    <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                                </div>
+                                                                {/* <div className = "col h-100" style = {{fontSize : "0.75rem", textAlign : "center",
+                                                                display : "flex", justifyContent : "center", alignItems : "center"}}>
+                                                                    이 사진이
+                                                                    <br />
+                                                                    대표로 표시되오.
+                                                                </div> */}
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        {/* <div className = "col" style = {{padding : "0rem", marginLeft : "0.8125rem",
                                                         border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden"}}> 
                                                             <div className = "row gx-0 flex-nowrap">
                                                                 <div className = "col-auto" style = {{width : "5rem", height : "5rem", position : "relative", overflow : "hidden",
@@ -256,7 +282,7 @@ export default function MarketUpdateArticlePage() {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -405,8 +431,8 @@ export default function MarketUpdateArticlePage() {
                                                 <div className = "col d-flex justify-content-end">
                                                     <div className = "row">
                                                         <div className = "col-auto">
-                                                            <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)} 
-                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>취소</button>
+                                                            {/* <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)} 
+                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>취소</button> */}
                                                         </div>
                                                     </div>
                                                 </div>
