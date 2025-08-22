@@ -167,6 +167,12 @@
   
 }
 
+.primaryDivisionSizeDefault{
+  
+  height : calc(100vh - 157px)
+  
+}
+
 .primaryDivisionDefault {
   
   overflow-y : auto;

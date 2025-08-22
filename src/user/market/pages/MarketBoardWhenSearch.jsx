@@ -272,7 +272,7 @@ export default function MarketBoardPageWhenSearch() {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "30rem", overflowX : "hidden"}}>
+                    <div className = "col primaryDivisionDefault" style = {{position : "relative", height : "100%", overflowX : "hidden"}}>
                         
                         <MarketSearchDivision inputSearchWord = {inputSearchWord} constApplySearchWord = {constApplySearchWord} 
                         constButtonToSendSearchWordParam = {constButtonToSendSearchWordParam} searchWordRef = {searchWordRef}/>
