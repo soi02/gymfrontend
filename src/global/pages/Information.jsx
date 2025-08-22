@@ -65,7 +65,7 @@ const Information = () => {
 {/* ===== Intro (Clean) ===== */}
 <section className="info-section intro-clean">
   <h1 className="app-title">짐마당</h1>
-  <p className="app-sub">매일의 운동을 습관으로 바꾸는 헬스 커뮤니티.<br />
+  <p className="app-sub">매일의 운동을 습관으로 바꾸는 헬스 커뮤니티<br />
     혼자가 아닌 우리라서, 오늘도 한 걸음 더.
 
 
