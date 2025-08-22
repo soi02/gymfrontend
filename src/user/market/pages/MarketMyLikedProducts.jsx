@@ -277,7 +277,7 @@ export default function MarketMyLikedProductsPage() {
             <>
                 
                 <div className = "row">
-                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "1.5vh"}}>
+                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "0.6125rem"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
                         <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
                     </div>
@@ -294,7 +294,7 @@ export default function MarketMyLikedProductsPage() {
             <>
                 
                 <div className = "row">
-                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "1.5vh"}}>
+                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "0.6125rem"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
                         <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
                     </div>
@@ -519,12 +519,12 @@ export default function MarketMyLikedProductsPage() {
                             {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                             
                             { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                            <div className = "row" style = {{height : "12.5vh", marginBottom : "2.5vh"}}>
-                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                            <div className = "row" style = {{height : "5rem", marginBottom : "1rem"}}>
+                                <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginLeft : "1vh", marginRight : "1vh"}}>
+                                        <div className = "col" style = {{marginLeft : "0.4375rem", marginRight : "0.4375rem"}}>
                                             <div className = "row h-100">
-                                                <div className = "col-auto" style = {{paddingLeft : "1.5vh", paddingRight : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                <div className = "col-auto" style = {{paddingLeft : "0.6125rem", paddingRight : "0.6125rem", display : "flex", alignItems : "center"}}>
                                                     
                                                     
                                                     {/* {
@@ -583,8 +583,8 @@ export default function MarketMyLikedProductsPage() {
                                                 <div className = "col">
                                                     <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                         <div className = "row">
-                                                            <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                            paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh", display : "flex", alignItems : "center"}}>
+                                                            <div className = "col-auto" style = {{width : "5rem", height : "5rem", overflow : "hidden", position : "relative",
+                                                            paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem", display : "flex", alignItems : "center"}}>
                                                                 <div className = "row h-100">
                                                                     <div className = "col" style = {{width : "100%", height : "100%"}}>
                                                                         <div className = "row gx-0" style = {{top : "0px", left : "0px", width : "100%", height : "100%", position : "absolute", zIndex: "5"}}>
@@ -601,7 +601,7 @@ export default function MarketMyLikedProductsPage() {
                                                                                             event.stopPropagation();
                                                                                             clickPossibleWhenLikeChecked(event, {marketUserId : checkUserStatus, specificArticleId : article.id})}} 
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
-                                                                                        fontSize : "5vh", color : "#c0392b", pointerEvents : "none"}}>
+                                                                                        fontSize : "2rem", color : "#c0392b", pointerEvents : "none"}}>
                                                                                             <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
                                                                                         </div>
                                                                                     </div>
@@ -615,7 +615,7 @@ export default function MarketMyLikedProductsPage() {
                                                                                             event.stopPropagation();
                                                                                             clickPossibleWhenLikeUnchecked(event, {insertMarketProductInterestedLog})}} 
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
-                                                                                        fontSize : "5vh", color : "#f2a766", pointerEvents : "none"}}>
+                                                                                        fontSize : "2rem", color : "#f2a766", pointerEvents : "none"}}>
                                                                                             <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
                                                                                         </div>
                                                                                     </div>
@@ -637,12 +637,12 @@ export default function MarketMyLikedProductsPage() {
                                                             </div>
                                                             <div className = "col" style = {{position : "relative"}}>
                                                                 <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "1.25vh"}}>
+                                                                    <div className = "col" style = {{fontSize : "0.5rem"}}>
                                                                         {funcSellEnded(article.sellEnded)}
                                                                     </div>
                                                                 </div>
                                                                 <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "2.375vh"}}>
+                                                                    <div className = "col" style = {{fontSize : "1rem"}}>
                                                                         {article.title}
                                                                     </div>
                                                                 </div>
@@ -657,12 +657,12 @@ export default function MarketMyLikedProductsPage() {
                                                                             <div className = "col-auto" 
                                                                             style = {{
                                                                             // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
-                                                                                fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1.5vh", marginRight : "0.75vh"}}
+                                                                                fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
                                                                                 >
                                                                                 {/* <MarketAnonymousUserMiniProfileImage /> */}
                                                                                 <i className = "ri-user-3-fill"></i>
                                                                             </div>
-                                                                            <div className = "col" style = {{fontSize : "1.75vh", paddingLeft : "0vh", paddingRight : "0vh"}}>
+                                                                            <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
                                                                                 {userInfo.nickname}
                                                                             </div>
                                                                         </div>
@@ -674,7 +674,7 @@ export default function MarketMyLikedProductsPage() {
                                                                     </div>
                                                                 </div> */}
                                                                 <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", position : "absolute", bottom : "0vh"}}>
+                                                                    <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
                                                                         ￦ {formatProductCost(article.productCost)}
                                                                     </div>
                                                                 </div>
@@ -705,37 +705,37 @@ export default function MarketMyLikedProductsPage() {
                     {/* <div className = "widthDefault"> */}
                         <div className = "col">
                             <div className = "row">
-                                <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
+                                <div className = "col primaryDivisionDefault" style = {{ height : "30rem", overflowX : "hidden"}}>
                                     <div className = "row">
-                                        <div className = "col firstCategorizingDivisionDefault" style = {{marginTop : "2vh", marginLeft : "1.5vh", marginRight : "1.5vh", paddingTop : "4vh"}}>
+                                        <div className = "col firstCategorizingDivisionDefault" style = {{marginTop : "0.8125rem", marginLeft : "0.6125rem", marginRight : "0.6125rem", paddingTop : "1.625rem"}}>
                                             <div className = "row">
-                                                <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "4.5vh"}}>
+                                                <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                                        <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                                             <div className = "row">
-                                                                <div className = "col" style = {{fontSize : "1.875vh"}}>
+                                                                <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                                     내가 탐낸 물품 개수
                                                                 </div>
                                                             </div>
                                                             <div className = "row">
-                                                                <div className = "col" style = {{fontSize : "3.25vh", fontWeight : "bold"}}>
+                                                                <div className = "col" style = {{fontSize : "1.3125rem", fontWeight : "bold"}}>
                                                                     {countOfInterestedLogsOnUser} 개
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", marginBottom : "0.5vh", paddingTop : "3vh", paddingBottom : "1vh", 
-                                                            paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#ffffff"}}>
+                                                        <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", marginBottom : "0.25rem", paddingTop : "1.25rem", paddingBottom : "0.4375rem", 
+                                                            paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#ffffff"}}>
                                                             <div className = "row">
-                                                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                                <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                                                     {
                                                                         constmarketuserLikedProductElementList.length > 0 ? 
                                                                         constmarketuserLikedProductElementList : 
                                                                         <>
                                                                         
                                                                             <div className = "row">
-                                                                                <div className = "col" style = {{fontSize : "2vh", marginBottom : "2vh"}}>
+                                                                                <div className = "col" style = {{fontSize : "0.8125rem", marginBottom : "0.8125rem"}}>
                                                                                     탐낸 물품이 없소.
                                                                                 </div>
                                                                             </div>
@@ -750,7 +750,7 @@ export default function MarketMyLikedProductsPage() {
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.6125rem"}}>
                                                             <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있소.
                                                         </div>
                                                     </div>

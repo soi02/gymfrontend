@@ -749,9 +749,9 @@ export default function MarketArticlePageTest() {
                 <div className = "row gx-0">
                         <div className = "col">
                             <div className = "row gx-0">
-                                <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
+                                <div className = "col" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", marginBottom : "0.6125rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{height : "33vh", overflow : "hidden", position : "relative", marginBottom : "2vh"
+                                        <div className = "col" style = {{height : "13.25rem", overflow : "hidden", position : "relative", marginBottom : "0.8125rem"
                                         }}>
                                             {/* <div className = "row" style = {{height : "67%"}}>
                                                 <div className = "col">
@@ -773,19 +773,19 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "1.5vh"}}>
+                                        <div className = "col" style = {{fontSize : "0.6125rem"}}>
                                             {funcSellEnded(article.sellEnded)}
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "3.25vh", marginBottom : "1vh"}}>
+                                        <div className = "col" style = {{fontSize : "1.3125rem", marginBottom : "0.4375rem"}}>
                                             {article.title}
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                        <div className = "col" style = {{marginBottom : "0.8125rem"}}>
                                             <div className = "row h-100">
-                                                <div className = "col-auto" style = {{fontSize : "2.5vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                <div className = "col-auto" style = {{fontSize : "1rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
                                                     {funcFreeShare(article.productCost)}
                                                 </div>
                                                 <div className = "col">
@@ -793,7 +793,7 @@ export default function MarketArticlePageTest() {
                                                 </div>
                                                 <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
                                                     <div className = "row">
-                                                        <div className = "col-auto" style = {{fontSize : "1.5vh", display : "flex", alignItems : "center", color : "#6d6d6d"}}>
+                                                        <div className = "col-auto" style = {{fontSize : "0.6125rem", display : "flex", alignItems : "center", color : "#6d6d6d"}}>
                                                             {formatDate(article.createdAt)}
                                                             {/* {article.createdAt.toLocaleString()} */}
                                                         </div>
@@ -809,14 +809,14 @@ export default function MarketArticlePageTest() {
                                     <div className = "row">
                                         <div className = "col">
                                             <div className = "row">
-                                                <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "3.25vh"}}>
+                                                <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.3125rem"}}>
                                                     <div className = "row">
-                                                        <div className = "col-auto" style = {{width : "4.5vh", height : "4.5vh", overflow : "hidden", position : "relative"}}>
+                                                        <div className = "col-auto" style = {{width : "1.8125rem", height : "1.8125rem", overflow : "hidden", position : "relative"}}>
                                                             <MarketAnonymousUserMiniProfileImage />
                                                         </div>
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
-                                                                <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                <div className = "col-auto" style = {{fontSize : "0.9375rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
                                                                     <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
                                                                         {userInfo.nickname}
                                                                     </Link>
@@ -834,7 +834,7 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.125vh", minHeight : "15vh", marginBottom : "4vh", whiteSpace : "pre-wrap"}}>
+                                        <div className = "col" style = {{fontSize : "0.875rem", minHeight : "6rem", marginBottom : "1.625rem", whiteSpace : "pre-wrap"}}>
                                             {article.content}
                                         </div>
                                     </div>
@@ -854,7 +854,7 @@ export default function MarketArticlePageTest() {
             <>
             
                 <button type="button" className="btn buttonDefault" onClick = {constButtonToDeleteMarketProductInterestedLog} 
-                style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                style = {{fontSize : "0.75rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                             
                         <i className="ri-heart-3-fill"></i> 탐냄 취소
                     
@@ -871,7 +871,7 @@ export default function MarketArticlePageTest() {
             <>
             
                 <button type="button" className="btn buttonDefault" onClick = {constButtonToInsertMarketProductInterestedLog} 
-                style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                style = {{fontSize : "0.75rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                     
                         <i className="ri-heart-3-line"></i> 탐나요!
                     
@@ -1058,7 +1058,7 @@ export default function MarketArticlePageTest() {
                     (
                         <>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                <div className = "col" style = {{fontSize : "0.75rem"}}>
                                     <div className = "row">
                                         
                                         {
@@ -1067,7 +1067,7 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
-                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                                         취소
                                                     </div>
                                                     
@@ -1077,7 +1077,7 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
-                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                                         수정
                                                     </div>
                                                 
@@ -1089,7 +1089,7 @@ export default function MarketArticlePageTest() {
                                             ｜
                                         </div>
                                         <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment.id})}
-                                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                             삭제
                                         </div>
                                     </div>
@@ -1107,7 +1107,7 @@ export default function MarketArticlePageTest() {
                         <>
                         
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                <div className = "col" style = {{fontSize : "0.75rem"}}>
                                     <div className = "row">
                                         
                                         {
@@ -1116,7 +1116,7 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
-                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem"}}>
                                                         취소
                                                     </div>
                                                     
@@ -1126,7 +1126,7 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
-                                                    style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                                         수정
                                                     </div>
                                                 
@@ -1138,7 +1138,7 @@ export default function MarketArticlePageTest() {
                                             ｜
                                         </div>
                                         <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment.id})}
-                                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                             삭제
                                         </div>
                                     </div>
@@ -1160,7 +1160,7 @@ export default function MarketArticlePageTest() {
                         <>
                         
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                <div className = "col" style = {{fontSize : "0.75rem"}}>
                                     {/* <div className = "row">
                                         <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller}
                                         style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
@@ -1187,7 +1187,7 @@ export default function MarketArticlePageTest() {
                             <>
                             
                                 <div className = "row">
-                                    <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                    <div className = "col" style = {{fontSize : "0.75rem"}}>
                                         {/* <div className = "row">
                                             <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
                                             style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
@@ -1235,20 +1235,20 @@ export default function MarketArticlePageTest() {
                 <div className = "row">
                         <div className = "col">
                             {/*  날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                            <div className = "row" style = {{marginBottom : "2vh"}}>
-                                <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                            <div className = "row" style = {{marginBottom : "0.8125rem"}}>
+                                <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginLeft : "2vh", marginRight : "2vh", marginBottom : "0.375vh"}}>
+                                        <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem", marginBottom : "0.1875rem"}}>
                                             <div className = "row">
-                                                <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "1.25vh"}}>
+                                                <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.5rem"}}>
                                                     <div className = "row h-100">
-                                                        <div className = "col-auto" style = {{width : "4.5vh", height : "4.5vh", overflow : "hidden", position : "relative",
-                                                            paddingLeft : "0vh", paddingRight : "0vh", marginRight : "1.5vh"}}>
+                                                        <div className = "col-auto" style = {{width : "1.8125rem", height : "1.8125rem", overflow : "hidden", position : "relative",
+                                                            paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
                                                             <MarketAnonymousUserMiniProfileImage />
                                                         </div>
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
-                                                                <div className = "col-auto" style = {{fontSize : "2.25vh", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                <div className = "col-auto" style = {{fontSize : "0.9375rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
                                                                     <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
                                                                         {userInfo.nickname}
                                                                     </Link>
@@ -1264,22 +1264,22 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "row">
-                                                        <div className = "col" style = {{marginBottom : "1vh"}}>
+                                                        <div className = "col" style = {{marginBottom : "0.4375rem"}}>
                                                             <div className = "row h-100">
                                                                 <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
-                                                                    paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh"}}>
+                                                                    paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.8125rem"}}>
                                                                     <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
                                                                     id = "content" name = "content" 
                                                                     value = {editingContent} onChange = {handleContentChange} ref = {updateCommentRef}
                                                                     placeholder = "수정할 댓글을 입력해 주시오."
-                                                                    style = {{resize : "none", fontSize : "1.75vh"}}/>
+                                                                    style = {{resize : "none", fontSize : "0.75rem"}}/>
                                                                 </div>
-                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh", paddingRight : "0vh", marginLeft : "1vh"}}>
+                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.4375rem"}}>
                                                                     <div className = "row h-100 gx-0">
                                                                         <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
                                                                             <button className = "btn buttonDefault" 
                                                                             onClick = {handleSubmit} 
-                                                                            style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
+                                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>쓰기</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1293,7 +1293,7 @@ export default function MarketArticlePageTest() {
                                                 <>
                                                 
                                                     <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "2vh", marginBottom : "1vh", whiteSpace : "pre-wrap"}}>
+                                                        <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.8125rem", marginBottom : "0.4375rem", whiteSpace : "pre-wrap"}}>
                                                             {comment.content}
                                                         </div>
                                                     </div>
@@ -1303,7 +1303,7 @@ export default function MarketArticlePageTest() {
                                             }
                                             
                                             <div className = "row">
-                                                <div className = "col" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", fontSize : "1.5vh", marginBottom : "0.25vh", color : "#6d6d6d"}}>
+                                                <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.6125rem", marginBottom : "0.125rem", color : "#6d6d6d"}}>
                                                     {formatDate(comment.createdAt)}
                                                 </div>
                                             </div>
@@ -1337,7 +1337,7 @@ export default function MarketArticlePageTest() {
                 
                     <div className = "row">
                         <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
-                        style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                             판매인으로 선택
                         </div>
                     </div>
@@ -1378,7 +1378,7 @@ export default function MarketArticlePageTest() {
 
                         <div className = "row">
                             <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller1}
-                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                 구매인으로 선택
                             </div>
                         </div>
@@ -1413,7 +1413,7 @@ export default function MarketArticlePageTest() {
 
                         <div className = "row">
                             <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer1}
-                            style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}}>
+                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                 판매인으로 선택
                             </div>
                         </div>
@@ -1490,9 +1490,9 @@ export default function MarketArticlePageTest() {
                 <>
                 
                     <div className = "row">
-                        <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", fontSize : "2.25vh"}}>
+                        <div className = "col" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", fontSize : "0.9375rem"}}>
                             <div className = "row">
-                                <div className = "col-auto" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
+                                <div className = "col-auto" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem"}}>
                                     <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/updateArticle/${article.id}`}
                                     style = {{color : "#6d6d6d"}}>
                                         수정
@@ -1501,7 +1501,7 @@ export default function MarketArticlePageTest() {
                                 <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
                                     ｜
                                 </div>
-                                <div className = "col-auto divisionOnclickStyleDefault" style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh", color : "#6d6d6d"}} 
+                                <div className = "col-auto divisionOnclickStyleDefault" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}} 
                                 onClick = {() => constDivisionToDeleteMarketArticle({articleId : article.id})}>
                                     삭제
                                 </div>
@@ -1520,7 +1520,7 @@ export default function MarketArticlePageTest() {
                 <>
                 
                     <div className = "row">
-                        <div className = "col" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", fontSize : "2.25vh"}}>
+                        <div className = "col" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", fontSize : "0.9375rem"}}>
                             {/* <div className = "row">
                                 <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
                                 style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
@@ -1552,10 +1552,10 @@ export default function MarketArticlePageTest() {
             return(
                 <>
                 
-                    <div className = "row gx-0" style = {{marginTop : "0.75vh", marginBottom : "3.5vh"}}>
-                        <div className = "col-auto" style = {{fontSize : "2vh"}}>
+                    <div className = "row gx-0" style = {{marginTop : "0.3125rem", marginBottom : "1.4375rem"}}>
+                        <div className = "col-auto" style = {{fontSize : "0.8125rem"}}>
                             <button type="button" className="btn buttonDefault" disabled = {true}
-                            style = {{fontSize : "1.875vh", fontWeight : "bold", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                            style = {{fontSize : "0.75rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                 
                                 {
                                     <>
@@ -1609,9 +1609,9 @@ export default function MarketArticlePageTest() {
                     <div className = "widthDefault">
                         <div className = "col">
                             <div className = "row">
-                                <div className = "col primaryDivisionDefault" style = {{height : "75vh", paddingLeft : "2vh", paddingRight : "2vh", overflowX : "hidden"}}>
+                                <div className = "col primaryDivisionDefault" style = {{height : "30rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem", overflowX : "hidden"}}>
                                     <div className = "row">
-                                        <div className = "col gx-0" style = {{marginLeft : "1.5vh", marginRight : "1.5vh", marginBottom : "1.5vh"}}>
+                                        <div className = "col gx-0" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", marginBottom : "0.6125rem"}}>
                                             
                                             {
                                                 constMarketArticleElement.length > 0 ? 
@@ -1624,7 +1624,7 @@ export default function MarketArticlePageTest() {
                                     <div style={{
                                         // bottom: 0, left: 0, width: "100%", height: "0.5vh", background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.1875), transparent)",
                                         // pointerEvents: "none", marginBottom : "1.25vh"
-                                        bottom : "0", left : "0", width : "100%", height : "1px", backgroundColor : "#cccccc", marginBottom : "1.25vh"
+                                        bottom : "0", left : "0", width : "100%", height : "1px", backgroundColor : "#cccccc", marginBottom : "0.5rem"
                                     }} />
                                     
                                     {
@@ -1634,13 +1634,13 @@ export default function MarketArticlePageTest() {
                                     }
 
                                     <div className = "row">
-                                        <div className = "col" style = {{height : "0.0625vh", marginBottom : "4vh"}}>
+                                        <div className = "col" style = {{height : "0.0625rem", marginBottom : "1.625rem"}}>
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "1.75vh", paddingLeft : "3vh", paddingRight : "3vh"}}>
+                                        <div className = "col" style = {{marginBottom : "0.75rem", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                             <div className = "row">
-                                                <div className = "col" style = {{fontSize : "2.625vh", fontWeight : "bold", marginBottom : "1vh"}}>
+                                                <div className = "col" style = {{fontSize : "1.0625rem", fontWeight : "bold", marginBottom : "0.4375rem"}}>
                                                     탐냄 {countOfInterestedLogsOnArticle}개
                                                 </div>
                                             </div>
@@ -1654,18 +1654,18 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{paddingLeft : "3vh", paddingRight : "3vh", marginBottom : "1.5vh"}}>
+                                        <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "0.6125rem"}}>
                                             <div className = "row">
-                                                <div className = "col" style = {{fontSize : "2.625vh", fontWeight : "bold"}}>
+                                                <div className = "col" style = {{fontSize : "1.0625rem", fontWeight : "bold"}}>
                                                     댓글 {countOfCommentOnArticle}개
                                                 </div>
                                             </div>
                                             <div className = "row">
-                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5vh", paddingTop : "2vh", paddingBottom : "0.5vh", paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "0.8125rem", paddingBottom : "0.25rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                                     <div className = "row">
                                                         <div className = "col">
                                                             <div className = "row h-100">
-                                                                <div className = "col" style = {{marginTop : "1.5vh", marginBottom : "4.5vh"}}>
+                                                                <div className = "col" style = {{marginTop : "0.6125rem", marginBottom : "1.8125rem"}}>
                                                                     <div className = "row h-100">
                                                                         <div className = "col">
                                                                             <div className = "row h-100">
@@ -1674,12 +1674,12 @@ export default function MarketArticlePageTest() {
                                                                                     id = "content" name = "content" value = {insertMarketCommentOnArticleElement.content} 
                                                                                     onChange = {constApplyTextContent} ref = {contentRef}
                                                                                     placeholder = "댓글을 작성해 보겠소?"
-                                                                                    style = {{resize : "none", fontSize : "1.75vh", overflow : "hidden", alignSelf : "center"}}/>
+                                                                                    style = {{resize : "none", fontSize : "0.75rem", overflow : "hidden", alignSelf : "center"}}/>
                                                                                 </div>
-                                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0vh"}}>
+                                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem"}}>
                                                                                     <div className = "row h-100 gx-0">
                                                                                         <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
-                                                                                            <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketCommentOnArticle} style = {{fontSize : "1.875vh", fontWeight : "bold"}}>쓰기</button>
+                                                                                            <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketCommentOnArticle} style = {{fontSize : "0.75rem", fontWeight : "bold"}}>쓰기</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -1692,15 +1692,15 @@ export default function MarketArticlePageTest() {
                                                     </div>
 
                                                     <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "2vh", paddingRight : "2vh"}}>
+                                                        <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                                             {
                                                                 constmarketCommentElementListOnArticle.length  > 0 ? 
                                                                 constmarketCommentElementListOnArticle : 
                                                                 <>
                                                                     
                                                                     <div className = "row">
-                                                                        <div className = "col" style = {{fontSize : "2.25vh", paddingLeft : "3vh", paddingRight : "3vh",
-                                                                            marginBottom : "4vh"
+                                                                        <div className = "col" style = {{fontSize : "0.9375rem", paddingLeft : "1.25rem", paddingRight : "1.25rem",
+                                                                            marginBottom : "1.625rem"
                                                                         }}>
                                                                             게시글에 쓰인 댓글이 없소.
                                                                         </div>
@@ -1713,7 +1713,7 @@ export default function MarketArticlePageTest() {
                                                 </div>
                                             </div>
                                             <div className = "row">
-                                                <div className = "col" style = {{marginTop : "2vh"}}>
+                                                <div className = "col" style = {{marginTop : "0.8125rem"}}>
                                                     <div className = "row">
                                                         <div className = "col">
                                                             
@@ -1722,7 +1722,7 @@ export default function MarketArticlePageTest() {
                                                             <div className = "row">
                                                                 <div className = "col-auto">
                                                                     <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)}
-                                                                    style = {{fontSize : "1.875vh", fontWeight : "bold"}}>이전으로</button>
+                                                                    style = {{fontSize : "0.75rem", fontWeight : "bold"}}>이전으로</button>
                                                                 </div>
                                                             </div>
                                                         </div>

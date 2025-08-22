@@ -6,20 +6,20 @@ export default function MarketTopFixed() {
         
         <>
         
-            <div className = "row" style = {{height : "10vh"}}>
+            <div className = "row" style = {{height : "4rem"}}>
                 <div className = "widthDefault">
                     <div className = "col marketTopFixed" style = {{paddingLeft : "0rem", paddingRight : "0rem"}}>
                         <div className = "row h-100">
-                            <div className = "col" style = {{flexGrow : "1", fontSize : "4vh",
+                            <div className = "col" style = {{flexGrow : "1", fontSize : "1.625rem",
                             display : "flex", alignItems : "center", justifyContent : "center", textAlign : "center"
                             }}>
                                 <i className="bi bi-chevron-left"></i>
                             </div>
-                            <div className = "col" style = {{flexGrow : "4", fontSize : "3.25vh",
+                            <div className = "col" style = {{flexGrow : "4", fontSize : "1.3125rem",
                             display : "flex", alignItems : "center", justifyContent : "center", textAlign : "center"}}>
                                 마켓공간
                             </div>
-                            <div className = "col" style = {{flexGrow : "1", fontSize : "4vh",
+                            <div className = "col" style = {{flexGrow : "1", fontSize : "1.625rem",
                             display : "flex", alignItems : "center", justifyContent : "center", textAlign : "center"}}>
                                 <i className="bi bi-bell"></i> 
                             </div>

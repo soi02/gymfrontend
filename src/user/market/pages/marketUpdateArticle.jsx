@@ -206,12 +206,12 @@ export default function MarketUpdateArticlePage() {
             <div className = "container-fluid">
                 
                 <div className = "row">
-                    <div className = "col primaryDivisionDefault" style = {{ height : "75vh", overflowX : "hidden"}}>
+                    <div className = "col primaryDivisionDefault" style = {{ height : "30rem", overflowX : "hidden"}}>
                         
                             <div className = "row">
-                                <div className = "col" style = {{marginBottom : "2.5vh"}}>
+                                <div className = "col" style = {{marginBottom : "1rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", marginBottom : "1.25vh"}}>
+                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
                                             사진
                                         </div>
                                     </div>
@@ -219,10 +219,10 @@ export default function MarketUpdateArticlePage() {
                                     
                                     
                                     <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                        <div className = "col" style = {{marginBottom : "0.8125rem"}}>
                                             <div className = "row gx-0">
-                                                <div className = "col-auto" style = {{width : "15vh", height : "15vh", overflow : "hidden", position : "relative",
-                                                paddingLeft : "0vh", paddingRight : "0vh", border : "1px solid #cccccc", borderRadius : "1.25vh"}}>
+                                                <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
+                                                paddingLeft : "0rem", paddingRight : "0rem", border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
                                                     <input type = "file" style = {{display : "none"}} accept = "image*" onChange = {constApplyImageLink} ref = {imageLinkRef} />
                                                         <div className = "row">
                                                             <div className = "col basicDivisionOnClickStyle" onClick = {handleDivisionClick}>
@@ -230,24 +230,24 @@ export default function MarketUpdateArticlePage() {
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div className = "col" style = {{padding : "0vh", marginLeft : "2vh",
-                                                border : "1px solid #cccccc", borderRadius : "1.25vh", overflow : "hidden"}}> 
+                                                <div className = "col" style = {{padding : "0rem", marginLeft : "0.8125rem",
+                                                border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden"}}> 
                                                     <div className = "row gx-0 flex-nowrap">
-                                                        <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", position : "relative", overflow : "hidden",
-                                                            display: "flex", justifyContent: "center", padding : "0vh", alignItems: "center", marginBottom : "2.5vh", 
-                                                            border : "1px solid #cccccc", borderRadius : "1.25vh"}}>
+                                                        <div className = "col-auto" style = {{width : "5rem", height : "5rem", position : "relative", overflow : "hidden",
+                                                            display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "1rem", 
+                                                            border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
                                                             <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
                                                         </div>
-                                                        <div className = "col" style = {{fontSize : "1.75vh"}}>
+                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                             <div className = "row">
-                                                                <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
+                                                                <div className = "col" style = {{flexGrow : "3", padding : "0rem"}}>
                                                                 </div>
-                                                                <div className = "col" style = {{flexGrow : "8", padding : "0vh"}}>
+                                                                <div className = "col" style = {{flexGrow : "8", padding : "0rem"}}>
                                                                     대표로 표시되는 
                                                                     <br />
                                                                     사진이오.
                                                                 </div>
-                                                                <div className = "col" style = {{flexGrow : "3", padding : "0vh"}}>
+                                                                <div className = "col" style = {{flexGrow : "3", padding : "0rem"}}>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -257,9 +257,9 @@ export default function MarketUpdateArticlePage() {
                                         </div>
                                     </div>
                                     <div className = "row gx-0">
-                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", 
-                                        paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", backgroundColor : "#f9f9f9",
-                                        marginBottom : "1vh", height : "9.5vh", overflowY : "auto"}}>
+                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "0.75rem", paddingTop : "0.3125rem", 
+                                        paddingBottom : "0.3125rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#f9f9f9",
+                                        marginBottom : "0.4375rem", height : "3.8125rem", overflowY : "auto"}}>
                                             {/* {
                                                 updateImageLink ?
                                                 <div className = "row">
@@ -280,7 +280,7 @@ export default function MarketUpdateArticlePage() {
                                                     <div className = "col">
                                                         {displayImageName}
                                                     </div>
-                                                    <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                    <div className = "col-auto" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
                                                     onClick = {constRemoveImageLink}>
                                                         ×
                                                     </div>
@@ -291,7 +291,7 @@ export default function MarketUpdateArticlePage() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "1.5vh", marginTop : "0.75vh"}}>
+                                        <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
                                             <i className="ri-information-line"></i> 선택한 사진이 대표 사진으로 표시됩니다.
                                         </div>
                                     </div>
@@ -322,9 +322,9 @@ export default function MarketUpdateArticlePage() {
                             </div>
                             
                             <div className = "row">
-                                <div className = "col" style = {{marginBottom : "2.5vh"}}>
+                                <div className = "col" style = {{marginBottom : "1rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", marginBottom : "1.25vh"}}>
+                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
                                             제목
                                         </div>
                                     </div>
@@ -333,16 +333,16 @@ export default function MarketUpdateArticlePage() {
                                             <input className = "form-control writeArticleTextDivisionDefault" 
                                             id = "title" name = "title" value = {updateMarketArticleElement.title}
                                             onChange = {constApplyTextContent} ref = {titleRef}
-                                            style = {{fontSize : "1.75vh"}}/>
+                                            style = {{fontSize : "0.75rem"}}/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
                             <div className = "row">
-                                <div className = "col" style = {{marginBottom : "2.5vh"}}>
+                                <div className = "col" style = {{marginBottom : "1rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", marginBottom : "1.25vh"}}>
+                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
                                             가격
                                         </div>
                                     </div>
@@ -351,11 +351,11 @@ export default function MarketUpdateArticlePage() {
                                             <input className = "form-control writeArticleTextDivisionDefault" 
                                             id = "productCost" name = "productCost" value = {updateMarketArticleElement.productCost}
                                             onChange = {constApplyTextContent} ref = {productCostRef}
-                                            style = {{fontSize : "1.75vh"}}/>
+                                            style = {{fontSize : "0.75rem"}}/>
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "1.5vh", marginTop : "0.75vh"}}>
+                                        <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
                                             <i className="ri-information-line"></i> 0원을 입력할 시 나눔 물품으로 표시됩니다.
                                         </div>
                                     </div>
@@ -363,9 +363,9 @@ export default function MarketUpdateArticlePage() {
                             </div>
                             
                             <div className = "row">
-                                <div className = "col" style = {{marginBottom : "2.5vh"}}>
+                                <div className = "col" style = {{marginBottom : "1rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "2.5vh", fontWeight : "bold", marginBottom : "1.25vh"}}>
+                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
                                             내용
                                         </div>
                                     </div>
@@ -374,7 +374,7 @@ export default function MarketUpdateArticlePage() {
                                             <textarea className = "form-control writeArticleTextDivisionDefault" rows = "4"
                                             id = "content" name = "content" value = {updateMarketArticleElement.content}
                                             onChange = {constApplyTextContent} ref = {contentRef}
-                                            style = {{fontSize : "1.75vh", resize : "none"}}/>
+                                            style = {{fontSize : "0.75rem", resize : "none"}}/>
                                         </div>
                                     </div>
                                 </div>
@@ -393,7 +393,7 @@ export default function MarketUpdateArticlePage() {
                                             <div className = "row">
                                                 <div className = "col-auto">
                                                     <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle}
-                                                    style = {{fontSize : "1.875vh", fontWeight : "bold"}}>수정</button>
+                                                    style = {{fontSize : "0.75rem", fontWeight : "bold"}}>수정</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -402,7 +402,7 @@ export default function MarketUpdateArticlePage() {
                                             <div className = "row">
                                                 <div className = "col-auto">
                                                     <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)} 
-                                                    style = {{fontSize : "1.875vh", fontWeight : "bold"}}>취소</button>
+                                                    style = {{fontSize : "0.75rem", fontWeight : "bold"}}>취소</button>
                                                 </div>
                                             </div>
                                         </div>
