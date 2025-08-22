@@ -169,7 +169,8 @@
 
 .primaryDivisionSizeDefault{
   
-  height : calc(100vh - 157px)
+  position : relative;
+  height : calc(100vh - 157px);
   
 }
 

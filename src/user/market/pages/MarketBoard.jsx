@@ -304,13 +304,7 @@ export default function MarketBoardPage() {
                             
                             {/* 길이 테스트를 위해 임시로 생략 */}
                                 
-                            </div>
-                        
-                        
-                        
-
-                        
-                        
+                        </div>
                         
                     </div>
                 </div>
