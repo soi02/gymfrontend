@@ -7,13 +7,92 @@ import MarketProductMainImage from "../components/test/example/MarketProductMain
 import '../styles/MarketCommonStyles.css';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 
 export default function MarketUserPage() {
     
     const {id : loadedId} = useParams();
     console.log(loadedId);
     
-    const checkUserStatus = 1;
+    const dispatch = useDispatch();
+    
+    //
+    
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
+      
+        const checkAuth = async () => {
+            
+            console.log("checkAuth is running");
+            
+            const tokenOnCheckAuth =  localStorage.getItem("token");
+            
+            if (!tokenOnCheckAuth) {
+                
+                return;
+                
+            }
+            
+            try {
+                
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
+                
+                if (resOnCheckAuth.data.success) {
+                    
+                    dispatch(loginAction(resOnCheckAuth.data))
+                    
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    
+                }
+                
+            } catch (error) {
+                
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
+                
+            }
+            
+        }
+        
+        checkAuth();
+        
+    }, [])
+    
+    // ▲ 토큰 관련 문제 (나중에 메인 서버에서 받아서 처리할 것)
+    
+    const checkUserStatus = userId;
     const checkUserId = Number(loadedId);
     const defaultUserStatus = Number(loadedId);
     
@@ -25,7 +104,7 @@ export default function MarketUserPage() {
     const [checkLoadEnded, setCheckLoadEnded] = useState(true);
     
     const [marketUserInfo, setMarketUserInfo] = useState([
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+        {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
     ])
     
     const constMarketUserInfoElement =
@@ -88,7 +167,7 @@ export default function MarketUserPage() {
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
-            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
+            userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
             soldLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
         }
@@ -100,7 +179,7 @@ export default function MarketUserPage() {
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
-            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
+            userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
             boughtLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
         }
@@ -291,7 +370,7 @@ export default function MarketUserPage() {
                                                                         <i className="bi bi-person-circle"></i>
                                                                     </div>
                                                                     <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
-                                                                        {userInfo.nickname}
+                                                                        {userInfo.name}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -421,7 +500,7 @@ export default function MarketUserPage() {
                                                                         <i className="bi bi-person-circle"></i>
                                                                     </div>
                                                                     <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
-                                                                        {userInfo.nickname}
+                                                                        {userInfo.name}
                                                                     </div>
                                                                 </div>
                                                             </div>

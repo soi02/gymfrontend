@@ -105,7 +105,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                                     <i className="bi bi-person-circle"></i>
                                                                 </div>
                                                                 <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
-                                                                    {userInfo.nickname}
+                                                                    {userInfo.name}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -154,7 +154,7 @@ export default function MarketBoardPageWhenSearch() {
     ]) 
     
     const [marketUserInfoList, setMarketUserInfoList] = useState([
-        {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+        {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
     ])
     
     const mergedList = marketArticleList.map(article => {
@@ -172,7 +172,7 @@ export default function MarketBoardPageWhenSearch() {
             article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
-            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }
     ])

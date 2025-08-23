@@ -2,12 +2,91 @@ import { useEffect, useRef, useState } from "react";
 import MarketFetchMyPhotoOnWriteArticle from "../components/MarketFecthMyPhotoOnWriteArticle";
 import useMarketAPI from "../service/MarketService";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 
 export default function MarketUpdateArticlePage() {
     
     const {id : loadedId} = useParams()
     
-    const checkUserStatus = 1;
+    const dispatch = useDispatch();
+    
+    //
+    
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
+      
+        const checkAuth = async () => {
+            
+            console.log("checkAuth is running");
+            
+            const tokenOnCheckAuth =  localStorage.getItem("token");
+            
+            if (!tokenOnCheckAuth) {
+                
+                return;
+                
+            }
+            
+            try {
+                
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
+                
+                if (resOnCheckAuth.data.success) {
+                    
+                    dispatch(loginAction(resOnCheckAuth.data))
+                    
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    
+                }
+                
+            } catch (error) {
+                
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
+                
+            }
+            
+        }
+        
+        checkAuth();
+        
+    }, [])
+    
+    // ▲ 토큰 관련 문제 (나중에 메인 서버에서 받아서 처리할 것)
+    
+    const checkUserStatus = userId;
     const checkArticleId = Number(loadedId);
     
     const navigate = useNavigate();

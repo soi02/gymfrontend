@@ -10,84 +10,86 @@ import axios from "axios";
 
 export default function MarketWriteArticlePage() {
     
-    // const dispatch = useDispatch();
-    
-    // //
-    
-    // const constToken = localStorage.getItem("token");
-    
-    // if (constToken) {
-        
-    //     try {
-            
-    //         const decodedToken = jwtDecode(constToken);
-            
-    //         console.log("decodedToken : ", decodedToken);
-            
-    //     } catch (error) {
-    //         console.error("Token Error :", error)
-    //     }
-        
-    // } else {
-        
-    //     console.log("No Token");
-        
-    // }
-    
-    // //
-    
-    // const userId = useSelector(state => state.auth.id);
-    
-    // console.log(userId);
+    const dispatch = useDispatch();
     
     //
     
-    // useEffect (() => {
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
       
-    //     const checkAuth = async () => {
+        const checkAuth = async () => {
             
-    //         console.log("checkAuth is running");
+            console.log("checkAuth is running");
             
-    //         const tokenOnCheckAuth =  localStorage.getItem("token");
+            const tokenOnCheckAuth =  localStorage.getItem("token");
             
-    //         if (!tokenOnCheckAuth) {
+            if (!tokenOnCheckAuth) {
                 
-    //             return;
+                return;
                 
-    //         }
+            }
             
-    //         try {
+            try {
                 
-    //             const resOnCheckAuth = await axios.post(
-    //                 "http://localhost:8080/api/user/verify-token",
-    //                 {},
-    //                 { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
-    //             );
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
                 
-    //             if (resOnCheckAuth.data.success) {
+                if (resOnCheckAuth.data.success) {
                     
-    //                 dispatch(loginAction(resOnCheckAuth.data))
+                    dispatch(loginAction(resOnCheckAuth.data))
                     
-    //                 console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
                     
-    //             }
+                }
                 
-    //         } catch (error) {
+            } catch (error) {
                 
-    //             console.error("checkAuthError", error);
-    //             localStorage.removeItem("token");
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
                 
-    //         }
+            }
             
-    //     }
+        }
         
-    //     checkAuth();
+        checkAuth();
         
-    // }, [])
+    }, [])
     
     // ▲ 토큰 관련 문제 (나중에 메인 서버에서 받아서 처리할 것)
     
-    const checkUserStatus = 1;
+    const checkUserStatus = userId;
+    console.log("checkUserStatus");
+    console.log(checkUserStatus);
     
     const navigate = useNavigate();
     

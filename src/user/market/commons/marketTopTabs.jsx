@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function TabItem({ to, label }) {
@@ -29,6 +31,83 @@ function TabItem({ to, label }) {
 }
 
 export default function MarketTopTabs() {
+  
+    const dispatch = useDispatch();
+    
+    //
+    
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
+      
+        const checkAuth = async () => {
+            
+            console.log("checkAuth is running");
+            
+            const tokenOnCheckAuth =  localStorage.getItem("token");
+            
+            if (!tokenOnCheckAuth) {
+                
+                return;
+                
+            }
+            
+            try {
+                
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
+                
+                if (resOnCheckAuth.data.success) {
+                    
+                    dispatch(loginAction(resOnCheckAuth.data))
+                    
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    
+                }
+                
+            } catch (error) {
+                
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
+                
+            }
+            
+        }
+        
+        checkAuth();
+        
+    }, [])
+    
+    // ▲ 토큰 관련 문제 (나중에 메인 서버에서 받아서 처리할 것)
   
   const navigate = useNavigate();
   
@@ -79,7 +158,7 @@ export default function MarketTopTabs() {
 
         <TabItem to="/market" label="장터 홈" />
         <TabItem to="/market/myLikedProducts" label="탐나는 물품" />
-        <TabItem to="/market/user/1" label="나의 장터 정보함" />
+        <TabItem to={`/market/user/${userId}`} label="나의 장터 정보함" />
       </div>
       )}
 
