@@ -354,3 +354,199 @@ input:checked + .routine-slider::before {
   background-color: #3a5546; 
   color: white;
 }
+
+
+/* === 타이머 모달 === */
+
+.timer-overlay {
+  position: fixed;
+  inset: 0;
+  /* 검정보단 청색빛 오버레이 */
+  background: rgba(22, 34, 49, 0.35);
+  display: grid;
+  place-items: center;
+  z-index: 3000;
+  padding: 16px;
+}
+
+.timer-card {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  width: min(80vw, 280px);
+  /* 연한 회청 배경 */
+  background: #EDF1F5;
+  border: 1px solid #D8DFE7;
+  border-radius: 16px;
+  padding: 16px 12px 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: timer-pop 0.18s ease-out;
+}
+
+@keyframes timer-pop {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.timer-title {
+  font-size: 1rem;
+  color: #1F2E44; /* 딥 네이비 텍스트 */
+  font-weight: 800;
+}
+
+/* 기본 링 색 변수 세팅 */
+.timer-ring {
+  --angle: 360deg;
+  --progress: #CFA78E; /* 포인트 베이지(진사/황동 느낌) */
+  --track: #253447;    /* 딥 네이비 트랙 */
+  position: relative;
+  width: clamp(140px, 50vw, 180px);
+  height: clamp(140px, 50vw, 180px);
+  border-radius: 50%;
+  background: conic-gradient(var(--progress) var(--angle), var(--track) var(--angle));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 안쪽은 카드와 동일 톤 */
+.timer-inner {
+  position: relative;
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  background: #EDF1F5;
+  border: 2px solid #2F445B; /* 네이비 테두리 */
+  display: grid;
+  place-items: center;
+}
+
+/* 진행 점(도트) */
+.timer-ring::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--progress);
+  box-shadow: 0 0 6px var(--progress), 0 0 10px var(--progress);
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%) rotate(calc(var(--angle) - 90deg))
+             translate(clamp(70px, 25vw, 90px));
+  transform-origin: 0 0;
+}
+
+/* 숫자는 네이비, 가독성 업 */
+.timer-digits {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(40px, 12vw, 60px);
+  font-weight: 900;
+  color: rgb(75, 113, 143);
+  line-height: 1;
+}
+
+/* 버튼은 포인트 베이지 */
+.timer-close {
+  border: 0;
+  border-radius: 8px;
+  background: #1F2E44;
+  color: #fff;
+  font-weight: 800;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: filter .15s ease;
+}
+.timer-close:hover { filter: brightness(0.95); }
+
+/* (선택) 기존 className 유지해도 되게 오버라이드 */
+.timer--pink { 
+  --progress: #CFA78E; 
+  --track: #253447; 
+}
+/* === 베이지 → 청회색(rgb(75,113,143))으로 교체 === */
+
+/* 진행 링 색 */
+.timer-ring {
+  --progress: rgb(75, 113, 143);
+}
+
+/* 진행 점(도트) – 변수 따라가므로 별도 수정 불필요하지만, 안전하게 재선언 */
+.timer-ring::after {
+  background-color: var(--progress);
+  box-shadow: 0 0 6px var(--progress), 0 0 10px var(--progress);
+}
+
+/* 닫기 버튼 색 */
+.timer-close {
+  background: rgb(204, 208, 215);
+  color: #2F445B;
+}
+
+/* (사용 중이면) 커스텀 변형 클래스도 통일 */
+.timer--pink {
+  --progress: rgb(75, 113, 143);
+  /* 트랙 색은 그대로 두고 싶으면 아래 유지 */
+  --track: #253447;
+}
+/* === 진행 도트가 꽉 붙는 버전 === */
+.timer-ring{
+  /* 공통 변수 */
+  --size: clamp(140px, 50vw, 180px);          /* 바깥 지름 */
+  --thickness: calc(var(--size) * 0.06);      /* 링 굵기(=도트 지름) : 기존 88% inner 기준 → 6% */
+  --angle: 360deg;                             /* JS에서 넘겨주는 각도 그대로 사용 */
+  --progress: rgb(75, 113, 143);               /* 진행색 */
+  --track: #253447;                            /* 트랙색 */
+  --cap-deg: 0.9deg;                           /* 끝부분 살짝 덮어 그려 빈틈 제거 */
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  /* 진행색을 살짝 더 칠해 도트 아래가 비지 않게 */
+  background: conic-gradient(
+    var(--progress) calc(var(--angle) + var(--cap-deg)),
+    var(--track) 0
+  );
+  display: flex; justify-content: center; align-items: center;
+}
+
+/* 안쪽 원 크기 = 바깥 - 굵기*2  (기존 88% 대신 계산식으로 정확히) */
+.timer-inner{
+  position: relative;
+  width: calc(100% - var(--thickness) * 2);
+  height: calc(100% - var(--thickness) * 2);
+  border-radius: 50%;
+  background: #EDF1F5;
+  border: px solid #2F445B;
+  display: grid; place-items: center;
+}
+
+/* ★ 도트: 링 중심선에 정확히 놓기 (토끼꼬리 효과) */
+.timer-ring::after{
+  content: "";
+  position: absolute;
+  width: var(--thickness);
+  height: var(--thickness);
+  border-radius: 50%;
+  background-color: var(--progress);
+  box-shadow: 0 0 6px var(--progress), 0 0 10px var(--progress);
+
+  /* 중심에서 회전 → 반지름만큼 이동(= 지름/2 - 굵기/2) */
+  top: 50%;
+  left: 50%;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--angle) - 90deg))
+    translateX(calc(var(--size)/2 - var(--thickness)/2));
+  transform-origin: center;
+}
+
+.timer-ring{
+  --dot-scale: 1.4; /* 1 = 링과 동일, 1.2~1.6 추천 */
+}
+.timer-ring::after{
+  width: calc(var(--thickness) * var(--dot-scale));
+  height: calc(var(--thickness) * var(--dot-scale));
+}

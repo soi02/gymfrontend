@@ -478,22 +478,17 @@ export default function StartFreeWorkoutPage() {
                 </div> */}
         {showTimerModal && (
           <div className="timer-overlay" role="dialog" aria-modal="true">
-            <div
-              className="timer-card"
-              onClick={(e) => e.stopPropagation()}
-              aria-label={`휴식 ${countdown}초 남음`}
-            >
+            <div className="timer-card" onClick={(e) => e.stopPropagation()}>
               <div className="timer-title">타이머</div>
-              {/* 진행각: 남은 비율 × 360 */}
+
               <div
-                className="timer-ring"
+                className="timer-ring timer--pink"
                 style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
               >
                 <div className="timer-inner">
                   <div className="timer-digits" aria-live="polite">
                     {String(countdown).padStart(2, "0")}
                   </div>
-                  {/* <div className="timer-sub">sec</div> */}
                 </div>
               </div>
 
@@ -501,7 +496,7 @@ export default function StartFreeWorkoutPage() {
                 className="timer-close"
                 onClick={() => {
                   setShowTimerModal(false);
-                  setCountdown(restDuration); // 초기화
+                  setCountdown(restDuration);
                 }}
               >
                 닫기
