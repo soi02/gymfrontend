@@ -903,7 +903,7 @@ export default function MarketUserPage() {
                                     {/* {<MarketUserRatePageLayout />} */}
                                     
                                     <div className = "row">
-                                        <div className = "col" style = {{marginTop : "0.8125rem"}}>
+                                        <div className = "col" style = {{marginTop : "0.8125rem", marginBottom : "1rem"}}>
                                             <div className = "row">
                                                 <div className = "col">
                                                     

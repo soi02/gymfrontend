@@ -688,7 +688,8 @@ export default function MarketMyLikedProductsPage() {
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
                                                                                         fontSize : "2rem", color : "#c0392b", pointerEvents : "none"}}>
                                                                                             <i className="ri-heart-3-fill" style = {{ WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
-                                                                                                filter: "drop-shadow(0 0 2px #7c1d0d) drop-shadow(0 0 1px #7c1d0d) drop-shadow(0 0 4px #c03a2b6b) drop-shadow(0 0 2px #c0392b) drop-shadow(0 0 1px #c0392b)"
+                                                                                                filter: "drop-shadow(0 0 2px #7c1e0d80) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 4px #c03a2b80)" +
+                                                                                                "drop-shadow(0 0 2px #c03a2b80) drop-shadow(0 0 1px #c03a2b80)"
                                                                                             }}></i>
                                                                                         </div>
                                                                                     </div>
@@ -704,7 +705,8 @@ export default function MarketMyLikedProductsPage() {
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
                                                                                         fontSize : "2rem", color : "transparent", pointerEvents : "none"}}>
                                                                                             <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
-                                                                                                filter: "drop-shadow(0 0 1px #7c1d0d) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 1px #ffffff)"}}></i>
+                                                                                                filter: "drop-shadow(0 0 2px #7c1d0d80) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 2px #ffffff40)" + 
+                                                                                                "drop-shadow(0 0 1px #ffffffc0) drop-shadow(0 0 1px #ffffff) drop-shadow(0 0 1px #ffffff)"}}></i>
                                                                                         </div>
                                                                                     </div>
                                                                                 
@@ -848,7 +850,7 @@ export default function MarketMyLikedProductsPage() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginTop : "0.8125rem"}}>
+                                        <div className = "col" style = {{marginTop : "0.8125rem", marginBottom : "1rem"}}>
                                             <div className = "row">
                                                 <div className = "col">
                                                     

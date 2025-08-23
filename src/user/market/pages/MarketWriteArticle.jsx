@@ -411,7 +411,7 @@ export default function MarketWriteArticlePage() {
                                         </div>
                                         
                                         <div className = "row">
-                                            <div className = "col">
+                                            <div className = "col" style = {{marginBottom : "1rem"}}>
 
                                                 <div className = "d-flex w-100 align-items-center">
 
