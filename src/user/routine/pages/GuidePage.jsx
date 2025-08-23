@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useRoutineService from "../service/routineService";
 import { useEffect, useState } from "react";
 import "../styles/GuidePage.css";
 import { BiPencil } from "react-icons/bi";
+
 
 const formatSteps = (text) => {
   if (!text) return "";
@@ -42,6 +43,8 @@ const parseGuideText = (text) => {
 
 export default function GuidePage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const routineService = useRoutineService();
 
   const [instruction, setinstruction] = useState("");
@@ -51,7 +54,11 @@ export default function GuidePage() {
     elementPicture: "",
     memoContent: "",
   });
-
+const handleBack = () => {
+    const canGoBack = window.history.state && window.history.state.idx > 0;
+    if (canGoBack) navigate(-1);
+    else navigate("/routine"); // 👉 원하는 기본 경로로 변경 가능
+  };
   useEffect(() => {
     const getWorkoutGuide = async () => {
       try {
@@ -97,13 +104,21 @@ export default function GuidePage() {
 
   return (
     <>
-      <div className="divider-line" />
+      {/* <div className="divider-line" /> */}
       {/* ← 동일한 상단 라인 */}
 
       <div
         className="main-content routine-main-content"
         style={{ height: "100vh", display: "flex", flexDirection: "column" }}
       >
+        <div className="gp-header-wrapper">
+          <button type="button" className="gp-back-btn" onClick={handleBack}>
+            &lt; 이전
+          </button>
+        {/* 캘린더 */}
+        {/* 헤더 */}
+        </div>
+
         <h4 className="routine-title">
           <span className="routine-subtitle">
             {meta.categoryName} &gt; {meta.elementName}
