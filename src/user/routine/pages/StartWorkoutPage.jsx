@@ -208,7 +208,7 @@ export default function StartWorkoutPage() {
           {showTimerMenu && (
             <div ref={timerMenuRef} className="swp-timer-popover">
               <div className="swp-timer-popover-row">
-                <span>휴식 시간</span>
+                <span style={{marginLeft:"0.4rem"}}>휴식 타이머</span>
                 <label
                   className="routine-switch"
                   style={{ marginLeft: "auto" }}
