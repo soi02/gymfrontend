@@ -237,53 +237,56 @@ export default function StartFreeWorkoutPage() {
             style={{ width: "22px", height: "22px" }}
           ></img>
         </button>
-        {showTimerMenu && (
-          <div ref={timerMenuRef} className="swp-timer-popover">
-            <div className="swp-timer-popover-row">
-              <span>휴식 타이머</span>
-              <label className="routine-switch" style={{ marginLeft: "auto" }}>
-                <input
-                  type="checkbox"
-                  checked={useRestTimer}
-                  onChange={(e) => setUseRestTimer(e.target.checked)}
-                />
-                <span className="routine-slider" />
-              </label>
-            </div>
+          {showTimerMenu && (
+            <div ref={timerMenuRef} className="swp-timer-popover">
+              <div className="swp-timer-popover-row">
+                <span style={{marginLeft:"0.4rem"}}>휴식 타이머</span>
+                <label
+                  className="routine-switch"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={useRestTimer}
+                    onChange={(e) => setUseRestTimer(e.target.checked)}
+                  />
+                  <span className="routine-slider" />
+                </label>
+              </div>
 
-            <div
-              className="swp-timer-popover-row swp-rest-inline"
-              style={{ marginTop: "0.6rem" }}
-            >
-              <button
-                type="button"
-                className="rest-step"
-                onClick={decRest}
-                disabled={restDuration <= MIN}
-                aria-label="휴식시간 10초 감소"
+              <div
+                className="swp-timer-popover-row swp-rest-inline"
+                style={{ marginTop: "0.6rem" }}
               >
-                −
-              </button>
-              <span className="rest-value">{restDuration}초</span>
+                <button
+                  type="button"
+                  className="rest-step"
+                  onClick={decRest}
+                  disabled={restDuration <= MIN}
+                  aria-label="휴식시간 10초 감소"
+                >
+                  −
+                </button>
+                <span className="rest-value">{restDuration}초</span>
+                <button
+                  type="button"
+                  className="rest-step"
+                  onClick={incRest}
+                  disabled={restDuration >= MAX}
+                  aria-label="휴식시간 10초 증가"
+                >
+                  ＋
+                </button>
+              </div>
+
               <button
-                type="button"
-                className="rest-step"
-                onClick={incRest}
-                disabled={restDuration >= MAX}
-                aria-label="휴식시간 10초 증가"
+                className="swp-timer-close"
+                onClick={() => setShowTimerMenu(false)}
               >
-                ＋
+                설정 완료
               </button>
             </div>
-
-            <button
-              className="swp-timer-close"
-              onClick={() => setShowTimerMenu(false)}
-            >
-              설정 완료
-            </button>
-          </div>
-        )}
+          )}
       </div>
       <div {...handlers} className="start-workout-container">
         <div className="routine-top-bar">
@@ -465,43 +468,45 @@ export default function StartFreeWorkoutPage() {
           </div>
         </div>
 
-        {/* <div className="routine-rest-timer-toggle">
-                  <label className="routine-switch">
-                    <input
-                      type="checkbox"
-                      checked={useRestTimer}
-                      onChange={(e) => setUseRestTimer(e.target.checked)}
-                    />
-                    <span className="routine-slider" />
-                  </label>
-                  <span className="routine-label-text">휴식 타이머</span>
-                </div> */}
+
         {showTimerModal && (
-          <div className="timer-overlay" role="dialog" aria-modal="true">
+          <div
+            className="timer-overlay"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setShowTimerModal(false)}
+          >
             <div
-              className="timer-card"
+              className="timer-card timer-card--onboarding"
               onClick={(e) => e.stopPropagation()}
-              aria-label={`휴식 ${countdown}초 남음`}
             >
-              <div className="timer-title">타이머</div>
-              {/* 진행각: 남은 비율 × 360 */}
+              <div className="timer-top"></div>
+              <p className="timer-timer">숨 고르기 시계</p>
+              
+
               <div
-                className="timer-ring"
+                className="timer-ring timer-ring--attached"
                 style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
               >
                 <div className="timer-inner">
                   <div className="timer-digits" aria-live="polite">
                     {String(countdown).padStart(2, "0")}
                   </div>
-                  {/* <div className="timer-sub">sec</div> */}
                 </div>
               </div>
 
+              {/* 안내문 */}
+              {/* <p className="timer-timer">숨 고르기 시계</p> */}
+              <p className="timer-desc">
+                휴식 시간은 우측 상단에서 조정할 수 있소.
+              </p>
+
+              {/* 버튼 */}
               <button
-                className="timer-close"
+                className="timer-primary"
                 onClick={() => {
                   setShowTimerModal(false);
-                  setCountdown(restDuration); // 초기화
+                  setCountdown(restDuration);
                 }}
               >
                 닫기
@@ -509,7 +514,6 @@ export default function StartFreeWorkoutPage() {
             </div>
           </div>
         )}
-
         {showConfirmModal && (
           <div className="routine-timer-modal">
             <div className="routine-timer-modal-content">

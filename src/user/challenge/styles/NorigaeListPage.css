@@ -82,7 +82,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  margin: 14px auto 0;
+  margin: 6rem auto 0;
 }
 .nlm-medal {
   width: 50%;
@@ -153,6 +153,7 @@
   text-align: center;
   color: var(--nlm-sub);
   padding: 20px;
+  margin-top: 20rem;
 }
 .nlm-empty-title {
   font-size: 24px;

@@ -354,3 +354,139 @@ input:checked + .routine-slider::before {
   background-color: #3a5546; 
   color: white;
 }
+
+
+/* === 타이머 모달 === */
+/* ===== 최소/정리된 타이머 CSS ===== */
+
+/* 오버레이 */
+.timer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 34, 49, 0.35);
+  display: grid;
+  place-items: center;
+  z-index: 3000;
+  padding: 16px;
+}
+
+/* 카드 */
+.timer-card--onboarding{
+  width: min(88vw, 340px);
+  background: #fff;
+  border: 1px solid #EEF2F6;
+  border-radius: 24px;
+  padding: 20px 16px 14px;
+  box-shadow: 0 12px 32px rgba(31,46,68,0.12);
+  display: flex;                 /* grid → flex 로 단순화 */
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;                     /* 전체 간격 */
+}
+
+/* 빈 헤더는 자동으로 숨김 → 쓸데없는 공간 제거 */
+.timer-top:empty { display: none; }
+
+/* 원형 타이머 (토끼꼬리 착붙) */
+.timer-ring--attached{
+  --size: 200px;
+  --thickness: 16px;                      /* 링 굵기 = 도트 지름 */
+  --angle: 360deg;
+  --progress: rgb(75, 113, 143);
+  --track: #243547;
+  --cap-deg: 1deg;
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--progress) calc(var(--angle) + var(--cap-deg)),
+    var(--track) 0
+  );
+  display: flex; justify-content: center; align-items: center;
+}
+
+.timer-inner{
+  width: calc(100% - var(--thickness) * 2);
+  height: calc(100% - var(--thickness) * 2);
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #2F445B10; /* 아주 연한 테두리 */
+  display: grid; place-items: center;
+}
+
+/* 도트(끝 마커) */
+.timer-ring--attached::after{
+  content: "";
+  position: absolute;
+  width: var(--thickness);
+  height: var(--thickness);
+  border-radius: 50%;
+  background: var(--progress);
+  box-shadow: 0 0 6px var(--progress), 0 0 12px var(--progress);
+  top: 50%; left: 50%;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--angle) - 90deg))
+    translateX(calc(var(--size)/2 - var(--thickness)/2));
+  transform-origin: center;
+}
+
+/* 숫자 */
+.timer-digits{
+  font-variant-numeric: tabular-nums;
+  font-size: 56px;
+  font-weight: 900;
+  color: rgb(75, 113, 143);
+  line-height: 1;
+}
+
+/* 타이틀(“숨 고르기 시계”) — 아래 문구랑 더 붙이기 */
+.timer-timer{
+  margin: 10px 0 10px;                 /* 위쪽만 살짝 */
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1F2E44;
+  text-align: center;
+}
+
+/* 설명 문구 — 타이틀과 더 타이트하게 붙임 */
+.timer-desc{
+  margin: 1rem 0 8px;              /* ← 포인트: 위쪽을 음수로 살짝 당김 */
+  font-size: 0.82rem;
+  color: #5E7084;
+  text-align: center;
+}
+.swp-timer-close {
+  margin: 0.6rem auto 0;
+  width: 40%;
+  display: block;
+  border: none;
+  border-radius: 10px;
+  padding: 0.55rem 0.55rem;
+  background: #dbdbdb;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+/* 버튼 */
+.timer-primary{
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 800;
+  color: #fff;
+  background: #243d52;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+.timer-primary:hover{ filter: brightness(1.05); }
+
+/* "휴식 타이머 + 토글" 이 들어있는 첫 행 아래에 구분선 넣기 */
+.swp-timer-popover .swp-timer-popover-row:first-child{
+  border-bottom: 1px solid var(--line, #E6EEF6); /* 선 색 */
+  margin: 0 -12px 17px;   /* 카드 패딩만큼 밖으로 빼서 풀폭 라인 */
+  padding: 0 12px 8px;    /* 다시 안쪽 여백 복원 + 아래 간격 */
+}

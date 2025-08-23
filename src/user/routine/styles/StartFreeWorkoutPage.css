@@ -1,29 +1,14 @@
-.swp-main-content{
-  height: 100dvh;           /* 모바일 브라우저 주소창 높이 이슈 대비 */
+/* StartFreeWorkoutPage.css */
+
+.swp-main-content {
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;         /* ← 바깥 스크롤 차단 */
+  overflow: hidden;
 }
-
-/* 2) 헤더는 그대로 콘텐츠 위에 고정되지 않으므로 auto */
-.swp-header{ flex: 0 0 auto; }
-
-.start-workout-container{
-  /* height: 100vh;  <-- 삭제 */
-  /* overflow-y: auto;  <-- 아래로 교체 */
-  margin-top: 0;
-  flex: 1 1 auto;
-  overflow: auto;           /* ← 내부만 스크롤 */
-  padding: 1rem;
-  /* 고정 버튼 + 탭바만큼 바닥 여유 */
-  padding-top: 0;
-  padding-bottom: calc(14rem + env(safe-area-inset-bottom));
-  box-sizing: border-box;
-}
-
-
 
 .swp-header {
+  flex: 0 0 auto;
   position: relative;
   height: 3.5rem;
   display: flex;
@@ -34,8 +19,6 @@
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
 }
-
-
 
 .swp-back-btn {
   position: absolute;
@@ -55,7 +38,6 @@
   font-weight: 600;
   text-align: center;
 }
-
 
 .swp-timer-btn {
   position: absolute;
@@ -77,7 +59,7 @@
   background: #fff;
   border: 1px solid #eee;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   padding: 0.8rem;
   z-index: 1200;
 }
@@ -85,7 +67,7 @@
 .swp-timer-popover-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   font-size: 0.95rem;
 }
 
@@ -96,12 +78,11 @@
   border: none;
   border-radius: 10px;
   padding: 0.55rem 0.55rem;
-  background: #f5f5f5;
+  background: #dbdbdb;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
 }
-
 
 .swp-rest-inline {
   justify-content: center;
@@ -125,57 +106,28 @@
 }
 
 .rest-value {
+  font-size: 1.2rem;
   min-width: 4.2rem;
   text-align: center;
   font-weight: 700;
 }
 
-
-
-.routine-kebab-button {
-  font-size: 1.6rem;
-  background: none;
-  border: none;
-  color: rgb(73, 43, 43);
-  cursor: pointer;
-  margin-left: auto;
-  padding: 0.3rem;
-}
-
-.routine-options {
-  position: relative;
-}
-
-.routine-menu-popup {
-  position: absolute;
-  top: 2.2rem;
-  right: 0;
-  background-color: #222;
-  color: rgb(227, 98, 98);
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  z-index: 999;
-  padding: 0.5rem 0;
-  min-width: 180px;
-}
-
-.routine-menu-popup > div {
-  padding: 0.6rem 1rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.routine-menu-popup > div:hover {
-  background: #333;
+.start-workout-container {
+  margin-top: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 1rem;
+  padding-top: 0;
+  padding-bottom: calc(14rem + env(safe-area-inset-bottom));
+  box-sizing: border-box;
 }
 
 .image-wrapper-with-arrows {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0rem; /* 좌우 여백도 균형 맞게 */
+  gap: 0rem;
 }
-
 
 .routine-arrow-button {
   width: 2rem;
@@ -189,17 +141,6 @@
   flex-shrink: 0;
 }
 
-
-
-
-.routine-arrow-placeholder {
-  visibility: hidden; /* 공간은 차지하되, 보이진 않음 */
-}
-
-
-
-
-/* 이미지 */
 .start-workout-image {
   width: 52%;
   max-width: 300px;
@@ -207,18 +148,16 @@
   display: block;
   margin: 0 auto;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .start-workout-elementName {
   padding-top: 0.5rem;
-  
   text-align: center;
 }
 
 .routine-set-table {
   margin-top: 1rem;
-  /* background: #e6e6e6; */
   border: 1px solid #7a666343;
   border-radius: 12px;
   padding: 1.5rem;
@@ -230,20 +169,14 @@
   justify-content: space-between;
   margin-bottom: 0.3rem;
   gap: 0.5rem;
-  /* color: white; */
 }
-
-
-
 
 .routine-set-row input[type="number"] {
   width: 60px;
   text-align: center;
-  /* background: #333; */
   border: none;
   margin-left: 0.1rem;
   margin-right: 0.4rem;
-  /* color: white; */
   border-radius: 8px;
 }
 
@@ -273,11 +206,11 @@
   width: 24px;
   background-color: #7c1d0d;
 }
-.input-with-unit {
+
+.routine-input-with-unit {
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-right: 8px;
 }
 
 .routine-input-with-unit input {
@@ -290,29 +223,24 @@
   color: #666;
 }
 
-
-
 .sfwp-button-row {
   display: flex;
   gap: 12px;
-  justify-content: center; /* 가운데 정렬 */
+  justify-content: center;
   margin: 12px 0 4px;
-  flex-wrap: wrap; /* 버튼이 너무 길면 다음 줄로 */
+  flex-wrap: wrap;
 }
 
-/* 모바일에서도 가로 유지 */
-@media (max-width: 420px){
-  .routine-action-buttons .sfwp-button-row{
-    flex-direction: row; /* column → row */
+@media (max-width: 420px) {
+  .routine-action-buttons .sfwp-button-row {
+    flex-direction: row;
   }
-  .routine-action-buttons .sfwp-button-row .sfwp-btn{
-    width: auto; /* 100% 채우던 거 해제 */
+  .routine-action-buttons .sfwp-button-row .sfwp-btn {
+    width: auto;
   }
 }
 
-
-/* 공통 버튼 */
-.sfwp-btn{
+.sfwp-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -324,14 +252,11 @@
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
-  /* background: #fff; */
-  box-shadow: 0 4px 12px rgba(0,0,0,.08);
-  transition: transform .08s ease, box-shadow .2s ease,
-              background-color .2s ease, border-color .2s ease, color .2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.08s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-/* 공통 버튼 */
-.sfwp-btn-2{
+.sfwp-btn-2 {
   display: flex;
   position: relative;
   display: inline-flex;
@@ -345,55 +270,56 @@
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
-  /* background: #fff; */
-  /* box-shadow: 0 4px 12px rgba(0,0,0,.08); */
-  transition: transform .08s ease, box-shadow .2s ease,
-              background-color .2s ease, border-color .2s ease, color .2s ease;
+  transition: transform 0.08s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-/* 동그란 아이콘 뱃지 */
-.sfwp-btn .icon{
-  width: 20px; height: 20px;
-  display: inline-grid; place-items: center;
+.sfwp-btn .icon {
+  width: 20px;
+  height: 20px;
+  display: inline-grid;
+  place-items: center;
   background: #fff;
   border-radius: 999px;
   font-size: 16px;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
-/* 프라이머리: 세트추가 */
-.sfwp-btn-add{
-  background: #ffffff;   /* 진한 빨강 */
+.sfwp-btn-add {
+  background: #ffffff;
   color: #424141;
-  
   border-color: #e5d0cb;
 }
-.sfwp-btn-add:hover{
-  filter: brightness(1.05);
-  box-shadow: 0 6px 16px rgba(124,29,13,.25);
-}
-.sfwp-btn-add:active{ transform: translateY(1px); }
 
-/* 위험/아웃라인: 세트삭제 */
-.sfwp-btn-del{
+.sfwp-btn-add:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 16px rgba(124, 29, 13, 0.25);
+}
+
+.sfwp-btn-add:active {
+  transform: translateY(1px);
+}
+
+.sfwp-btn-del {
   background: #ffffff;
   color: #7c1d0d;
   border-color: #e5d0cb;
 }
-.sfwp-btn-del:hover{
+
+.sfwp-btn-del:hover {
   background: #fce7e4;
   border-color: #caa39c;
 }
-.sfwp-btn-del:active{ transform: translateY(1px); }
 
-/* 비활성화 공통 */
-.sfwp-btn:disabled{
-  opacity: .45;
+.sfwp-btn-del:active {
+  transform: translateY(1px);
+}
+
+.sfwp-btn:disabled {
+  opacity: 0.45;
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
 }
-
 
 .routine-timer-modal {
   position: fixed;
@@ -401,25 +327,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 3000;
 }
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 
 .routine-timer-modal-content {
   background: white;
@@ -428,43 +341,22 @@
   text-align: center;
   min-width: 240px;
   max-width: 80%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   font-size: 1.1rem;
 }
 
 .routine-timer-modal-content p {
-  /* font-size: 1.4rem; */
   margin-bottom: 1rem;
 }
 
-
-
-
-.digital-timer {
-  font-family: 'Orbitron', monospace; /* or 'Digital-7' 같은 디지털 느낌 폰트 */
-  font-size: 2.8rem;
-  color: #000;
-  background-color: #f5f5f5;
-  padding: 1rem 2rem;
-  border-radius: 12px;
-  display: inline-block;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  letter-spacing: 4px;
-}
-
-
-
-/* 전체 wrapper */
 .routine-rest-timer-toggle {
   display: flex;
-  flex-direction: column;  /* 수직 정렬 */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 1.5rem 0;
 }
 
-
-/* 토글 스위치 전체 */
 .routine-switch {
   position: relative;
   display: inline-block;
@@ -478,7 +370,6 @@
   height: 0;
 }
 
-/* 슬라이더 스타일 */
 .routine-slider {
   position: absolute;
   cursor: pointer;
@@ -503,12 +394,11 @@
   transition: 0.4s;
 }
 
-/* 토글 ON 상태 */
-input:checked + .routine-slider {
+input:checked+.routine-slider {
   background-color: #e8dc82;
 }
 
-input:checked + .routine-slider::before {
+input:checked+.routine-slider::before {
   transform: translateX(22px);
 }
 
@@ -516,358 +406,220 @@ input:checked + .routine-slider::before {
   margin-left: 0.5rem;
 }
 
-.swo-btn {
-  flex: 1;
-  padding: 0.7rem 1rem 0.7rem 1rem;
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: all 0.2s;
-  background-color: #3a5546; 
-  color: white;
-}
-
-/* 공통 버튼은 이미 sfwp-btn, .icon 존재 — 그대로 재사용 */
-
-/* 이 운동 완료: 은은한 성공(아웃라인) */
-.sfwp-btn-done{
+.sfwp-btn-done {
   background: #fff;
   color: #7c1d0d;
   border-color: #cccccc;
 }
-.sfwp-btn-done:hover{
+
+.sfwp-btn-done:hover {
   background: #d0bdba;
   border-color: #cccccc;
-  box-shadow: 0 6px 16px rgba(47,99,63,.15);
+  box-shadow: 0 6px 16px rgba(47, 99, 63, 0.15);
 }
-.sfwp-btn-done:active{ transform: translateY(1px); }
 
-/* 모든 운동 완료: 프라이머리(딥 레드) */
-.sfwp-btn-finish{
+.sfwp-btn-done:active {
+  transform: translateY(1px);
+}
+
+.sfwp-btn-finish {
   background: #7c1d0d;
   color: #fff;
   border-color: transparent;
 }
-.sfwp-btn-finish:hover{
+
+.sfwp-btn-finish:hover {
   filter: brightness(1.05);
-  box-shadow: 0 8px 18px rgba(124,29,13,.28);
+  box-shadow: 0 8px 18px rgba(124, 29, 13, 0.28);
 }
-.sfwp-btn-finish:active{ transform: translateY(1px); }
 
+.sfwp-btn-finish:active {
+  transform: translateY(1px);
+}
 
-
-/* (옵션) 모달 버튼도 통일감 주기 */
-.sfwp-cancel-btn{
+.sfwp-cancel-btn {
   padding: 12px 16px;
   border-radius: 12px;
   border: 1px solid #e5e5e5;
   background: #fff;
   font-weight: 700;
 }
-.sfwp-cancel-btn:hover{ background:#f7f7f7; }
 
-.sfwp-confirm-end-btn{
+.sfwp-cancel-btn:hover {
+  background: #f7f7f7;
+}
+
+.sfwp-confirm-end-btn {
   padding: 12px 16px;
   border-radius: 12px;
   border: 1px solid transparent;
   background: #7c1d0d;
-  color:#fff;
+  color: #fff;
   font-weight: 700;
 }
-.sfwp-confirm-end-btn:hover{
+
+.sfwp-confirm-end-btn:hover {
   filter: brightness(1.05);
 }
 
-.set-header{
-  display:flex;
-  justify-content:flex-end;   /* 오른쪽 배치; 왼쪽이면 flex-start */
-  margin-bottom:.6rem;
-  margin-right: 0;
-}
-
-.set-header-check{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  font-weight:600;
-  color:#444;
-  cursor:pointer;
-}
-
-.set-header-check input[type="checkbox"]{
-  width:16px; height:16px;
-  transform:scale(1.3);
-  accent-color:#000;
-}
-
-
-.sfwp-fixed-actions{
+.sfwp-fixed-actions {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(72px + env(safe-area-inset-bottom)); /* 탭바 높이에 맞춰 주세요 */
+  bottom: calc(72px + env(safe-area-inset-bottom));
   width: 100%;
   max-width: 425px;
   padding: 10px 16px 12px;
   z-index: 1200;
 }
 
-
-
-
-/* 상단 페이드: 스크롤 영역과 자연스럽게 연결 */
-.sfwp-fixed-actions::before{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:100%;
+.sfwp-fixed-actions::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
   height: 4px;
-  pointer-events:none;
-
-
+  pointer-events: none;
 }
 
-/* 버튼 가로 정렬 유지 */
-.sfwp-fixed-actions .sfwp-button-row{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-    align-items: center;          /* ← 추가 */
-
+.sfwp-fixed-actions .sfwp-button-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
 }
 
-.sfwp-fixed-actions .sfwp-btn-2{
-  flex:1;
-  min-width:0;
+.sfwp-fixed-actions .sfwp-btn-2 {
+  flex: 1;
+  min-width: 0;
 }
 
-/* 콘텐츠가 고정바 뒤로 숨지지 않게 바닥 패딩 넉넉히 */
-.start-workout-container{
+.start-workout-container {
   padding-bottom: calc(14rem + env(safe-area-inset-bottom));
 }
 
-/* 전체 검은 오버레이 */
-.timer-overlay{
-  position: fixed; inset: 0;
-  background: #000;
-  display: grid; place-items: center;
+
+/* === 타이머 모달 === */
+/* ===== 최소/정리된 타이머 CSS ===== */
+
+/* 오버레이 */
+.timer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 34, 49, 0.35);
+  display: grid;
+  place-items: center;
   z-index: 3000;
   padding: 16px;
 }
 
-/* 카드 래퍼 */
-.timer-card{
-  display: grid; gap: 20px;
-  justify-items: center;
+/* 카드 */
+.timer-card--onboarding{
+  width: min(88vw, 340px);
+  background: #fff;
+  border: 1px solid #EEF2F6;
+  border-radius: 24px;
+  padding: 20px 16px 14px;
+  box-shadow: 0 12px 32px rgba(31,46,68,0.12);
+  display: flex;                 /* grid → flex 로 단순화 */
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;                     /* 전체 간격 */
 }
 
-/* 원형 진행 링 (conic-gradient) */
-.timer-ring{
-  --angle: 360deg;                 /* JS에서 덮어씀 */
-  width: min(75vw, 260px);
-  height: min(75vw, 260px);
+/* 빈 헤더는 자동으로 숨김 → 쓸데없는 공간 제거 */
+.timer-top:empty { display: none; }
+
+/* 원형 타이머 (토끼꼬리 착붙) */
+.timer-ring--attached{
+  --size: 200px;
+  --thickness: 16px;                      /* 링 굵기 = 도트 지름 */
+  --angle: 360deg;
+  --progress: rgb(75, 113, 143);
+  --track: #243547;
+  --cap-deg: 1deg;
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
   border-radius: 50%;
-  background:
-    conic-gradient(#fff var(--angle), rgba(255,255,255,0.15) 0);
-  display: grid; place-items: center;
+  background: conic-gradient(
+    var(--progress) calc(var(--angle) + var(--cap-deg)),
+    var(--track) 0
+  );
+  display: flex; justify-content: center; align-items: center;
 }
 
-/* 안쪽(검은 원 + 흰 테두리) */
 .timer-inner{
-  width: 78%;
-  height: 78%;
+  width: calc(100% - var(--thickness) * 2);
+  height: calc(100% - var(--thickness) * 2);
   border-radius: 50%;
-  background: #000;
-  border: 6px solid #fff;
+  background: #FFFFFF;
+  border: 2px solid #2F445B10; /* 아주 연한 테두리 */
   display: grid; place-items: center;
+}
+
+/* 도트(끝 마커) */
+.timer-ring--attached::after{
+  content: "";
+  position: absolute;
+  width: var(--thickness);
+  height: var(--thickness);
+  border-radius: 50%;
+  background: var(--progress);
+  box-shadow: 0 0 6px var(--progress), 0 0 12px var(--progress);
+  top: 50%; left: 50%;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--angle) - 90deg))
+    translateX(calc(var(--size)/2 - var(--thickness)/2));
+  transform-origin: center;
 }
 
 /* 숫자 */
 .timer-digits{
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(64px, 18vw, 108px);
-  font-weight: 800;
-  color: #fff;
+  font-size: 56px;
+  font-weight: 900;
+  color: rgb(75, 113, 143);
   line-height: 1;
 }
 
-/* 보조 텍스트 */
-.timer-sub{
-  margin-top: 6px;
-  color: rgba(255,255,255,0.7);
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-size: clamp(12px, 3.5vw, 14px);
+/* 타이틀(“숨 고르기 시계”) — 아래 문구랑 더 붙이기 */
+.timer-timer{
+  margin: 10px 0 10px;                 /* 위쪽만 살짝 */
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1F2E44;
+  text-align: center;
 }
 
-/* 닫기 버튼 */
-.timer-close{
-  border: 0; border-radius: 12px;
-  background: #fff; color: #000;
-  font-weight: 700; padding: 10px 16px;
-}
-/* 전체 오버레이: 반투명 + 중앙정렬 */
-.timer-overlay{
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.6);
-  display: grid; place-items: center;
-  z-index: 3000;
-  padding: 16px;                     /* 가장자리 여백 */
+/* 설명 문구 — 타이틀과 더 타이트하게 붙임 */
+.timer-desc{
+  margin: 1rem 0 8px;              /* ← 포인트: 위쪽을 음수로 살짝 당김 */
+  font-size: 0.82rem;
+  color: #5E7084;
+  text-align: center;
 }
 
-/* 카드 래퍼: 모달 느낌 */
-.timer-card{
-  display: grid; gap: 16px;
-  justify-items: center;
+/* 버튼 */
+.timer-primary{
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 800;
+  color: #fff;
+  background: #243d52;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
 }
+.timer-primary:hover{ filter: brightness(1.05); }
 
-.timer-card.modal,                    /* 혹시 클래스 분리했다면 둘 다 커버 */
-.timer-card{
-  width: min(92vw, 360px);            /* 📏 카드 너비 */
-  background: #020a1b;                   /* 어두운 카드 */
-  border-radius: 20px;
-  padding: 20px 18px 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.45);
-}
-
-/* 링 사이즈: 카드 안에 알맞게 */
-.timer-card .timer-ring{
-  --angle: 360deg;
-  width: clamp(180px, 60vw, 220px);   /* 📏 링 최대/최소 */
-  height: clamp(180px, 60vw, 220px);
-  border-radius: 50%;
-  background: conic-gradient(#fff var(--angle), rgba(255,255,255,0.16) 0);
-  display: grid; place-items: center;
-}
-
-/* 안쪽 원 + 테두리 두께 */
-.timer-inner{
-  width: 78%;
-  height: 78%;
-  border-radius: 50%;
-  background: #000000;
-  border: 6px solid #fff;            /* 테두리 두께 */
-  display: grid; place-items: center;
-}
-
-/* 숫자/보조텍스트 */
-.timer-digits{
-  font-variant-numeric: tabular-nums;
-  font-size: clamp(56px, 14vw, 88px);
-  font-weight: 800; color: #fff; line-height: 1;
-}
-.timer-sub{ margin-top: 6px; color: #bbb; font-weight: 700; letter-spacing: .08em; }
-
-/* 닫기 버튼도 카드 안쪽에 */
-.timer-close{
-  border: 0; border-radius: 12px;
-  background: #b4b4b4; color: #0e0e0e;
-  font-weight: 700; padding: 10px 16px;
-}
-
-/* 살짝 팝 애니메이션 (선택) */
-@keyframes timer-pop { from{ transform: scale(.95); opacity: 0 } to{ transform: scale(1); opacity: 1 } }
-.timer-card{ animation: timer-pop .18s ease-out; }
-.timer-ring{
-  --angle: 360deg;
-  --thickness: 0px;   /* 링 두께 */
-  --track: #3a3a3a;    /* 남은(트랙) 색 */
-  --progress: #fff;    /* 진행 색 */
-  position: relative;
-  width: clamp(180px, 60vw, 220px);
-  height: clamp(180px, 60vw, 220px);
-  border-radius: 50%;
-  display: grid; place-items: center;
-}
-
-/* 트랙 레이어 (전체 원) */
-.timer-ring::before{
-  content:"";
-  position:absolute; inset:0; border-radius:50%;
-  background: var(--track);
-  /* 도넛 마스크 */
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-}
-
-/* 진행 레이어 (각도만 채움) */
-.timer-ring::after{
-  content:"";
-  position:absolute; inset:0; border-radius:50%;
-  background: conic-gradient(var(--progress) var(--angle), transparent 0);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-}
-
-.timer-title {
-  font-size: 1.4rem;
-  color: rgb(255, 255, 255);
-}
-/* === 공통 타이머 모달 === */
-.timer-overlay{
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.6);
-  display: grid; place-items: center;
-  z-index: 3000;
-  padding: 16px;
-}
-
-.timer-card{
-  width: min(92vw, 360px);
-  background: #020a1b;
-  border-radius: 20px;
-  padding: 20px 18px 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.45);
-  display: grid; gap: 16px; justify-items: center;
-  animation: timer-pop .18s ease-out;
-}
-
-@keyframes timer-pop { from{ transform: scale(.95); opacity: 0 } to{ transform: scale(1); opacity: 1 } }
-
-.timer-title { font-size: 1.4rem; color: #fff; }
-
-/* 원형 링(배경 영향 안 받도록 트랙/프로그레스 분리) */
-.timer-ring{
-  --angle: 360deg;
-  --thickness: 18px;      /* 링 두께 */
-  --track: #3a3a3a;       /* 남은 색 */
-  --progress: #fff;       /* 진행 색 */
-  position: relative;
-  width: clamp(180px, 60vw, 220px);
-  height: clamp(180px, 60vw, 220px);
-  border-radius: 50%;
-  display: grid; place-items: center;
-}
-.timer-ring::before{
-  content:""; position:absolute; inset:0; border-radius:50%;
-  background: var(--track);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-}
-.timer-ring::after{
-  content:""; position:absolute; inset:0; border-radius:50%;
-  background: conic-gradient(var(--progress) var(--angle), transparent 0);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
-}
-.timer-inner{
-  width: 78%; height: 78%;
-  border-radius: 50%;
-  background: #000;
-  border: 6px solid #fff;
-  display: grid; place-items: center;
-}
-.timer-digits{
-  font-variant-numeric: tabular-nums;
-  font-size: clamp(56px, 14vw, 88px);
-  font-weight: 800; color: #fff; line-height: 1;
-}
-.timer-close{
-  border: 0; border-radius: 12px;
-  background: #b4b4b4; color: #0e0e0e;
-  font-weight: 700; padding: 10px 16px;
+/* "휴식 타이머 + 토글" 이 들어있는 첫 행 아래에 구분선 넣기 */
+.swp-timer-popover .swp-timer-popover-row:first-child{
+  border-bottom: 1px solid var(--line, #E6EEF6); /* 선 색 */
+  margin: 0 -12px 17px;   /* 카드 패딩만큼 밖으로 빼서 풀폭 라인 */
+  padding: 0 12px 8px;    /* 다시 안쪽 여백 복원 + 아래 간격 */
 }
