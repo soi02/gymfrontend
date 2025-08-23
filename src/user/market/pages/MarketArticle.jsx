@@ -901,7 +901,7 @@ export default function MarketArticlePageTest() {
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
                                                                 <div className = "col-auto" style = {{fontSize : "1.3125rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                    <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
+                                                                    <Link className = "linkDefault" to = {`/market/user/${userInfo.id}`}>
                                                                         {userInfo.name}
                                                                     </Link>
                                                                 </div>
@@ -1338,7 +1338,7 @@ export default function MarketArticlePageTest() {
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
                                                                 <div className = "col-auto" style = {{fontSize : "0.9375rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                    <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
+                                                                    <Link className = "linkDefault" to = {`/market/user/${userInfo.id}`}>
                                                                         {userInfo.name}
                                                                     </Link>
                                                                 </div>
