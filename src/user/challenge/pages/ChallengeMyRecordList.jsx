@@ -136,42 +136,38 @@ export default function ChallengeMyRecordList() {
               </div>
             )}
 
-            {/* KPI 타일 */}
-            <section className="cmrl-new-grid4">
-              <div className="cmrl-new-tile kpi kpi--progress">
-                <div>
-                  <div className="cmrl-new-tile-head">참여 중</div>
-                  <div className="cmrl-new-tile-val">{stats.inProgress}</div>
-                </div>
-                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.inProgress} alt="" /> */}
-              </div>
+      {/* KPI 타일 */}
+      <section className="cmrl-new-grid4">
+        <div className="cmrl-new-tile kpi kpi--progress">
+          <div>
+            <div className="cmrl-new-tile-head">참여 중</div>
+            <div className="cmrl-new-tile-val">{stats.inProgress}</div>
+          </div>
+        </div>
 
-              <div className="cmrl-new-tile kpi kpi--done">
-                <div>
-                  <div className="cmrl-new-tile-head">참여 완료</div>
-                  <div className="cmrl-new-tile-val">{stats.completed}</div>
-                </div>
-                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.completed} alt="" /> */}
-              </div>
+        <div className="cmrl-new-tile kpi kpi--done">
+          <div>
+            <div className="cmrl-new-tile-head">참여 완료</div>
+            <div className="cmrl-new-tile-val">{stats.completed}</div>
+          </div>
+        </div>
 
-              <div className="cmrl-new-tile kpi kpi--today">
-                <div>
-                  <div className="cmrl-new-tile-head">오늘 인증</div>
-                  <div className="cmrl-new-tile-val">
-                    {stats.todayDone} <span className="cmrl-new-subtxt">/ {stats.inProgress}</span>
-                  </div>
-                </div>
-                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.todayDone} alt="" /> */}
-              </div>
+        <div className="cmrl-new-tile kpi kpi--today">
+          <div>
+            <div className="cmrl-new-tile-head">오늘 인증</div>
+            <div className="cmrl-new-tile-val">
+              {stats.todayDone} <span className="cmrl-new-subtxt">/ {stats.inProgress}</span>
+            </div>
+          </div>
+        </div>
 
-              <div className="cmrl-new-tile kpi kpi--avg">
-                <div>
-                  <div className="cmrl-new-tile-head">평균 진행률</div>
-                  <div className="cmrl-new-tile-val">{stats.avgProgressPct}%</div>
-                </div>
-                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.avgProgressPct} alt="" /> */}
-              </div>
-            </section>
+        {/* <div className="cmrl-new-tile kpi kpi--avg">  <-- 이 부분을 삭제합니다.
+          <div>
+            <div className="cmrl-new-tile-head">평균 진행률</div>
+            <div className="cmrl-new-tile-val">{stats.avgProgressPct}%</div>
+          </div>
+        </div> */}
+      </section>
 
             <div className="cmrl-new-cta">
               <button

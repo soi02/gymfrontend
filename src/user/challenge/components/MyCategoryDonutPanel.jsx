@@ -9,6 +9,58 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 /** 앱 고정 8카테고리 (백엔드 categoryName이 이 라벨로 온다고 가정) */
 const CATS = ['루틴', '회복', '소통', '정보', '습관', '동기부여', '자기관리', '분위기'];
 
+// ---- 날짜 유틸 ----
+function toDateSafe(src) {
+  if (!src) return null;
+  if (src instanceof Date) return src;
+  if (typeof src === 'string') {
+    // "YYYY-MM-DD" 같은 SQL Date 문자열이면 로컬 자정 기준으로 파싱
+    const s = /\d{4}-\d{2}-\d{2}$/.test(src) ? `${src}T00:00:00` : src;
+    const d = new Date(s);
+    return isNaN(d) ? null : d;
+  }
+  const d = new Date(src);
+  return isNaN(d) ? null : d;
+}
+function addDays(d, n) {
+  const t = new Date(d);
+  t.setDate(t.getDate() + n);
+  return t;
+}
+function fmtYmd(d) {
+  return d
+    ? d.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\.\s/g, '.')
+    : null;
+}
+
+/** 챌린지 기간 계산 */
+function periodOf(ch) {
+  const startRaw =
+    ch.personalJoinDate ||
+    ch.challengeStartDate ||
+    ch.challengeRecruitStartDate ||
+    ch.createdAt;
+
+  const start = toDateSafe(startRaw);
+  const total = Number(ch.challengeDurationDays) || 0;
+
+  if (!start || total <= 0) return null;
+
+  const end = addDays(start, total - 1);
+  const nowIdx = Math.min(Math.max(Number(ch.daysAttended) || 0, 0), total); // 0~total
+  const remain = Math.max(total - nowIdx, 0);
+
+  return {
+    start,
+    end,
+    startText: fmtYmd(start),
+    endText: fmtYmd(end),
+    total,
+    dayIndex: nowIdx,   // 진행 n일차(=출석 n일)
+    remain,
+  };
+}
+
 /** 진행률 */
 function ratioOf(ch) {
   const dur = Number(ch.challengeDurationDays) || 0;
@@ -117,8 +169,8 @@ export default function MyCategoryDonutPanel({
 
           {/* 리스트 섹션 헤더: 카드 밖, 위로 분리 */}
           <div className="cmrl-new-list-head">
-            <div className="cmrl-new-chart-title">
-              {active ? `${active} 카테고리 수련(${selectedList.length})` : `모든 수련(${total})`}
+            <div className="cmrl-new-chart-title"> 
+              {active ? `${active} 카테고리 수련 ${selectedList.length} 개` : `모든 수련(${total})`}
             </div>
           </div>
 
@@ -126,7 +178,7 @@ export default function MyCategoryDonutPanel({
           <ul className="cmrl-slice-list">
             {(active ? selectedList : myChallengeList).length === 0 ? (
               <div className="cmrl-new-empty">
-                {active ? '해당 카테고리에 참여 중인 수련이 없소.' : '참여 중인 수련이 없소.'}
+                {active ? '해당 카테고리에 참여 중인 수련이 없소' : '참여 중인 수련이 없소'}
               </div>
             ) : (
               (active ? selectedList : myChallengeList).map((ch) => {
@@ -171,32 +223,66 @@ export default function MyCategoryDonutPanel({
                         </div>
                       </div>
 
-                      {/* 메타 라인: “오늘 오후 7시 · LIVE” 같은 느낌 → 우리 데이터로 매핑 */}
-                      <div className="cmrl-media-meta">
-                        <span className="meta">{(ch.challengeStartDate && new Date(ch.challengeStartDate).toLocaleDateString()) || '날짜 미정'}</span>
-                        <span className="dot">·</span>
-                        <span className="meta-strong">진행률 {Math.round(ratioOf(ch) * 100)}%</span>
-                      </div>
 
-                      {/* 액션 & 보조정보 라인: 라이트 필 버튼 */}
-                      <div className="cmrl-media-actions">
-                        <button
-                          className="cmrl-pill cmrl-pill-primary"
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            // 👉 인증 페이지 라우트에 맞게 경로만 필요시 변경하세요
-                            navigate?.(`/challenge/auth/${ch.challengeId}`);
-                          }}
-                        >
-                          {/* 카메라 아이콘 (인증 느낌) */}
-                          {/* <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                            <path d="M9 4l1.2 2H14a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h.8L9 4zm3 4a5 5 0 100 10 5 5 0 000-10zm0 2.2a2.8 2.8 0 110 5.6 2.8 2.8 0 010-5.6z"
-                              fill="currentColor" />
-                          </svg> */}
-                          인증하기
-                        </button>
-                      </div>
+
+{/* 기간 + 하단(남은일/진행률/버튼) */}
+{(() => {
+  const p = periodOf(ch);
+  const pct = Math.round(ratioOf(ch) * 100);
+
+  if (!p) {
+    return (
+      <>
+        {/* 1) 기간 한 줄(미정일 때) */}
+        <div className="cmrl-media-period">기간 미정</div>
+
+        {/* 2) 하단 한 줄: 진행률 + 버튼 */}
+        <div className="cmrl-media-bottom">
+          <div className="cmrl-media-stats">
+            <span className="stat">진행률 <span className="stat-strong">{pct}%</span></span>
+          </div>
+
+          <button
+            className="cmrl-pill cmrl-pill-primary"
+            type="button"
+            onClick={(e) => { e.stopPropagation(); navigate?.(`/challenge/auth/${ch.challengeId}`); }}
+          >
+            인증하기
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {/* 1) 기간 한 줄 전체 */}
+      <div className="cmrl-media-period">
+        {p.startText} ~ {p.endText}
+      </div>
+
+      {/* 2) 하단 한 줄: 남은일 · 진행률 + 버튼 */}
+      <div className="cmrl-media-bottom">
+        <div className="cmrl-media-stats">
+          <span className="stat"><span className="stat-strong">{p.remain}</span> 일 남음</span>
+          {/* <span className="dot" /> */}
+          <span className="stat">진행률 <span className="stat-strong-none">{pct}%</span></span>
+        </div>
+
+        <button
+          className="cmrl-pill cmrl-pill-primary"
+          type="button"
+          onClick={(e) => { e.stopPropagation(); navigate?.(`/challenge/auth/${ch.challengeId}`); }}
+        >
+          인증하기
+        </button>
+      </div>
+    </>
+  );
+})()}
+
+
+
                     </div>
                   </li>
                 );
