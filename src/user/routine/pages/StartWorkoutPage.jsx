@@ -447,30 +447,43 @@ const [restDuration, setRestDuration] = useState(60);
             </button>
           </div>
         </div>
+{showTimerModal && (
+  <div className="timer-overlay" role="dialog" aria-modal="true" onClick={() => {
+    setShowTimerModal(false);
+    setCountdown(restDuration);
+  }}>
+    <div
+      className="timer-card"
+      onClick={(e) => e.stopPropagation()}
+      aria-label={`휴식 ${countdown}초 남음`}
+    >
+      <div className="timer-title">타이머</div>
 
-        {showTimerModal && (
-          <div className="routine-timer-modal">
-            <div className="routine-timer-modal-content">
-              <h4>휴식</h4>
-              <br />
-              <h1>⏱️{countdown}초</h1>
-              {/* <div className="digital-timer">
-                        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-                      </div> */}
-              <p>휴식 타이머는 <br></br> 우측 상단에서 조정할 수 있소.</p>
-
-              <button
-                className="swo-btn"
-                onClick={() => {
-                  setShowTimerModal(false);
-                  setCountdown(restDuration);
-                }}
-              >
-                닫기
-              </button>
-            </div>
+      {/* 진행각: 남은 비율 × 360 */}
+      <div
+        className="timer-ring"
+        style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
+      >
+        <div className="timer-inner">
+          <div className="timer-digits" aria-live="polite">
+            {String(countdown).padStart(2, "0")}
           </div>
-        )}
+        </div>
+      </div>
+
+      <button
+        className="timer-close"
+        onClick={() => {
+          setShowTimerModal(false);
+          setCountdown(restDuration); // 초기화
+        }}
+      >
+        닫기
+      </button>
+    </div>
+  </div>
+)}
+
 
         {showConfirmModal && (
           <div className="routine-timer-modal">

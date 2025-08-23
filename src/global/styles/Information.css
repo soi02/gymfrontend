@@ -29,14 +29,39 @@
   margin-bottom: 15px;
 }
 
-.section-title {
-  font-size: 1.1rem;
-  color: #4a4a4a;
-  /* '짐마당' 테마 색상으로 변경 */
-  border-left: 4px solid #f9c74f; 
-  padding-left: 5px;
-  margin-bottom: 10px;
+:root { --accent:#f9c74f; --line:#e9ecef; }
+
+/* 섹션 타이틀 — 왼쪽 포인트 + 오른쪽 얇은 라인 */
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:30px 0 12px;
+  color:#111827;
+  font-weight:700;
+  font-size:1.02rem;
+  letter-spacing:.2px;
+  border-left:none;
+  padding-left:0;
+  text-align:left;
 }
+.section-title::before{
+  content:"";
+  width:4px; height:18px;
+  background:#f9c74f; 
+  /* background:#7c1d0d; */
+  border-radius:2px;
+}
+.section-title::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, #f3f4f6, #e9ecef); /* ← 고정값 */
+  border-radius:999px;
+  opacity:.9;
+}
+
+
 
 .section-content {
   font-size: 0.85rem;
@@ -76,41 +101,338 @@
 }
 
 /* 팀원 소개 */
-.team-members-container {
+/* 이름만 예쁘게: 2열 그리드 + 필 */
+.team-mini-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin:8px 0 0;
+  padding:0;
+  list-style:none;
+}
+
+.team-pill{
+  text-align:center;
+  padding:12px 0;
+  border-radius:14px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  color:#374151;
+  font-weight:600;
+  letter-spacing:.2px;
+  box-shadow:0 2px 6px rgba(15,23,42,.06);
+  transition:transform .15s ease, box-shadow .15s ease, background .15s;
+}
+/* .team-pill:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 14px rgba(15,23,42,.12);
+  background:#eef2ff;
+} */
+.team-pill:focus-visible{
+  outline:3px solid #c7d2fe;
+  outline-offset:2px;
+  background:#eef2ff;
+}
+
+/* 화면 더 좁을 때 1열 */
+@media (max-width: 320px){
+  .team-mini-grid{ grid-template-columns: 1fr 1fr; } /* 필요시 1fr 로 한줄 */
+}
+
+
+
+
+
+
+/* Bootstrap .badge 와 충돌 피하려고 이름 변경 */
+.stack-badge-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.stack-badge { height:32px; border-radius:8px; display:block; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+
+/* 이미지 로드 실패 시 텍스트 칩 폴백 */
+.stack-chip {
+  font-size:12px; line-height:1;
+  padding:8px 10px; border:1px solid #e5e7eb;
+  border-radius:999px; background:#f9fafb; color:#374151;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.stack-chip i { font-size:8px; opacity:.6; }
+
+
+.stack-badge-grid {
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+
+
+
+
+.stack-badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 10px;
+  margin-top: 15px;
   gap: 10px;
-  justify-content: center;
+  align-items: center;
 }
 
-.member-card {
-  /* 배경색을 옅은 회색으로 변경 */
-  background-color: #f7f7f7;
-  border: 1px solid #eee;
+.stack-badge-img {
+  display: inline-block;
+  height: 32px;
+  width: auto;
   border-radius: 8px;
-  padding: 10px;
-  flex: 1 1 auto;
-  min-width: 100px;
-  max-width: 140px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+/* ========== HOPAE GRID ========== */
+.hopae-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:12px;
+  margin-top:8px;
+  padding:0;
+  list-style:none;
+}
+
+/* 공통 카드 형태 : 세로 직사각, 살짝 둥근 모서리 */
+.hopae{
+  position:relative;
+  height:140px;
+  border-radius:10px;
+  padding:34px 10px 14px;             /* 상단은 구멍/끈 공간 */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  box-shadow: 0 6px 16px rgba(162, 162, 162, 0.12);
+  border:1px solid rgba(0,0,0,.06);
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.hopae:hover{
+  transform: translateY(-2px) rotate(-.5deg);
+  box-shadow: 0 10px 24px rgba(15,23,42,.18);
+  filter: saturate(1.05);
+}
+
+/* 재질 3종 */
+.hopae--wood{
+  background: linear-gradient(180deg,#f3e7d6 0%, #e6d5bd 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -60px 80px rgba(0,0,0,.06);
+}
+.hopae--ebony{
+  background: linear-gradient(180deg,#2a2a2a 0%, #1e1e1e 100%);
+  border-color: rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), inset 0 -60px 80px rgba(0,0,0,.3),
+              0 6px 16px rgba(0,0,0,.25);
+}
+.hopae--ivory{
+  background: linear-gradient(180deg,#fbfbf6 0%, #eeeada 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), inset 0 -60px 80px rgba(0,0,0,.05);
+}
+
+/* 구멍 */
+.hopae-hole{
+  position:absolute; top:8px; left:50%;
+  width:10px; height:10px; transform:translateX(-50%);
+  background: radial-gradient(circle at 50% 50%, #000 0 35%, transparent 36%);
+  border-radius:50%;
+  opacity:.65;
+}
+
+/* 끈 (간단한 고리) */
+.hopae-string{
+  position:absolute; top:6px; left:50%;
+  width:34px; height:16px; transform:translateX(-50%);
+  border:2px solid #c4a962; border-bottom:none; border-radius:18px 18px 0 0;
+  opacity:.55; pointer-events:none;
+}
+
+/* 이름 새김(음각) 효과 */
+.hopae-name{
+  font-family: 'Gowun Dodum', system-ui, -apple-system, "Noto Serif KR", serif;
+  font-weight:700;
+  color:#2b2b2b;
+  letter-spacing:.5px;
+  z-index:1;
+  /* 음각 느낌 */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.6),
+    0 -1px 0 rgba(0,0,0,.06);
+}
+.hopae--ebony .hopae-name{
+  color:#f3e9d8;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.55),
+    0 -1px 0 rgba(255,255,255,.04);
+}
+
+/* 붉은 인장 */
+.hopae-seal{
+  position:absolute; right:8px; bottom:8px;
+  font-family: "Noto Serif KR", serif;
+  font-size:12px; line-height:1;
+  color:#fff;
+  background:#d84c3d;
+  padding:3px 4px;
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:2px;
+  mix-blend-mode:multiply;
+  opacity:.85;
+}
+
+/* 선택: 세로 글자 모드가 필요하면 아래 클래스만 추가하면 됨 */
+/* .hopae-name { writing-mode: vertical-rl; letter-spacing: 2px; } */
+
+
+/* 기존 걸 교체 */
+.hopae-row{
+  display:flex;
+  gap:12px;
+  justify-content: space-between;  /* 넓이 균등 */
+  overflow-x: hidden;               /* 스크롤러 해제 */
+  scroll-snap-type: none;
+  margin: 0 auto;
+  padding-left: 12px;
+  padding-right: 12px;
+  -webkit-overflow-scrolling: auto;
+  padding-bottom: 0;
+}
+.hopae-row{ box-sizing: border-box; }
+
+
+/* 카드 공통은 기존 .hopae 그대로 사용 */
+/* 한 줄 정렬 시 스냅 */
+.hopae{ scroll-snap-align:start; }
+
+/* 세로 글자 버전 */
+.hopae--vertical{ width:70px; height:140px; }  /* 폭은 좁게 */
+.hopae--vertical .hopae-name{
+  writing-mode: vertical-rl;      /* 세로쓰기 */
+  text-orientation: upright;      /* 글자 회전 X */
+  letter-spacing: 4px;
+  line-height: 1.1;
+  white-space: normal;            /* 줄바꿈 자동 */
+  font-weight: 700;
+}
+
+/* 아이보리 톤 공통(김지은 카드 느낌) */
+.hopae--paper{
+  /* 변수로 색 제어 */
+  --c1:#fbf9f4;         /* 상단 크림 */
+  --c2:#efe7d8;         /* 하단 샌드 */
+  --edge:#eadfca;       /* 외곽선 */
+  --ring:#c9ab6a;       /* 끈 금빛 */
+  --text:#2e2721;       /* 글자 */
+  --seal:#de6a57;       /* 붉은 인장 */
+
+  background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+  border-color: var(--edge);
+
+}
+.hopae--paper .hopae-name{
+  color: var(--text);
+  text-shadow: 0 1px 0 rgba(255,255,255,.65), 0 -1px 0 rgba(0,0,0,.05);
+}
+.hopae--paper .hopae-string{ border-color: var(--ring); }
+.hopae--paper .hopae-seal{ background: var(--seal); }
+
+/* 미세 변주 4종(톤온톤) */
+.hopae--v1{ /* 크림 기본 */
+  --c1:#fbf9f4; --c2:#efe7d8; --edge:#eadfca; --ring:#c9ab6a;
+}
+.hopae--v2{ /* 살짝 워머/피치 */
+  --c1:#fcf6f2; --c2:#f2e6d8; --edge:#eadbc7; --ring:#d4b27a;
+}
+.hopae--v3{ /* 샌디/조금 더 진함 */
+  --c1:#f8f0e2; --c2:#ecdcc7; --edge:#e5d2bc; --ring:#c5a461;
+}
+.hopae--v4{ /* 뉴트럴/쿨톤 살짝 */
+  --c1:#f6f2ea; --c2:#eae1d0; --edge:#e2d7c2; --ring:#bfa35d;
+}
+
+/* 얇은 금속 링 */
+.hopae--ring-thin .hopae-string{
+  position:absolute; top:7px; left:50%; transform:translateX(-50%);
+  width:26px; height:12px;
+  border-top:1.5px solid var(--ring);
+  border-left:1.5px solid var(--ring);
+  border-right:1.5px solid var(--ring);
+  border-bottom:none;
+  border-radius:26px 26px 0 0;
+  opacity:.35;   /* 기존보다 연하게 */
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,.25));
+}
+/* 구멍은 조금만 진하게 */
+.hopae--ring-thin .hopae-hole{ opacity:.85; }
+
+/* 미니멀 인트로 */
+.intro-clean { padding-top: 6px; }
+
+.app-title{
+  margin: 0 0 6px;
+  text-align:center;
+  color:#111827;
+  font-size:1.6rem;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+.app-sub{
+  margin: 0 0 14px;
+  text-align:center;
+  color:#6b7280;
+  font-size:.86rem;
+}
+
+/* 얇은 포인트 라인 */
+.hairline{
+  height:1px;
+  margin: 8px auto 14px;
+  width: 72%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  border-radius:999px;
+}
+
+/* 본문/CTA */
+.app-body{
+  text-align:center;
+  color:#4b5563;
+  font-size:.92rem;
+  line-height:1.7;
+  margin: 8px 4px 0;
+}
+.app-cta{
+  text-align:center;
+  color:#374151;
+  font-weight:600;
+  margin-top:12px;
+}
+/* Soft Callout: 박스 느낌 최소화 */
+.app-callout{
+  position: relative;
+  margin: 10px 2px 0;
+  padding: 12px 14px;
+  border: 1px solid #eef0f2;                 /* 아주 연한 테두리 */
+  border-radius: 12px;
+  background: linear-gradient(180deg,#fbfbfd,#f7f8fa); /* 살짝만 톤 차이 */
+  box-shadow: 0 2px 8px rgba(15,23,42,.04);   /* 낮은 그림자 */
+}
+
+/* “너무 박스!” 방지용: 얇은 포인트 스트라이프 */
+
+
+/* 내부 문단 간격/정렬 미세 조정 */
+.app-callout .app-body{
+  margin: 0;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease-in-out;
+  color:#4b5563;
+  line-height: 1.7;
 }
-
-.member-card h3 {
-  font-size: 1rem;
-  color: #2c3e50;
-  margin-bottom: 5px;
-}
-
-.member-role {
-  font-size: 0.75em;
-  color: #888;
-  margin-bottom: 3px;
-}
-
-.member-tasks {
-  font-size: 0.75em;
-  color: #666;
-  line-height: 1.3;
+.app-callout .app-cta{
+  margin: 10px 0 0;
+  text-align: center;
+  color:#374151;
+  font-weight: 600;
 }

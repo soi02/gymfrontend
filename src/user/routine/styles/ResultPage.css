@@ -304,7 +304,7 @@
 /* 좌하단 통합 박스 */
 .pf-stats-box{
   position:absolute; left:16px; bottom:16px;
-  width:min(62%, 130px);
+  width:min(62%, 150px);
   font-size: 0.9rem;
   padding:12px 14px;
   border-radius:16px;

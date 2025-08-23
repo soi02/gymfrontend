@@ -1,0 +1,21 @@
+/* src/styles/DailyCompletionLineChart.css */
+
+.daily-line-chart-card{
+  border-radius: 12px;
+  border: 1px solid #e9edf2;
+  box-shadow: 0 1px 4px rgba(16,24,40,.06);
+  padding: 12px 14px;
+  height: 300px;
+  background: #fff;
+}
+
+.daily-line-chart-wrapper{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+/* 작은 화면에서 높이 살짝 낮춤 */
+@media (max-width: 375px){
+  .daily-line-chart-card{ height: 260px; padding: 10px 12px; }
+}

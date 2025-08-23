@@ -647,3 +647,227 @@ input:checked + .routine-slider::before {
 .start-workout-container{
   padding-bottom: calc(14rem + env(safe-area-inset-bottom));
 }
+
+/* 전체 검은 오버레이 */
+.timer-overlay{
+  position: fixed; inset: 0;
+  background: #000;
+  display: grid; place-items: center;
+  z-index: 3000;
+  padding: 16px;
+}
+
+/* 카드 래퍼 */
+.timer-card{
+  display: grid; gap: 20px;
+  justify-items: center;
+}
+
+/* 원형 진행 링 (conic-gradient) */
+.timer-ring{
+  --angle: 360deg;                 /* JS에서 덮어씀 */
+  width: min(75vw, 260px);
+  height: min(75vw, 260px);
+  border-radius: 50%;
+  background:
+    conic-gradient(#fff var(--angle), rgba(255,255,255,0.15) 0);
+  display: grid; place-items: center;
+}
+
+/* 안쪽(검은 원 + 흰 테두리) */
+.timer-inner{
+  width: 78%;
+  height: 78%;
+  border-radius: 50%;
+  background: #000;
+  border: 6px solid #fff;
+  display: grid; place-items: center;
+}
+
+/* 숫자 */
+.timer-digits{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(64px, 18vw, 108px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+/* 보조 텍스트 */
+.timer-sub{
+  margin-top: 6px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: clamp(12px, 3.5vw, 14px);
+}
+
+/* 닫기 버튼 */
+.timer-close{
+  border: 0; border-radius: 12px;
+  background: #fff; color: #000;
+  font-weight: 700; padding: 10px 16px;
+}
+/* 전체 오버레이: 반투명 + 중앙정렬 */
+.timer-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6);
+  display: grid; place-items: center;
+  z-index: 3000;
+  padding: 16px;                     /* 가장자리 여백 */
+}
+
+/* 카드 래퍼: 모달 느낌 */
+.timer-card{
+  display: grid; gap: 16px;
+  justify-items: center;
+}
+
+.timer-card.modal,                    /* 혹시 클래스 분리했다면 둘 다 커버 */
+.timer-card{
+  width: min(92vw, 360px);            /* 📏 카드 너비 */
+  background: #020a1b;                   /* 어두운 카드 */
+  border-radius: 20px;
+  padding: 20px 18px 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+/* 링 사이즈: 카드 안에 알맞게 */
+.timer-card .timer-ring{
+  --angle: 360deg;
+  width: clamp(180px, 60vw, 220px);   /* 📏 링 최대/최소 */
+  height: clamp(180px, 60vw, 220px);
+  border-radius: 50%;
+  background: conic-gradient(#fff var(--angle), rgba(255,255,255,0.16) 0);
+  display: grid; place-items: center;
+}
+
+/* 안쪽 원 + 테두리 두께 */
+.timer-inner{
+  width: 78%;
+  height: 78%;
+  border-radius: 50%;
+  background: #000000;
+  border: 6px solid #fff;            /* 테두리 두께 */
+  display: grid; place-items: center;
+}
+
+/* 숫자/보조텍스트 */
+.timer-digits{
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(56px, 14vw, 88px);
+  font-weight: 800; color: #fff; line-height: 1;
+}
+.timer-sub{ margin-top: 6px; color: #bbb; font-weight: 700; letter-spacing: .08em; }
+
+/* 닫기 버튼도 카드 안쪽에 */
+.timer-close{
+  border: 0; border-radius: 12px;
+  background: #b4b4b4; color: #0e0e0e;
+  font-weight: 700; padding: 10px 16px;
+}
+
+/* 살짝 팝 애니메이션 (선택) */
+@keyframes timer-pop { from{ transform: scale(.95); opacity: 0 } to{ transform: scale(1); opacity: 1 } }
+.timer-card{ animation: timer-pop .18s ease-out; }
+.timer-ring{
+  --angle: 360deg;
+  --thickness: 0px;   /* 링 두께 */
+  --track: #3a3a3a;    /* 남은(트랙) 색 */
+  --progress: #fff;    /* 진행 색 */
+  position: relative;
+  width: clamp(180px, 60vw, 220px);
+  height: clamp(180px, 60vw, 220px);
+  border-radius: 50%;
+  display: grid; place-items: center;
+}
+
+/* 트랙 레이어 (전체 원) */
+.timer-ring::before{
+  content:"";
+  position:absolute; inset:0; border-radius:50%;
+  background: var(--track);
+  /* 도넛 마스크 */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+}
+
+/* 진행 레이어 (각도만 채움) */
+.timer-ring::after{
+  content:"";
+  position:absolute; inset:0; border-radius:50%;
+  background: conic-gradient(var(--progress) var(--angle), transparent 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+}
+
+.timer-title {
+  font-size: 1.4rem;
+  color: rgb(255, 255, 255);
+}
+/* === 공통 타이머 모달 === */
+.timer-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6);
+  display: grid; place-items: center;
+  z-index: 3000;
+  padding: 16px;
+}
+
+.timer-card{
+  width: min(92vw, 360px);
+  background: #020a1b;
+  border-radius: 20px;
+  padding: 20px 18px 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  display: grid; gap: 16px; justify-items: center;
+  animation: timer-pop .18s ease-out;
+}
+
+@keyframes timer-pop { from{ transform: scale(.95); opacity: 0 } to{ transform: scale(1); opacity: 1 } }
+
+.timer-title { font-size: 1.4rem; color: #fff; }
+
+/* 원형 링(배경 영향 안 받도록 트랙/프로그레스 분리) */
+.timer-ring{
+  --angle: 360deg;
+  --thickness: 18px;      /* 링 두께 */
+  --track: #3a3a3a;       /* 남은 색 */
+  --progress: #fff;       /* 진행 색 */
+  position: relative;
+  width: clamp(180px, 60vw, 220px);
+  height: clamp(180px, 60vw, 220px);
+  border-radius: 50%;
+  display: grid; place-items: center;
+}
+.timer-ring::before{
+  content:""; position:absolute; inset:0; border-radius:50%;
+  background: var(--track);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+}
+.timer-ring::after{
+  content:""; position:absolute; inset:0; border-radius:50%;
+  background: conic-gradient(var(--progress) var(--angle), transparent 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thickness)), #000 0);
+}
+.timer-inner{
+  width: 78%; height: 78%;
+  border-radius: 50%;
+  background: #000;
+  border: 6px solid #fff;
+  display: grid; place-items: center;
+}
+.timer-digits{
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(56px, 14vw, 88px);
+  font-weight: 800; color: #fff; line-height: 1;
+}
+.timer-close{
+  border: 0; border-radius: 12px;
+  background: #b4b4b4; color: #0e0e0e;
+  font-weight: 700; padding: 10px 16px;
+}

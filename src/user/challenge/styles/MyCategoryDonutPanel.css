@@ -1,0 +1,283 @@
+/* ===========================
+   Tokens
+   =========================== */
+:root{
+  --ink-900:#0f141b;
+  --ink-700:#1f2937;
+  --ink-600:#34495e;
+  --ink-500:#4b5563;
+  --ink-400:#8a95a1;
+  --line:#e9edf2;
+
+  --radius:12px;
+  --elev-1:0 1px 4px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+  --elev-1h:0 2px 10px rgba(16,24,40,.10), 0 10px 28px rgba(16,24,40,.10);
+}
+
+/* ===========================
+   Section title (리스트 섹션 헤더)
+   =========================== */
+.cmrl-new-list-head{ margin:20px 6px 10px; }
+.cmrl-new-chart-title{
+  margin:0; padding:0; line-height:1.1;
+  font-size:15px; font-weight:bold; color:#333;
+  letter-spacing:-0.2px;
+}
+
+/* ===========================
+   리스트(미디어 카드 레이아웃)
+   =========================== */
+.cmrl-slice-list{
+  list-style:none; margin:0; padding:0 2px 12px;
+  display:flex; flex-direction:column; gap:10px;
+}
+
+/* (구) slice 레이아웃을 쓰는 경우 여전히 동작하도록 유지 */
+.cmrl-slice{
+  display:grid; grid-template-columns:92px 1fr; gap:12px; align-items:stretch;
+  width:100%; cursor:pointer;
+}
+
+/* 왼쪽 스탬프 (구버전 호환) */
+.cmrl-slice-stamp{
+  width:92px; height:92px; border-radius:var(--radius);
+  background:#0e0e10; display:flex; align-items:center; justify-content:center;
+  position:relative; box-shadow:0 2px 10px rgba(0,0,0,.22);
+}
+.cmrl-slice-thumb{ width:56px; height:56px; border-radius:50%; background-size:cover; background-position:center;
+  filter:saturate(1.05) contrast(1.02); box-shadow:0 6px 14px rgba(0,0,0,.28); }
+.cmrl-slice-date{ position:absolute; left:10px; bottom:10px; display:flex; flex-direction:column; gap:2px; line-height:1; }
+.cmrl-slice-date .year{ font-size:11px; font-weight:800; color:rgba(255,255,255,.88); }
+.cmrl-slice-date .day{  font-size:11px; font-weight:700; color:rgba(255,255,255,.72); }
+
+/* 오른쪽 카드 (구버전 호환) */
+.cmrl-slice-card{
+  background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  padding:12px 14px; display:flex; flex-direction:column; gap:8px; min-height:92px;
+  transition:box-shadow .18s ease, transform .18s ease;
+}
+.cmrl-slice-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.cmrl-slice-title{ font-size:15px; font-weight:800; color:#1f2937; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cmrl-slice-chevron{ flex-shrink:0; color:#c7ced9; display:flex; align-items:center; justify-content:center; }
+.cmrl-slice-meta{ display:flex; align-items:center; gap:6px; font-size:12.5px; }
+.cmrl-slice-meta .muted{ color:#8a95a1; } .cmrl-slice-meta .sep{ color:#c6cbd2; }
+.cmrl-slice-meta .strong{ color:#374151; font-weight:800; }
+.cmrl-slice-bar{ height:6px; border-radius:var(--radius); background:#eef2f6; overflow:hidden; border:1px solid rgba(0,0,0,.04); }
+.cmrl-slice-bar>div{ height:100%; width:0; border-radius:var(--radius); transition:width .35s ease; }
+
+.cmrl-slice:hover .cmrl-slice-card{ box-shadow:0 6px 16px rgba(0,0,0,.12); transform:translateY(-1px); }
+.cmrl-slice:active .cmrl-slice-card{ transform:translateY(1px); }
+.cmrl-slice:focus-within .cmrl-slice-card{ outline:2px solid rgba(73,124,255,.25); outline-offset:2px; }
+
+/* 카드 자체가 컨테이너 */
+.cmrl-media{
+  display: grid;
+  grid-template-columns: 108px 1fr;   /* 왼쪽 이미지 고정폭 */
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 10px;                      /* 카드 안쪽 여백 */
+  background: #fff;                   /* 한 장의 카드 배경 */
+  border: 1px solid #e9edf2;          /* 라이트 보더 */
+  border-radius: 12px;                /* 통일된 라운드 */
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  box-shadow: none;                   /* 그림자 제거 */
+}
+
+/* 썸네일 */
+.cmrl-media-thumb{
+  width: 95px;
+  height: 95px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f6f7f9;               /* 로딩/빈칸용 배경 */
+  flex-shrink: 0;
+  box-shadow: none;                   /* 그림자 제거 */
+}
+.cmrl-media-thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: translateZ(0);
+}
+
+/* 우측 내용: 투명 + 보더/그림자/패딩 제거 */
+.cmrl-media-card{
+  position: static;
+  padding: 0;
+  min-height: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transition: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* hover 효과 제거(상위 카드 하나만 있으므로) */
+.cmrl-media:hover .cmrl-media-card{
+  transform: none;
+  box-shadow: none;
+}
+
+/* 제목/메타/버튼 */
+.cmrl-media-head{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.cmrl-media-title{
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: -0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cmrl-media-chevron{
+  color: #c6cfd9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmrl-media-meta{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 0.5rem;
+}
+.cmrl-media-meta .meta      { color:#8b93a1; }
+.cmrl-media-meta .dot       { color:#cbd3dd; }
+.cmrl-media-meta .meta-strong{ color:#8b93a1; }
+
+/* 인증하기 pill – 단색, 그림자 없음 (이미 요청 반영) */
+.cmrl-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(0,0,0,.06);
+  background: #f5f7fb;
+  color: #263442;
+  font-size: 12px;
+  font-weight: 700;
+}
+.cmrl-pill:active{ transform: translateY(1px); }
+.cmrl-pill-primary{
+  background: #f2f2f2;
+  color: #333;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* SE 등 작은 화면 최적화 */
+@media (max-width: 375px){
+  .cmrl-media{
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+  .cmrl-media-thumb{ width:96px; height:96px; border-radius:12px; }
+  .cmrl-media-title{ font-size: 15px; }
+}
+
+/* ===========================
+   카테고리 도넛 + 레전드
+   =========================== */
+.cat-mini-wrap{
+  display:grid; grid-template-columns:120px 1fr; gap:12px; align-items:center;
+}
+.cat-mini-donut{ width:120px; height:120px; }
+
+.cat-mini-legend{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  grid-auto-rows:min-content; row-gap:8px; column-gap:10px;
+}
+
+/* 새 레전드: 각 아이템이 CSS 변수 --c 로 색을 받음 */
+.cat-legend-item{
+  --c:#6E78FF;  /* fallback */
+  display:grid; grid-template-columns:12px 1fr auto; align-items:center; gap:8px;
+  padding:8px 10px; border-radius:var(--radius);
+  background:#fff; border:1px solid #eef1f5; box-shadow:0 1px 4px rgba(0,0,0,.04);
+  text-align:left;
+}
+.cat-legend-item .legend-dot{
+  width:10px; height:10px; border-radius:50%; background:var(--c);
+  /* box-shadow:0 0 0 2px #fff inset; */
+}
+.cat-legend-item .legend-label{ font-size:12px; color:#333; font-weight:bold; }
+.cat-legend-item .legend-pct{ margin-left:auto; font-size:11px; color:#8a95a1; }
+
+.cat-legend-item.on{
+  /* 선택 시 살짝 물든 배경 + 윤곽 */
+  background: color-mix(in oklab, var(--c) 9%, #fff);
+  box-shadow:0 0 0 2px color-mix(in oklab, var(--c) 28%, transparent);
+}
+
+/* 반응형 */
+@media (max-width:375px){
+  .cat-mini-wrap{ grid-template-columns:110px 1fr; }
+  .cat-mini-donut{ width:110px; height:110px; }
+}
+
+
+
+
+
+
+/* 기간: 한 줄 전체 */
+.cmrl-media-period{
+  font-size: 12px;
+  line-height: 1.25;
+  color: #6b7280;        /* muted */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* 하단 한 줄: 좌측 지표 + 우측 버튼 */
+.cmrl-media-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* 지표 그룹 */
+.cmrl-media-stats{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  line-height: 1.25;
+  color: #6b7280;
+}
+.cmrl-media-stats .dot{ color:#6b7280; }
+.cmrl-media-stats .stat-strong{ color:#333; font-weight: bold; }
+.cmrl-media-stats .stat-strong-none{ color:#333;}
+
+/* 버튼은 한 줄 유지 */
+.cmrl-media-bottom .cmrl-pill{
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* 작은 화면 보정 */
+@media (max-width: 375px){
+  .cmrl-media-period{ font-size: 11.5px; }
+  .cmrl-media-stats{ font-size: 11.5px; gap: 6px; }
+  .cmrl-media-bottom{ gap: 10px; }
+}
