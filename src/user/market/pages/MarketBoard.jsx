@@ -122,10 +122,10 @@ function MarketArticleElement({marketArticleElem1}) {
                                                                 <div className = "col-auto" 
                                                                 style = {{
                                                                 // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
-                                                                    fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
+                                                                    fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6875rem", marginRight : "0.3125rem"}}
                                                                     >
                                                                     {/* <MarketAnonymousUserMiniProfileImage /> */}
-                                                                    <i className = "ri-user-3-fill"></i>
+                                                                    <i className="bi bi-person-circle"></i>
                                                                 </div>
                                                                 <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
                                                                     {userInfo.nickname}
