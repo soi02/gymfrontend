@@ -4,10 +4,8 @@
   /* 최신 뷰포트 단위 먼저 */
   height: 100dvh;          /* 크롬/안드 신형 */
   height: 100svh;          /* iOS 16+ */
-  /* 폴백들 */
   height: 100vh;
   height: -webkit-fill-available;
-
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -235,3 +233,25 @@
 
 /* 카드/레이아웃이 소수점 픽셀로 떨어지며 흐려지는 것 방지(경계 그리기 최적화) */
 .diary-section, .flip-inner, .pf-card-media { contain: paint; }
+/* ---- 터치 기기에서는 3D flip -> 표시/숨김 전환 ---- */
+@media (hover: none) and (pointer: coarse) {
+  .flip { perspective: none; -webkit-perspective: none; }
+  .flip-inner { transform: none !important; -webkit-transform: none !important; }
+
+  .flip-front, .flip-back {
+    transform: none !important; -webkit-transform: none !important;
+    backface-visibility: visible !important; -webkit-backface-visibility: visible !important;
+  }
+
+  /* 기본은 앞면만 보이게 */
+  .flip-back { display: none; }
+  /* is-flipped가 붙으면 뒷면만 보이게 */
+  .flip-inner.is-flipped .flip-front { display: none; }
+  .flip-inner.is-flipped .flip-back  { display: block; }
+
+  /* 부드럽게 전환하고 싶으면 opacity 사용 */
+  .flip-front, .flip-back { transition: opacity .25s ease; }
+  .flip-back { opacity: 0; }
+  .flip-inner.is-flipped .flip-front { opacity: 0; }
+  .flip-inner.is-flipped .flip-back  { opacity: 1; }
+}

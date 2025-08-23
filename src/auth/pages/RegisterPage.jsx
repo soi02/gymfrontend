@@ -51,6 +51,18 @@ export default function RegisterPage() {
         }
     }, []);
 
+    const formatPhoneNumber = (value) => {
+        if (!value) return value;
+        const phoneNumber = value.replace(/[^\d]/g, '');
+        if (phoneNumber.length <= 3) {
+            return phoneNumber;
+        } else if (phoneNumber.length <= 7) {
+            return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
+        } else {
+            return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7, 11)}`;
+        }
+    };
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === "file") {
@@ -58,6 +70,14 @@ export default function RegisterPage() {
                 ...formData,
                 [name]: e.target.files[0]
             });
+        } else if (name === "phone") {
+            const formattedNumber = formatPhoneNumber(value);
+            if (formattedNumber.replace(/[^\d]/g, '').length <= 11) {
+                setFormData({
+                    ...formData,
+                    [name]: formattedNumber
+                });
+            }
         } else {
             setFormData({
                 ...formData,
@@ -68,11 +88,27 @@ export default function RegisterPage() {
     
     const handleAllAgree = (e) => {
         const checked = e.target.checked;
-        setFormData({
-            ...formData,
-            agreeTerms: checked,
-            agreePrivacy: checked,
-        });
+        if (!checked && (formData.agreeTerms || formData.agreePrivacy)) {
+            setFormData({
+                ...formData,
+                agreeTerms: false,
+                agreePrivacy: false,
+            });
+        } else if (checked) {
+            setFormData({
+                ...formData,
+                agreeTerms: true,
+                agreePrivacy: true,
+            });
+        }
+    };
+
+    // 각각의 약관 동의 처리
+    const handleSingleAgree = (name, checked) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
+        }));
     };
 
     const handleNext = () => {
@@ -170,7 +206,7 @@ export default function RegisterPage() {
                                         <input
                                             type="checkbox"
                                             checked={formData.agreeTerms}
-                                            onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
+                                            onChange={(e) => handleSingleAgree('agreeTerms', e.target.checked)}
                                         />
                                         <span>이용약관 동의 (필수)</span>
                                     </label>
@@ -194,7 +230,7 @@ export default function RegisterPage() {
                                         <input
                                             type="checkbox"
                                             checked={formData.agreePrivacy}
-                                            onChange={(e) => setFormData({ ...formData, agreePrivacy: e.target.checked })}
+                                            onChange={(e) => handleSingleAgree('agreePrivacy', e.target.checked)}
                                         />
                                         <span>개인정보 수집 및 이용 동의 (필수)</span>
                                     </label>
@@ -346,17 +382,58 @@ export default function RegisterPage() {
                     <div className="step-content">
                         <h4 className="step-title">📏 신체 정보</h4>
                         <p className="step-subtitle">정확한 파트너 매칭을 위해 필요합니다.</p>
-                        <div className="form-group">
-                            <label className="form-label">키(cm)</label>
-                            <input name="height" type="number" value={formData.height} onChange={handleChange} placeholder="키를 입력해주세요" />
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">몸무게(kg)</label>
-                            <input name="weight" type="number" value={formData.weight} onChange={handleChange} placeholder="몸무게를 입력해주세요" />
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">골격근량(kg)</label>
-                            <input name="muscleMass" type="number" value={formData.muscleMass} onChange={handleChange} placeholder="골격근량을 입력해주세요" />
+                        <div className="body-info-group">
+                            <div className="body-info-field">
+                                <div className="body-info-label">키</div>
+                                <input
+                                    type="range"
+                                    className="body-info-slider"
+                                    name="height"
+                                    min="140"
+                                    max="200"
+                                    value={formData.height || 170}
+                                    onChange={handleChange}
+                                    style={{
+                                        background: `linear-gradient(to right, #7c1d0d ${((formData.height || 170) - 140) / (200 - 140) * 100}%, #e0e0e0 ${((formData.height || 170) - 140) / (200 - 140) * 100}%)`
+                                    }}
+                                />
+                                <div className="body-info-value">{formData.height || 170}<span className="unit">cm</span></div>
+                            </div>
+                            
+                            <div className="body-info-field">
+                                <div className="body-info-label">몸무게</div>
+                                <input
+                                    type="range"
+                                    className="body-info-slider"
+                                    name="weight"
+                                    min="40"
+                                    max="150"
+                                    value={formData.weight || 60}
+                                    onChange={handleChange}
+                                    style={{
+                                        background: `linear-gradient(to right, #7c1d0d ${((formData.weight || 60) - 40) / (150 - 40) * 100}%, #e0e0e0 ${((formData.weight || 60) - 40) / (150 - 40) * 100}%)`
+                                    }}
+                                />
+                                <div className="body-info-value">{formData.weight || 60}<span className="unit">kg</span></div>
+                            </div>
+                            
+                            <div className="body-info-field">
+                                <div className="body-info-label">골격근량</div>
+                                <input
+                                    type="range"
+                                    className="body-info-slider"
+                                    name="muscleMass"
+                                    min="20"
+                                    max="80"
+                                    value={formData.muscleMass || 30}
+                                    onChange={handleChange}
+                                    style={{
+                                        background: `linear-gradient(to right, #7c1d0d ${((formData.muscleMass || 30) - 20) / (80 - 20) * 100}%, #e0e0e0 ${((formData.muscleMass || 30) - 20) / (80 - 20) * 100}%)`
+                                    }}
+                                />
+                                <div className="body-info-value">{formData.muscleMass || 30}<span className="unit">kg</span></div>
+                                <div className="body-info-label">골격근량</div>
+                            </div>
                         </div>
                     </div>
                 )}

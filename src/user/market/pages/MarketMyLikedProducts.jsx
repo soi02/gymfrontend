@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 
 export default function MarketMyLikedProductsPage() {
     
     const checkUserStatus = 2;
     const defaultUserStatus = 1004;
+    
+    const navigate = useNavigate();
     
     const [countOfInterestedLogsOnUser, setCountOfInterestedLogsOnUser] = useState(-1);
     
@@ -753,6 +755,23 @@ export default function MarketMyLikedProductsPage() {
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "0.6125rem"}}>
                                                             <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있소.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col" style = {{marginTop : "0.8125rem"}}>
+                                            <div className = "row">
+                                                <div className = "col">
+                                                    
+                                                </div>
+                                                <div className = "col d-flex justify-content-end">
+                                                    <div className = "row">
+                                                        <div className = "col-auto">
+                                                            <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)}
+                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>이전으로</button>
                                                         </div>
                                                     </div>
                                                 </div>

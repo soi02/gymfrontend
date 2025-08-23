@@ -2,7 +2,9 @@
 .register-container {
     margin: 0 auto;
     padding: 24px;
-    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 600px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -78,13 +80,15 @@
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-right: 8px;
     padding-bottom: 24px;
+    width: 100%;
 }
 .step-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
 }
 .step-title {
     font-size: 20px;
@@ -165,6 +169,8 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 .form-label {
     font-size: 14px;
@@ -174,9 +180,11 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    width: 100%;
 }
 .input-with-button input {
     flex-grow: 1;
+    width: auto;
 }
 
 /* 아이디, 비밀번호 입력칸 (네모 박스) */
@@ -202,11 +210,8 @@ input[name="confirmPassword"]:focus {
 input[name="name"],
 input[name="birth"],
 input[name="phone"],
-input[name="email"], /* 이메일 관련 ིྀ추가 */
-input[name="address"],
-input[name="height"],
-input[name="weight"],
-input[name="muscleMass"] {
+input[name="email"],
+input[name="address"] {
     padding: 12px 0;
     border: none;
     border-bottom: 2px solid #e0e0e0;
@@ -216,16 +221,99 @@ input[name="muscleMass"] {
     background-color: transparent;
     transition: border-bottom-color 0.3s ease;
 }
+
 input[name="name"]:focus,
 input[name="birth"]:focus,
 input[name="phone"]:focus,
-input[name="email"]:focus, /* 이메일 관련 ིྀ추가 */
-input[name="address"]:focus,
-input[name="height"]:focus,
-input[name="weight"]:focus,
-input[name="muscleMass"]:focus {
+input[name="email"]:focus,
+input[name="address"]:focus {
     border-bottom-color: #7c1d0d;
     outline: none;
+}
+
+/* 신체 정보 입력 스타일 */
+.body-info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.body-info-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+}
+
+.body-info-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    transition: all 0.3s;
+    margin: 16px 0;
+    cursor: pointer;
+}
+
+.body-info-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #7c1d0d;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(124, 29, 13, 0.3);
+    transition: all 0.3s;
+    margin-top: -7px; /* 슬라이더 바의 중앙에 맞추기 위한 조정 */
+}
+
+.body-info-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #7c1d0d;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(124, 29, 13, 0.3);
+    transition: all 0.3s;
+}
+
+.body-info-slider::-webkit-slider-thumb:hover,
+.body-info-slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    background: #7c1d0d;
+    border-color: #7c1d0d;
+}
+
+.body-info-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #7c1d0d;
+    text-align: center;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+
+.body-info-value .unit {
+    font-size: 16px;
+    font-weight: 500;
+    color: #999;
+    margin-left: 4px;
+}
+
+.body-info-label {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-top: 4px;
 }
 
 input::placeholder {
