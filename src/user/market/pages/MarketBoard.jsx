@@ -6,6 +6,9 @@ import MarketSearchDivision from "../commons/test/example/MarketSearchDivision";
 import { Link, useNavigate } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 import MarketAnonymousUserMiniProfileImage from "../components/test/example/MarketAnonymousUserMiniProfileImage";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 function MarketArticleElement({marketArticleElem1}) {
     
@@ -122,13 +125,13 @@ function MarketArticleElement({marketArticleElem1}) {
                                                                 <div className = "col-auto" 
                                                                 style = {{
                                                                 // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
-                                                                    fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
+                                                                    fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6875rem", marginRight : "0.3125rem"}}
                                                                     >
                                                                     {/* <MarketAnonymousUserMiniProfileImage /> */}
-                                                                    <i className = "ri-user-3-fill"></i>
+                                                                    <i className="bi bi-person-circle"></i>
                                                                 </div>
                                                                 <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
-                                                                    {userInfo.nickname}
+                                                                    {userInfo.name}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -156,6 +159,83 @@ function MarketArticleElement({marketArticleElem1}) {
 }
 
 export default function MarketBoardPage() {
+    
+    const dispatch = useDispatch();
+    
+    //
+    
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
+      
+        const checkAuth = async () => {
+            
+            console.log("checkAuth is running");
+            
+            const tokenOnCheckAuth =  localStorage.getItem("token");
+            
+            if (!tokenOnCheckAuth) {
+                
+                return;
+                
+            }
+            
+            try {
+                
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
+                
+                if (resOnCheckAuth.data.success) {
+                    
+                    dispatch(loginAction(resOnCheckAuth.data))
+                    
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    
+                }
+                
+            } catch (error) {
+                
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
+                
+            }
+            
+        }
+        
+        checkAuth();
+        
+    }, [])
+    
+    // ▲ 토큰 관련 문제 (나중에 메인 서버에서 받아서 처리할 것)
     
     const navigate = useNavigate();
     
@@ -194,7 +274,7 @@ export default function MarketBoardPage() {
             article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
-            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }
     ])

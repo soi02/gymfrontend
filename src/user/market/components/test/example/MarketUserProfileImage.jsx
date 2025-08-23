@@ -1,3 +1,5 @@
+import default_profile_img from '../../../../../assets/img/default_profile_img.svg';
+
 export default function MarketUserProfileImage() {
     
     return ( 
@@ -8,7 +10,7 @@ export default function MarketUserProfileImage() {
                 
                 <div className = "row">
                     <div className = "col">
-                        <img src = "/src/assets/img/market/test/example/ca_2nd_project_user_profile_division.png" 
+                        <img src = {default_profile_img}
                         style = {{
                             position: "absolute",
                             top: "50%",

@@ -2,10 +2,89 @@ import { useEffect, useState } from "react";
 import MarketProductMainImage from "../components/test/example/MarketProductMainImage";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 
 export default function MarketMyLikedProductsPage() {
     
-    const checkUserStatus = 2;
+    const dispatch = useDispatch();
+    
+    //
+    
+    const constToken = localStorage.getItem("token");
+    
+    if (constToken) {
+        
+        try {
+            
+            const decodedToken = jwtDecode(constToken);
+            
+            console.log("decodedToken : ", decodedToken);
+            
+        } catch (error) {
+            console.error("Token Error :", error)
+        }
+        
+    } else {
+        
+        console.log("No Token");
+        
+    }
+    
+    //
+    
+    const userId = useSelector(state => state.auth.id);
+    
+    console.log(userId);
+    
+    //
+    
+    useEffect (() => {
+      
+        const checkAuth = async () => {
+            
+            console.log("checkAuth is running");
+            
+            const tokenOnCheckAuth =  localStorage.getItem("token");
+            
+            if (!tokenOnCheckAuth) {
+                
+                return;
+                
+            }
+            
+            try {
+                
+                const resOnCheckAuth = await axios.post(
+                    "http://localhost:8080/api/user/verify-token",
+                    {},
+                    { headers: { Authorization: `Bearer ${tokenOnCheckAuth}` } }
+                );
+                
+                if (resOnCheckAuth.data.success) {
+                    
+                    dispatch(loginAction(resOnCheckAuth.data))
+                    
+                    console.log("resOnCheckAuth.data : ", resOnCheckAuth.data);
+                    
+                }
+                
+            } catch (error) {
+                
+                console.error("checkAuthError", error);
+                localStorage.removeItem("token");
+                
+            }
+            
+        }
+        
+        checkAuth();
+        
+    }, [])
+    
+    // ▲ 토큰 관련 문제 (나중에 메인 서버에서 받아서 처리할 것)
+    
+    const checkUserStatus = userId;
     const defaultUserStatus = 1004;
     
     const navigate = useNavigate();
@@ -53,7 +132,7 @@ export default function MarketMyLikedProductsPage() {
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
             viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
-            userInfo : {id : 0, userId : 0, nickname : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
+            userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
             interestedLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
         }
@@ -279,7 +358,8 @@ export default function MarketMyLikedProductsPage() {
             <>
                 
                 <div className = "row">
-                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "0.6125rem"}}>
+                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} 
+                    style = {{padding : "0.6125rem"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
                         <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
                     </div>
@@ -296,9 +376,12 @@ export default function MarketMyLikedProductsPage() {
             <>
                 
                 <div className = "row">
-                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "0.6125rem"}}>
+                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} 
+                    style = {{padding : "0.6125rem"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
-                        <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
+                        <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766", 
+                        textShadow : "0 0 0 6px rgba(255,255,255,0.4), 0 0 0 9px rgba(255,255,255,0.2), 0 0 0 12px rgba(255,255,255,0.1)"
+                        }}></i>
                     </div>
                 </div>
                 
@@ -486,7 +569,7 @@ export default function MarketMyLikedProductsPage() {
                 
             }
             
-        }
+        } // unused code
         
         function funcSellEnded(sellEnded) {
             
@@ -526,7 +609,7 @@ export default function MarketMyLikedProductsPage() {
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "0.4375rem", marginRight : "0.4375rem"}}>
                                             <div className = "row h-100">
-                                                <div className = "col-auto" style = {{paddingLeft : "0.6125rem", paddingRight : "0.6125rem", display : "flex", alignItems : "center"}}>
+                                                {/* <div className = "col-auto" style = {{paddingLeft : "0.6125rem", paddingRight : "0.6125rem", display : "flex", alignItems : "center"}}> */}
                                                     
                                                     
                                                     {/* {
@@ -581,12 +664,12 @@ export default function MarketMyLikedProductsPage() {
                                                     <constDivisionToDeleteMarketProductInterestedLog /> :
                                                     <constDivisionToInsertMarketProductInterestedLog />} */}
                                                     
-                                                </div>
+                                                {/* </div> */}
                                                 <div className = "col">
                                                     <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                         <div className = "row">
                                                             <div className = "col-auto" style = {{width : "5rem", height : "5rem", overflow : "hidden", position : "relative",
-                                                            paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem", display : "flex", alignItems : "center"}}>
+                                                            paddingLeft : "0rem", paddingRight : "0rem", borderRadius : "0.5rem", marginRight : "0.6125rem", display : "flex", alignItems : "center"}}>
                                                                 <div className = "row h-100">
                                                                     <div className = "col" style = {{width : "100%", height : "100%"}}>
                                                                         <div className = "row gx-0" style = {{top : "0px", left : "0px", width : "100%", height : "100%", position : "absolute", zIndex: "5"}}>
@@ -604,7 +687,10 @@ export default function MarketMyLikedProductsPage() {
                                                                                             clickPossibleWhenLikeChecked(event, {marketUserId : checkUserStatus, specificArticleId : article.id})}} 
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
                                                                                         fontSize : "2rem", color : "#c0392b", pointerEvents : "none"}}>
-                                                                                            <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
+                                                                                            <i className="ri-heart-3-fill" style = {{ WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
+                                                                                                filter: "drop-shadow(0 0 2px #7c1e0d80) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 4px #c03a2b80)" +
+                                                                                                "drop-shadow(0 0 2px #c03a2b80) drop-shadow(0 0 1px #c03a2b80)"
+                                                                                            }}></i>
                                                                                         </div>
                                                                                     </div>
                                                                                 
@@ -617,8 +703,10 @@ export default function MarketMyLikedProductsPage() {
                                                                                             event.stopPropagation();
                                                                                             clickPossibleWhenLikeUnchecked(event, {insertMarketProductInterestedLog})}} 
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
-                                                                                        fontSize : "2rem", color : "#f2a766", pointerEvents : "none"}}>
-                                                                                            <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
+                                                                                        fontSize : "2rem", color : "transparent", pointerEvents : "none"}}>
+                                                                                            <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
+                                                                                                filter: "drop-shadow(0 0 2px #7c1d0d80) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 2px #ffffff40)" + 
+                                                                                                "drop-shadow(0 0 1px #ffffffc0) drop-shadow(0 0 1px #ffffff) drop-shadow(0 0 1px #ffffff)"}}></i>
                                                                                         </div>
                                                                                     </div>
                                                                                 
@@ -659,13 +747,13 @@ export default function MarketMyLikedProductsPage() {
                                                                             <div className = "col-auto" 
                                                                             style = {{
                                                                             // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
-                                                                                fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
+                                                                                fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6875rem", marginRight : "0.3125rem"}}
                                                                                 >
                                                                                 {/* <MarketAnonymousUserMiniProfileImage /> */}
-                                                                                <i className = "ri-user-3-fill"></i>
+                                                                                <i className="bi bi-person-circle"></i>
                                                                             </div>
                                                                             <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
-                                                                                {userInfo.nickname}
+                                                                                {userInfo.name}
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -762,7 +850,7 @@ export default function MarketMyLikedProductsPage() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginTop : "0.8125rem"}}>
+                                        <div className = "col" style = {{marginTop : "0.8125rem", marginBottom : "1rem"}}>
                                             <div className = "row">
                                                 <div className = "col">
                                                     
