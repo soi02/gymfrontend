@@ -476,23 +476,32 @@ export default function StartFreeWorkoutPage() {
                   </label>
                   <span className="routine-label-text">휴식 타이머</span>
                 </div> */}
-
         {showTimerModal && (
-          <div className="routine-timer-modal">
-            <div className="routine-timer-modal-content">
-              <h4>휴식</h4>
-              <br />
-              <h1>⏱️{countdown}초</h1>
-              {/* <div className="digital-timer">
-                        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-                      </div> */}
-              <p>휴식 타이머는 <br></br> 우측 상단에서 조정할 수 있소.</p>
+          <div className="timer-overlay" role="dialog" aria-modal="true">
+            <div
+              className="timer-card"
+              onClick={(e) => e.stopPropagation()}
+              aria-label={`휴식 ${countdown}초 남음`}
+            >
+              <div className="timer-title">타이머</div>
+              {/* 진행각: 남은 비율 × 360 */}
+              <div
+                className="timer-ring"
+                style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
+              >
+                <div className="timer-inner">
+                  <div className="timer-digits" aria-live="polite">
+                    {String(countdown).padStart(2, "0")}
+                  </div>
+                  {/* <div className="timer-sub">sec</div> */}
+                </div>
+              </div>
 
               <button
-                className="swo-btn"
+                className="timer-close"
                 onClick={() => {
                   setShowTimerModal(false);
-                  setCountdown(60);
+                  setCountdown(restDuration); // 초기화
                 }}
               >
                 닫기
