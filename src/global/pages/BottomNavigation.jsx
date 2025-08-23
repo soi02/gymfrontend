@@ -88,31 +88,43 @@ export default function BottomNavigation() {
       }
   
       try {
+          console.log('API 호출 전 userId:', userId);
+          console.log('API 호출 전 token:', token);
+          
           // 백엔드에서 만든 API 엔드포인트 호출
-          const response = await axios.get(`/api/buddy/is-buddy`, {
+          const response = await axios.get(`http://localhost:8080/api/buddy/is-buddy`, {
               params: { userId: userId },
               headers: {
                   'Authorization': `Bearer ${token}`
               }
           });
   
+          console.log('서버 응답 전체:', response);
           // 응답 데이터에서 is_buddy 상태를 추출
           const isBuddy = response.data.is_buddy;
+          console.log('서버에서 받은 isBuddy 값:', isBuddy);
           
           if (isBuddy) {
-              // is_buddy가 true일 경우 BuddyHome 페이지로 이동
+              console.log('버디 상태가 true이므로 buddyHome으로 이동');
               navigate('/buddy/buddyHome');
           } else {
-              // is_buddy가 false일 경우 버디 등록 페이지로 이동
+              console.log('버디 상태가 false이므로 buddy로 이동');
               navigate('/buddy');
           }
   
       } catch (error) {
           console.error("is_buddy 상태 확인 실패:", error);
+          console.error("에러 상세 정보:", {
+              status: error.response?.status,
+              data: error.response?.data,
+              config: error.config
+          });
+          
           if (error.response && error.response.status === 401) {
               alert("세션이 만료되었습니다. 다시 로그인해주세요.");
               navigate('/login');
           } else {
+              console.log('에러로 인해 기본 페이지로 이동');
               // 기타 오류 발생 시 기본 페이지로 이동
               navigate('/buddy');
           }
