@@ -9,6 +9,7 @@ import MarketAnonymousUserMiniProfileImage from "../components/test/example/Mark
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { loginAction } from "../../../redux/authSlice";
 
 function MarketArticleElement({marketArticleElem1}) {
     
