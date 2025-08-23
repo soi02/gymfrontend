@@ -1,0 +1,74 @@
+전체 오버레이
+.scroll-modal-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 2000;
+}
+
+/* 카드(족자 본체) */
+.scroll-card{
+  position: relative;
+  width: min(90vw, 380px);
+}
+
+/* 상단 매달리는 끈(간단 표현) */
+.scroll-hanger{
+  position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+  width: 64px; height: 22px;
+}
+.scroll-hanger::before{
+  content:""; position:absolute; inset:0;
+  border: 2px solid #222; border-bottom: none; border-radius: 10px 10px 0 0;
+}
+
+/* 위/아래 롤러(막대) */
+.scroll-rod{
+  height: 12px; background: #0f0f10; border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+}
+.scroll-rod--top{ position:absolute; top: -10px; left:0; right:0; }
+.scroll-rod--bottom{ position:absolute; bottom: -10px; left:0; right:0; }
+
+/* 내부 패널(천+종이) */
+.scroll-panel{
+  overflow: hidden;
+  border-left: 6px solid rgba(0,0,0,.08);
+  border-right: 6px solid rgba(0,0,0,.08);
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+/* 천(위/아래) – 기본 그라디언트, 또는 이미지 사용 */
+.scroll-top, .scroll-bottom{
+  height: 72px;
+  background: var(--brocade);
+}
+.scroll-top.with-img, .scroll-bottom.with-img{
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.scroll-top.with-img{ background-position: top center; }
+.scroll-bottom.with-img{ background-position: bottom center; }
+
+/* 중앙 종이(한지 느낌) */
+.scroll-paper{
+  min-height: 200px;
+  padding: 20px 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background:
+    radial-gradient(rgba(0,0,0,.04) 1px, transparent 1px) 0 0/6px 6px,
+    linear-gradient(#fffef8, #fffdfa);
+}
+
+/* 텍스트/버튼 */
+.scroll-text{ text-align: center; margin: 0 0 16px; font-weight: 700; color:#1a1a1a; }
+.scroll-btn{
+  background: #111; color:#fff; border:0;
+  padding: 10px 16px; border-radius: 12px; font-weight: 700; cursor: pointer;
+}
+.scroll-btn:active{ transform: translateY(1px); }
+
+/* 테마 컬러 (상단/하단 천) */
+.theme-jade{ --brocade: linear-gradient(135deg, #5b7d6b, #3e544a); }
+.theme-ink{ --brocade: linear-gradient(135deg, #1f2a31, #0f161a); }

@@ -34,7 +34,7 @@ const localIcons = {
     { alt: "Git", src: icon("icon_Git.svg") },
     { alt: "GitHub", src: icon("icon_Github-Dark.svg") },
     { alt: "Gradle", src: icon("icon_Gradle-Dark.svg") },
-    { alt: "Gradle", src: icon("icon_notion.svg") },
+    { alt: "Notion", src: icon("icon_notion.svg") },
   ],
 };
 
