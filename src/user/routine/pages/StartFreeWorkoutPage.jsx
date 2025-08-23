@@ -240,7 +240,7 @@ export default function StartFreeWorkoutPage() {
         {showTimerMenu && (
           <div ref={timerMenuRef} className="swp-timer-popover">
             <div className="swp-timer-popover-row">
-              <span>휴식 타이머</span>
+              <span>휴식 시간</span>
               <label className="routine-switch" style={{ marginLeft: "auto" }}>
                 <input
                   type="checkbox"
@@ -465,24 +465,24 @@ export default function StartFreeWorkoutPage() {
           </div>
         </div>
 
-        {/* <div className="routine-rest-timer-toggle">
-                  <label className="routine-switch">
-                    <input
-                      type="checkbox"
-                      checked={useRestTimer}
-                      onChange={(e) => setUseRestTimer(e.target.checked)}
-                    />
-                    <span className="routine-slider" />
-                  </label>
-                  <span className="routine-label-text">휴식 타이머</span>
-                </div> */}
+
         {showTimerModal && (
-          <div className="timer-overlay" role="dialog" aria-modal="true">
-            <div className="timer-card" onClick={(e) => e.stopPropagation()}>
-              <div className="timer-title">타이머</div>
+          <div
+            className="timer-overlay"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setShowTimerModal(false)}
+          >
+            <div
+              className="timer-card timer-card--onboarding"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="timer-top"></div>
+              <p className="timer-timer">숨 고르기 시계</p>
+              
 
               <div
-                className="timer-ring timer--pink"
+                className="timer-ring timer-ring--attached"
                 style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
               >
                 <div className="timer-inner">
@@ -492,8 +492,15 @@ export default function StartFreeWorkoutPage() {
                 </div>
               </div>
 
+              {/* 안내문 */}
+              {/* <p className="timer-timer">숨 고르기 시계</p> */}
+              <p className="timer-desc">
+                휴식 시간은 우측 상단에서 조정할 수 있소.
+              </p>
+
+              {/* 버튼 */}
               <button
-                className="timer-close"
+                className="timer-primary"
                 onClick={() => {
                   setShowTimerModal(false);
                   setCountdown(restDuration);
@@ -504,7 +511,6 @@ export default function StartFreeWorkoutPage() {
             </div>
           </div>
         )}
-
         {showConfirmModal && (
           <div className="routine-timer-modal">
             <div className="routine-timer-modal-content">

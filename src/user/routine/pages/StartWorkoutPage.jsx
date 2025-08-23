@@ -21,9 +21,8 @@ export default function StartWorkoutPage() {
   const navigate = useNavigate();
   const timerMenuRef = useRef(null);
 
-
-// ✅ 기본 60초 — deps에서 쓰이므로 여기(위쪽)에 선언해야 함
-const [restDuration, setRestDuration] = useState(60);
+  // ✅ 기본 60초 — deps에서 쓰이므로 여기(위쪽)에 선언해야 함
+  const [restDuration, setRestDuration] = useState(60);
 
   useEffect(() => {
     setStartTime(new Date());
@@ -142,23 +141,19 @@ const [restDuration, setRestDuration] = useState(60);
   const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
-  if (showTimerModal && countdown > 0) {
-    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-    return () => clearTimeout(timer);
-  } else if (countdown === 0) {
-    setShowTimerModal(false);
-    setCountdown(restDuration); // 0초 끝나면 닫고 기본값으로
-    if (navigator.vibrate) navigator.vibrate(200); // 선택: 진동 알림
-  }
-}, [showTimerModal, countdown, restDuration]);
-
+    if (showTimerModal && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (countdown === 0) {
+      setShowTimerModal(false);
+      setCountdown(restDuration); // 0초 끝나면 닫고 기본값으로
+      if (navigator.vibrate) navigator.vibrate(200); // 선택: 진동 알림
+    }
+  }, [showTimerModal, countdown, restDuration]);
 
   const [useRestTimer, setUseRestTimer] = useState(true);
 
-
-
-
-  const [showMenu, setShowMenu] = useState(false); 
+  const [showMenu, setShowMenu] = useState(false);
   const [showTimerMenu, setShowTimerMenu] = useState(false);
 
   // 기본 60초
@@ -191,68 +186,75 @@ const [restDuration, setRestDuration] = useState(60);
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-
   return (
     <div className="swp-main-content">
       <div {...handlers} className="start-workout-container">
         <div className="swp-header">
-        <button className="swp-back-btn" onClick={() => navigate(-1)}>&lt;</button>
-        <h3 className='swp-header-title'>나의 루틴: 기록중</h3>
-        <button
+          <button className="swp-back-btn" onClick={() => navigate(-1)}>
+            &lt;
+          </button>
+          <h3 className="swp-header-title">나의 루틴: 기록중</h3>
+          <button
             className="swp-timer-btn"
             aria-label="휴식 타이머 설정"
-            onClick={() => setShowTimerMenu(v => !v)}
-        >
-        <img
-          src={clock}
-          alt="휴식 타이머"
-          style={{ width: "22px", height: "22px"}}
-        >
-        </img>
-        </button>
-        {showTimerMenu && (
-          <div ref={timerMenuRef} className="swp-timer-popover">
-            <div className="swp-timer-popover-row">
-              <span>휴식 타이머</span>
-              <label className="routine-switch" style={{ marginLeft: "auto" }}>
-                <input
-                  type="checkbox"
-                  checked={useRestTimer}
-                  onChange={(e) => setUseRestTimer(e.target.checked)}
-                />
-                <span className="routine-slider" />
-              </label>
-            </div>
+            onClick={() => setShowTimerMenu((v) => !v)}
+          >
+            <img
+              src={clock}
+              alt="휴식 타이머"
+              style={{ width: "22px", height: "22px" }}
+            ></img>
+          </button>
+          {showTimerMenu && (
+            <div ref={timerMenuRef} className="swp-timer-popover">
+              <div className="swp-timer-popover-row">
+                <span>휴식 시간</span>
+                <label
+                  className="routine-switch"
+                  style={{ marginLeft: "auto" }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={useRestTimer}
+                    onChange={(e) => setUseRestTimer(e.target.checked)}
+                  />
+                  <span className="routine-slider" />
+                </label>
+              </div>
 
-            <div className="swp-timer-popover-row swp-rest-inline" style={{ marginTop: "0.6rem" }}>
-              <button
-                type="button"
-                className="rest-step"
-                onClick={decRest}
-                disabled={restDuration <= MIN}
-                aria-label="휴식시간 10초 감소"
+              <div
+                className="swp-timer-popover-row swp-rest-inline"
+                style={{ marginTop: "0.6rem" }}
               >
-                −
-              </button>
-              <span className="rest-value">{restDuration}초</span>
+                <button
+                  type="button"
+                  className="rest-step"
+                  onClick={decRest}
+                  disabled={restDuration <= MIN}
+                  aria-label="휴식시간 10초 감소"
+                >
+                  −
+                </button>
+                <span className="rest-value">{restDuration}초</span>
+                <button
+                  type="button"
+                  className="rest-step"
+                  onClick={incRest}
+                  disabled={restDuration >= MAX}
+                  aria-label="휴식시간 10초 증가"
+                >
+                  ＋
+                </button>
+              </div>
+
               <button
-                type="button"
-                className="rest-step"
-                onClick={incRest}
-                disabled={restDuration >= MAX}
-                aria-label="휴식시간 10초 증가"
+                className="swp-timer-close"
+                onClick={() => setShowTimerMenu(false)}
               >
-                ＋
+                설정 완료
               </button>
             </div>
-
-            <button className="swp-timer-close" onClick={() => setShowTimerMenu(false)}>
-              설정 완료
-            </button>
-          </div>
-        )}
-
-        
+          )}
         </div>
 
         <div className="routine-top-bar">
@@ -392,7 +394,6 @@ const [restDuration, setRestDuration] = useState(60);
                         setCountdown(restDuration); // ← 여기!
                       }
                     }}
-
                   />
                 </div>
               ))}
@@ -447,43 +448,51 @@ const [restDuration, setRestDuration] = useState(60);
             </button>
           </div>
         </div>
-{showTimerModal && (
-  <div className="timer-overlay" role="dialog" aria-modal="true" onClick={() => {
-    setShowTimerModal(false);
-    setCountdown(restDuration);
-  }}>
-    <div
-      className="timer-card"
-      onClick={(e) => e.stopPropagation()}
-      aria-label={`휴식 ${countdown}초 남음`}
-    >
-      <div className="timer-title">타이머</div>
+        {showTimerModal && (
+          <div
+            className="timer-overlay"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setShowTimerModal(false)}
+          >
+            <div
+              className="timer-card timer-card--onboarding"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="timer-top"></div>
+              <p className="timer-timer">숨 고르기 시계</p>
+              
 
-      {/* 진행각: 남은 비율 × 360 */}
-      <div
-        className="timer-ring"
-        style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
-      >
-        <div className="timer-inner">
-          <div className="timer-digits" aria-live="polite">
-            {String(countdown).padStart(2, "0")}
+              <div
+                className="timer-ring timer-ring--attached"
+                style={{ "--angle": `${(countdown / restDuration) * 360}deg` }}
+              >
+                <div className="timer-inner">
+                  <div className="timer-digits" aria-live="polite">
+                    {String(countdown).padStart(2, "0")}
+                  </div>
+                </div>
+              </div>
+
+              {/* 안내문 */}
+              {/* <p className="timer-timer">숨 고르기 시계</p> */}
+              <p className="timer-desc">
+                휴식 시간은 우측 상단에서 조정할 수 있소.
+              </p>
+
+              {/* 버튼 */}
+              <button
+                className="timer-primary"
+                onClick={() => {
+                  setShowTimerModal(false);
+                  setCountdown(restDuration);
+                }}
+              >
+                닫기
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <button
-        className="timer-close"
-        onClick={() => {
-          setShowTimerModal(false);
-          setCountdown(restDuration); // 초기화
-        }}
-      >
-        닫기
-      </button>
-    </div>
-  </div>
-)}
-
+        )}
 
         {showConfirmModal && (
           <div className="routine-timer-modal">
@@ -515,8 +524,6 @@ const [restDuration, setRestDuration] = useState(60);
             </div>
           </div>
         )}
-
-
       </div>
     </div>
   );
