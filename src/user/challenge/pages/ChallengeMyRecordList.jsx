@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import MyCategoryDonutPanel from '../components/MyCategoryDonutPanel';
+import DailyCompletionLineChart from '../components/DailyCompletionLineChart';
+
 
 /* 스타일 */
 import '../styles/ChallengeList.css';
@@ -44,6 +46,8 @@ export default function ChallengeMyRecordList() {
 
         const data = res?.data || [];
         setMyChallengeList(data);
+
+         console.log('챌린지 데이터:', data); 
       } catch (err) {
         console.error('[ChallengeMyRecordList] fetch error', err);
         setError('나의 챌린지 목록을 불러오는 데 실패했습니다.');
@@ -102,7 +106,7 @@ export default function ChallengeMyRecordList() {
           <h2 className="cmrl-new-title">{userName}님의 수련 기록</h2>
 
         </div>
-        <p className="cmrl-new-sub">오늘 해야 할 일과 진행 상황을 한눈에 확인하세요</p>
+        <p className="cmrl-new-sub">오늘 해야 할 일과 진행 상황을 한눈에 확인하시오</p>
       </header>
 
       <main className="cmrl-new-body">
@@ -116,7 +120,7 @@ export default function ChallengeMyRecordList() {
               <div className="cmrl-new-section">
                 <div className="cmrl-new-card">
                   <div className="cmrl-new-empty">
-                    수련 데이터가 없습니다. 로그인 상태나 참여 중인 수련을 확인해 주세요.
+                    수련 데이터가 없소. 로그인 상태나 참여 중인 수련을 확인해 주시오.
                     <div style={{ marginTop: 10 }}>
                       <button
                         className="cmrl-new-btn-primary"
@@ -134,38 +138,38 @@ export default function ChallengeMyRecordList() {
 
             {/* KPI 타일 */}
             <section className="cmrl-new-grid4">
-              <div className="cmrl-new-tile">
+              <div className="cmrl-new-tile kpi kpi--progress">
                 <div>
                   <div className="cmrl-new-tile-head">참여 중</div>
                   <div className="cmrl-new-tile-val">{stats.inProgress}</div>
                 </div>
-                <img className="cmrl-new-tile-icon" src={kpiIconMap.inProgress} alt="" />
+                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.inProgress} alt="" /> */}
               </div>
 
-              <div className="cmrl-new-tile">
+              <div className="cmrl-new-tile kpi kpi--done">
                 <div>
                   <div className="cmrl-new-tile-head">참여 완료</div>
                   <div className="cmrl-new-tile-val">{stats.completed}</div>
                 </div>
-                <img className="cmrl-new-tile-icon" src={kpiIconMap.completed} alt="" />
+                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.completed} alt="" /> */}
               </div>
 
-              <div className="cmrl-new-tile">
+              <div className="cmrl-new-tile kpi kpi--today">
                 <div>
                   <div className="cmrl-new-tile-head">오늘 인증</div>
                   <div className="cmrl-new-tile-val">
                     {stats.todayDone} <span className="cmrl-new-subtxt">/ {stats.inProgress}</span>
                   </div>
                 </div>
-                <img className="cmrl-new-tile-icon" src={kpiIconMap.todayDone} alt="" />
+                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.todayDone} alt="" /> */}
               </div>
 
-              <div className="cmrl-new-tile">
+              <div className="cmrl-new-tile kpi kpi--avg">
                 <div>
                   <div className="cmrl-new-tile-head">평균 진행률</div>
                   <div className="cmrl-new-tile-val">{stats.avgProgressPct}%</div>
                 </div>
-                <img className="cmrl-new-tile-icon" src={kpiIconMap.avgProgressPct} alt="" />
+                {/* <img className="cmrl-new-tile-icon" src={kpiIconMap.avgProgressPct} alt="" /> */}
               </div>
             </section>
 
@@ -183,6 +187,11 @@ export default function ChallengeMyRecordList() {
               navigate={navigate}
               thumbOf={thumbOf}
             />
+
+            {/* 일별 인증 통계 그래프 추가 */}
+    {myChallengeList.length > 0 && <DailyCompletionLineChart myChallengeList={myChallengeList} />}
+
+
           </>
         )}
       </main>

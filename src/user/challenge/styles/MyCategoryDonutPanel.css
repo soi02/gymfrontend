@@ -1,0 +1,174 @@
+/* ===========================
+   Tokens
+   =========================== */
+:root{
+  --ink-900:#0f141b;
+  --ink-700:#1f2937;
+  --ink-600:#34495e;
+  --ink-500:#4b5563;
+  --ink-400:#8a95a1;
+  --line:#e9edf2;
+
+  --radius:12px;
+  --elev-1:0 1px 4px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+  --elev-1h:0 2px 10px rgba(16,24,40,.10), 0 10px 28px rgba(16,24,40,.10);
+}
+
+/* ===========================
+   Section title (리스트 섹션 헤더)
+   =========================== */
+.cmrl-new-list-head{ margin:14px 6px 8px; }
+.cmrl-new-chart-title{
+  margin:0; padding:0; line-height:1.1;
+  font-size:13.5px; font-weight:800; color:var(--ink-500);
+  letter-spacing:-0.2px;
+}
+
+/* ===========================
+   리스트(미디어 카드 레이아웃)
+   =========================== */
+.cmrl-slice-list{
+  list-style:none; margin:0; padding:0 2px 12px;
+  display:flex; flex-direction:column; gap:12px;
+}
+
+/* (구) slice 레이아웃을 쓰는 경우 여전히 동작하도록 유지 */
+.cmrl-slice{
+  display:grid; grid-template-columns:92px 1fr; gap:12px; align-items:stretch;
+  width:100%; cursor:pointer;
+}
+
+/* 왼쪽 스탬프 (구버전 호환) */
+.cmrl-slice-stamp{
+  width:92px; height:92px; border-radius:var(--radius);
+  background:#0e0e10; display:flex; align-items:center; justify-content:center;
+  position:relative; box-shadow:0 2px 10px rgba(0,0,0,.22);
+}
+.cmrl-slice-thumb{ width:56px; height:56px; border-radius:50%; background-size:cover; background-position:center;
+  filter:saturate(1.05) contrast(1.02); box-shadow:0 6px 14px rgba(0,0,0,.28); }
+.cmrl-slice-date{ position:absolute; left:10px; bottom:10px; display:flex; flex-direction:column; gap:2px; line-height:1; }
+.cmrl-slice-date .year{ font-size:11px; font-weight:800; color:rgba(255,255,255,.88); }
+.cmrl-slice-date .day{  font-size:11px; font-weight:700; color:rgba(255,255,255,.72); }
+
+/* 오른쪽 카드 (구버전 호환) */
+.cmrl-slice-card{
+  background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  padding:12px 14px; display:flex; flex-direction:column; gap:8px; min-height:92px;
+  transition:box-shadow .18s ease, transform .18s ease;
+}
+.cmrl-slice-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.cmrl-slice-title{ font-size:15px; font-weight:800; color:#1f2937; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cmrl-slice-chevron{ flex-shrink:0; color:#c7ced9; display:flex; align-items:center; justify-content:center; }
+.cmrl-slice-meta{ display:flex; align-items:center; gap:6px; font-size:12.5px; }
+.cmrl-slice-meta .muted{ color:#8a95a1; } .cmrl-slice-meta .sep{ color:#c6cbd2; }
+.cmrl-slice-meta .strong{ color:#374151; font-weight:800; }
+.cmrl-slice-bar{ height:6px; border-radius:var(--radius); background:#eef2f6; overflow:hidden; border:1px solid rgba(0,0,0,.04); }
+.cmrl-slice-bar>div{ height:100%; width:0; border-radius:var(--radius); transition:width .35s ease; }
+
+.cmrl-slice:hover .cmrl-slice-card{ box-shadow:0 6px 16px rgba(0,0,0,.12); transform:translateY(-1px); }
+.cmrl-slice:active .cmrl-slice-card{ transform:translateY(1px); }
+.cmrl-slice:focus-within .cmrl-slice-card{ outline:2px solid rgba(73,124,255,.25); outline-offset:2px; }
+
+/* ===========================
+   Media 스타일 (현재 사용)
+   =========================== */
+.cmrl-media{
+  display:grid; grid-template-columns:108px 1fr; gap:14px; align-items:center;
+  padding:2px 2px; width:100%; -webkit-tap-highlight-color:transparent; cursor:pointer;
+}
+.cmrl-media-thumb{
+  width:108px; height:108px; border-radius:var(--radius); overflow:hidden;
+  box-shadow:0 6px 18px rgba(16,24,40,.08); background:#f4f6f8; flex-shrink:0;
+}
+.cmrl-media-thumb img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; transform:translateZ(0); }
+
+.cmrl-media-card{
+  position:relative; background:#fff; border:1px solid #e9edf2; border-radius:var(--radius);
+  padding:14px 16px 12px 16px; min-height:96px; box-shadow:var(--elev-1);
+  transition:transform .16s ease, box-shadow .16s ease;
+  display:flex; flex-direction:column; gap:8px;
+}
+.cmrl-media:hover .cmrl-media-card{ transform:translateY(-1px); box-shadow:var(--elev-1h); }
+
+.cmrl-media-head{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px; }
+.cmrl-media-title{ font-size:13px; font-weight:800; color:#1f2937; letter-spacing:-0.2px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cmrl-media-chevron{ color:#c6cfd9; display:flex; align-items:center; justify-content:center; }
+
+.cmrl-media-meta{ display:flex; align-items:center; gap:8px; font-size:12px; }
+.cmrl-media-meta .meta{ color:#8b93a1; } .cmrl-media-meta .dot{ color:#cbd3dd; }
+.cmrl-media-meta .meta-strong{ color:#8b93a1;  }
+
+.cmrl-media-actions{ display:flex; gap:8px; align-items:center; }
+
+/* 인증하기 Pill 버튼 */
+.cmrl-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 10px; border-radius:var(--radius);
+  border:1px solid rgba(0,0,0,.06); background:#f5f7fb; color:#263442;
+  font-size:12px; font-weight:bold;
+}
+.cmrl-pill:active {
+  transform: translateY(1px);
+}
+
+.cmrl-pill-primary {
+  background: #f2f2f2;     /* 단색으로 변경 */
+  color: #333;          /* 텍스트 컬러도 어둡게 변경 */
+  border-color: transparent;
+  box-shadow: none;        /* 필요 없으면 그림자도 제거 */
+}
+
+
+/* SE 최적화 */
+@media (max-width:375px){
+  .cmrl-media{ grid-template-columns:96px 1fr; gap:12px; }
+  .cmrl-media-thumb{ width:96px; height:96px; }
+  .cmrl-media-card{ padding:12px 14px 10px; min-height:88px; }
+  .cmrl-media-title{ font-size:13px; }
+  .cmrl-slice{ grid-template-columns:86px 1fr; gap:10px; }
+  .cmrl-slice-stamp{ width:86px; height:86px; }
+  .cmrl-slice-thumb{ width:52px; height:52px; }
+  .cmrl-slice-card{ padding:10px 12px; min-height:86px; }
+}
+
+/* ===========================
+   카테고리 도넛 + 레전드
+   =========================== */
+.cat-mini-wrap{
+  display:grid; grid-template-columns:120px 1fr; gap:12px; align-items:center;
+}
+.cat-mini-donut{ width:120px; height:120px; }
+
+.cat-mini-legend{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  grid-auto-rows:min-content; row-gap:8px; column-gap:10px;
+}
+
+/* 새 레전드: 각 아이템이 CSS 변수 --c 로 색을 받음 */
+.cat-legend-item{
+  --c:#6E78FF;  /* fallback */
+  display:grid; grid-template-columns:12px 1fr auto; align-items:center; gap:8px;
+  padding:8px 10px; border-radius:var(--radius);
+  background:#fff; border:1px solid #eef1f5; box-shadow:0 1px 4px rgba(0,0,0,.04);
+  text-align:left;
+}
+.cat-legend-item .legend-dot{
+  width:10px; height:10px; border-radius:50%; background:var(--c);
+  /* box-shadow:0 0 0 2px #fff inset; */
+}
+.cat-legend-item .legend-label{ font-size:13px; color:#1f2937; font-weight:700; }
+.cat-legend-item .legend-pct{ margin-left:auto; font-size:12px; color:#8a95a1; font-weight:700; }
+
+.cat-legend-item.on{
+  /* 선택 시 살짝 물든 배경 + 윤곽 */
+  background: color-mix(in oklab, var(--c) 9%, #fff);
+  box-shadow:0 0 0 2px color-mix(in oklab, var(--c) 28%, transparent);
+}
+
+/* 반응형 */
+@media (max-width:375px){
+  .cat-mini-wrap{ grid-template-columns:110px 1fr; }
+  .cat-mini-donut{ width:110px; height:110px; }
+}

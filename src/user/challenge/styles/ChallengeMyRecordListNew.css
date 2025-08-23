@@ -63,7 +63,7 @@
 .cmrl-new-btn-primary{
   width:100%; border:0; border-radius:12px; padding:13px 16px; font-weight:700;
   color:#fff; background:#7c1d0d;    /* 브랜드 컬러 */
-  box-shadow: 0 10px 22px rgba(124,29,13,.22);
+  /* box-shadow: 0 10px 22px rgba(124,29,13,.22); */
 }
 .cmrl-new-btn-primary:active{ transform: translateY(1px); }
 
@@ -71,7 +71,7 @@
 .cmrl-new-btn-lite{
   flex:1; border-radius:12px; padding:10px 12px; font-weight:600;
   background:#fff; color:#2c3e50; border:1px solid rgba(0,0,0,.06);
-  box-shadow: 0 6px 18px rgba(0,0,0,.05);
+  /* box-shadow: 0 6px 18px rgba(0,0,0,.05); */
 }
 
 /* 노리개 월릿 */
@@ -79,7 +79,7 @@
 .cmrl-new-wallet-cell{
   background:#fff; border:1px solid rgba(0,0,0,.06);
   border-radius:12px; padding:12px; text-align:center;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  /* box-shadow: 0 10px 30px rgba(0,0,0,.08); */
 }
 .cmrl-new-wallet-cell img{ width:38px; height:38px; object-fit:contain; margin-bottom:6px; }
 .cmrl-new-wc-title{ font-size:12px; color:#7f8c8d; }
@@ -91,7 +91,7 @@
   display:flex; gap:10px; width:100%;
   background:#fff; border-radius:12px; padding:10px;
   border:1px solid rgba(0,0,0,.06); text-align:left;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  /* box-shadow: 0 10px 30px rgba(0,0,0,.08); */
 }
 .cmrl-new-mini-thumb{ width:58px; height:58px; border-radius:12px; object-fit:cover; flex-shrink:0; }
 .cmrl-new-mini-main{ flex:1; display:flex; flex-direction:column; gap:6px; }
