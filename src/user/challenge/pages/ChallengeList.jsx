@@ -4,6 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import apiClient from '../../../global/api/apiClient';
 import '../styles/ChallengeListNew.css';
 
+import routineIcon from '/src/assets/img/challenge/categoryIconNew/routine_new.png';
+import recoveryIcon from '/src/assets/img/challenge/categoryIconNew/recovery_new.png';
+import commIcon from '/src/assets/img/challenge/categoryIconNew/comm.png';
+import infoIcon from '/src/assets/img/challenge/categoryIconNew/info_new.png';
+import habitIcon from '/src/assets/img/challenge/categoryIconNew/habit_new.png';
+import motivationIcon from '/src/assets/img/challenge/categoryIconNew/motivation_new.png';
+import selfIcon from '/src/assets/img/challenge/categoryIconNew/self.png';
+import vibeIcon from '/src/assets/img/challenge/categoryIconNew/vibe.png';
+
 export default function ChallengeList() {
   const navigate = useNavigate();
   const [keywordTree, setKeywordTree] = useState([]);
@@ -38,16 +47,16 @@ export default function ChallengeList() {
   }, [keywordTree]);
 
   // 카테고리명 → 아이콘 매핑 (이미지 경로는 프로젝트에 맞게 유지)
-  const iconMap = {
-    '루틴': '/src/assets/img/challenge/categoryIconNew/routine_new.png',
-    '회복': '/src/assets/img/challenge/categoryIconNew/recovery_new.png',
-    '소통': '/src/assets/img/challenge/categoryIconNew/comm.png',
-    '정보': '/src/assets/img/challenge/categoryIconNew/info_new.png',
-    '습관': '/src/assets/img/challenge/categoryIconNew/habit_new.png',
-    '동기부여': '/src/assets/img/challenge/categoryIconNew/motivation_new.png',
-    '자기관리': '/src/assets/img/challenge/categoryIconNew/self.png',
-    '분위기': '/src/assets/img/challenge/categoryIconNew/vibe.png',
-  };
+  const iconMap = useMemo(() => ({
+    '루틴': routineIcon,
+    '회복': recoveryIcon,
+    '소통': commIcon,
+    '정보': infoIcon,
+    '습관': habitIcon,
+    '동기부여': motivationIcon,
+    '자기관리': selfIcon,
+    '분위기': vibeIcon,
+  }), []);
 
 
   const getIconSrc = (name, idx) => iconMap[name] || fallbackIcons[idx % fallbackIcons.length];
