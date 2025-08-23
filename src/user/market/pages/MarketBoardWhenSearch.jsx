@@ -100,9 +100,9 @@ function MarketArticleElement({marketArticleElem1}) {
                                                         <div className = "col">
                                                             <div className = "row align-items-center">
                                                                 <div className = "col-auto" 
-                                                                style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6125rem", marginRight : "0.3125rem"}}
+                                                                style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6875rem", marginRight : "0.3125rem"}}
                                                                     >
-                                                                    <i className = "ri-user-3-fill"></i>
+                                                                    <i className="bi bi-person-circle"></i>
                                                                 </div>
                                                                 <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
                                                                     {userInfo.nickname}
