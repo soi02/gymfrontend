@@ -279,7 +279,8 @@ export default function MarketMyLikedProductsPage() {
             <>
                 
                 <div className = "row">
-                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "0.6125rem"}}>
+                    <div className = "col" onClick = {() => constTestInsertProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} 
+                    style = {{padding : "0.6125rem"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
                         <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
                     </div>
@@ -296,9 +297,12 @@ export default function MarketMyLikedProductsPage() {
             <>
                 
                 <div className = "row">
-                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} style = {{padding : "0.6125rem"}}>
+                    <div className = "col" onClick = {() => constTestDeleteProcess(interestedLogSpecificArticleId, interestedLogMarketUserId, articleId, userInfoId, interestedLogId)} 
+                    style = {{padding : "0.6125rem"}}>
                         {/* 버튼 클릭 시 interestedLog 는 속성 값 0, null 로 하기 (react 의 Dto 자체를 없애지는 말기, 데이터베이스에서는 삭제하기) */}
-                        <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766"}}></i>
+                        <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766", 
+                        textShadow : "0 0 0 6px rgba(255,255,255,0.4), 0 0 0 9px rgba(255,255,255,0.2), 0 0 0 12px rgba(255,255,255,0.1)"
+                        }}></i>
                     </div>
                 </div>
                 
@@ -486,7 +490,7 @@ export default function MarketMyLikedProductsPage() {
                 
             }
             
-        }
+        } // unused code
         
         function funcSellEnded(sellEnded) {
             
@@ -526,7 +530,7 @@ export default function MarketMyLikedProductsPage() {
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "0.4375rem", marginRight : "0.4375rem"}}>
                                             <div className = "row h-100">
-                                                <div className = "col-auto" style = {{paddingLeft : "0.6125rem", paddingRight : "0.6125rem", display : "flex", alignItems : "center"}}>
+                                                {/* <div className = "col-auto" style = {{paddingLeft : "0.6125rem", paddingRight : "0.6125rem", display : "flex", alignItems : "center"}}> */}
                                                     
                                                     
                                                     {/* {
@@ -581,12 +585,12 @@ export default function MarketMyLikedProductsPage() {
                                                     <constDivisionToDeleteMarketProductInterestedLog /> :
                                                     <constDivisionToInsertMarketProductInterestedLog />} */}
                                                     
-                                                </div>
+                                                {/* </div> */}
                                                 <div className = "col">
                                                     <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                         <div className = "row">
                                                             <div className = "col-auto" style = {{width : "5rem", height : "5rem", overflow : "hidden", position : "relative",
-                                                            paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem", display : "flex", alignItems : "center"}}>
+                                                            paddingLeft : "0rem", paddingRight : "0rem", borderRadius : "0.5rem", marginRight : "0.6125rem", display : "flex", alignItems : "center"}}>
                                                                 <div className = "row h-100">
                                                                     <div className = "col" style = {{width : "100%", height : "100%"}}>
                                                                         <div className = "row gx-0" style = {{top : "0px", left : "0px", width : "100%", height : "100%", position : "absolute", zIndex: "5"}}>
@@ -604,7 +608,9 @@ export default function MarketMyLikedProductsPage() {
                                                                                             clickPossibleWhenLikeChecked(event, {marketUserId : checkUserStatus, specificArticleId : article.id})}} 
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
                                                                                         fontSize : "2rem", color : "#c0392b", pointerEvents : "none"}}>
-                                                                                            <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
+                                                                                            <i className="ri-heart-3-fill" style = {{ WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
+                                                                                                filter: "drop-shadow(0 0 2px #7c1d0d) drop-shadow(0 0 1px #7c1d0d) drop-shadow(0 0 4px #c03a2b6b) drop-shadow(0 0 2px #c0392b) drop-shadow(0 0 1px #c0392b)"
+                                                                                            }}></i>
                                                                                         </div>
                                                                                     </div>
                                                                                 
@@ -617,8 +623,9 @@ export default function MarketMyLikedProductsPage() {
                                                                                             event.stopPropagation();
                                                                                             clickPossibleWhenLikeUnchecked(event, {insertMarketProductInterestedLog})}} 
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
-                                                                                        fontSize : "2rem", color : "#f2a766", pointerEvents : "none"}}>
-                                                                                            <i className="ri-heart-3-line" style = {{WebkitTextStroke : "3px #f2a766", pointerEvents : "auto"}}></i>
+                                                                                        fontSize : "2rem", color : "transparent", pointerEvents : "none"}}>
+                                                                                            <i className="ri-heart-3-fill" style = {{WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
+                                                                                                filter: "drop-shadow(0 0 1px #7c1d0d) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 1px #ffffff)"}}></i>
                                                                                         </div>
                                                                                     </div>
                                                                                 

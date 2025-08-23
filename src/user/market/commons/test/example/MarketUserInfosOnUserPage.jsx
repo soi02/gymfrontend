@@ -10,9 +10,10 @@ export default function MarketUserInfosOnUserPage({marketUserInfoElem1}) {
                 <div className = "widthDefault">
                     <div className = "col">
                         <div className = "row">
-                            <div className = "col-auto" style = {{width : "4rem", height : "4rem", overflow : "hidden", position : "relative",
-                                marginLeft : "1.25rem", marginRight : "0.6125rem"}}>
-                                <MarketUserProfileImage />
+                            <div className = "col-auto" style = {{fontSize : "3.25rem", width : "4rem", height : "4rem", overflow : "hidden", position : "relative",
+                                marginLeft : "1.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignItems : "center"}}>
+                                <i className="bi bi-person-circle"></i>
+                                {/* <MarketUserProfileImage /> */}
                             </div>
                             <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center"}}>
                                 <div className = "row">

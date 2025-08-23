@@ -778,12 +778,12 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{fontSize : "1.3125rem", marginBottom : "0.4375rem"}}>
+                                        <div className = "col" style = {{fontSize : "1.3125rem", marginBottom : "0.125rem"}}>
                                             {article.title}
                                         </div>
                                     </div>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "0.8125rem"}}>
+                                        <div className = "col" style = {{marginBottom : "0.875rem"}}>
                                             <div className = "row h-100">
                                                 <div className = "col-auto" style = {{fontSize : "1rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
                                                     {funcFreeShare(article.productCost)}
@@ -809,14 +809,19 @@ export default function MarketArticlePageTest() {
                                     <div className = "row">
                                         <div className = "col">
                                             <div className = "row">
-                                                <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.3125rem"}}>
+                                                <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.125rem"}}>
                                                     <div className = "row">
-                                                        <div className = "col-auto" style = {{width : "1.8125rem", height : "1.8125rem", overflow : "hidden", position : "relative"}}>
-                                                            <MarketAnonymousUserMiniProfileImage />
+                                                        <div className = "col-auto" style = {{fontSize : "0.9375rem", height : "1.8125rem", overflow : "hidden", position : "relative", 
+                                                            paddingLeft : "0.25rem", paddingRight : "0.25rem"}}>
+                                                            <div className = "row h-100">
+                                                                <div className = "col-auto" style = {{fontSize : "1.3125rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                    <i className="bi bi-person-circle"></i>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
-                                                                <div className = "col-auto" style = {{fontSize : "0.9375rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                <div className = "col-auto" style = {{fontSize : "1.3125rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
                                                                     <Link className = "linkDefault" to = {`/market/user/${userInfo.userId}`}>
                                                                         {userInfo.nickname}
                                                                     </Link>
@@ -1242,9 +1247,14 @@ export default function MarketArticlePageTest() {
                                             <div className = "row">
                                                 <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.5rem"}}>
                                                     <div className = "row h-100">
-                                                        <div className = "col-auto" style = {{width : "1.8125rem", height : "1.8125rem", overflow : "hidden", position : "relative",
-                                                            paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
-                                                            <MarketAnonymousUserMiniProfileImage />
+                                                        <div className = "col-auto" style = {{height : "1.8125rem", overflow : "hidden", position : "relative",
+                                                            paddingLeft : "0.125rem", paddingRight : "0.125rem"}}>
+                                                            <div className = "row h-100">
+                                                                <div className = "col-auto" style = {{fontSize : "0.9375rem", fontWeight : "bold", display : "flex", 
+                                                                alignItems : "center", justifyContent : "center"}}>
+                                                                    <i className="bi bi-person-circle"></i>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                             <div className = "row h-100">
