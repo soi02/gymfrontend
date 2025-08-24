@@ -179,8 +179,14 @@ export default function GroupChatRoom() {
                     const isMyMessage = msg.senderUserId === userId;
 
                     const shouldShowSenderInfo = !isMyMessage && (!prevMsg || prevMsg.senderUserId !== msg.senderUserId);
-                    const shouldShowTime = !nextMsg || (nextMsg && new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes());
-                    const shouldShowReadCount = isMyMessage && (!nextMsg || nextMsg.senderUserId !== msg.senderUserId || new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes());
+                    // const shouldShowTime = !nextMsg || (nextMsg && new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes());
+                    // const shouldShowReadCount = isMyMessage && (!nextMsg || nextMsg.senderUserId !== msg.senderUserId || new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes());
+                    const isBlockEnd =
+                    !nextMsg ||
+                    nextMsg.senderUserId !== msg.senderUserId ||
+                    new Date(nextMsg.createdAt).getMinutes() !== new Date(msg.createdAt).getMinutes();
+                    const shouldShowTime = isBlockEnd;
+                    const unreadCount = Math.max(0, (participantCount ?? 0) - (msg.readCount ?? 0));
 
                     return (
                         <div 
@@ -210,11 +216,14 @@ export default function GroupChatRoom() {
                                     </div>
                                     {shouldShowTime && (
                                         <div className="group-chat-room-message-info">
-                                            {isMyMessage && shouldShowReadCount && (
+                                            {/* {isMyMessage && shouldShowReadCount && (
                                                 <span className="group-chat-room-unread-count">
                                                     {participantCount - (msg.readCount || 0)}
                                                 </span>
-                                            )}
+                                            )} */}
+                                               {isBlockEnd && unreadCount > 0 && (
+                                                    <span className="group-chat-room-unread-count">{unreadCount}</span>
+                                                )}
                                             <span className="group-chat-room-message-time">
                                                 {formatTime(msg.createdAt)}
                                             </span>
@@ -232,7 +241,7 @@ export default function GroupChatRoom() {
                     type="text"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="메시지를 입력하세요..."
+                    placeholder="말을 건네보시오"
                     className="group-chat-room-input"
                 />
                 <button type="submit" className="group-chat-room-send-button">전송</button>

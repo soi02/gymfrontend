@@ -1,0 +1,110 @@
+/* 페이지 컨테이너: ChallengeList와 동일한 상하/좌우 여백 */
+.gchat-container {
+  max-width: 100%;
+  padding: 1.75rem 20px;    /* ⬅️ cl-new-container와 동일 */
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  color: #333;
+  background: #fff; /* 배경 필요시 조정 */
+}
+
+/* 헤더 (대제목/소제목) */
+.gchat-header { margin-bottom: 1rem; text-align: left; }
+.gchat-title { font-size: 1.4rem; font-weight: bold; margin: 0; color: #2c3e50; }
+.gchat-subtitle { font-size: 0.8rem; color: #7f8c8d; margin-top: 0.5rem; }
+
+/* 검색바 */
+.gchat-search-wrap { padding: 8px 0 10px; }
+.gchat-search {
+  width: 100%;
+  height: 38px;
+  border: 0;
+  outline: none;
+  border-radius: 12px;
+  background: #f1f1f3;
+  padding: 0 12px;
+  font-size: 0.85rem;
+  color: #111;
+}
+.gchat-search::placeholder { color: #9aa0a6; }
+
+/* 리스트 래퍼 */
+.gchat-list-wrap { flex: 1; }
+.gchat-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 아이템 */
+.gchat-item {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;             /* 좌우 패딩은 컨테이너가 가지고 있음 */
+  cursor: pointer;
+}
+.gchat-item + .gchat-item { border-top: 1px solid rgba(0,0,0,.06); }
+.gchat-item:active { background: rgba(0,0,0,.03); }
+
+/* 아바타 */
+.gchat-avatar-wrap {
+  position: relative;
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+}
+.gchat-avatar {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #eaeaea;
+}
+.gchat-avatar-fallback {
+  display: grid; place-items: center;
+  font-weight: 700; font-size: 14px; color: #808080;
+}
+.gchat-unread-dot {
+  position: absolute; right: 6px; top: 6px;
+  width: 10px; height: 10px; border-radius: 999px;
+  background: #28c840; box-shadow: 0 0 0 2px #fff;
+}
+
+/* 본문 */
+.gchat-main { min-width: 0; }
+.gchat-row-1, .gchat-row-2 { display: flex; align-items: center; }
+.gchat-row-1 { justify-content: space-between; gap: 8px; }
+.gchat-title-row {
+  font-size: 0.9rem; font-weight: bold; color: #333;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gchat-time { flex: 0 0 auto; font-size: 0.7rem; color: #808080; margin-left: 8px; }
+.gchat-row-2 { margin-top: 2px; gap: 8px; }
+.gchat-preview {
+  flex: 1 1 auto; min-width: 0;
+  font-size: 0.8rem; color: #808080;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gchat-unread-badge {
+  flex: 0 0 auto; min-width: 22px; height: 18px; padding: 0 6px;
+  border-radius: 10px; background: #28c840; color: #fff;
+  font-size: 11px; line-height: 18px; text-align: center; font-weight: 700;
+}
+
+/* 상태 메시지 */
+.gchat-empty, .gchat-error, .gchat-status {
+  padding: 24px 0; text-align: center; color: #8e8e93; font-size: 0.9rem;
+}
+
+/* 아이폰 SE 최적화 */
+@media (max-width: 375px) {
+  .gchat-container { padding: 1.25rem .75rem; }
+  .gchat-title { font-size: 1.25rem; }
+  .gchat-search { height: 36px; }
+  .gchat-title-row { font-size: 0.9rem; }
+  .gchat-preview { font-size: 0.8rem; }
+}

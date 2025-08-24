@@ -57,10 +57,10 @@ export default function ChallengeTopTabs() {
   backgroundColor: '#fff',
 }}>
 
-      <TabItem to="/challenge/challengeHome" label="수련장 홈" />
+      <TabItem to="/challenge/challengeHome" label="수련장" />
       <TabItem to="/challenge/challengeList" label="수련 목록" />
       <TabItem to="/challenge/challengeMy" label="나의 수련기록" />
-      <TabItem to="/challenge/groupchatList" label="그룹채팅" />
+      <TabItem to="/challenge/groupchatList" label="수련 채팅" />
     </div>
   );
 }

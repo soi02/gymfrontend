@@ -131,7 +131,7 @@
 
 .cdp-content {
   padding: 20px;
-  padding-top: 15px;
+  padding-top: 20px;
   background-color: white;
   border-radius: 0 0 0 0;
   margin-top: -20px;
@@ -150,17 +150,19 @@
   font-weight: 700;
   color: #333;
   margin: 0 0 0;
+  margin-top: 1rem;
+  margin-bottom: .8rem;
 }
 
 .cdp-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: .8rem;
 }
 
 .tag {
-  background-color: #f0f0f0;
+  background-color: #ecb0a552;
   color: #666;
   padding: 4px 10px;
   border-radius: 15px;
@@ -777,7 +779,8 @@ border-bottom: 1px solid #eee; }
   gap: 10px 12px;
   /* padding: 8px 0; */
   padding: 10px;
-  /* margin-top: 5px; */
+  margin-top: .8rem;
+  margin-bottom: .8rem;
   border: 0;
 }
 .cdp-meta2x2 .m2-cell{
@@ -793,8 +796,8 @@ border-bottom: 1px solid #eee; }
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  font-weight: 800;                 /* ← 굵게 */
-  color: var(--ink, #2b2c2f);       /* 라벨 진하게 */
+  font-weight: bold;                 /* ← 굵게 */
+  color: var(--ink, #333);       /* 라벨 진하게 */
   letter-spacing: -.2px;
 }
 .m2-lab-ic{
@@ -829,4 +832,58 @@ border-bottom: 1px solid #eee; }
 /* 작은 화면에서 1열 스택 */
 @media (max-width: 360px){
   .cdp-meta2x2{ grid-template-columns: 1fr; gap: 10px; }
+}
+
+
+
+/* ===== Author row (프로필/닉네임/오른쪽 하트) ===== */
+.cdp-author-row{
+  display:flex; justify-content:space-between; align-items:center;
+  background:#fff; 
+}
+.cdp-author-left{ display:flex; align-items:center; gap:10px; }
+.cdp-author-avatar{
+  width:36px; height:36px; border-radius:50%; object-fit:cover; border:1px solid #eee;
+}
+.cdp-author-meta{ display:flex; flex-direction:column; line-height:1.2; }
+.cdp-author-name{ font-weight:700; font-size:14px; color:#1f2329; }
+.cdp-author-sub{ font-size:11px; color:#7e7f82; }
+.cdp-like-btn{
+  border:none; background:#fff; width:32px; height:32px; border-radius:999px;
+  font-size:18px; line-height:32px; text-align:center; color:#8a8f98; cursor:pointer;
+}
+.cdp-like-btn:active{ background:#f4f4f5; }
+
+/* ===== 소개 말풍선 ===== */
+.cdp-desc-bubble{
+  position:relative;
+  background:#f2f2f2;
+  color:#333;
+  border-radius:12px;
+  padding:12px 14px;
+  margin-top:10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+}
+
+.cdp-desc-bubble p{ margin:0; font-size:13.5px; line-height:1.55; }
+
+/* ===== 참여 중인 이웃 카드 ===== */
+.cdp-members-card{
+  background:#fff; border:1px solid rgba(0,0,0,.06);
+  border-radius:12px; padding:12px 14px; margin:12px 0 6px;
+  box-shadow:0 6px 16px rgba(0,0,0,.05);
+}
+.cdp-members-head{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
+}
+.cdp-members-title{ font-weight:800; font-size:14px; color:#2b2c2f; }
+.cdp-members-count{ font-size:12px; color:#8a8f98; }
+.cdp-members-row{ display:flex; align-items:center; gap:8px; }
+.cdp-member-avatar{
+  width:34px; height:34px; border-radius:50%; object-fit:cover; border:1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,.06);
+}
+.cdp-member-avatar.placeholder{
+  display:inline-grid; place-items:center; font-weight:700; color:#6b7280;
+  background:#f1f1f3; border:1px dashed #ddd;
 }

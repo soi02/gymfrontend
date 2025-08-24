@@ -134,7 +134,7 @@
 .cl-new-create-card {
   grid-column: 1 / -1; /* 두 컬럼 모두 차지 */
   margin-top: var(--cl-gap); /* 일반 카드와의 간격 */
-  background: #fff9e3; /* 색감 수정 예정 */
+  background: #fff9e3;
   color: #fff;
   border-radius: var(--cl-card-radius);
   padding: 1.6rem;
@@ -160,7 +160,7 @@
   width: 45px; /* 아이콘 크기 */
   height: 45px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #fff1c0;
   display: flex;
   align-items: center;
   justify-content: center;
