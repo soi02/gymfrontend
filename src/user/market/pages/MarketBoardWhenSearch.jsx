@@ -10,11 +10,11 @@ function MarketArticleElement({marketArticleElem1}) {
     
     const BACKEND_BASE_URL = "http://localhost:8080";
     
-    const { article, userInfo } = marketArticleElem1;
+    const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
     
-    const imageLinkPath = article.imageLink;
+    const imageLinkPath = article?.imageLink;
     
-    const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
+    const imageLinkURL = new URL(imageLinkPath ?? "", BACKEND_BASE_URL).toString();
     
     const formatProductCost = (productCost) => {
         return productCost.toLocaleString('Ko-KR');
@@ -26,7 +26,7 @@ function MarketArticleElement({marketArticleElem1}) {
             
             return (
                 <>
-                    <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 완료</span>
+                    <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 완료</span>
                 </>
             );
             
@@ -34,7 +34,7 @@ function MarketArticleElement({marketArticleElem1}) {
             
             return (
                 <>
-                    <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.5rem"}}>거래 미완료</span>
+                    <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 미완료</span>
                 </>
             );
             
@@ -75,44 +75,67 @@ function MarketArticleElement({marketArticleElem1}) {
                         {marketArticleElem1.viewedCount}, {marketArticleElem1.isSellEnded}, {marketArticleElem1.createdAt.toLocaleString()}, {marketArticleElem1.updatedAt}
                         
                         { 날짜 값이 null 인 경우와 null 이 아닌 경우를 철저히 체크할 것 (toLocaleString 시 오류 방지) */}
-                        <div className = "row" style = {{height : "5rem", marginBottom : "1rem"}}>
+                        <div className = "row" style = {{height : "6rem", marginBottom : "1rem"}}>
                             <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem"}}>
-                                        <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
+                                        <Link className = "linkDefault" to = {`/market/article/${article?.id}`}>
                                             <div className = "row">
-                                                <div className = "col-auto" style = {{width : "5rem", height : "5rem", overflow : "hidden", position : "relative",
-                                                    paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
-                                                    <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
+                                                    paddingLeft : "0rem", paddingRight : "0rem", borderRadius : "0.5rem", marginRight : "0.6125rem"}}>
+                                                    {imageLinkPath ?
+                                                    <>
+                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
+                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
+                                                                
+                                                            </div>
+                                                            <div className = "col" style = {{flexGrow : "7"}}>
+                                                                
+                                                            </div>
+                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                    }
                                                 </div>
-                                                <div className = "col" style = {{position : "relative"}}>
+                                                <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.5rem"}}>
-                                                            {funcSellEnded(article.sellEnded)}
+                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                                            {funcSellEnded(article?.sellEnded)}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "1rem"}}>
-                                                            {article.title}
+                                                            <div className = "truncateText" style = {{fontSize : "1.0625rem"}}>
+                                                                {article?.title}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div className = "row">
                                                         <div className = "col">
                                                             <div className = "row align-items-center">
                                                                 <div className = "col-auto" 
-                                                                style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6875rem", marginRight : "0.3125rem"}}
+                                                                style = {{
+                                                                // width : "2.5vh", height : "2.5vh", overflow : "hidden", position : "relative",
+                                                                    fontSize : "1rem", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.6875rem", marginRight : "0.3125rem"}}
                                                                     >
+                                                                    {/* <MarketAnonymousUserMiniProfileImage /> */}
                                                                     <i className="bi bi-person-circle"></i>
                                                                 </div>
-                                                                <div className = "col" style = {{fontSize : "0.75rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
-                                                                    {userInfo.name}
+                                                                <div className = "col" style = {{fontSize : "0.875rem", paddingLeft : "0rem", paddingRight : "0rem", lineHeight : "1"}}>
+                                                                    {userInfo?.name}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
-                                                            {funcFreeShare(article.productCost)}
+                                                        <div className = "col" style = {{fontSize : "1.125rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
+                                                            {funcFreeShare(article?.productCost)}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,20 +170,24 @@ export default function MarketBoardPageWhenSearch() {
         // console.log(searchWordRef.current.value);
     // } // null 체크 꼭 해 주기
     
-    const [marketArticleList, setMarketArticleList] = useState([
-        {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
-        title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-        viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
-    ]) 
+    //
     
-    const [marketUserInfoList, setMarketUserInfoList] = useState([
-        {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
-    ])
+    // const [marketArticleList, setMarketArticleList] = useState([
+    //     {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
+    //     title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
+    //     viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")}
+    // ]) 
     
-    const mergedList = marketArticleList.map(article => {
-        const userInfo = marketUserInfoList.find(user => user.userId === article.marketUserId);
-        return { article, userInfo };
-    });
+    // const [marketUserInfoList, setMarketUserInfoList] = useState([
+    //     {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+    // ])
+    
+    // const mergedList = marketArticleList.map(article => {
+    //     const userInfo = marketUserInfoList.find(user => user.userId === article.marketUserId);
+    //     return { article, userInfo };
+    // });
+    
+    // ▲ 안 쓰는 코드...??
     
     const [inputSearchWord, setInputSearchWord] = useState("");
     // console.log("inputSearchWord");
@@ -178,7 +205,7 @@ export default function MarketBoardPageWhenSearch() {
     ])
     
     const constMarketArticleElementList = mergeMarketArticleInfo.map((mergedElement) => (
-        <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement} />
+        <MarketArticleElement key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement} />
     ))
     
     const constApplySearchWord = (element) => {

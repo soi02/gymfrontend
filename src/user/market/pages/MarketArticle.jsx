@@ -129,9 +129,12 @@ export default function MarketArticlePageTest() {
     console.log("mergeMarketArticleInfo");
     console.log(mergeMarketArticleInfo);
     
-    const imageLinkPath = mergeMarketArticleInfo[0].article.imageLink;
+    const imageLinkPath = mergeMarketArticleInfo[0]?.article?.imageLink;
     
-    const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
+    const imageLinkURL = new URL(imageLinkPath ?? "", BACKEND_BASE_URL).toString();
+    // `${BACKEND_BASE_URL}${imageLinkPath}`;
+    
+    
     
     const [checkArticleWriteUser, setCheckArticleWriteUser] = useState(0);
     
@@ -151,13 +154,13 @@ export default function MarketArticlePageTest() {
     console.log(dealerCheckDivisionActivate);
     
     const constMarketArticleElement = mergeMarketArticleInfo.map(mergedElement => (
-    <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
+    <MarketArticleElement key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
     
     const constMarketArticleUpdateOrDeleteDivisionPageLayout = mergeMarketArticleInfo.map(mergedElement => (
-    <MarketArticleUpdateOrDeleteDivisionPageLayout key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
+    <MarketArticleUpdateOrDeleteDivisionPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
     
     const constMarketArticleLikeButtonPageLayout = mergeMarketArticleInfo.map(mergedElement => (
-    <MarketArticleLikeButtonPageLayout key = {mergedElement.article.id} marketArticleElem1 = {mergedElement}/>));
+    <MarketArticleLikeButtonPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
     
     const [marketProductInterestedLogOnArticle, setMarketProductInterestedLogOnArticle] = useState([
         {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
@@ -180,8 +183,8 @@ export default function MarketArticlePageTest() {
     )
     
     const constMarketProductInterestedLogElement = mergeMarketProductInterestedLogOnArticle
-    .filter(element => element.interestInfo.specificArticleId === checkArticleId && element.interestInfo.marketUserId === checkUserStatus)
-    .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element.interestInfo.id} marketArticleElem1 = {element}/>)
+    .filter(element => element?.interestInfo?.specificArticleId === checkArticleId && element?.interestInfo?.marketUserId === checkUserStatus)
+    .map(element => <MarketProductInterestedLogElementOnArticleWhenExists key = {element?.interestInfo?.id} marketArticleElem1 = {element}/>)
     
     console.log("mergeMarketProductInterestedLogOnArticle");
     console.log(mergeMarketProductInterestedLogOnArticle);
@@ -233,7 +236,7 @@ export default function MarketArticlePageTest() {
     const handleUpdateComment = async (targetId, newContent) => {
         
         const targetElement = mergeMarketCommentEditElementListOnArticle.find(
-            element => element.comment.id === targetId
+            element => element?.comment?.id === targetId
         );
         console.log("targetElement");
         console.log(targetElement);
@@ -263,7 +266,7 @@ export default function MarketArticlePageTest() {
             setMergeMarketCommentListOnArticle(currentList =>
                 currentList.map(element => {
                     
-                    if (element.comment.id === submitUpdateCommentData.id) {
+                    if (element?.comment?.id === submitUpdateCommentData.id) {
                         
                         return constGetSelectSpecificMarketCommentElementOnArticle; 
                     }
@@ -285,7 +288,7 @@ export default function MarketArticlePageTest() {
     .map(mergedElement => {
         
         return(
-        <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement} onUpdateConfirm = {handleUpdateComment}/>
+        <MarketCommentElementOnArticle key = {mergedElement?.comment?.id} marketCommentElem1 = {mergedElement} onUpdateConfirm = {handleUpdateComment}/>
         )
         
     });
@@ -314,7 +317,7 @@ export default function MarketArticlePageTest() {
             
             currentList.map(element => {
                 
-                if (element.comment.id !== targetId) {
+                if (element?.comment?.id !== targetId) {
                     
                     return element;
                     
@@ -325,7 +328,7 @@ export default function MarketArticlePageTest() {
                         ...element,
                         comment : {
                             
-                            ...element.comment,
+                            ...element?.comment,
                             content : newContent
                             
                         }
@@ -393,7 +396,7 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
-                setCheckArticleWriteUser(constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId);
+                setCheckArticleWriteUser(constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
                     userInfo : APIElem1.marketUserInfoDto
@@ -419,7 +422,7 @@ export default function MarketArticlePageTest() {
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
                 
-                if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId) {
+                if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId) {
                     
                     setCheckUserDealerStatus(1);
                     
@@ -526,7 +529,7 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketArticleInfoAndDistincted);
                 // 여기서 조회수 바꾸고 update 로 변경 사항 넣기 (백엔드에서 조회수만 바꾸면 됨)
                 setMergeMarketArticleInfo([constGetSelectSpecificMarketArticleInfoAndDistincted])
-                setCheckArticleWriteUser(constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId);
+                setCheckArticleWriteUser(constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId);
                 const constCommentOnArticleElementsFromAPI = constGetSelectMarketCommentOnArticle.map(APIElem1 => ({
                     comment : APIElem1.marketCommentOnArticleDto,
                     userInfo : APIElem1.marketUserInfoDto
@@ -552,7 +555,7 @@ export default function MarketArticlePageTest() {
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
                 
-                if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article.marketUserId) {
+                if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId) {
                     
                     setCheckUserDealerStatus(1);
                     
@@ -615,7 +618,7 @@ export default function MarketArticlePageTest() {
                 .map(mergedElement => {
                     
                     return(
-                    <MarketCommentElementOnArticle key = {mergedElement.comment.id} marketCommentElem1 = {mergedElement} onUpdateConfirm = {handleUpdateComment}/>
+                    <MarketCommentElementOnArticle key = {mergedElement?.comment?.id} marketCommentElem1 = {mergedElement} onUpdateConfirm = {handleUpdateComment}/>
                     )});
                 
             }
@@ -706,7 +709,7 @@ export default function MarketArticlePageTest() {
                 
                 const marketDealedLogCheckedByBuyerDto = {
                     
-                    sellerId : userInfo.id,
+                    sellerId : userInfo?.id,
                     buyerId : checkUserStatus,
                     specificArticleId : checkArticleId
                     
@@ -759,7 +762,7 @@ export default function MarketArticlePageTest() {
     
     function MarketArticleElement({marketArticleElem1}) {
         
-        const { article, userInfo } = marketArticleElem1;
+        const { article = {} , userInfo = {} } = marketArticleElem1 ?? {};
         
         const formatDate = (dateString) => {
             
@@ -870,19 +873,19 @@ export default function MarketArticlePageTest() {
                                     </div>
                                     <div className = "row">
                                         <div className = "col" style = {{fontSize : "0.75rem", marginBottom : "0.25rem"}}>
-                                            {funcSellEnded(article.sellEnded)}
+                                            {funcSellEnded(article?.sellEnded)}
                                         </div>
                                     </div>
                                     <div className = "row">
                                         <div className = "col" style = {{fontSize : "1.4375rem", marginBottom : "0.125rem"}}>
-                                            {article.title}
+                                            {article?.title}
                                         </div>
                                     </div>
                                     <div className = "row">
                                         <div className = "col" style = {{marginBottom : "0.875rem"}}>
                                             <div className = "row h-100">
                                                 <div className = "col-auto" style = {{fontSize : "1.125rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                    {funcFreeShare(article.productCost)}
+                                                    {funcFreeShare(article?.productCost)}
                                                 </div>
                                                 <div className = "col">
                                                     
@@ -890,7 +893,7 @@ export default function MarketArticlePageTest() {
                                                 <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
                                                     <div className = "row">
                                                         <div className = "col-auto" style = {{fontSize : "0.75rem", display : "flex", alignItems : "center", color : "#6d6d6d"}}>
-                                                            {formatDate(article.createdAt)}
+                                                            {formatDate(article?.createdAt)}
                                                             {/* {article.createdAt.toLocaleString()} */}
                                                         </div>
                                                         {/* 시간 여유 시 구현 목표로 하는 코드 및 시스템*/}
@@ -915,7 +918,7 @@ export default function MarketArticlePageTest() {
                                                     <div className = "row">
                                                         <div className = "col" style = {{height : "2.5rem", marginTop : "0.375rem", marginBottom : "0.375rem"}}>
                                                             
-                                                            <Link className = "linkDefault" to = {`/market/user/${userInfo.id}`} style = {{display : "inline-block"}}>
+                                                            <Link className = "linkDefault" to = {`/market/user/${userInfo?.id}`} style = {{display : "inline-block"}}>
                                                             
                                                                 <div className = "row">
                                                                     <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.5rem"}}>
@@ -932,7 +935,7 @@ export default function MarketArticlePageTest() {
                                                                             <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                                                 <div className = "row h-100">
                                                                                     <div className = "col-auto" style = {{fontSize : "1.1875rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                                        {userInfo.name}
+                                                                                        {userInfo?.name}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -979,7 +982,7 @@ export default function MarketArticlePageTest() {
                                     </div>
                                     <div className = "row">
                                         <div className = "col" style = {{fontSize : "0.9375rem", minHeight : "6rem", marginTop : "0.875rem", marginBottom : "1rem", whiteSpace : "pre-wrap"}}>
-                                            {article.content}
+                                            {article?.content}
                                         </div>
                                     </div>
                                 </div>
@@ -1028,7 +1031,7 @@ export default function MarketArticlePageTest() {
 
     function MarketCommentElementOnArticle({marketCommentElem1, onUpdateConfirm}) {
         
-        const { comment, userInfo } = marketCommentElem1;
+        const { comment = {} , userInfo = {} } = marketCommentElem1 ?? {};
         
         const formatDate = (dateString) => {
             
@@ -1051,7 +1054,7 @@ export default function MarketArticlePageTest() {
         const [ commentSellerCheckedByBuyer, setCommentSellerCheckedByBuyer ] = useState(false);
         const [ commentBuyerCheckedBySeller, setCommentBuyerCheckedBySeller ] = useState(false);
         
-        const [ editingContent, setEditingContent ] = useState(comment.content);
+        const [ editingContent, setEditingContent ] = useState(comment?.content);
         
         const handleContentChange = (event) => {
             
@@ -1061,7 +1064,7 @@ export default function MarketArticlePageTest() {
         
         const handleSubmit = () => {
             
-            onUpdateConfirm(comment.id, editingContent);
+            onUpdateConfirm(comment?.id, editingContent);
             
             setCommentEditModeChecked(false);
             
@@ -1084,7 +1087,7 @@ export default function MarketArticlePageTest() {
                     const marketDealedLogCheckedBySellerDto = {
                         
                         sellerId : checkUserStatus,
-                        buyerId : userInfo.id,
+                        buyerId : userInfo?.id,
                         specificArticleId : checkArticleId
                         
                     } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
@@ -1137,7 +1140,7 @@ export default function MarketArticlePageTest() {
                     
                     const marketDealedLogCheckedByBuyerDto = {
                         
-                        sellerId : userInfo.id,
+                        sellerId : userInfo?.id,
                         buyerId : checkUserStatus,
                         specificArticleId : checkArticleId
                         
@@ -1193,7 +1196,7 @@ export default function MarketArticlePageTest() {
             
             let letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout;
             
-            if (checkUserStatus == comment.marketUserId) {
+            if (checkUserStatus == comment?.marketUserId) {
                 
                 if (checkUserStatus === checkArticleWriteUser) {
                 
@@ -1232,7 +1235,7 @@ export default function MarketArticlePageTest() {
                                         <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
                                             ｜
                                         </div>
-                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment.id})}
+                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment?.id})}
                                         style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                             삭제
                                         </div>
@@ -1281,7 +1284,7 @@ export default function MarketArticlePageTest() {
                                         <div className = "col-auto px-0">
                                             ｜
                                         </div>
-                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment.id})}
+                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => constDivisionToDeleteMarketCommentOnArticle({commentId : comment?.id})}
                                         style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                             삭제
                                         </div>
@@ -1323,7 +1326,7 @@ export default function MarketArticlePageTest() {
                     
                 } else {
                     
-                    if (comment.marketUserId == checkArticleWriteUser) {
+                    if (comment?.marketUserId == checkArticleWriteUser) {
                         
                         // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
                         
@@ -1391,7 +1394,7 @@ export default function MarketArticlePageTest() {
                                             <div className = "row">
                                                 <div className = "col" style = {{height : "2rem", marginTop : "0.375rem", marginBottom : "0.375rem"}}>
 
-                                                <Link className = "linkDefault" to = {`/market/user/${userInfo.id}`} style = {{display : "inline-block"}}>
+                                                <Link className = "linkDefault" to = {`/market/user/${userInfo?.id}`} style = {{display : "inline-block"}}>
                                                 
                                                     <div className = "row">
                                                         <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.5rem"}}>
@@ -1408,7 +1411,7 @@ export default function MarketArticlePageTest() {
                                                                 <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                                     <div className = "row h-100">
                                                                         <div className = "col-auto" style = {{fontSize : "1.0625rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                            {userInfo.name}
+                                                                            {userInfo?.name}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1462,7 +1465,7 @@ export default function MarketArticlePageTest() {
                                                 
                                                     <div className = "row">
                                                         <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.875rem", marginBottom : "0.4375rem", whiteSpace : "pre-wrap"}}>
-                                                            {comment.content}
+                                                            {comment?.content}
                                                         </div>
                                                     </div>
                                                 
@@ -1472,7 +1475,7 @@ export default function MarketArticlePageTest() {
                                             
                                             <div className = "row">
                                                 <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.6875rem", marginBottom : "0.125rem", color : "#6d6d6d"}}>
-                                                    {formatDate(comment.createdAt)}
+                                                    {formatDate(comment?.createdAt)}
                                                 </div>
                                             </div>
                                             
@@ -1650,7 +1653,7 @@ export default function MarketArticlePageTest() {
         
         let letMarketArticleUpdateOrDeleteDivisionPageLayout;
         
-        if (checkUserStatus == article.marketUserId) {
+        if (checkUserStatus == article?.marketUserId) {
             
             letMarketArticleUpdateOrDeleteDivisionPageLayout =
             
@@ -1661,7 +1664,7 @@ export default function MarketArticlePageTest() {
                         <div className = "col" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", fontSize : "1rem"}}>
                             <div className = "row">
                                 <div className = "col-auto" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem"}}>
-                                    <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/updateArticle/${article.id}`}
+                                    <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/updateArticle/${article?.id}`}
                                     style = {{color : "#6d6d6d"}}>
                                         수정
                                     </Link>
@@ -1670,7 +1673,7 @@ export default function MarketArticlePageTest() {
                                     ｜
                                 </div>
                                 <div className = "col-auto divisionOnclickStyleDefault" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}} 
-                                onClick = {() => constDivisionToDeleteMarketArticle({articleId : article.id})}>
+                                onClick = {() => constDivisionToDeleteMarketArticle({articleId : article?.id})}>
                                     삭제
                                 </div>
                             </div>
@@ -1710,12 +1713,12 @@ export default function MarketArticlePageTest() {
     
     function MarketArticleLikeButtonPageLayout({marketArticleElem1}) {
         
-        const { article, userInfo } = marketArticleElem1;
+        const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
                                 
         if (constMarketProductInterestedLogElement.length > 0) {} else {}
         <></>
         
-        if (checkUserStatus == article.marketUserId) {
+        if (checkUserStatus == article?.marketUserId) {
             
             return(
                 <>

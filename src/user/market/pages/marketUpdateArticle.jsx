@@ -314,7 +314,8 @@ export default function MarketUpdateArticlePage() {
                 
                 if (constGetSelectSpecificMarketArticle.imageLink) {
                     
-                    const constUpdateImageLinkURL = `${BACKEND_BASE_URL}${constGetSelectSpecificMarketArticle.imageLink}`
+                const constUpdateImageLinkURL = new URL(constGetSelectSpecificMarketArticle.imageLink ?? "", BACKEND_BASE_URL).toString();
+                    
                     // setUpdateImageLink(constGetSelectSpecificMarketArticle.imageLink);
                     setDisplayImageName(constGetSelectSpecificMarketArticle.imageOriginalFilename);
                     setPreviewURL(constUpdateImageLinkURL);
