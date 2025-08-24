@@ -742,7 +742,21 @@ export default function MarketMyLikedProductsPage() {
                                                                             </div> */}
                                                                         </div>
                                                                         <div style = {{position: "absolute", zIndex: "2", width : "100%", height : "100%"}}>
-                                                                            <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                                        {imageLinkPath ?
+                                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                                        :
+                                                                        <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
+                                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
+                                                                                
+                                                                            </div>
+                                                                            <div className = "col" style = {{flexGrow : "7"}}>
+                                                                                
+                                                                            </div>
+                                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                        }
                                                                         </div>
                                                                     </div>
                                                                 </div>
