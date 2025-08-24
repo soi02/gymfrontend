@@ -842,7 +842,7 @@ export default function MarketArticlePageTest() {
                                                 <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
                                                     
                                                 </div>
-                                                <div className = "col" style = {{flexGrow : "3"}}>
+                                                <div className = "col" style = {{flexGrow : "7"}}>
                                                     
                                                 </div>
                                                 <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
