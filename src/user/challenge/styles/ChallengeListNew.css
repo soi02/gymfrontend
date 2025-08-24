@@ -133,7 +133,7 @@
 /* Create 카드: 전체 폭 */
 .cl-new-create-card {
   grid-column: 1 / -1; /* 두 컬럼 모두 차지 */
-  margin-top: var(--cl-gap); /* 일반 카드와의 간격 */
+  margin-top: 2.2rem;
   background: #fff9e3;
   color: #fff;
   border-radius: var(--cl-card-radius);

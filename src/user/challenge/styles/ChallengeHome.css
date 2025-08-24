@@ -1,0 +1,158 @@
+/* ChallengeHome.css
+   접두사: challenge-home-
+   ChallengeListNew.css의 레이아웃 틀(제목/소제목/좌우 20px/스크롤)을 반영
+*/
+
+/* 토큰 */
+:root {
+  --ch-home-max: 100%;
+  --ch-pad-x: 20px;              /* 좌우 20px: ChallengeList와 동일 */
+  --ch-pad-y: 1.75rem;           /* 상하 패딩 */
+  --ch-card-radius-lg: 16px;
+  --ch-card-radius-md: 12px;
+  --ch-shadow-card: 0 10px 30px rgba(0,0,0,0.08);
+  --ch-ink: #333;
+  --ch-sub: #949494;
+  --ch-bg: #ffffff;
+  --ch-surface: #ffffff;
+}
+
+/* 컨테이너: ChallengeList와 동일한 외곽 레이아웃 */
+.challenge-home-container {
+  max-width: var(--ch-home-max);
+  padding: var(--ch-pad-y) var(--ch-pad-x);
+  box-sizing: border-box;
+  height: 100vh;                 /* 세로 스크롤 컨테이너 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--ch-bg);
+  color: var(--ch-ink);
+}
+
+/* 헤더(제목/소제목) - 스타일/간격을 ChallengeList 헤더와 맞춤 */
+.challenge-home-header {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.challenge-home-title {
+  font-size: 1.3rem;             /* cl-new-title와 동일 크기 */
+  font-weight: bold;
+  margin: 0;
+  color: var(--ch-ink);
+  line-height: 2rem;
+}
+.challenge-home-subtitle {
+  font-size: 0.8rem;             /* cl-new-subtitle과 동일 크기 */
+  color: var(--ch-sub);
+  margin-top: 0.5rem;
+}
+
+/* 메인 영역 */
+.challenge-home-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 섹션 공통 */
+.challenge-home-section { margin-top: 6px; }
+.challenge-home-sec-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.challenge-home-sec-title {
+  font-size: 16px; font-weight: 700; color: var(--ch-ink);
+}
+.challenge-home-seeall {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; font-weight: 600; color: var(--ch-ink);
+  background: #ededf2; border: 0; padding: 6px 10px;
+  border-radius: 999px; cursor: pointer;
+}
+
+/* 추천 가로 스크롤 카드 */
+.challenge-home-rec-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 72%;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 420px) {
+  .challenge-home-rec-row { grid-auto-columns: 58%; }
+}
+.challenge-home-rec-card {
+  background: var(--ch-surface);
+  border-radius: var(--ch-card-radius-lg);
+  box-shadow: var(--ch-shadow-card);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 140px auto;
+  min-height: 220px;
+  cursor: pointer;
+}
+.challenge-home-rec-thumb { background: #ddd center/cover no-repeat; }
+.challenge-home-rec-meta { padding: 12px 12px 14px; }
+.challenge-home-rec-title {
+  font-size: 15px; font-weight: 700; color: var(--ch-ink);
+  line-height: 1.35; margin-bottom: 6px;
+}
+.challenge-home-rec-sub { font-size: 12px; color: #7b8190; }
+
+/* 스켈레톤 */
+.challenge-home-rec-skel {
+  height: 220px;
+  border-radius: var(--ch-card-radius-lg);
+  background: linear-gradient(90deg, #eceef3 25%, #f5f6fa 37%, #eceef3 63%);
+  background-size: 400% 100%;
+  animation: chHomeShimmer 1.2s infinite;
+}
+@keyframes chHomeShimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 액션 그리드 */
+.challenge-home-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 480px) {
+  .challenge-home-actions { grid-template-columns: 1fr 1fr; }
+}
+.challenge-home-action {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px; align-items: center;
+  width: 100%; border: 0;
+  background: var(--ch-surface);
+  border-radius: var(--ch-card-radius-md);
+  padding: 14px;
+  box-shadow: var(--ch-shadow-card);
+  text-align: left; cursor: pointer;
+}
+.challenge-home-action-ico {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: #0f1115; color: #fff; display: grid; place-items: center;
+  font-size: 22px;
+}
+.challenge-home-action-t1 { font-size: 15px; font-weight: 700; color: var(--ch-ink); }
+.challenge-home-action-t2 { margin-top: 2px; font-size: 12px; color: #7b8190; }
+
+/* 빈 상태 */
+.challenge-home-empty {
+  font-size: 13px; color: #7b8190;
+  background: #eef1f6; border-radius: 12px; padding: 14px;
+}
+
+/* 하단 여백 */
+.challenge-home-bottom-space { height: 16px; }
+
+/* 아이폰 SE 최적화 */
+@media (max-width: 375px) {
+  .challenge-home-container { padding: 1.25rem 20px; }
+  .challenge-home-title { font-size: 1.2rem; }
+}
