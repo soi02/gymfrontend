@@ -1,0 +1,266 @@
+/* ===== 토큰 ===== */
+:root{
+  --ch-pad-x: 20px;          /* 좌우 20px 유지 */
+  --ch-pad-y: 20px;
+  --ch-radius-lg: 16px;
+  --ch-radius-md: 12px;
+  --ch-shadow: 0 10px 28px rgba(0,0,0,.08);
+
+  --ch-ink: #222;
+  --ch-sub: #7b8190;
+  --ch-bg: #ffffff;
+  --ch-surface: #ffffff;
+  --ch-chip: #eef1f6;
+  --ch-divider: #eceff4;
+}
+
+/* ===== 컨테이너 ===== */
+.challenge-home-container{
+  box-sizing: border-box;
+  padding: var(--ch-pad-y) var(--ch-pad-x);
+  max-width: 100%;
+  height: 100dvh;                       /* iOS 브라우저 대응 */
+  display: flex; flex-direction: column;
+  background: var(--ch-bg); color: var(--ch-ink);
+}
+
+/* ===== 헤더 ===== */
+.chome-header{ margin-bottom: 10px; }
+.chome-title{
+  font-size: 1.35rem; font-weight: 800; line-height: 1.35;
+  letter-spacing:-0.2px; margin: 0 0 6px 0;
+}
+.chome-subtitle{ font-size: .85rem; color: var(--ch-sub); margin: 0 0 12px 0; }
+
+.chome-actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
+.chome-btn{
+  height: 40px; border-radius: 999px; padding: 0 14px;
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:.9rem; font-weight:700; cursor:pointer; border:1px solid transparent;
+  background: transparent; color: var(--ch-ink);
+}
+.chome-btn svg{ font-size:18px; }
+.chome-btn-primary{ background:#0f1115; color:#fff; border-color:#0f1115; }
+.chome-btn-primary:disabled{ opacity:.6; cursor:not-allowed; }
+.chome-btn-ghost{ background:#f3f4f6; color:#111827; border-color:#f3f4f6; }
+
+.chome-inline-notice{
+  margin-top: 8px; font-size:.8rem; color:#5b6478;
+  background:#f5f7fb; border:1px solid #e7ebf3; padding:10px 12px; border-radius:10px;
+}
+
+/* ===== 본문 스크롤 영역 ===== */
+.chome-main{
+  flex:1; min-height:0;                 /* ★ 가운데 스크롤 허용 */
+  display:flex; flex-direction:column; gap:16px;
+  overflow:auto; -webkit-overflow-scrolling:touch;
+}
+.chome-section{ padding-top: 2px; }
+.chome-sec-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.chome-sec-title{ font-size:1rem; font-weight:800; }
+
+/* ===== 가로 캐러셀 ===== */
+.chome-hscroll-wrapper{
+  position: relative;
+}
+.chome-hscroll{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 78%;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 420px){ .chome-hscroll{ grid-auto-columns: 62%; } }
+@media (min-width: 640px){ .chome-hscroll{ grid-auto-columns: 48%; } }
+
+.chome-hcell{
+  scroll-snap-align: start;
+}
+
+/* 카드(세로 구성) */
+.chome-hcard{
+  width: 100%;
+  display: grid;
+  grid-template-rows: 160px auto;
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-divider);
+  border-radius: var(--ch-radius-lg);
+  box-shadow: var(--ch-shadow);
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .25s ease;
+}
+.chome-hcard:active{ transform: scale(.997); }
+
+.chome-hcard-thumb{
+  background: #dcdfe6 center/cover no-repeat;
+}
+.chome-hcard-body{
+  padding: 12px 12px 14px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.chome-hcard-title{
+  font-size: 1rem; font-weight: 800; line-height:1.35;
+}
+.chome-hcard-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+.chome-tag{
+  font-size:.75rem; font-weight:700; color:#394150;
+  background: var(--ch-chip); border-radius: 999px; padding: 5px 8px;
+}
+
+/* 캐러셀 가장자리 그라데이션 마스크 */
+.chome-hscroll-edge{
+  position:absolute; top:0; bottom:0; width:24px; pointer-events:none;
+  z-index:2;
+}
+.chome-hscroll-edge.left{ left:-2px; background: linear-gradient(to right, #fff, rgba(255,255,255,0)); }
+.chome-hscroll-edge.right{ right:-2px; background: linear-gradient(to left, #fff, rgba(255,255,255,0)); }
+
+/* 인라인 빈 상태 */
+.chome-empty-inline{
+  display:flex; align-items:center; justify-content:center;
+  height: 160px; min-width: 80%;
+  color:#5b6478; background:#f5f7fb; border:1px dashed #e0e6f2; border-radius: 12px;
+}
+
+/* 캐러셀 스켈레톤 */
+.chome-hskel{
+  height: 236px; min-width: 78%;
+  border-radius: var(--ch-radius-lg);
+  border:1px solid var(--ch-divider);
+  background: linear-gradient(90deg,#eef1f6 25%,#f7f9fc 37%,#eef1f6 63%);
+  background-size: 400% 100%; animation: chomeShimmer 1.2s infinite;
+  box-shadow: var(--ch-shadow);
+}
+@keyframes chomeShimmer{
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== 액션 그리드 ===== */
+.chome-grid-actions{
+  display:grid; grid-template-columns: 1fr; gap:10px;
+}
+@media (min-width:480px){ .chome-grid-actions{ grid-template-columns: 1fr 1fr; } }
+
+.chome-action{
+  display:grid; grid-template-columns: 48px 1fr; gap:12px; align-items:center;
+  width:100%; border:1px solid var(--ch-divider);
+  background: var(--ch-surface);
+  border-radius: var(--ch-radius-md);
+  padding: 14px; box-shadow: var(--ch-shadow);
+  text-align:left; cursor:pointer; transition:.25s ease;
+}
+.chome-action:active{ transform: scale(.997); }
+
+.chome-action-ico{
+  width:48px; height:48px; border-radius: 14px;
+  background:#0f1115; color:#fff; display:grid; place-items:center; font-size: 22px;
+}
+.chome-action-texts{ display:flex; flex-direction:column; }
+.chome-action-t1{ font-size:.98rem; font-weight:800; color: var(--ch-ink); }
+.chome-action-t2{ margin-top:2px; font-size:.8rem; color: var(--ch-sub); }
+
+.chome-bottom-space{ height: 14px; }
+
+/* ===== AI 로딩 오버레이 ===== */
+.chome-loading{
+  position: fixed; inset: 0;        /* 페이지 전체 덮음 */
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,.72); backdrop-filter: blur(6px);
+  z-index: 20;
+}
+.chome-loading-core{
+  position: relative;
+  width: min(520px, 86vw);
+  border-radius: 18px;
+  border: 1px solid var(--ch-divider);
+  background: #fff;
+  box-shadow: 0 30px 60px rgba(0,0,0,.15);
+  padding: 22px 18px 18px;
+  display:grid; grid-template-columns: 120px 1fr; gap:14px;
+}
+
+/* 회전 오브(순수 CSS) */
+.chome-orb-spin{
+  width: 120px; height: 120px; border-radius: 999px;
+  background:
+    conic-gradient(from 0deg, #0f1115, #3b3f4a, #aeb7c7, #0f1115);
+  animation: orbSpin 2.4s linear infinite;
+  mask: radial-gradient(circle 48px, transparent 46px, #000 47px);
+  position: relative;
+}
+.chome-orb-spin::after{
+  content:""; position:absolute; inset:8px; border-radius:999px;
+  background: radial-gradient( circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,.2) );
+  box-shadow: inset 0 0 24px rgba(0,0,0,.18);
+}
+@keyframes orbSpin { to { transform: rotate(360deg); } }
+
+.chome-orb-glow{
+  position:absolute; width: 140px; height: 140px; left:-10px; top:-10px;
+  filter: blur(18px);
+  background: radial-gradient( circle, rgba(15,17,21,.20), rgba(15,17,21,0) 60% );
+  pointer-events:none;
+}
+
+/* 텍스트/프로그레스 */
+.chome-loading-text{ display:flex; flex-direction:column; gap:8px; justify-content:center; }
+.chome-loading-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#0f1115; color:#fff; padding:6px 10px; border-radius:999px;
+  width: fit-content; font-weight:800; font-size:.86rem;
+}
+.chome-loading-badge svg{ font-size:18px; }
+
+.chome-loading-steps{ position: relative; height: 20px; overflow:hidden; }
+.chome-loading-steps .step{
+  position:absolute; left:0; top:0; right:0;
+  opacity:0; transform: translateY(8px);
+  animation: stepCycle 3.0s ease-in-out infinite;
+  font-size:.9rem; font-weight:700; color:#333;
+}
+.chome-loading-steps .step-2{ animation-delay: 1s; }
+.chome-loading-steps .step-3{ animation-delay: 2s; }
+@keyframes stepCycle{
+  0%{ opacity:0; transform:translateY(8px); }
+  10%,30%{ opacity:1; transform:translateY(0); }
+  40%{ opacity:.0; transform:translateY(-8px); }
+  100%{ opacity:0; }
+}
+
+.chome-progress-bar{
+  height: 8px; background:#f2f4f8; border-radius:999px; overflow:hidden; border:1px solid #e7ebf3;
+}
+.chome-progress-bar i{
+  display:block; height:100%; width:30%;
+  background: linear-gradient(90deg,#0f1115,#3b3f4a);
+  animation: indet 1.2s ease-in-out infinite;
+  border-radius:999px;
+}
+@keyframes indet{
+  0%{ margin-left:-30%; width:30%; }
+  50%{ width:60%; }
+  100%{ margin-left:100%; width:30%; }
+}
+.chome-loading-sub{ margin:4px 0 0; color:#5b6478; font-size:.85rem; }
+
+/* 오버레이 가장자리 은은한 마스크 (선택 사항) */
+.chome-loading-mask{
+  position: absolute; top:0; bottom:0; width: 8vw; pointer-events:none;
+}
+.chome-loading-mask.chome-left{ left:0; background: linear-gradient(to right, rgba(255,255,255,.9), transparent); }
+.chome-loading-mask.chome-right{ right:0; background: linear-gradient(to left, rgba(255,255,255,.9), transparent); }
+
+/* iPhone SE 최적화 */
+@media (max-width:375px){
+  .challenge-home-container{ padding: 16px var(--ch-pad-x); }
+  .chome-title{ font-size: 1.2rem; }
+  .chome-hscroll{ grid-auto-columns: 86%; }
+  .chome-loading-core{ grid-template-columns: 1fr; gap:12px; }
+  .chome-orb-spin{ margin: 0 auto; }
+}

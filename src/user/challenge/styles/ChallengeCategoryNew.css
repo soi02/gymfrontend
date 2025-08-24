@@ -1,0 +1,292 @@
+/* ====== Page layout (header size/position 유지 느낌) ====== */
+.ccp-page{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+/* Header */
+.ccp-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fff;
+  /* box-shadow: 0 1px 0 rgba(0,0,0,.06); */
+  /* ✅ padding-top과 padding-bottom을 동일하게 16px로 설정 */
+  padding: 1.75rem 20px; 
+}
+.ccp-header-inner{
+  position: relative;
+  padding: 16px 20px 18px; /* 타이틀/서브타이틀 여백 유지 */
+}
+.ccp-icon-wrap{ width: 60px; height: 60px; display: grid; place-items: center; }
+.ccp-icon{ width: 44px; height: 44px; object-fit: contain; }
+.ccp-head-text{ display: flex; flex-direction: column; justify-content: center; }
+.ccp-title{ margin: 0; font-size: 1.3rem; font-weight: bold; color: #333; margin-bottom: .4rem;}
+.ccp-sub{font-size: .8rem; color: #949494; }
+
+/* Chip bar (sticky-ish) */
+.ccp-chipbar{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.ccp-chip-scroll{
+  display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.ccp-chip{
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+  border: 1px solid #e6e6ea;
+  background: #f7f7fa;
+  color: #333;
+}
+.ccp-chip.active{
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* Content */
+.ccp-content{
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.ccp-list{ display: grid; gap: 12px; }
+.ccp-content .ch-category-fab-container{
+  position: sticky !important;
+  bottom: 16px;
+  right: 0;               /* 내부 레이아웃 우측 정렬 */
+  display: flex;
+  justify-content: flex-end;
+  z-index: 30;
+  pointer-events: none;   /* 스크롤 자연스럽게 */
+  margin-top: 16px;       /* 마지막 카드와 간격 */
+}
+
+/* 실제 버튼/칩만 클릭 가능하게 */
+.ccp-content .ch-category-fab-hash,
+.ccp-content .ch-category-keyword-chips-slide-up{
+  pointer-events: auto;
+}
+.ccp-empty{
+  padding: 36px 12px;
+  text-align: center;
+  color: #8e8e93;
+  font-size: .9rem;
+}
+
+/* ====== New Card ====== */
+.cc-card {
+  /* ✅ 고정 높이 지정 */
+  height: 125px; /* 원하는 고정 높이 값으로 설정 (예: 120px) */
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 20px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(17,17,20,.02);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .16s ease;
+}
+.cc-card:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(17,17,20,.08); }
+
+/* thumbnail */
+.cc-thumb {
+  /* ✅ 이미지 컨테이너 높이를 카드 높이에 맞게 100%로 설정 */
+  height: 100%;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f1f1f4;
+}
+.cc-thumb > img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.cc-thumb-fallback{ width:100%; height:100%; display:grid; place-items:center; color:#9aa0a6; font-size:12px; }
+
+/* badges on thumbnail */
+.cc-badge{
+  position: absolute; left: 8px;
+  padding: 3px 8px; font-size: 10px; font-weight: bold;
+  border-radius: .25rem; color: #fff;
+}
+.cc-badge-dday{ top: 8px; background: #7c1d0d; }
+.cc-badge-duration{ bottom: 8px; background: #001439; }
+
+/* body */
+.cc-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* ✅ 남은 공간을 모두 차지하도록 flex-grow 추가 */
+  flex-grow: 1;
+  /* ✅ min-height를 0으로 설정하여 overflow를 막음 */
+  min-height: 0;
+}
+.cc-title{
+  margin: 0; font-size: .9rem; font-weight: bold; color: #333; margin-bottom: .7rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cc-intro {
+  /* ✅ body 내에서 남은 공간을 차지하도록 flex-grow 추가 */
+  flex-grow: 1;
+  /* ✅ 내용이 넘칠 경우 스크롤 숨김 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; /* 한 줄로 처리하지 않음 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.45;
+}
+.cc-tags{ display: flex; flex-wrap: nowrap; gap: 6px; overflow: hidden; margin-bottom: .4rem; }
+.cc-tag{
+  font-size: 11px; color: #5e5e5e; background: #f7f7f7; border: 1px solid rgba(0,0,0,.06);
+  padding: 3px 8px; border-radius: 999px;
+}
+
+
+/* 날짜: 항상 한 줄(넘칠 땐 말줄임) */
+.cc-date{
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .75rem;
+  color: #949494;
+  white-space: nowrap;            /* 한 줄 유지 */
+}
+.cc-date-text{
+  min-width: 0;                   /* 그리드 내 줄바꿈 방지용 */
+  overflow: hidden;
+  text-overflow: ellipsis;        /* 아주 좁은 화면 대비 */
+}
+
+/* 하단 서브 메타(인원 등) */
+.cc-submeta{
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .75rem;
+  color: #949494;
+}
+
+/* 아이콘은 기존과 동일하게 사용 */
+.cc-meta-item{ display: inline-flex; align-items: center; gap: 4px; }
+
+
+
+/* right chevron */
+.cc-cta{ display: grid; place-items: center; }
+.cc-cta-ico{ font-size: 18px; color: rgb(179, 179, 179); }
+
+@media (max-width: 360px){
+  .cc-card{ grid-template-columns: 96px 1fr; }
+  .ccp-header{ grid-template-columns: 52px 1fr; }
+  .ccp-icon{ width: 40px; height: 40px; }
+  .cc-tags {
+    flex-wrap: wrap; /* ✅ 작은 화면에서는 줄바꿈 허용 */
+  }
+}
+
+
+
+/* 기존 카테고리 헤더(아이콘/텍스트)는 그대로 스타일 유지 */
+.ch-category-header{
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.ch-category-icon{ width:44px; height:44px; object-fit:contain; }
+.ch-category-title{ margin:0; font-size:1.3rem; font-weight:bold; margin-bottom: .5rem;}
+.ch-category-sub{ margin:.15rem 0 0; font-size:.8rem; color:#949494; line-height: 1rem; }
+
+/* ===== FAB: 헤더 우하단에 고정 ===== */
+.ccp-header .ch-category-fab-container{
+  position: absolute;
+  right: 20px;
+  bottom: 50px;            /* 헤더 하단에 붙임 */
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 2;
+}
+
+/* 해시 버튼은 기존 스타일 유지 (필요 시만 보정) */
+.ccp-header .ch-category-fab-hash{
+  /* 원래 스타일 그대로 사용 */
+}
+
+/* 칩 패널: 헤더 아래로 펼쳐지게 */
+.ccp-header .ch-category-keyword-chips-slide-up{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);   /* FAB 버튼보다 아래로 */
+}
+
+/* FAB/칩이 컨텐츠 위로 겹쳐져도 클릭 잘 되도록 */
+.ccp-header .ch-category-fab-container,
+.ccp-header .ch-category-fab-hash,
+.ccp-header .ch-category-keyword-chips-slide-up{
+  pointer-events: auto;
+}
+
+
+/* 아이콘 */
+.ch-category-icon-wrap {
+  width: 70px; /* ✅ 2rem -> 70px로 변경 */
+  height: 70px; /* ✅ 2rem -> 70px로 변경 */
+  display: grid;
+  place-items: center;
+}
+.ch-category-icon {
+  width: 54px; /* ✅ 2rem -> 54px로 변경 */
+  height: 54px; /* ✅ 2rem -> 54px로 변경 */
+  object-fit: contain;
+}
+
+
+
+
+.ch-category-keyword-chips-slide-up{
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* FAB 해시 버튼의 배경/오라 제거 (있다면) */
+.ch-category-fab-hash{
+  background: #7c1d0d;                 /* 투명으로 하고 싶으면 transparent */
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.ch-category-fab-hash::before,
+.ch-category-fab-hash::after{
+  content: none !important;         /* 라디얼/오라 효과 제거 */
+}
+
+/* 칩 자체를 완전 불투명 화이트로 (배경 비침 방지) */
+.ch-category-chip{
+  background: #fff !important;      /* 기존 rgba → #fff */
+  box-shadow: none;                  /* 필요 없으면 제거 */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.ch-category-chip:hover{ box-shadow: none; }
+
+
+/* 활성 칩은 색상만 유지 */
+.ch-category-chip.active{
+  background: #7c1d0d !important;
+  color: #fff !important;
+}

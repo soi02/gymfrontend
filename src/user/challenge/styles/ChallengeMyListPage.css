@@ -26,10 +26,10 @@
 
 /* 제목: cmrl-new-title의 레이아웃을 복제 */
 .cmlp-title {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: bold;
   margin: 0;
-  color: #2c3e50;
+  color: #333;
   flex-grow: 1; /* 제목이 남은 공간을 차지하도록 */
 }
 
@@ -46,7 +46,7 @@
 /* 부제목: cmrl-new-sub의 레이아웃을 복제 */
 .cmlp-sub {
   font-size: 0.8rem;
-  color: #7f8c8d;
+  color: #949494;
   margin-top: 0.5rem; /* 제목과 부제목 사이 간격 */
   margin-left: 2.1rem;
 }
