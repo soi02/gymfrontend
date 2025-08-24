@@ -1,9 +1,9 @@
-// src/global/pages/BottomNavigation.jsx
-import React, { useState } from "react";
-import axios from "axios";
+// BottomNavigation.jsx
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import BasicLoginModal from "./BasicLoginModal"; 
+import BasicLoginModal from "./BasicLoginModal";
+import apiClient from "../api/apiClient";
 
 function BottomNavigationItem({ link, iconClass, label, matchPrefix, onClick }) {
   const location = useLocation();
@@ -13,89 +13,56 @@ function BottomNavigationItem({ link, iconClass, label, matchPrefix, onClick }) 
 
   return (
     <div className="text-center col">
-      <button
-        type="button"
-        onClick={onClick}
-        className="text-decoration-none d-block btn btn-link p-0"
-      >
-        <i
-          className={iconClass}
-          style={{ fontSize: "24px", color: isActive ? "#000000" : "#C4C4C4" }}
-        />
-        <div style={{ fontSize: "0.75rem", color: isActive ? "#000000" : "#C4C4C4" }}>
-          {label}
-        </div>
+      <button type="button" onClick={onClick} className="text-decoration-none d-block btn btn-link p-0">
+        <i className={iconClass} style={{ fontSize: 24, color: isActive ? "#000000" : "#C4C4C4" }} />
+        <div style={{ fontSize: "0.75rem", color: isActive ? "#000000" : "#C4C4C4" }}>{label}</div>
       </button>
     </div>
   );
 }
 
-
 export default function BottomNavigation() {
   const navigate = useNavigate();
-  // Redux에서 userId와 token을 모두 가져옵니다.
   const { id: userId, token } = useSelector((state) => state.auth);
 
-  // 로그인 모달 상태
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [redirectAfterLogin, setRedirectAfterLogin] = useState("/");
 
-  // 공통 인증 체크
-  const requireAuth = (nextPath) => {
-    // Redux 상태의 userId와 token만 사용
-    const authed = !!userId && !!token;
+  // ✅ 단일 소스가 아니면 OR로 합치고, id는 0도 허용
+  const localToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const authed = useMemo(() => (userId != null) || Boolean(token || localToken), [userId, token, localToken]);
+
+  // ✅ 인증이 되면 모달 강제 닫기 (혹시 열려있을 수 있으니)
+  useEffect(() => {
+    if (authed && showLoginModal) setShowLoginModal(false);
+  }, [authed, showLoginModal]);
+
+  const handleProtectedNavigation = (e, path) => {
+    e.preventDefault(); // 버튼이라 필수는 아니지만 그냥 둬도 무방
     if (!authed) {
-      setRedirectAfterLogin(nextPath);
+      setRedirectAfterLogin(path);
       setShowLoginModal(true);
-      return false; 
-    }
-    return true;
-  };
-
-  const handleRoutineTabClick = (e) => {
-    e.preventDefault();
-    if (!requireAuth("/routine")) {
-      return; 
-    }
-    navigate("/routine");
-  };
-
-  const handleChallengeTabClick = (e) => {
-    e.preventDefault();
-    if (!requireAuth("/challenge/challengeIntro")) {
-      return; 
-    }
-    navigate("/challenge/challengeIntro");
-  };
-
-  const handleBuddyTabClick = async (e) => {
-    e.preventDefault();
-    // Redux 상태에 토큰이 없으면 여기서 바로 종료하고 모달 띄움
-    if (!requireAuth("/buddy")) {
       return;
     }
+    if (path === "/buddy") {
+      handleBuddyTabLogic();
+    } else {
+      navigate(path);
+    }
+  };
 
+  const handleBuddyTabLogic = async () => {
     try {
-      // apiClient를 사용하여 요청 보냄 (자동으로 Redux 토큰 사용)
-      const res = await apiClient.get(`/buddy/is-buddy`, {
-        params: { userId },
-      });
+      const res = await apiClient.get(`/buddy/is-buddy`, { params: { userId } });
       const isBuddy = res?.data?.is_buddy;
       navigate(isBuddy ? "/buddy/buddyHome" : "/buddy");
     } catch (error) {
       console.error("is_buddy 상태 확인 실패:", error);
-      // catch 블록은 더 이상 모달을 띄우지 않고,
-      // 401은 이미 apiClient.js에서 처리하므로
-      // 다른 에러일 경우에만 기본 경로로 이동
-      if (error.response?.status !== 401) {
-          navigate("/buddy");
-      }
     }
   };
 
   const handleLoginConfirm = () => {
     setShowLoginModal(false);
-    if (!userId) { try { localStorage.removeItem("token"); } catch {} }
     navigate("/login", { state: { from: redirectAfterLogin } });
   };
 
@@ -123,40 +90,41 @@ export default function BottomNavigation() {
           matchPrefix="/routine"
           iconClass="ri-file-paper-2-fill"
           label="운동기록"
-          onClick={handleRoutineTabClick}
+          onClick={(e) => handleProtectedNavigation(e, "/routine")}
         />
         <BottomNavigationItem
           link="/challenge"
           matchPrefix="/challenge"
           iconClass="ri-award-fill"
           label="수련장"
-          onClick={handleChallengeTabClick}
+          onClick={(e) => handleProtectedNavigation(e, "/challenge/challengeIntro")}
         />
         <BottomNavigationItem
           link="/buddy"
           matchPrefix="/buddy"
           iconClass="ri-wechat-fill"
           label="벗"
-          onClick={handleBuddyTabClick}
+          onClick={(e) => handleProtectedNavigation(e, "/buddy")}
         />
         <BottomNavigationItem
           link="/market"
           matchPrefix="/market"
           iconClass="ri-store-3-fill"
           label="장터"
-          onClick={() => navigate("/market")}
+          onClick={(e) => handleProtectedNavigation(e, "/market")}
         />
         <BottomNavigationItem
           link="/mypage"
           matchPrefix="/mypage"
           iconClass="ri-user-3-fill"
           label="나의 처소"
-          onClick={() => navigate("/mypage")}
+          onClick={(e) => handleProtectedNavigation(e, "/mypage")}
         />
       </div>
 
+      {/* ✅ 인증된 상태에선 모달이 절대 안 열리도록 더블가드 */}
       <BasicLoginModal
-        open={showLoginModal}
+        open={showLoginModal && !authed}
         onClose={() => setShowLoginModal(false)}
         onConfirm={handleLoginConfirm}
       />
