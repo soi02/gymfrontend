@@ -1704,10 +1704,12 @@ export default function MarketArticlePageTest() {
             return(
                 <>
                 
-                    <div className = "row gx-0" style = {{marginTop : "0.3125rem", marginBottom : "1.4375rem"}}>
+                    <div className = "row gx-0" 
+                    // style = {{marginTop : "0.3125rem", marginBottom : "1.4375rem"}}
+                    >
                         <div className = "col-auto" style = {{fontSize : "0.8125rem"}}>
                             <button type="button" className="btn buttonDefault" disabled = {true}
-                            style = {{fontSize : "0.75rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
+                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                 
                                 {
                                     <>
