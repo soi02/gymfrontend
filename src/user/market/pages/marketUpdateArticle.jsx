@@ -402,7 +402,7 @@ export default function MarketUpdateArticlePage() {
                                             </div>
                                             <div className = "row">
                                                 <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
-                                                    <i className="ri-information-line"></i> 여기에 대표로 표시되는 사진의 이름이 보여지오.
+                                                    {/* <i className="ri-information-line"></i> 여기에 대표로 표시되는 사진의 이름이 보여지오. */}
                                                 </div>
                                             </div>
                                             
