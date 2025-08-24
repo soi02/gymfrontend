@@ -1,17 +1,27 @@
+/* ✅ 페이지 본문: 화면 가장자리에서 딱 20px만 띄우기 */
 .test-page-body {
-  background-color: #f9f9f9;
-  min-height: 100vh;
-  padding: 20px;
   box-sizing: border-box;
-  max-width: 375px;
-  width: 100%;
-  margin: 0 auto;
+
+  /* 좌우 여백 20px 보장 + 375px 이하로 */
+  width: min(375px, calc(100vw - 40px));
+
+  /* 상하 여백 20px 보장 (주소창/노치 포함 대응) */
+  min-height: calc(100dvh - 40px);
+
+  /* 여기가 핵심: 바깥 여백 20px */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: calc(20px + env(safe-area-inset-top, 0px));
+  margin-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+
+  /* 내부 패딩은 제거 (정확히 20px만 띄우려면 padding 쓰지 않음) */
+  padding: 0;
 
   display: flex;
   flex-direction: column;
-  
-  /* 수정된 부분: 고정된 버튼을 위한 하단 여백 추가 */
-  padding-bottom: 120px; /* 버튼 높이와 여백을 고려하여 충분히 여유를 줌 */
+
+  /* 하단 고정 버튼 가려짐 방지 여백만 유지 */
+  padding-bottom: 120px;
 }
 
 
@@ -44,7 +54,7 @@
 .progress-dots {
   display: flex;
   gap: 6px;
-  margin-left: 230px;
+  margin-left: 250px;
   margin-top: 20px;
 }
 
@@ -75,26 +85,27 @@
   line-height: 1.5; 
 }
 
-
 .choice-buttons {
-  /* 수정된 부분: 하단에 고정될 버튼 컨테이너 */
   position: fixed;
   bottom: 20px;
-  left: 20px;
-  width: calc(100% - 40px); /* 양 옆 20px 여백 */
-  max-width: 335px; /* 375px - 40px */
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%); /* 가운데 정렬 */
   
+  /* ✅ 더 넓게: test-page-body와 같은 폭 */
+  width: min(calc(100vw - 40px), 375px);
+  
+  margin: 0; 
   display: flex;
-  gap: 16px;
+  gap: 20px;
   flex-direction: column;
+  z-index: 20;
 }
 
 .choice-btn {
   background-color: white;
   border: 2px solid #ddd;
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.4;
