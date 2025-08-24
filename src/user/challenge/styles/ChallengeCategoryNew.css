@@ -215,7 +215,7 @@
 .ccp-header .ch-category-fab-container{
   position: absolute;
   right: 20px;
-  bottom: 40px;            /* 헤더 하단에 붙임 */
+  bottom: 50px;            /* 헤더 하단에 붙임 */
   display: inline-flex;
   align-items: flex-end;
   gap: 8px;
