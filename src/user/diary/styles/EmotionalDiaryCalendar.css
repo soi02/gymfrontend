@@ -235,3 +235,36 @@
   white-space: nowrap!important;
   border: 0!important;
 }
+
+.stats-button-container {
+  width: 90%;
+  max-width: 350px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.emotion-stats-button {
+  width: 100%;
+  background: linear-gradient(45deg, #FFD700, #FFA500);
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.emotion-stats-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.emotion-stats-button i {
+  font-size: 1.2rem;
+}

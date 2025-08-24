@@ -236,6 +236,16 @@ const EmotionalDiaryCalendar = () => {
           </div>
         </div>
       )}
+
+      <div className="stats-button-container">
+        <button 
+          className="emotion-stats-button"
+          onClick={() => navigate('/diary/stats')}
+        >
+          <i className="bi bi-bar-chart-fill"></i>
+          감정 통계 보기
+        </button>
+      </div>
     </div>
   );
 };
