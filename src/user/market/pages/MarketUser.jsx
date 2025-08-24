@@ -336,7 +336,7 @@ export default function MarketUserPage() {
                             <div className = "row" style = {{height : "6rem", marginBottom : "1rem"}}>
                                 <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125remh"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem"}}>
+                                        <div className = "col" style = {{marginLeft : "0.4375rem", marginRight : "0.4375rem"}}>
                                             <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                 <div className = "row">
                                                     <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
@@ -466,7 +466,7 @@ export default function MarketUserPage() {
                             <div className = "row" style = {{height : "6rem", marginBottom : "1rem"}}>
                                 <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem"}}>
+                                        <div className = "col" style = {{marginLeft : "0.4375rem", marginRight : "0.4375rem"}}>
                                             <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
                                                 <div className = "row">
                                                     <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
@@ -594,7 +594,7 @@ export default function MarketUserPage() {
                     <div className = "row">
                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                <div className = "col" style = {{fontSize : "0.875rem"}}>
                                     내 판매 물품 개수
                                 </div>
                             </div>
@@ -614,7 +614,7 @@ export default function MarketUserPage() {
                                                 <>
                                             
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.8125rem", marginBottom : "0.8125rem"}}>
+                                                        <div className = "col" style = {{fontSize : "0.9375rem", marginBottom : "0.8125rem"}}>
                                                             판매한 물품이 없소.
                                                         </div>
                                                     </div>
@@ -639,7 +639,7 @@ export default function MarketUserPage() {
                     <div className = "row">
                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                <div className = "col" style = {{fontSize : "0.875rem"}}>
                                     판매 물품 개수
                                 </div>
                             </div>
@@ -659,7 +659,7 @@ export default function MarketUserPage() {
                                                 <>
                                             
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.8125rem", marginBottom : "0.8125rem"}}>
+                                                        <div className = "col" style = {{fontSize : "0.9375rem", marginBottom : "0.8125rem"}}>
                                                             판매한 물품이 없소.
                                                         </div>
                                                     </div>
@@ -690,7 +690,7 @@ export default function MarketUserPage() {
                     <div className = "row">
                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                <div className = "col" style = {{fontSize : "0.875rem"}}>
                                     내 구매 물품 개수
                                 </div>
                             </div>
@@ -710,7 +710,7 @@ export default function MarketUserPage() {
                                                 <>
                                             
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.8125rem", marginBottom : "0.8125rem"}}>
+                                                        <div className = "col" style = {{fontSize : "0.9375rem", marginBottom : "0.8125rem"}}>
                                                             구매한 물품이 없소.
                                                         </div>
                                                     </div>
@@ -735,7 +735,7 @@ export default function MarketUserPage() {
                     <div className = "row">
                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                <div className = "col" style = {{fontSize : "0.875rem"}}>
                                     구매 물품 개수
                                 </div>
                             </div>
@@ -755,7 +755,7 @@ export default function MarketUserPage() {
                                                 <>
                                             
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.8125rem", marginBottom : "0.8125rem"}}>
+                                                        <div className = "col" style = {{fontSize : "0.9375rem", marginBottom : "0.8125rem"}}>
                                                             구매한 물품이 없소.
                                                         </div>
                                                     </div>

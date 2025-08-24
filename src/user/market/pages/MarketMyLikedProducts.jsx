@@ -827,7 +827,7 @@ export default function MarketMyLikedProductsPage() {
                                                     <div className = "row">
                                                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                                             <div className = "row">
-                                                                <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                                                <div className = "col" style = {{fontSize : "0.875rem"}}>
                                                                     내가 탐낸 물품 개수
                                                                 </div>
                                                             </div>
@@ -849,7 +849,7 @@ export default function MarketMyLikedProductsPage() {
                                                                         <>
                                                                         
                                                                             <div className = "row">
-                                                                                <div className = "col" style = {{fontSize : "0.8125rem", marginBottom : "0.8125rem"}}>
+                                                                                <div className = "col" style = {{fontSize : "0.9375rem", marginBottom : "0.8125rem"}}>
                                                                                     탐낸 물품이 없소.
                                                                                 </div>
                                                                             </div>
