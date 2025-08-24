@@ -37,11 +37,17 @@ export default function RegisterPage() {
         confirmPassword: ''
     });
 
+    const [idCheckStatus, setIdCheckStatus] = useState({
+        checked: false,
+        available: false,
+        message: ''
+    });
+
     const [isTermsOpen, setIsTermsOpen] = useState(false);
     const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
     const navigate = useNavigate();
-    const { registerUser } = useUserService();
+    const { registerUser, checkAccountNameDuplicate } = useUserService();
     const totalSteps = 5;
 
     useEffect(() => {
@@ -113,14 +119,18 @@ export default function RegisterPage() {
 
     const handleNext = () => {
         if (step === 1 && (!formData.agreeTerms || !formData.agreePrivacy)) {
-            // alert 대신 커스텀 모달 UI 사용
-            // alert("모든 약관에 동의해야 다음 단계로 진행할 수 있습니다.");
+            alert("모든 약관에 동의해야 다음 단계로 진행할 수 있습니다.");
             return;
         }
-        if (step === 2 && formData.password !== formData.confirmPassword) {
-            // alert 대신 커스텀 모달 UI 사용
-            // alert("비밀번호가 일치하지 않습니다.");
-            return;
+        if (step === 2) {
+            if (!idCheckStatus.checked || !idCheckStatus.available) {
+                alert("아이디 중복 확인이 필요합니다.");
+                return;
+            }
+            if (formData.password !== formData.confirmPassword) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return;
+            }
         }
         setStep(prev => Math.min(prev + 1, totalSteps));
     };
@@ -262,14 +272,49 @@ export default function RegisterPage() {
                                 <input
                                     name="accountName"
                                     value={formData.accountName}
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                        // 아이디 입력 시 중복 체크 상태 초기화
+                                        setIdCheckStatus({
+                                            checked: false,
+                                            available: false,
+                                            message: ''
+                                        });
+                                    }}
                                     placeholder="아이디를 입력해주세요"
                                 />
-                                <button className="btn outline-btn" onClick={() => {
-                                    // alert 대신 커스텀 모달 UI 사용
-                                    // alert("아이디 중복 확인 로직 연결 필요");
-                                }}>중복 확인</button>
+                                <button
+                                    className="btn outline-btn"
+                                    onClick={async () => {
+                                        if (!formData.accountName) {
+                                            alert("아이디를 입력해주세요.");
+                                            return;
+                                        }
+                                        try {
+                                            const result = await checkAccountNameDuplicate(formData.accountName);
+                                            setIdCheckStatus({
+                                                checked: true,
+                                                available: result.success,
+                                                message: result.message
+                                            });
+                                        } catch (error) {
+                                            setIdCheckStatus({
+                                                checked: true,
+                                                available: false,
+                                                message: "계정명 중복 확인에 실패했습니다."
+                                            });
+                                        }
+                                    }}
+                                    disabled={!formData.accountName}
+                                >
+                                    중복 확인
+                                </button>
                             </div>
+                            {idCheckStatus.checked && (
+                                <p className={idCheckStatus.available ? "success-text" : "error-text"}>
+                                    {idCheckStatus.message}
+                                </p>
+                            )}
                         </div>
 
                         <div className="form-group">

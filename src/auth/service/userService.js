@@ -137,5 +137,22 @@ export default function useUserService() {
     };
 
 
-    return { registerUser, login, getUserInfo, updateUserInfo }
+    /**
+     * 계정명 중복 체크를 수행하는 함수
+     * @param {string} accountName - 중복 체크할 계정명
+     * @returns {Promise<Object>} - { success: boolean, message: string } 형태의 응답
+     */
+    const checkAccountNameDuplicate = async (accountName) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/user/check-account`, {
+                params: { accountName }
+            });
+            return response.data;
+        } catch (error) {
+            console.error("계정명 중복 체크 오류:", error);
+            throw error.response?.data?.message || error.message || '계정명 중복 체크 실패';
+        }
+    };
+
+    return { registerUser, login, getUserInfo, updateUserInfo, checkAccountNameDuplicate }
 }
