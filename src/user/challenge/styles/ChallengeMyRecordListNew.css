@@ -233,7 +233,7 @@
   gap: 12px;
   align-items: center;
 }
-.cat-mini-donut{
+.legend-dot{
   width: 120px; height: 120px;  /* ← 이미지처럼 작게 */
 }
 .cat-mini-legend{
