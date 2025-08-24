@@ -29,13 +29,12 @@
 }
 
 .group-chat-room-back-button {
-    font-size: 24px;
-    color: #7c1d0d;
+    font-size: 22px;
+    color: rgb(179, 179, 179);
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
-    margin-right: 15px;
 }
 
 /* 메시지 목록 컨테이너 */
@@ -111,8 +110,8 @@
 /* 메시지 발신자 이름 */
 .group-chat-room-message-sender {
     font-size: 13px;
-    color: #555;
-    font-weight: bold;
+    color: #333;
+    /* font-weight: bold; */
     display: block;
 }
 
@@ -122,7 +121,7 @@
     border-radius: 18px;
     word-wrap: break-word;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.4;
     max-width: 110%; /* 메시지 버블이 차지할 수 있는 최대 너비 */
 }
@@ -163,7 +162,7 @@
 .group-chat-room-input-form {
     display: flex;
     align-items: center;
-    padding: 8px 15px;
+    padding: 10px 10px;
     background-color: #fff;
     border-top: 1px solid #e5e5e5;
     box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
@@ -173,10 +172,10 @@
     flex-grow: 1;
     border: 1px solid #e5e5ea;
     padding: 8px 12px;
-    border-radius: 20px;
+    border-radius: 12px;
     background-color: #f9f9f9;
     margin-right: 10px;
-    font-size: 15px;
+    font-size: 13px;
     outline: none;
 }
 
@@ -184,14 +183,40 @@
     background-color: #7c1d0d;
     color: #fff;
     border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 12px;
+    /* font-weight: 600; */
     cursor: pointer;
     flex-shrink: 0;
     transition: background-color 0.3s ease;
+    font-size: 13px;
 }
 
 .group-chat-room-send-button:hover {
     background-color: #a42c16;
+}
+
+
+
+
+
+/* 첫 메시지(연속 시작)인 상대방 메시지 줄은 위쪽 정렬 → 닉네임이 아바타 바로 옆에 붙도록 */
+.group-chat-room-other-message.first-message {
+  align-items: flex-start; /* 기본 flex-end를 덮어씀 */
+}
+
+/* 닉네임 줄을 한 줄로, 너무 길면 말줄임 */
+.group-chat-room-message-sender {
+  display: inline-block;        /* 줄 높이 깔끔하게 */
+  line-height: 1.1;
+  margin-left: 2px;             /* 아바타와 살짝 간격 */
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 닉네임 아래 버블/시간과 간격 살짝 */
+.group-chat-room-other-message.first-message .group-chat-room-message-and-info {
+  margin-top: 2px;
 }
