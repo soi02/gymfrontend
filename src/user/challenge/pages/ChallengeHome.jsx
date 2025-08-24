@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import apiClient from "../../../global/api/apiClient";
@@ -12,6 +12,29 @@ import { LuSparkles } from "react-icons/lu";
 import "../styles/ChallengeHome.css";
 
 const BACKEND_BASE_URL = "http://localhost:8080";
+
+/* === 비용 절감용: 로컬 캐시 + 쿨다운 설정 === */
+const COOLDOWN_MS = 10 * 60 * 1000; // 10분 (원하면 30분/1시간 등으로 올려도 됨)
+const recKey = (uid) => `ai.recs.v1:${uid}`;
+const readCache = (uid) => {
+  try {
+    const raw = localStorage.getItem(recKey(uid));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.recs)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+};
+const saveCache = (uid, recs) => {
+  try {
+    localStorage.setItem(
+      recKey(uid),
+      JSON.stringify({ ts: Date.now(), recs })
+    );
+  } catch {}
+};
 
 /* 안전 매핑 */
 function normalizeChallenge(item = {}) {
@@ -96,11 +119,30 @@ export default function ChallengeHome() {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
+  /* 첫 진입 시 캐시가 있으면 바로 뿌려줌 (호출 0회) */
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    const cached = readCache(userId);
+    if (cached?.recs?.length) setRecs(cached.recs.map(normalizeChallenge));
+  }, [isLoggedIn, userId]);
+
   const handleFetchAIRecs = async () => {
     if (!isLoggedIn) {
       setErrMsg("로그인 후 추천을 받을 수 있습니다.");
       return;
     }
+
+    // 최근 호출이 있으면 서버 호출 없이 캐시 사용
+    const cached = readCache(userId);
+    const freshEnough =
+      cached && Array.isArray(cached.recs) && Date.now() - cached.ts < COOLDOWN_MS;
+
+    if (freshEnough) {
+      setRecs(cached.recs.map(normalizeChallenge));
+      setErrMsg("최근 추천을 재사용했어요.");
+      return;
+    }
+
     setLoading(true);
     setErrMsg("");
     try {
@@ -109,7 +151,12 @@ export default function ChallengeHome() {
         { params: { userId, topN: 8 } }
       );
       const list = Array.isArray(data) ? data : [];
-      setRecs(list.map(normalizeChallenge).filter((x) => x.id != null));
+      const normalized = list
+        .map(normalizeChallenge)
+        .filter((x) => x.id != null);
+
+      setRecs(normalized);
+      saveCache(userId, normalized); // ★ 성공 시 캐시에 저장
     } catch (e) {
       console.error("AI 추천 실패, 기본 목록으로 대체 시도", e);
       try {
@@ -117,10 +164,15 @@ export default function ChallengeHome() {
           `${BACKEND_BASE_URL}/api/challenge/list`
         );
         const list = Array.isArray(data) ? data : [];
-        setRecs(
-          list.slice(0, 10).map(normalizeChallenge).filter((x) => x.id != null)
-        );
+        const normalized = list
+          .slice(0, 10)
+          .map(normalizeChallenge)
+          .filter((x) => x.id != null);
+
+        setRecs(normalized);
         setErrMsg("AI 추천이 잠시 불안정하여 기본 목록을 보여드립니다.");
+        // 기본 목록도 캐시에 넣어두면 다음 클릭 비용 절감
+        saveCache(userId, normalized);
       } catch (e2) {
         console.error("기본 목록도 실패", e2);
         setRecs([]);
@@ -214,7 +266,7 @@ export default function ChallengeHome() {
             <h2 className="chome-sec-title">내 기능들</h2>
           </div>
 
-          <div className="chome-grid-actions">
+        <div className="chome-grid-actions">
             <button
               type="button"
               className="chome-action"

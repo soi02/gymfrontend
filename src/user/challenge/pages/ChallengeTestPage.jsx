@@ -336,7 +336,7 @@ export default function ChallengeTestPage() {
                         {data.options.map((opt, idx) => (
                             <button
                                 key={idx}
-                                // ❗❗❗ 수정된 부분: 선택된 버튼에 'selected' 클래스 추가
+                                // 수정된 부분: 선택된 버튼에 'selected' 클래스 추가
                                 className={`choice-btn ${selectedOptionIndex === idx ? 'selected' : ''}`}
                                 onClick={() => handleOptionSelect(opt, idx)}
                             >
