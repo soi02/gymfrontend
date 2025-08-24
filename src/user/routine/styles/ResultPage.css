@@ -232,20 +232,29 @@
 }
 
 .pf-actions{ margin-top: 8px; margin-bottom: 8px; width: 100%; display:flex; justify-content:center; gap: 0.6rem;}
-.pf-btn{
+.pf-btn-photo{
+  /* background: #1d5269; 민트 버튼 */
   background: #1d5269; /* 민트 버튼 */
   color: #fff; border: 0; border-radius: 14px;
   padding: 12px 18px; font-weight: 800; font-size: 16px;
-  box-shadow: 0 10px 24px #1d52695a;
+  /* box-shadow: 0 10px 24px #1d52695a; */
 }
 .pf-btn:active{ transform: translateY(1px); }
 
-.pf-actions-2{ margin-top: 10px; width: 100%; justify-content:center;}
-.pf-btn-2{
+.pf-btn-diary{
   background: #1d5269; /* 민트 버튼 */
   color: #fff; border: 0; border-radius: 14px;
   padding: 12px 18px; font-weight: 800; font-size: 16px;
-  box-shadow: 0 10px 24px #1d52695a;
+  /* box-shadow: 0 10px 24px #1d52695a; */
+}
+.pf-btn:active{ transform: translateY(1px); }
+.pf-actions-2{ margin-top: 10px; width: 100%; justify-content:center;}
+.pf-btn-2{
+  /* margin-top: 0rem; */
+  background: #ababab; /* 민트 버튼 */
+  color: #fff; border: 0; border-radius: 14px;
+  padding: 18px 18px; font-weight: 800; font-size: 16px;
+  /* box-shadow: 0 10px 24px #1d52695a; */
 }
 
 /* 1:1 정사각형 카드 */
@@ -467,3 +476,60 @@
   backface-visibility: hidden;
 }
 .flip-back { transform: rotateY(180deg); }
+/* === Korean-trad palette (오방색 무드) === */
+:root{
+  --han-ink:   #1f2937;  /* 먹색(텍스트) */
+  --han-teal:  #0F4C5C;  /* 청록/남청 */
+  --han-yellow:#E7C45B;  /* 유황/노랑 */
+  --han-wine:  #8E2C3B;  /* 자주/와인 */
+  --han-stone: #9CA3AF;  /* 돌회색(옵션) */
+  --han-ivory: #F7F6F2;  /* 아이보리(배경용) */
+  --han-ivory: #0f0f35; 
+}
+
+.pf-actions.pf-actions--triple{
+  width: 100%;
+  height: 70px;
+  max-width: 470px;
+  display: grid;                            /* ✅ 그리드 ON */
+  grid-template-columns: 2fr 2fr 4fr;       /* ✅ 비율: 2 : 2 : 3 */
+  gap: 8px;
+  margin-top: 12px;
+}
+.pf-btn{ width: 100%; border-radius: 14px; border: none; }
+
+/* 텍스트 한 줄 또렷하게 */
+.pf-btn-top{
+  display: inline;           /* ✅ block → inline */
+  font-size: 14px;           /* 가독되는 크기 */
+  font-weight: 700;          /* 700~800 권장 */
+  white-space: nowrap;       /* ✅ 줄바꿈 방지 */
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: none;
+}
+
+
+
+/* 변형(컬러) */
+.pf-btn.is-teal   { background: var(--han-teal);   color: #fff; }
+.pf-btn.is-yellow { background: #5d5d6e; color: #fff; }
+.pf-btn.is-wine   { background: var(--han-wine);   color: #fff; }
+
+/* 옵션: 차분한 돌회색(와인 대체용) */
+.pf-btn.is-stone  { background: var(--han-stone);  color: #fff; }
+
+/* hover/active */
+.pf-btn:hover  { filter: brightness(1.06); }
+.pf-btn:active { transform: translateY(1px); box-shadow: 0 4px 12px rgba(0,0,0,.10); }
+
+/* 사진 위 오버레이에서도 선명하게 보이도록 살짝 테두리(가독성) */
+.pf-btn.is-yellow { box-shadow: 0 6px 18px rgba(0,0,0,.10), inset 0 0 0 1px rgba(0,0,0,.04); }
+
+/* 아주 좁은 화면에서 줄 바꿈 방지하려면: (보통은 필요 없음)
+@media (max-width: 360px){
+  .pf-btn{ height: 46px; font-size: 14px; }
+  .pf-btn-bottom{ font-size: 13px; }
+}
+*/
