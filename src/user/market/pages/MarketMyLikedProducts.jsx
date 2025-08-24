@@ -866,7 +866,7 @@ export default function MarketMyLikedProductsPage() {
                                                         </div>
                                                     </div>
                                                     <div className = "row">
-                                                        <div className = "col" style = {{fontSize : "0.6125rem"}}>
+                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                             <i className="ri-information-line"></i> 하트를 눌러서 탐냄 상태를 바꿀 수 있소.
                                                         </div>
                                                     </div>

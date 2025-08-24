@@ -60,6 +60,7 @@ function ImageWarningModal({open, onClose, onConfirm}) {
                                             <div className = "row">
                                                 <div className = "col">
                                                     <button className = "btn buttonCancellationDefault" onClick={onClose}
+                                                    // onClick = {() => setDoesImageWarningModalOpened(true)}
                                                     style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
                                                 </div>
                                             </div>
@@ -193,8 +194,6 @@ export default function MarketWriteArticlePage() {
     const handleDivisionClick = () => {
         
         imageLinkRef.current.click();
-        console.log("imageLinkRef");
-        console.log(imageLinkRef);
         
     }
     
@@ -323,11 +322,6 @@ export default function MarketWriteArticlePage() {
             console.log("insertImageLink : ", insertImageLink);
             console.log("previewURL : ", previewURL);
             
-        } else {
-            
-            console.log("insertImageLink : ", insertImageLink);
-            console.log("previewURL : ", previewURL);
-            
         }
         
     }, [insertImageLink, previewURL])
@@ -371,9 +365,10 @@ export default function MarketWriteArticlePage() {
                                                                         </div>
                                                                     </div>
                                                             </div>
-                                                            {/* <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
+                                                            <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
                                                             border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden", alignItems : "center",
                                                             paddingLeft : "2rem", paddingRight : "2rem"}}> 
+                                                            {/* ui 추후 보완 (어차피 갈아엎어야 되고 기능 구현이 우선. ui 정렬 어떻게 하는지 방법 알고 있음) */}
                                                                 <div className = "row">
                                                                     <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                                         이 사진이 대표로 표시되오.
@@ -386,20 +381,14 @@ export default function MarketWriteArticlePage() {
                                                                         border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
                                                                         <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
                                                                     </div>
+                                                                    {/* <div className = "col h-100" style = {{fontSize : "0.75rem", textAlign : "center",
+                                                                    display : "flex", justifyContent : "center", alignItems : "center"}}>
+                                                                        이 사진이
+                                                                        <br />
+                                                                        대표로 표시되오.
+                                                                    </div> */}
                                                                 </div>
-                                                            </div> */}
-                                                            {
-                                                                insertImageLink ?
-                                                                <div className = "col-auto" style = {{width : "6rem", height : "6rem", position : "relative", overflow : "hidden",
-                                                                    display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "0rem", 
-                                                                    marginLeft : "1rem", marginRight : "1rem",
-                                                                    border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
-                                                                    <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
-                                                                </div>
-                                                                :
-                                                                <></>
-                                                            }
-
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -477,7 +466,7 @@ export default function MarketWriteArticlePage() {
                                                     </div>
                                                 </div>
                                                 <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "0.75rem", marginTop : "0.3125rem"}}>
+                                                    <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
                                                         <i className="ri-information-line"></i> 0원을 입력하면 나눔 물품으로 게시되오.
                                                     </div>
                                                 </div>
@@ -506,35 +495,32 @@ export default function MarketWriteArticlePage() {
                                             <div className = "col" style = {{marginBottom : "1rem"}}>
 
                                                 <div className = "d-flex w-100 align-items-center">
+
+                                                    <div className = "col">
+                                                        
+                                                    </div>
+
+                                                    <div className = "col d-flex justify-content-center">
+                                                        <div className = "row">
+                                                            <div className = "col-auto">
+                                                                <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketArticle}
+                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>게시</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     
                                                     <ImageWarningModal open = {doesImageWarningModalOpened}
                                                     onClose = {() => setDoesImageWarningModalOpened(false)}
-                                                    onConfirm = {constButtonToInsertMarketArticle} />
-                                                    
-                                                    {insertImageLink ? 
-                                                    
-                                                        <div className = "col d-flex justify-content-center">
-                                                            <div className = "row">
-                                                                <div className = "col-auto">
-                                                                    <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketArticle}
-                                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>게시</button>
-                                                                </div>
+                                                    onConfirm = {handleConfirmOfImageWarningModal} />
+
+                                                    <div className = "col d-flex justify-content-end">
+                                                        <div className = "row">
+                                                            <div className = "col-auto">
+                                                                <button className = "btn buttonCancellationDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
+                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>모달</button>
                                                             </div>
                                                         </div>
-                                                    
-                                                        :
-                                                        
-                                                        <div className = "col d-flex justify-content-center">
-                                                            <div className = "row">
-                                                                <div className = "col-auto">
-                                                                    <button className = "btn buttonDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
-                                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>게시</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    
-                                                    }
-                                                    
+                                                    </div>
                                                 </div>
 
                                             </div>
