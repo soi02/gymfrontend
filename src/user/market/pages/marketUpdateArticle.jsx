@@ -6,6 +6,65 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { loginAction } from "../../../redux/authSlice";
 
+function ImageWarningModal({open, onClose, onConfirm}) {
+    
+    if (!open) {
+        
+        return null;
+        
+    }
+    
+    return(
+        <>
+        
+            <div role = "dialog" aria-modal = "true" onClick = {onClose}
+            style = {{position: "fixed", inset: 0, background: "rgba(0, 0, 0, 0.5)", display: "flex",
+            justifyContent: "center", alignItems: "center", zIndex: 2000, padding: "16px"}}>
+                <div onClick={(e) => e.stopPropagation()}
+                style={{width: "100%", maxWidth: 330, background: "#fff", borderRadius: 16,
+                boxShadow: "0 10px 30px rgba(0,0,0,.18)", padding: "25px 18px", textAlign: "center"}}>
+                    <div className = "row">
+                        <div className = "col" style = {{paddingTop : "0.5rem", paddingBottom : "0.5rem"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.5rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                    잠깐!
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.125rem", marginBottom : "1.25rem"}}>
+                                    정말 이대로 게시하겠소?
+                                    <br />
+                                    물건 파악의 원활함을 위해
+                                    <br />
+                                    이미지 업로드를 권하오.
+                                </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col">
+                                    <div className = "row">
+                                        <div className = "col">
+                                            <button className = "btn buttonDefault" onClick = {onConfirm}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>그래도 게시하기</button>
+                                        </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col">
+                                            <button className = "btn buttonCancellationDefault" onClick={onClose}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </>
+    )
+    
+}
+
 export default function MarketUpdateArticlePage() {
     
     const {id : loadedId} = useParams()
@@ -93,6 +152,15 @@ export default function MarketUpdateArticlePage() {
     const navigate = useNavigate();
     
     const BACKEND_BASE_URL = "http://localhost:8080";
+    
+    const [doesImageWarningModalOpened, setDoesImageWarningModalOpened] = useState(false);
+    
+    const handleConfirmOfImageWarningModal = () => {
+        
+        console.log("Modal Process Completed!");
+        setDoesImageWarningModalOpened(false);
+        
+    }
     
     const imageLinkRef = useRef(null);
     const titleRef = useRef(null);
@@ -315,30 +383,37 @@ export default function MarketUpdateArticlePage() {
                                                                 </div>
                                                         </div>
                                                         
-                                                        <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
+                                                        {/* <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
                                                         border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden", alignItems : "center",
-                                                        paddingLeft : "2rem", paddingRight : "2rem"}}> 
+                                                        paddingLeft : "2rem", paddingRight : "2rem"}}>  */}
                                                         {/* ui 추후 보완 (어차피 갈아엎어야 되고 기능 구현이 우선. ui 정렬 어떻게 하는지 방법 알고 있음) */}
-                                                            <div className = "row">
+                                                            {/* <div className = "row">
                                                                 <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                                     이 사진이 대표로 표시되오.
                                                                 </div>
-                                                            </div>
-                                                            <div className = "row h-100 gx-0 flex-nowrap align-items-center">
-                                                                <div className = "col-auto" style = {{width : "4rem", height : "4rem", position : "relative", overflow : "hidden",
+                                                            </div> */}
+                                                            {/* <div className = "row h-100 gx-0 flex-nowrap align-items-center"> */}
+                                                            
+                                                            {
+                                                                (updateImageLink || displayImageName) ?
+                                                                <div className = "col-auto" style = {{width : "6rem", height : "6rem", position : "relative", overflow : "hidden",
                                                                     display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "0rem", 
                                                                     marginLeft : "1rem", marginRight : "1rem",
                                                                     border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
                                                                     <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
                                                                 </div>
+                                                                :
+                                                                <></>
+                                                            }
+                                                            
                                                                 {/* <div className = "col h-100" style = {{fontSize : "0.75rem", textAlign : "center",
                                                                 display : "flex", justifyContent : "center", alignItems : "center"}}>
                                                                     이 사진이
                                                                     <br />
                                                                     대표로 표시되오.
                                                                 </div> */}
-                                                            </div>
-                                                        </div>
+                                                            {/* </div> */}
+                                                        {/* </div> */}
                                                         
                                                         {/* <div className = "col" style = {{padding : "0rem", marginLeft : "0.8125rem",
                                                         border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden"}}> 
@@ -465,7 +540,7 @@ export default function MarketUpdateArticlePage() {
                                                 </div>
                                             </div>
                                             <div className = "row">
-                                                <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
+                                                <div className = "col" style = {{fontSize : "0.75rem", marginTop : "0.3125rem"}}>
                                                     <i className="ri-information-line"></i> 0원을 입력하면 나눔 물품으로 게시되오.
                                                 </div>
                                             </div>
@@ -494,28 +569,35 @@ export default function MarketUpdateArticlePage() {
                                         <div className = "col" style = {{marginBottom : "1rem"}}>
 
                                             <div className = "d-flex w-100 align-items-center">
+                                                
+                                                <ImageWarningModal open = {doesImageWarningModalOpened}
+                                                onClose = {() => setDoesImageWarningModalOpened(false)}
+                                                onConfirm = {constButtonToUpdateMarketArticle} />
+                                                
+                                                {(updateImageLink || displayImageName) ?
 
-                                                <div className = "col">
+                                                    <div className = "col d-flex justify-content-center">
+                                                        <div className = "row">
+                                                            <div className = "col-auto">
+                                                                <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle}
+                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     
-                                                </div>
-
-                                                <div className = "col d-flex justify-content-center">
-                                                    <div className = "row">
-                                                        <div className = "col-auto">
-                                                            <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle}
-                                                            style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
+                                                    :
+                                                    
+                                                    <div className = "col d-flex justify-content-center">
+                                                        <div className = "row">
+                                                            <div className = "col-auto">
+                                                                <button className = "btn buttonDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
+                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div className = "col d-flex justify-content-end">
-                                                    <div className = "row">
-                                                        <div className = "col-auto">
-                                                            {/* <button className = "btn buttonCancellationDefault" onClick = {() => navigate(-1)} 
-                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>취소</button> */}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
+                                                }
+                                                
                                             </div>
 
                                         </div>

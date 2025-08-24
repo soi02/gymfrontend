@@ -477,7 +477,7 @@ export default function MarketWriteArticlePage() {
                                                     </div>
                                                 </div>
                                                 <div className = "row">
-                                                    <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
+                                                    <div className = "col" style = {{fontSize : "0.75rem", marginTop : "0.3125rem"}}>
                                                         <i className="ri-information-line"></i> 0원을 입력하면 나눔 물품으로 게시되오.
                                                     </div>
                                                 </div>
@@ -528,7 +528,7 @@ export default function MarketWriteArticlePage() {
                                                             <div className = "row">
                                                                 <div className = "col-auto">
                                                                     <button className = "btn buttonDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
-                                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>정말?</button>
+                                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>게시</button>
                                                                 </div>
                                                             </div>
                                                         </div>
