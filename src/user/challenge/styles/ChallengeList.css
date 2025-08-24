@@ -1031,7 +1031,7 @@ ccp-page {
   width:56px; height:56px;
   border-radius:999px;
   border:1px solid rgba(0,0,0,0.08);
-  background:#001439; color:#fff;
+  background:#789396; color:#fff;
   font-weight:900; font-size:22px; line-height:0;
   display:grid; place-items:center;
   box-shadow:0 12px 28px rgba(0,0,0,0.18);
@@ -1083,5 +1083,5 @@ ccp-page {
 }
 
 .ch-category-chip:hover{ box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-.ch-category-chip.active{ background:#001439; color:#fff; }
+.ch-category-chip.active{ background:#789396; color:#fff; }
 .ch-category-chip-text{ font-size:12px; font-weight:bold; }

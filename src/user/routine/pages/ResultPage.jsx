@@ -47,7 +47,6 @@ export default function ResultPage() {
     return photoUrl || gibon;
   }, [photoUrl]);
 
-
   // 데이터 로드 (너가 쓰던 방식 유지)
   useEffect(() => {
     if (!workoutId) return;
@@ -177,8 +176,7 @@ export default function ResultPage() {
     return keys.size;
   }, [workoutList]);
 
-  useEffect(() => {
-  }, [photoUrl]);
+  useEffect(() => {}, [photoUrl]);
   return (
     <>
       <div className="divider-line"></div>
@@ -192,10 +190,10 @@ export default function ResultPage() {
 
         {/* 메인 카드 */}
         {/* 메인 카드 (사진 배경 + 오버레이 UI) */}
-          <div
-            className={`pf-card-media ${bgUrl ? "has-photo" : ""}`}
-            style={{ ["--pf-bg"]: `url("${bgUrl}")` }}
-          >
+        <div
+          className={`pf-card-media ${bgUrl ? "has-photo" : ""}`}
+          style={{ ["--pf-bg"]: `url("${bgUrl}")` }}
+        >
           {/* 가독성 오버레이 */}
           <div className="pf-media-overlay" />
 
@@ -257,19 +255,25 @@ export default function ResultPage() {
         {/* 하단 브랜드/액션 */}
         {/* <div className="pf-brand">짐마당</div> */}
 
-        <div className="pf-actions">
-          <button className="pf-btn" onClick={() => setShowModal(true)}>
-            사진을 추가하겠소
-          </button>
-          <button className="pf-btn" onClick={() => setShowModal(true)}>
-            일지를 작성하겠소
+        <div className="pf-actions pf-actions--triple">
+          <button className="pf-btn is-teal" onClick={() => setShowModal(true)}>
+            <span className="pf-btn-top">사진<br></br>추가</span>
+            {/* <span className="pf-btn-bottom">추가</span> */}
           </button>
 
+          <button
+            className="pf-btn is-wine"
+            onClick={() => setShowModal(true)}
+          >
+            <span className="pf-btn-top">일지<br></br>작성</span>
+          </button>
 
-        </div>
-        <div className="pf-action-2">
-          <button className="pf-btn-2" onClick={() => navigate("/mypage/routineCalendar")}>
-            나의 기록들을 보러가겠소
+          <button
+            className="pf-btn is-yellow"
+            onClick={() => navigate("/mypage/routineCalendar")}
+          >
+            <span className="pf-btn-top">모든 기록<br></br> 보러가기</span>
+            {/* <span className="pf-btn-bottom">보러 가기</span> */}
           </button>
         </div>
 

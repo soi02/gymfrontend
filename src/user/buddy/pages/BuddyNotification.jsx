@@ -117,53 +117,53 @@ export default function BuddyNotification() {
     };
 
     return (
-        <div className="buddy-container buddy-scroll-container">
-            {/* <h4 className="buddy-title">버디 알림</h4> */}
+        <div className="buddy-no-container buddy-no-scroll-container">
+            {/* <h4 className="buddy-no-title">버디 알림</h4> */}
             {notifications.length === 0 ? (
-                <div className="no-notification-container">
-                    <img src={noNotificationImage} alt="운동벗 이미지" className="no-notification-image" />
-                    <p className="no-notification-text">아직 운동 벗이 없어요.<br />새로운 운동 벗을 찾으세요!</p>
+                <div className="buddy-no-empty-container">
+                    <img src={noNotificationImage} alt="운동벗 이미지" className="buddy-no-empty-image" />
+                    <p className="buddy-no-empty-text">아직 운동 벗이 없어요.<br />새로운 운동 벗을 찾으세요!</p>
                     <button 
-                        className="find-buddy-button" 
+                        className="buddy-no-find-button" 
                         onClick={() => navigate('/buddy/buddyHome')}
                     >
                         운동 벗 찾으러 가기
                     </button>
                 </div>
             ) : (
-                <ul className="buddy-list">
+                <ul className="buddy-no-list">
                     {notifications.map((noti) => (
-                        <li key={noti.id} className="buddy-item">
-                            <div className="buddy-info">
-                                <img src={noti.profileImage} alt="프로필" className="buddy-profile-img" />
-                                <div className="buddy-text">
-                                    <div className="buddy-name">{noti.name}</div>
-                                    <div className="buddy-intro">{noti.intro}</div>
+                        <li key={noti.id} className="buddy-no-item">
+                            <div className="buddy-no-info">
+                                <img src={noti.profileImage} alt="프로필" className="buddy-no-profile-img" />
+                                <div className="buddy-no-text">
+                                    <div className="buddy-no-name">{noti.name}</div>
+                                    <div className="buddy-no-intro">{noti.intro}</div>
                                 </div>
                             </div>
 
-                            <div className="buddy-buttons">
+                            <div className="buddy-no-buttons">
                                 {noti.type === 'received' ? (
                                     <>
                                         {noti.status === '대기중' ? (
                                             <>
-                                                <button className="btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
-                                                <button className="btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
+                                                <button className="buddy-no-btn-accept" onClick={() => handleResponse(noti.id, '수락', noti.sendBuddyId)}>수락</button>
+                                                <button className="buddy-no-btn-decline" onClick={() => handleResponse(noti.id, '거절', noti.sendBuddyId)}>거절</button>
                                             </>
                                         ) : noti.status === '수락' ? (
-                                            <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
+                                            <button className="buddy-no-btn-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
                                         ) : noti.status === '거절' ? (
-                                            <span className="rejected-status">거절됨</span>
+                                            <span className="buddy-no-status-rejected">거절됨</span>
                                         ) : null}
                                     </>
                                 ) : (
                                     <>
                                         {noti.status === '대기중' ? (
-                                            <button className="btn-cancel" onClick={() => handleCancel(noti.id)}>요청 취소</button>
+                                            <button className="buddy-no-btn-cancel" onClick={() => handleCancel(noti.id)}>요청 취소</button>
                                         ) : noti.status === '수락' ? (
-                                            <button className="btn-go-to-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
+                                            <button className="buddy-no-btn-chat" onClick={() => handleGoToChat(noti.id)}>채팅 가기</button>
                                         ) : noti.status === '거절' ? (
-                                            <span className="rejected-status">거절됨</span>
+                                            <span className="buddy-no-status-rejected">거절됨</span>
                                         ) : null}
                                     </>
                                 )}
