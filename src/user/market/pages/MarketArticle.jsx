@@ -1818,11 +1818,33 @@ export default function MarketArticlePageTest() {
                                                 </div>
                                             </div>
                                             <div className = "row">
-                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "0.8125rem", paddingBottom : "0.25rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
+                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "0.8125rem", paddingBottom : "0.25rem", 
+                                                paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
+
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
+                                                            {
+                                                                constmarketCommentElementListOnArticle.length  > 0 ? 
+                                                                constmarketCommentElementListOnArticle : 
+                                                                <>
+                                                                    
+                                                                    <div className = "row">
+                                                                        <div className = "col" style = {{fontSize : "0.9375rem", paddingLeft : "1.25rem", paddingRight : "1.25rem",
+                                                                            marginTop : "0.625rem", marginBottom : "1rem"
+                                                                        }}>
+                                                                            게시글에 쓰인 댓글이 없소.
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    
                                                     <div className = "row">
                                                         <div className = "col">
                                                             <div className = "row h-100">
-                                                                <div className = "col" style = {{marginTop : "0.6125rem", marginBottom : "1.8125rem"}}>
+                                                                <div className = "col" style = {{marginTop : "0.6125rem", marginBottom : "1.5rem"}}>
                                                                     <div className = "row h-100">
                                                                         <div className = "col">
                                                                             <div className = "row h-100">
@@ -1847,26 +1869,7 @@ export default function MarketArticlePageTest() {
                                                             </div>                                                            
                                                         </div>
                                                     </div>
-
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
-                                                            {
-                                                                constmarketCommentElementListOnArticle.length  > 0 ? 
-                                                                constmarketCommentElementListOnArticle : 
-                                                                <>
-                                                                    
-                                                                    <div className = "row">
-                                                                        <div className = "col" style = {{fontSize : "0.9375rem", paddingLeft : "1.25rem", paddingRight : "1.25rem",
-                                                                            marginBottom : "1.625rem"
-                                                                        }}>
-                                                                            게시글에 쓰인 댓글이 없소.
-                                                                        </div>
-                                                                    </div>
-                                                                
-                                                                </>
-                                                            }
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div className = "row">
