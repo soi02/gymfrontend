@@ -154,7 +154,7 @@ const EmotionalDiaryCalendar = () => {
   return (
     <div className="diary-calendar">
       <div className="diary-calendar-header">
-        <h2 className="diary-calendar-title">무드 캘린더</h2>
+        <h2 className="diary-calendar-title">감정 달력</h2>
         <div className="header-icons">
           <i className="bi bi-search"></i>
           <button 
@@ -229,21 +229,25 @@ const EmotionalDiaryCalendar = () => {
                            ${day.hasEntry ? 'has-entry' : ''}`}
                 onClick={() => handleDayClick(day)}
               >
-                <span className="diary-day-number">{day.date.getDate()}</span>
-                {day.isCurrentMonth && day.hasEntry && day.emotion && (
-                  <img
-                    src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
-                    alt={day.emotion.name}
-                    className="diary-emotion-indicator"
-                    onError={(e) => {
-                      console.error(`이미지 로드 실패: ${e.target.src}`, {
-                        날짜: getFormattedLocalDate(day.date),
-                        감정: day.emotion
-                      });
-                      e.target.style.display = 'none';
-                    }}
-                  />
+                {day.isCurrentMonth && day.hasEntry && day.emotion ? (
+                  <div className="emoji-container">
+                    <img
+                      src={`http://localhost:8080/uploadFiles${day.emotion.emoji_image}`}
+                      alt={day.emotion.name}
+                      className="diary-emotion-indicator"
+                      onError={(e) => {
+                        console.error(`이미지 로드 실패: ${e.target.src}`, {
+                          날짜: getFormattedLocalDate(day.date),
+                          감정: day.emotion
+                        });
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="emoji-circle"></div>
                 )}
+                <span className="diary-day-number">{day.date.getDate()}</span>
               </div>
             ))}
           </div>
