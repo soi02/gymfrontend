@@ -53,11 +53,18 @@ export default function BottomNavigation() {
 
   const handleBuddyTabLogic = async () => {
     try {
+      console.log("버디 탭 클릭 - userId:", userId); // userId 값 확인
       const res = await apiClient.get(`/buddy/is-buddy`, { params: { userId } });
+      console.log("서버 응답:", res.data); // 응답 데이터 확인
       const isBuddy = res?.data?.is_buddy;
+      console.log("isBuddy 값:", isBuddy); // is_buddy 값 확인
       navigate(isBuddy ? "/buddy/buddyHome" : "/buddy");
     } catch (error) {
       console.error("is_buddy 상태 확인 실패:", error);
+      console.log("에러 응답:", error.response?.data); // 에러 응답 데이터 확인
+      console.log("에러 상태 코드:", error.response?.status); // HTTP 상태 코드 확인
+      // 에러가 발생하더라도 기본적으로 /buddy 페이지로 이동
+      navigate("/buddy");
     }
   };
 
