@@ -80,9 +80,62 @@
   
 }
 
+.buttonWhenLikeDefault {
+  
+  --var-bg-color : #c0392b;
+  --var-color : rgb(255, 255, 255);
+  --var-ft-weight : bold;
+  --var-ft-radius : 0.5rem;
+  --var-border : 0rem;
+  
+  background-color: var(--var-bg-color);
+  color: var(--var-color);
+  font-weight: var(--var-ft-weight);
+  border-radius: var(--var-ft-radius);
+  border: var(--var-border);
+  
+}
+
+.buttonWhenLikeDefault:hover {
+  
+  background-color: var(--var-bg-color);
+  color: var(--var-color);
+  font-weight: var(--var-ft-weight);
+  border-radius: var(--var-ft-radius);
+  border: var(--var-border);
+  
+}
+
+.buttonWhenLikeDefault:active {
+  
+  background-color: var(--var-bg-color) !important;
+  color: var(--var-color) !important;
+  font-weight: var(--var-ft-weight) !important;
+  border-radius: var(--var-ft-radius) !important;
+  border: var(--var-border) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  
+}
+
+.buttonWhenLikeDefault:disabled {
+  
+  opacity : 1;
+  background-color: #dddddd !important;
+  color: #6b7280 !important;
+  font-weight: normal !important;
+  border-radius: var(--var-ft-radius) !important;
+  border: var(--var-border) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  
+}
+
 .buttonCancellationDefault {
   
-  --var-bg-color : #f2a766;
+  --var-bg-color : #a2a2a2;
   --var-color : rgb(255, 255, 255);
   --var-ft-weight : bold;
   --var-ft-radius : 0.5rem;
@@ -217,16 +270,16 @@
 
 .badgeStyleAboutUnconfirmedDeal {
   
-  background-color : #9faac0;
+  background-color : #dcdcdc;
   border-radius : 0.5rem;
-  color : white;
+  color : #494c52;
   
 }
 
 .badgeStyleAboutConfirmedDeal {
   
-  background-color : #22BF4F;
+  background-color : #ade6bf;
   border-radius : 0.5rem;
-  color : white;
+  color : #0d491e;
   
 }

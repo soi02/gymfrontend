@@ -3,11 +3,9 @@ export default function MarketProductMainImage({imageLinkURL}) {
     return ( 
         
         <>
-        
-            <div className = "container-fluid">
                 
-                <div className = "row">
-                    <div className = "col" style = {{width : "5rem", height : "5rem", position : "relative", overflow : "hidden", 
+                <div className = "row gx-0" style = {{width : "100%", height : "100%"}}>
+                    <div className = "col" style = {{width : "100%", height : "100%", position : "relative", overflow : "hidden", 
                         border : "1px solid #cccccc", borderRadius : "0.5rem", display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center",}}>
                         <img src = {imageLinkURL}
                         style = {{
@@ -21,8 +19,6 @@ export default function MarketProductMainImage({imageLinkURL}) {
                         }}/>
                     </div>
                 </div>
-                
-            </div>
         
         </>
         
