@@ -168,7 +168,10 @@ export default function ChallengeDetail() {
   if (now < recruitStart) status = '모집 예정이오';
   else if (now >= recruitStart && now <= recruitEnd) status = '모집 중이오';
   const isJoinable = status === '모집 중이오' && !userParticipating;
+  // const buttonText = userParticipating ? '참여하는 중이오' : (status === '모집 중이오' ? '참여하기' : status);
+
   const buttonText = userParticipating ? '참여하는 중이오' : (status === '모집 중이오' ? '참여하기' : status);
+  const ctaText = isJoinable ? '신청하기' : buttonText;   // ← 모집 중이면 "신청하기"
   const navigateToChat = () => navigate(`/challenge/groupchat/${challengeId}`);
   
   const handlePaymentStart = async () => {
@@ -220,79 +223,75 @@ export default function ChallengeDetail() {
           </div>
         </div>
 
-        <div className="cdp-content">
-          <div className="cdp-info-section">
-            <div className="cdp-tags">
-              {keywords.length > 0 && (
-                keywords.map((k, i) => <span className="tag" key={`k-${i}`}>#{k}</span>)
-              )}
-            </div>
-            <div className="cdp-title-creator">
-              <h1 className="cdp-title">{challengeTitle}</h1>
-
-            </div>
-<div className="cdp-meta2x2" role="group" aria-label="수련 주요 정보">
-  {/* 좌상: 수련 리더 */}
-  <div className="m2-cell">
-    <span className="m2-label">
-      <BsFillPeopleFill className="m2-lab-ic" />
-      수련 리더
-    </span>
-    <div className="m2-value m2-leader">
+<div className="cdp-content">
+  {/* 작성자 행 */}
+  <div className="cdp-author-row">
+    <div className="cdp-author-left">
       <img
-        className="m2-avatar"
+        className="cdp-author-avatar"
         src={profileImage || '/src/assets/img/default_profile_img.svg'}
         alt=""
       />
-      <span>{challengeCreator}</span>
+      <div className="cdp-author-meta">
+        <div className="cdp-author-name">{challengeCreator}</div>
+        <div className="cdp-author-sub">
+          {fmt(challengeRecruitStartDate)} · {participantCount}명 참여중
+        </div>
+      </div>
     </div>
   </div>
 
-  {/* 우상: 진행 기간 */}
-  <div className="m2-cell">
-    <span className="m2-label">
-      <BsFillCalendarEventFill className="m2-lab-ic" />
-      진행 기간
-    </span>
-    <div className="m2-value">
-      <span>{fmt(challengeRecruitStartDate)} ~ {fmt(challengeRecruitEndDate)}</span>
+  <div className="cdp-info-section">
+    <h1 className="cdp-title">{challengeTitle}</h1>
+
+    {/* 태그 칩 */}
+    <div className="cdp-tags">
+      {keywords?.map((k, i) => (
+        <span className="tag" key={`k-${i}`}>#{k}</span>
+      ))}
+    </div>
+
+    {/* 소개 말풍선 */}
+    {challengeDescription && (
+      <div className="cdp-desc-bubble">
+        <p>{challengeDescription}</p>
+      </div>
+    )}
+
+    {/* 2×2 메타 그리드 */}
+    <div className="cdp-meta2x2" role="group" aria-label="수련 주요 정보">
+      <div className="m2-cell">
+        <span className="m2-label"><BsFillPeopleFill className="m2-lab-ic" />수련 리더</span>
+        <div className="m2-value m2-leader">
+          <img className="m2-avatar" src={profileImage || '/src/assets/img/default_profile_img.svg'} alt="" />
+          <span>{challengeCreator}</span>
+        </div>
+      </div>
+
+      <div className="m2-cell">
+        <span className="m2-label"><BsFillCalendarEventFill className="m2-lab-ic" />진행 기간</span>
+        <div className="m2-value"><span>{fmt(challengeRecruitStartDate)} ~ {fmt(challengeRecruitEndDate)}</span></div>
+      </div>
+
+      <div className="m2-cell">
+        <span className="m2-label"><BsFillPeopleFill className="m2-lab-ic" />현재 참여 인원</span>
+        <div className="m2-value"><span>{participantCount} / {challengeMaxMembers}명</span></div>
+      </div>
+
+      <div className="m2-cell">
+        <span className="m2-label"><BsCashStack className="m2-lab-ic" />진행 · 보증금</span>
+        <div className="m2-value m2-inline">
+          <span>{challengeDurationDays}일 진행</span>
+          <span className="m2-dot" aria-hidden="true">·</span>
+          <span>{challengeDepositAmount.toLocaleString()}원</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  {/* 좌하: 현재 참여 인원 */}
-  <div className="m2-cell">
-    <span className="m2-label">
-      <BsFillPeopleFill className="m2-lab-ic" />
-      현재 참여 인원
-    </span>
-    <div className="m2-value">
-      <span>{participantCount} / {challengeMaxMembers}명</span>
-    </div>
-  </div>
-
-  {/* 우하: 진행 · 보증금 */}
-  <div className="m2-cell">
-    <span className="m2-label">
-      <BsCashStack className="m2-lab-ic" />
-      진행 · 보증금
-    </span>
-    <div className="m2-value m2-inline">
-      <span>{challengeDurationDays}일</span>
-      <span className="m2-dot" aria-hidden="true">·</span>
-      <span>{challengeDepositAmount.toLocaleString()}원</span>
-    </div>
-  </div>
-</div>
 
 
-          </div>
 
-          {challengeDescription && (
-            <div className="cdp-detail-section">
-              {/* <h2>수련 설명</h2> */}
-              <p className="cdp-description">{challengeDescription}</p>
-            </div>
-          )}
 
 {/* Norigae – Large Visual + Brief formula under images (사극 말투) */}
 <section className="ngx" aria-labelledby="ngx-title">
@@ -412,7 +411,7 @@ export default function ChallengeDetail() {
     </div>
     <div className="vs-rule ok">
       <MdCheckCircleOutline className="vs-rule-ic" />
-      <span>수련 수행 <b>정황</b>이 드러나도록 구성</span>
+      <span>수련 수행이 드러나도록 구성</span>
     </div>
     <div className="vs-rule no">
       <MdOutlineCancel className="vs-rule-ic" />
@@ -502,7 +501,7 @@ export default function ChallengeDetail() {
         disabled={!isJoinable}
         onClick={() => isJoinable && setShowModal(true)}
       >
-        {buttonText}
+        {ctaText}
       </button>
 
       {showModal && (
