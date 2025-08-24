@@ -21,6 +21,7 @@ const diaryApi = axios.create({
     }
 });
 
+// 요청 인터셉터
 diaryApi.interceptors.request.use(
     (config) => {
         const token = getToken();
@@ -30,6 +31,23 @@ diaryApi.interceptors.request.use(
         return config;
     },
     (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// 응답 인터셉터 추가
+diaryApi.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        // 404 에러는 조용히 처리
+        if (error.response?.status === 404) {
+            return {
+                status: 404,
+                data: null
+            };
+        }
         return Promise.reject(error);
     }
 );
@@ -56,52 +74,35 @@ export const diaryService = {
 
     getDiaryByDate: async (userId, date) => {
         try {
-            let targetDate;
-            if (!date) {
-                // 날짜가 제공되지 않은 경우 오늘 날짜 사용
-                targetDate = getFormattedLocalDate(new Date());
-            } else {
-                // 제공된 날짜 문자열을 그대로 사용
-                targetDate = date;
-            }
+            const targetDate = date || getFormattedLocalDate(new Date());
             
-            console.log('getDiaryByDate 요청 정보:', {
-                userId,
-                요청날짜: targetDate,
-                요청URL: `${API_BASE_URL}/date?userId=${userId}&date=${targetDate}`
-            });
-
+            // axios의 validateStatus 옵션을 사용하여 404를 정상 응답으로 처리
             const response = await diaryApi.get(`/date?userId=${userId}&date=${targetDate}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getToken()}`
-                }
+                },
+                validateStatus: status => {
+                    return (status >= 200 && status < 300) || status === 404;
+                },
+                // 404 에러를 콘솔에 출력하지 않도록 설정
+                silent: true
             });
             
-            console.log('getDiaryByDate 응답:', response.data);
-            
-            if (!response.data) {
-                return null;
-            }
-            
-            return response.data;
+            // 404인 경우 null 반환, 그 외에는 데이터 반환
+            return response.status === 404 ? null : (response.data || null);
         } catch (error) {
+            // 404는 정상적인 "일기 없음" 상황으로 처리
             if (error.response?.status === 404) {
-                console.log('해당 날짜에 일기가 없습니다 (404)', {
-                    userId,
-                    date: targetDate
-                });
                 return null;
             }
-            console.error('API 에러 상세:', {
+            // 다른 에러는 조용히 로깅하고 null 반환
+            console.error('일기 조회 중 에러 발생:', {
                 상태: error.response?.status,
-                에러: error.response?.data,
-                요청정보: {
-                    userId,
-                    date: targetDate
-                }
+                타입: error.name,
+                메시지: error.message
             });
-            throw error;
+            return null;
         }
     },
 

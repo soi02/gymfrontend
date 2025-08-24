@@ -47,20 +47,26 @@ const EmotionalDiary = () => {
       const diary = await diaryService.getDiaryByDate(id, targetDate);
       
       if (diary) {
+        // 일기가 있는 경우
         const emotion = emotions.find(e => e.id === diary.emoji_id);
         setSelectedEmotion(emotion || null);
         setDiaryContent(diary.content || '');
         setShowModal(false);
         setIsSaved(true);
       } else {
+        // 일기가 없는 경우 (정상적인 상황)
         setShowModal(true);
         setSelectedEmotion(null);
         setDiaryContent('');
         setIsSaved(false);
       }
     } catch (error) {
-      console.error('일기 조회 실패:', error);
-      setError('일기 데이터를 불러오지 못했습니다.');
+      // 실제 에러 상황만 에러 메시지 표시
+      if (error.name !== 'NotFoundError') {
+        console.error('일기 조회 중 예상치 못한 에러:', error);
+        setError('일기를 불러오는 중 문제가 발생했습니다.');
+      }
+      // 에러 발생 시도 일기 작성 모달 표시
       setShowModal(true);
       setSelectedEmotion(null);
       setDiaryContent('');
@@ -223,6 +229,19 @@ const EmotionalDiary = () => {
             <span>캘린더 보기</span>
           </button>
         </div>
+        <div className="diary-date">
+          {location.state?.selectedDate ? new Date(location.state.selectedDate).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+          }) : new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+          })}
+        </div>
       </div>
 
       {error && (
@@ -262,11 +281,16 @@ const EmotionalDiary = () => {
           {selectedEmotion && (
             <div className="diary-content-wrapper">
                 <div className="diary-header-buttons">
-                    <div className="diary-title-container" onClick={() => setShowModal(true)}>
+                    <div className={`diary-title-container ${!isSaved ? 'clickable' : ''}`} 
+                         onClick={() => !isSaved && setShowModal(true)}>
                         <h5 className="diary-content-title">
                             {isSaved ? "오늘의 일기" : "나의 기분"}
                         </h5>
-                        <img className="diary-title-icon" src={`http://localhost:8080/uploadFiles${selectedEmotion.emoji_image}`} alt={selectedEmotion.name} />
+                        <img className="diary-title-icon" 
+                             src={`http://localhost:8080/uploadFiles${selectedEmotion.emoji_image}`} 
+                             alt={selectedEmotion.name} 
+                             title={isSaved ? selectedEmotion.name : "감정 선택하기"}
+                        />
                     </div>
                     {!isSaved && (
                         <button 

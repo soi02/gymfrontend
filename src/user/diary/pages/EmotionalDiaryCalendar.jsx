@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { diaryService } from '../service/diaryService';
+import ShareModal from '../components/ShareModal';
 import '../styles/EmotionalDiaryCalendar.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -15,6 +16,7 @@ const EmotionalDiaryCalendar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isMonthPickerOpen, setIsMonthPickerOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // 로그를 위한 상태 추가
   const [debugInfo, setDebugInfo] = useState({
@@ -155,9 +157,20 @@ const EmotionalDiaryCalendar = () => {
         <h2 className="diary-calendar-title">무드 캘린더</h2>
         <div className="header-icons">
           <i className="bi bi-search"></i>
-          <i className="bi bi-upload"></i>
+          <button 
+            className="share-icon-button"
+            onClick={() => setIsShareModalOpen(true)}
+          >
+            <i className="bi bi-share"></i>
+          </button>
         </div>
       </div>
+      
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        shareUrl={window.location.href}
+      />
 
       <div className="diary-calendar-navigation">
         <div className="month-picker-container">

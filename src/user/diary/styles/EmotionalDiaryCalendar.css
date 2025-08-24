@@ -268,3 +268,30 @@
 .emotion-stats-button i {
   font-size: 1.2rem;
 }
+
+.share-icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-icon-button i {
+    color: #666;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+}
+
+.share-icon-button:hover i {
+    color: #333;
+}
+
+/* 헤더 아이콘 공통 스타일 */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
