@@ -93,7 +93,7 @@ const Information = () => {
 
       
       <section className="info-section">
-        <h2 className="section-title">팀원 소개</h2>
+        <h2 className="section-title">마당지기</h2>
 
         <ul className="hopae-row">
           {teamMembers.map((m, i) => (

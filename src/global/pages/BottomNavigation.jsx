@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import BasicLoginModal from "./BasicLoginModal"; // ← 경로는 프로젝트 구조에 맞게
+import BasicLoginModal from "./BasicLoginModal"; 
 
 function BottomNavigationItem({ link, iconClass, label, matchPrefix, onClick }) {
   const location = useLocation();
@@ -30,13 +30,11 @@ function BottomNavigationItem({ link, iconClass, label, matchPrefix, onClick }) 
   );
 }
 
+
 export default function BottomNavigation() {
   const navigate = useNavigate();
-  const userId = useSelector((state) => state.auth.id);
-
-  // localStorage에 "null"/"undefined" 문자열이 남는 함정 방지
-  const rawToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const token = rawToken && rawToken !== "null" && rawToken !== "undefined" ? rawToken : null;
+  // Redux에서 userId와 token을 모두 가져옵니다.
+  const { id: userId, token } = useSelector((state) => state.auth);
 
   // 로그인 모달 상태
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -44,45 +42,53 @@ export default function BottomNavigation() {
 
   // 공통 인증 체크
   const requireAuth = (nextPath) => {
+    // Redux 상태의 userId와 token만 사용
     const authed = !!userId && !!token;
     if (!authed) {
       setRedirectAfterLogin(nextPath);
       setShowLoginModal(true);
-      return false;
+      return false; 
     }
     return true;
   };
 
   const handleRoutineTabClick = (e) => {
     e.preventDefault();
-    if (!requireAuth("/routine")) return;
+    if (!requireAuth("/routine")) {
+      return; 
+    }
     navigate("/routine");
   };
 
   const handleChallengeTabClick = (e) => {
     e.preventDefault();
-    if (!requireAuth("/challenge/challengeIntro")) return;
+    if (!requireAuth("/challenge/challengeIntro")) {
+      return; 
+    }
     navigate("/challenge/challengeIntro");
   };
 
   const handleBuddyTabClick = async (e) => {
     e.preventDefault();
-    if (!requireAuth("/buddy")) return;
+    // Redux 상태에 토큰이 없으면 여기서 바로 종료하고 모달 띄움
+    if (!requireAuth("/buddy")) {
+      return;
+    }
 
     try {
-      const res = await axios.get(`/api/buddy/is-buddy`, {
+      // apiClient를 사용하여 요청 보냄 (자동으로 Redux 토큰 사용)
+      const res = await apiClient.get(`/buddy/is-buddy`, {
         params: { userId },
-        headers: { Authorization: `Bearer ${token}` },
       });
       const isBuddy = res?.data?.is_buddy;
       navigate(isBuddy ? "/buddy/buddyHome" : "/buddy");
     } catch (error) {
       console.error("is_buddy 상태 확인 실패:", error);
-      if (error.response && error.response.status === 401) {
-        setRedirectAfterLogin("/buddy");
-        setShowLoginModal(true);
-      } else {
-        navigate("/buddy");
+      // catch 블록은 더 이상 모달을 띄우지 않고,
+      // 401은 이미 apiClient.js에서 처리하므로
+      // 다른 에러일 경우에만 기본 경로로 이동
+      if (error.response?.status !== 401) {
+          navigate("/buddy");
       }
     }
   };
@@ -149,7 +155,6 @@ export default function BottomNavigation() {
         />
       </div>
 
-      {/* 족자 스타일 로그인 모달 */}
       <BasicLoginModal
         open={showLoginModal}
         onClose={() => setShowLoginModal(false)}
