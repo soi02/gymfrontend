@@ -25,8 +25,6 @@ export default function RegisterPage() {
         birth: '',
         address: '',
         phone: '',
-        // 이메일 관련 ིྀ추가
-        email: '',
         profileImageFile: null,
         height: '',
         weight: '',
@@ -91,7 +89,7 @@ export default function RegisterPage() {
             });
         }
     };
-    
+
     const handleAllAgree = (e) => {
         const checked = e.target.checked;
         if (!checked && (formData.agreeTerms || formData.agreePrivacy)) {
@@ -183,7 +181,7 @@ export default function RegisterPage() {
                 <button className="back-btn" onClick={handleGoBackPage}>&lt;</button>
                 <h2>회원가입</h2>
             </div>
-            
+
             <div className="register-progress-bar">
                 {[...Array(totalSteps)].map((_, index) => (
                     <div
@@ -197,7 +195,7 @@ export default function RegisterPage() {
                 {step === 1 && (
                     <div className="step-content">
                         <h4 className="step-title">서비스 이용약관에 동의해주세요.</h4>
-                        
+
                         <div className="terms-all-agree-box">
                             <label className="terms-checkbox-label all-agree">
                                 <input
@@ -208,7 +206,7 @@ export default function RegisterPage() {
                                 <span>모든 약관에 동의합니다.</span>
                             </label>
                         </div>
-                        
+
                         <div className="terms-accordion">
                             <div className={`terms-accordion-item ${isTermsOpen ? 'open' : ''}`}>
                                 <div className="terms-accordion-header" onClick={() => setIsTermsOpen(!isTermsOpen)}>
@@ -263,8 +261,18 @@ export default function RegisterPage() {
 
                 {step === 2 && (
                     <div className="step-content">
-                        <h4 className="step-title">👤 기본 정보</h4>
-                        <p className="step-subtitle">회원정보를 입력해주세요.</p>
+                        <h4 className="step-title">회원정보</h4>
+                        <p className="step-subtitle">짐마당에서 사용할 계정 정보를 입력해주세요.</p>
+
+                        <div className="form-group">
+                            <label className="form-label">이름</label>
+                            <input
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder="이름을 입력해주세요"
+                            />
+                        </div>
 
                         <div className="form-group">
                             <label className="form-label">아이디</label>
@@ -338,22 +346,14 @@ export default function RegisterPage() {
                                 placeholder="비밀번호를 다시 입력해주세요"
                             />
                             {formData.confirmPassword && formData.confirmPassword !== formData.password && (
-                                <p className="error-text">❌ 비밀번호가 일치하지 않습니다.</p>
+                                <p className="error-text"> 비밀번호가 일치하지 않습니다.</p>
                             )}
                             {formData.confirmPassword && formData.confirmPassword === formData.password && (
-                                <p className="success-text">✅ 비밀번호가 일치합니다.</p>
+                                <p className="success-text"> 비밀번호가 일치합니다.</p>
                             )}
                         </div>
 
-                        <div className="form-group">
-                            <label className="form-label">이름</label>
-                            <input
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="이름을 입력해주세요"
-                            />
-                        </div>
+
 
                         <div className="form-group">
                             <label className="form-label">생년월일</label>
@@ -389,24 +389,12 @@ export default function RegisterPage() {
 
                 {step === 3 && (
                     <div className="step-content">
-                        <h4 className="step-title">📞 연락처 정보</h4>
-                        <p className="step-subtitle">연락받으실 정보를 입력해주세요.</p>
+                        <h4 className="step-title">연락처</h4>
+                        <p className="step-subtitle">알림 수신과 계정 찾기에 필요한 정보입니다.</p>
                         <div className="form-group">
                             <label className="form-label">전화번호</label>
                             <input name="phone" value={formData.phone} onChange={handleChange} placeholder="전화번호를 입력해주세요" />
                         </div>
-                        {/* 이메일 관련 ིྀ추가 */}
-                        <div className="form-group">
-                            <label className="form-label">이메일</label>
-                            <input 
-                                name="email" 
-                                type="email" //이메일 관련 ིྀ추가
-                                value={formData.email} 
-                                onChange={handleChange} 
-                                placeholder="이메일을 입력해주세요" 
-                            />
-                        </div>
-                        {/* 이메일 관련 ིྀ추가 */}
                         <div className="form-group">
                             <label className="form-label">주소</label>
                             <div className="input-with-button">
@@ -425,8 +413,8 @@ export default function RegisterPage() {
 
                 {step === 4 && (
                     <div className="step-content">
-                        <h4 className="step-title">📏 신체 정보</h4>
-                        <p className="step-subtitle">정확한 파트너 매칭을 위해 필요합니다.</p>
+                        <h4 className="step-title">신체 정보</h4>
+                        <p className="step-subtitle">맞춤 운동 추천을 위한 기본 정보입니다.</p>
                         <div className="body-info-group">
                             <div className="body-info-field">
                                 <div className="body-info-label">키</div>
@@ -444,7 +432,7 @@ export default function RegisterPage() {
                                 />
                                 <div className="body-info-value">{formData.height || 170}<span className="unit">cm</span></div>
                             </div>
-                            
+
                             <div className="body-info-field">
                                 <div className="body-info-label">몸무게</div>
                                 <input
@@ -461,7 +449,7 @@ export default function RegisterPage() {
                                 />
                                 <div className="body-info-value">{formData.weight || 60}<span className="unit">kg</span></div>
                             </div>
-                            
+
                             <div className="body-info-field">
                                 <div className="body-info-label">골격근량</div>
                                 <input
@@ -477,7 +465,6 @@ export default function RegisterPage() {
                                     }}
                                 />
                                 <div className="body-info-value">{formData.muscleMass || 30}<span className="unit">kg</span></div>
-                                <div className="body-info-label">골격근량</div>
                             </div>
                         </div>
                     </div>
@@ -485,8 +472,8 @@ export default function RegisterPage() {
 
                 {step === 5 && (
                     <div className="step-content">
-                        <h4 className="step-title">📷 프로필</h4>
-                        <p className="step-subtitle">자신을 표현할 수 있는 사진을 올려주세요.</p>
+                        <h4 className="step-title">프로필 사진</h4>
+                        <p className="step-subtitle">다른 회원들에게 보여질 프로필 사진입니다.</p>
                         <div className="profile-upload-area">
                             <label htmlFor="profileImageFileInput" className="profile-upload-label">
                                 {formData.profileImageFile ? (
