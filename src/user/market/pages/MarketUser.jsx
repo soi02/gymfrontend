@@ -342,19 +342,23 @@ export default function MarketUserPage() {
                                                     <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
                                                         paddingLeft : "0rem", paddingRight : "0rem", borderRadius : "0.5rem", marginRight : "0.6125rem"}}>
                                                         {imageLinkPath ?
-                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                        <>
+                                                            <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                        </>
                                                         :
-                                                        <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
-                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
-                                                                
+                                                        <>
+                                                            <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
+                                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
+                                                                    
+                                                                </div>
+                                                                <div className = "col" style = {{flexGrow : "7"}}>
+                                                                    
+                                                                </div>
+                                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
+                                                                    
+                                                                </div>
                                                             </div>
-                                                            <div className = "col" style = {{flexGrow : "7"}}>
-                                                                
-                                                            </div>
-                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
-                                                                
-                                                            </div>
-                                                        </div>
+                                                        </>
                                                         }
                                                     </div>
                                                     <div className = "col" style = {{position : "relative", minWidth: "0"}}>
@@ -488,19 +492,23 @@ export default function MarketUserPage() {
                                                     <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
                                                         paddingLeft : "0rem", paddingRight : "0rem", borderRadius : "0.5rem", marginRight : "0.6125rem"}}>
                                                         {imageLinkPath ?
-                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                        <>
+                                                            <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                        </>
                                                         :
-                                                        <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
-                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
-                                                                
+                                                        <>
+                                                            <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
+                                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
+                                                                    
+                                                                </div>
+                                                                <div className = "col" style = {{flexGrow : "7"}}>
+                                                                    
+                                                                </div>
+                                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
+                                                                    
+                                                                </div>
                                                             </div>
-                                                            <div className = "col" style = {{flexGrow : "7"}}>
-                                                                
-                                                            </div>
-                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
-                                                                
-                                                            </div>
-                                                        </div>
+                                                        </>
                                                         }
                                                     </div>
                                                     <div className = "col" style = {{position : "relative", minWidth: "0"}}>

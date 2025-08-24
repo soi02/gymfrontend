@@ -838,6 +838,22 @@ export default function MarketArticlePageTest() {
                                                     
                                                 </div>
                                             </div> */}
+                                            {imageLinkPath ?
+                                            <>
+                                                <div className = "row" style = {{height : "100%"}}>
+                                                    <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
+                                                        
+                                                    </div>
+                                                    <div className = "col" style = {{flexGrow : "7"}}>
+                                                        
+                                                    </div>
+                                                    <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <MarketProductImageOnArticle imageLinkURL = {imageLinkURL}/>
+                                            </>
+                                            :
                                             <div className = "row" style = {{height : "100%"}}>
                                                 <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
                                                     
@@ -849,7 +865,7 @@ export default function MarketArticlePageTest() {
                                                     
                                                 </div>
                                             </div>
-                                            <MarketProductImageOnArticle imageLinkURL = {imageLinkURL}/>
+                                            }
                                         </div>
                                     </div>
                                     <div className = "row">
