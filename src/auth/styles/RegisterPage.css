@@ -86,19 +86,24 @@
 .step-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    /* gap: 16px; */
     width: 100%;
     max-width: 100%;
+    /* padding-top: 8px; */
 }
 .step-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #333;
+    letter-spacing: -0.5px;
 }
 .step-subtitle {
-    font-size: 14px;
-    color: #6c757d;
+    font-size: 15px;
+    color: #666;
     margin: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.4;
 }
 
 /* 1단계: 약관 동의 */
@@ -168,23 +173,32 @@
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    /* gap: 6px; */
     width: 100%;
-    margin-bottom: 20px;
+    margin-top: 36px;
+    /* margin-bottom: 5px; */
 }
 .form-label {
     font-size: 14px;
     font-weight: 500;
+    color: #555;
 }
 .input-with-button {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     width: 100%;
 }
 .input-with-button input {
-    flex-grow: 1;
+    flex: 7;
     width: auto;
+}
+.input-with-button .outline-btn {
+    flex: 3;
+    white-space: nowrap;
+    padding: 10px 12px;
+    font-size: 14px;
+    min-width: 80px;
 }
 
 /* 아이디, 비밀번호 입력칸 (네모 박스) */
@@ -192,7 +206,7 @@ input[name="accountName"],
 input[name="password"],
 input[name="confirmPassword"] {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-sizing: border-box;
@@ -210,7 +224,6 @@ input[name="confirmPassword"]:focus {
 input[name="name"],
 input[name="birth"],
 input[name="phone"],
-input[name="email"],
 input[name="address"] {
     padding: 12px 0;
     border: none;
@@ -225,7 +238,6 @@ input[name="address"] {
 input[name="name"]:focus,
 input[name="birth"]:focus,
 input[name="phone"]:focus,
-input[name="email"]:focus,
 input[name="address"]:focus {
     border-bottom-color: #7c1d0d;
     outline: none;
@@ -235,44 +247,44 @@ input[name="address"]:focus {
 .body-info-group {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    padding: 32px;
+    gap: 24px;
+    padding: 20px 16px;
     background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .body-info-field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 8px 0;
+    gap: 4px;
+    padding: 4px 0;
 }
 
 .body-info-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 4px;
+    height: 3px;
     border-radius: 2px;
     outline: none;
     transition: all 0.3s;
-    margin: 16px 0;
+    margin: 12px 0;
     cursor: pointer;
 }
 
 .body-info-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: #fff;
     border: 2px solid #7c1d0d;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(124, 29, 13, 0.3);
+    box-shadow: 0 1px 4px rgba(124, 29, 13, 0.2);
     transition: all 0.3s;
-    margin-top: -7px; /* 슬라이더 바의 중앙에 맞추기 위한 조정 */
+    margin-top: -6px;
 }
 
 .body-info-slider::-moz-range-thumb {
@@ -294,8 +306,8 @@ input[name="address"]:focus {
 }
 
 .body-info-value {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 600;
     color: #7c1d0d;
     text-align: center;
     font-feature-settings: "tnum";
@@ -303,17 +315,17 @@ input[name="address"]:focus {
 }
 
 .body-info-value .unit {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 500;
     color: #999;
-    margin-left: 4px;
+    margin-left: 2px;
 }
 
 .body-info-label {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
     text-align: center;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 input::placeholder {
@@ -361,10 +373,11 @@ input[readonly] {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 50px;
 }
 .profile-upload-label {
-    width: 140px;
-    height: 140px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px dashed #e0e0e0;
     display: flex;
@@ -408,6 +421,29 @@ input[readonly] {
     padding-top: 24px;
     margin-top: auto;
 }
+
+/* 모바일에서만 고정 푸터 적용 */
+@media (max-width: 768px) {
+    .register-form-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        /* box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); */
+        z-index: 900;
+        background-color: #fff;
+    }
+    
+    .register-form-section {
+        padding-bottom: 160px;  /* 버튼 영역 + 여유 공간 */
+    }
+    
+    .register-container {
+        padding-bottom: 0;  /* 컨테이너의 하단 패딩 제거 */
+    }
+}
+
 .btn-primary, .btn-secondary, .outline-btn {
     padding: 12px 24px;
     border: 1px solid transparent;
