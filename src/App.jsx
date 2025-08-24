@@ -78,6 +78,7 @@ import GroupChatList from './user/challenge/groupchat/pages/GroupChatList';
 import EmotionalDiary from './user/diary/pages/EmotionalDiary';
 import EmotionalDiaryCalendar from './user/diary/pages/EmotionalDiaryCalendar';
 import MypageNoticePage from './user/mypage/pages/MyPageNoticePage';
+import EmotionStatsPage from './user/diary/pages/EmotionStatsPage';
 
 
 // 이 부분은 따로 감싼 컴포넌트로 만들어야 useLocation을 쓸 수 있어!
@@ -252,6 +253,7 @@ function AppContent() {
             {/* 일기장 */}
             <Route path="/diary" element={<EmotionalDiary />} />
             <Route path="/diary/calendar" element={<EmotionalDiaryCalendar />} />
+            <Route path="/diary/stats" element={<EmotionStatsPage />} />
 
             {/* 수련장 */}
             <Route path="/challenge/challengeIntro" element={<ChallengeIntro />} />
