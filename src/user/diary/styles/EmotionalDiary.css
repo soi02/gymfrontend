@@ -16,10 +16,27 @@
 .diary-header {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+.diary-nav {
+    width: 100%;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
-    margin-bottom: 5px;
+}
+
+.diary-date {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #ff9800;
+    width: 100%;
 }
 
 .diary-nav {
@@ -191,7 +208,16 @@
 .diary-title-container {
     display: flex;
     align-items: center;
+    cursor: default;
+}
+
+.diary-title-container.clickable {
     cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.diary-title-container.clickable:hover {
+    opacity: 0.8;
 }
 
 .diary-title-icon {

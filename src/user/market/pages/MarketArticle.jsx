@@ -706,7 +706,7 @@ export default function MarketArticlePageTest() {
                 
                 const marketDealedLogCheckedByBuyerDto = {
                     
-                    sellerId : userInfo.userId,
+                    sellerId : userInfo.id,
                     buyerId : checkUserStatus,
                     specificArticleId : checkArticleId
                     
@@ -831,7 +831,7 @@ export default function MarketArticlePageTest() {
                             <div className = "row gx-0">
                                 <div className = "col" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", marginBottom : "0.6125rem"}}>
                                     <div className = "row">
-                                        <div className = "col" style = {{height : "13.25rem", overflow : "hidden", position : "relative", marginBottom : "0.8125rem"
+                                        <div className = "col" style = {{height : "15rem", overflow : "hidden", position : "relative", marginBottom : "0.8125rem"
                                         }}>
                                             {/* <div className = "row" style = {{height : "67%"}}>
                                                 <div className = "col">
@@ -839,13 +839,13 @@ export default function MarketArticlePageTest() {
                                                 </div>
                                             </div> */}
                                             <div className = "row" style = {{height : "100%"}}>
-                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d35)"}}>
+                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
                                                     
                                                 </div>
-                                                <div className = "col" style = {{flexGrow : "3"}}>
+                                                <div className = "col" style = {{flexGrow : "7"}}>
                                                     
                                                 </div>
-                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d35)"}}>
+                                                <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
                                                     
                                                 </div>
                                             </div>
@@ -1068,7 +1068,7 @@ export default function MarketArticlePageTest() {
                     const marketDealedLogCheckedBySellerDto = {
                         
                         sellerId : checkUserStatus,
-                        buyerId : userInfo.userId,
+                        buyerId : userInfo.id,
                         specificArticleId : checkArticleId
                         
                     } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
@@ -1121,7 +1121,7 @@ export default function MarketArticlePageTest() {
                     
                     const marketDealedLogCheckedByBuyerDto = {
                         
-                        sellerId : userInfo.userId,
+                        sellerId : userInfo.id,
                         buyerId : checkUserStatus,
                         specificArticleId : checkArticleId
                         
@@ -1424,14 +1424,14 @@ export default function MarketArticlePageTest() {
                                                                     id = "content" name = "content" 
                                                                     value = {editingContent} onChange = {handleContentChange} ref = {updateCommentRef}
                                                                     placeholder = "수정할 댓글을 입력해 주시오."
-                                                                    style = {{resize : "none", fontSize : "0.75rem"}}/>
+                                                                    style = {{resize : "none", fontSize : "0.875rem"}}/>
                                                                 </div>
                                                                 <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.4375rem"}}>
                                                                     <div className = "row h-100 gx-0">
                                                                         <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
                                                                             <button className = "btn buttonDefault" 
                                                                             onClick = {handleSubmit} 
-                                                                            style = {{fontSize : "0.75rem", fontWeight : "bold"}}>쓰기</button>
+                                                                            style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>쓰기</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1704,10 +1704,12 @@ export default function MarketArticlePageTest() {
             return(
                 <>
                 
-                    <div className = "row gx-0" style = {{marginTop : "0.3125rem", marginBottom : "1.4375rem"}}>
+                    <div className = "row gx-0" 
+                    // style = {{marginTop : "0.3125rem", marginBottom : "1.4375rem"}}
+                    >
                         <div className = "col-auto" style = {{fontSize : "0.8125rem"}}>
                             <button type="button" className="btn buttonDefault" disabled = {true}
-                            style = {{fontSize : "0.75rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
+                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                 
                                 {
                                     <>
@@ -1818,11 +1820,33 @@ export default function MarketArticlePageTest() {
                                                 </div>
                                             </div>
                                             <div className = "row">
-                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "0.8125rem", paddingBottom : "0.25rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
+                                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "0.8125rem", paddingBottom : "0.25rem", 
+                                                paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
+
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
+                                                            {
+                                                                constmarketCommentElementListOnArticle.length  > 0 ? 
+                                                                constmarketCommentElementListOnArticle : 
+                                                                <>
+                                                                    
+                                                                    <div className = "row">
+                                                                        <div className = "col" style = {{fontSize : "0.9375rem", paddingLeft : "1.25rem", paddingRight : "1.25rem",
+                                                                            marginTop : "0.625rem", marginBottom : "1rem"
+                                                                        }}>
+                                                                            게시글에 쓰인 댓글이 없소.
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    
                                                     <div className = "row">
                                                         <div className = "col">
                                                             <div className = "row h-100">
-                                                                <div className = "col" style = {{marginTop : "0.6125rem", marginBottom : "1.8125rem"}}>
+                                                                <div className = "col" style = {{marginTop : "0.6125rem", marginBottom : "1.5rem"}}>
                                                                     <div className = "row h-100">
                                                                         <div className = "col">
                                                                             <div className = "row h-100">
@@ -1831,7 +1855,7 @@ export default function MarketArticlePageTest() {
                                                                                     id = "content" name = "content" value = {insertMarketCommentOnArticleElement.content} 
                                                                                     onChange = {constApplyTextContent} ref = {contentRef}
                                                                                     placeholder = "댓글을 작성해 보겠소?"
-                                                                                    style = {{resize : "none", fontSize : "0.9375rem", overflow : "hidden", alignSelf : "center"}}/>
+                                                                                    style = {{resize : "none", fontSize : "0.875rem", overflow : "hidden", alignSelf : "center"}}/>
                                                                                 </div>
                                                                                 <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem"}}>
                                                                                     <div className = "row h-100 gx-0">
@@ -1847,26 +1871,7 @@ export default function MarketArticlePageTest() {
                                                             </div>                                                            
                                                         </div>
                                                     </div>
-
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
-                                                            {
-                                                                constmarketCommentElementListOnArticle.length  > 0 ? 
-                                                                constmarketCommentElementListOnArticle : 
-                                                                <>
-                                                                    
-                                                                    <div className = "row">
-                                                                        <div className = "col" style = {{fontSize : "0.9375rem", paddingLeft : "1.25rem", paddingRight : "1.25rem",
-                                                                            marginBottom : "1.625rem"
-                                                                        }}>
-                                                                            게시글에 쓰인 댓글이 없소.
-                                                                        </div>
-                                                                    </div>
-                                                                
-                                                                </>
-                                                            }
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div className = "row">

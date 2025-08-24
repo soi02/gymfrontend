@@ -27,6 +27,15 @@
   
 }
 
+.truncateText {
+  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width : 100%;
+  
+}
+
 .buttonDefault {
   
   --var-bg-color : #7c1d0d;

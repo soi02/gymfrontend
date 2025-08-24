@@ -65,6 +65,11 @@ export default function BuddyRegister() {
         navigate('/buddy/buddyHome');
     };
 
+    const handleGoToHome = () => {
+        setShowModal(false);
+        navigate('/home');
+    };
+
     const handleGoBack = () => {
         if (step > 1) {
             setStep(step - 1);
@@ -98,7 +103,7 @@ export default function BuddyRegister() {
                                 >
                                     {g === '남성' && '♂'}
                                     {g === '여성' && '♀'}
-                                    {g === '무관' && '⚧'}<br />{g}
+                                    {g === '무관' && '⇄'}<br />{g}
                                 </button>
                             ))}
                         </div>
@@ -173,12 +178,20 @@ export default function BuddyRegister() {
                     <div className="buddy-register-modal-content">
                         <h2>등록이 완료되었습니다.</h2>
                         <p>운동 벗을 찾아보시오 💪</p>
-                        <button
-                            className="buddy-register-button"
-                            onClick={handleGoToBuddyHome}
-                        >
-                            운동 벗 구하러 가기
-                        </button>
+                        <div className="buddy-register-modal-buttons">
+                            <button
+                                className="buddy-register-button"
+                                onClick={handleGoToBuddyHome}
+                            >
+                                운동 벗 구하러 가기
+                            </button>
+                            <button
+                                className="buddy-register-button-outline"
+                                onClick={handleGoToHome}
+                            >
+                                나중에 보기
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

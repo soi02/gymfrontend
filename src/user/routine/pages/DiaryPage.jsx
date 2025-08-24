@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useRoutineService from "../service/routineService";
@@ -117,11 +117,11 @@ export default function DiaryPage() {
     };
   }, [id, date, getWorkoutsByDate]);
 
-  // 단순 뒤집기
-  const flipToBack = (workoutId) =>
-    setFlipped((p) => ({ ...p, [workoutId]: true }));
-  const flipToFront = (workoutId) =>
-    setFlipped((p) => ({ ...p, [workoutId]: false }));
+  // 단순 뒤집기 (메모이제이션)
+  const flipToBack = useCallback((workoutId) =>
+    setFlipped((p) => ({ ...p, [workoutId]: true })), []);
+  const flipToFront = useCallback((workoutId) =>
+    setFlipped((p) => ({ ...p, [workoutId]: false })), []);
 
   // 상세 모달
   const openDetail = async (workoutId) => {

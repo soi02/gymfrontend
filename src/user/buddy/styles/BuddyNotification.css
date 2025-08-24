@@ -1,15 +1,12 @@
-.buddy-container {
-  /* max-width: 600px; */
-  /* margin: 0 auto; */
-  padding: 24px;
+.buddy-no-container {
+  padding: 18px;
   min-height: 100vh;
   overflow: auto;
-  
 }
 
 /* 바텀바에 가려지지 않게 스크롤 여백을 추가하는 클래스 */
 @media (max-width: 768px), (pointer: coarse) {
-  .buddy-scroll-container {
+  .buddy-no-scroll-container {
     padding-bottom: calc(var(--bottombar-h) + var(--cta-h) + 12px + env(safe-area-inset-bottom));
     scroll-padding-bottom: calc(var(--bottombar-h) + var(--cta-h) + 12px + env(safe-area-inset-bottom));
   }
@@ -17,38 +14,38 @@
 
 /* 💻 데스크탑(폭 769px 이상)에서는 여분 스크롤 안 생기도록 최소만 */
 @media (min-width: 769px) {
-  .buddy-scroll-container {
+  .buddy-no-scroll-container {
     padding-bottom: 150px;
   }
 }
 
-.buddy-title {
+.buddy-no-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.buddy-list {
+.buddy-no-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.buddy-item {
+.buddy-no-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
-  /* 아래 border 없애기 */
-  border-bottom: none;
+  padding: 16px 0;
+  border-bottom: 1px solid #e9ecef;
+  margin: 0 10px;
 }
 
-.buddy-info {
+.buddy-no-info {
   display: flex;
   align-items: center;
 }
 
-.buddy-profile-img {
+.buddy-no-profile-img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -57,29 +54,29 @@
   border: 2px solid #ccc;
 }
 
-.buddy-text {
+.buddy-no-text {
   display: flex;
   flex-direction: column;
 }
 
-.buddy-name {
+.buddy-no-name {
   font-weight: 600;
   font-size: 1rem;
 }
 
-.buddy-intro {
+.buddy-no-intro {
   font-size: 0.85rem;
   color: #666;
   margin-top: 2px;
 }
 
-.buddy-buttons {
+.buddy-no-buttons {
   display: flex;
   gap: 8px;
 }
 
-.btn-accept {
-  background-color: #228F4F; /* 진한 초록 */
+.buddy-no-btn-accept {
+  background-color: #228F4F;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -93,12 +90,12 @@
   text-align: center;
 }
 
-.btn-accept:hover {
-  background-color: #34A853; /* 좀 더 밝은 초록 */
+.buddy-no-btn-accept:hover {
+  background-color: #34A853;
 }
 
-.btn-decline {
-  background-color: #C0392B; /* 진한 빨강 */
+.buddy-no-btn-decline {
+  background-color: #C0392B;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -112,12 +109,12 @@
   text-align: center;
 }
 
-.btn-decline:hover {
-  background-color: #E74C3C; /* 좀 더 밝은 빨강 */
+.buddy-no-btn-decline:hover {
+  background-color: #E74C3C;
 }
 
-/* 취소, 바로채팅 버튼 스타일 */
-.btn-cancel, .btn-go-to-chat {
+.buddy-no-btn-cancel, 
+.buddy-no-btn-chat {
   background-color: transparent;
   color: #888;
   border: 1px solid #ccc;
@@ -132,7 +129,8 @@
   text-align: center;
 }
 
-.btn-cancel:hover, .btn-go-to-chat:hover {
+.buddy-no-btn-cancel:hover, 
+.buddy-no-btn-chat:hover {
   color: #228F4F;
   border-color: #228F4F;
 }
@@ -164,35 +162,32 @@
   padding: 0 !important;
 }
 
-/* src/styles/BuddyNotification.css 파일에 추가 */
-.no-notification-container {
+.buddy-no-empty-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 50vh; /* 컨테이너 높이 설정 */
+    min-height: 50vh;
     text-align: center;
     padding: 20px;
-    /* margin-top: 100px; */
     box-sizing: border-box;
     width: 100%;
 }
 
-.no-notification-image {
+.buddy-no-empty-image {
     width: 200px;
     height: auto;
     margin-bottom: 2rem;
 }
 
-.no-notification-text {
+.buddy-no-empty-text {
     font-size: 1rem;
     color: #555;
     line-height: 1.5;
     margin-bottom: 2rem;
 }
 
-/* 기존 버튼과 동일한 스타일을 사용합니다. */
-.find-buddy-button {
+.buddy-no-find-button {
     padding: 1rem 2rem;
     font-size: 1rem;
     font-weight: bold;
@@ -204,11 +199,11 @@
     transition: background-color 0.3s ease;
 }
 
-.find-buddy-button:hover {
+.buddy-no-find-button:hover {
     background-color: #5f180a;
 }
 
-.rejected-status {
+.buddy-no-status-rejected {
     color: #C0392B;
     font-size: 0.85rem;
     font-weight: bold;

@@ -711,7 +711,7 @@ export default function MarketMyLikedProductsPage() {
                                                                                         style = {{width : "100%", height : "100%", display : "flex", justifyContent : "center", alignItems : "center", 
                                                                                         fontSize : "2rem", color : "#c0392b", pointerEvents : "none"}}>
                                                                                             <i className="ri-heart-3-fill" style = {{ WebkitTextStroke : "2px #7c1d0d", pointerEvents : "auto",
-                                                                                                filter: "drop-shadow(0 0 2px #7c1e0d80) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 4px #c03a2b80)" +
+                                                                                                filter: "drop-shadow(0 0 2px #7c1e0d80) drop-shadow(0 0 1px #7c1e0d80) drop-shadow(0 0 3px #ffffffc0)" +
                                                                                                 "drop-shadow(0 0 2px #c03a2b80) drop-shadow(0 0 1px #c03a2b80)"
                                                                                             }}></i>
                                                                                         </div>
@@ -748,15 +748,17 @@ export default function MarketMyLikedProductsPage() {
                                                                 </div>
 
                                                             </div>
-                                                            <div className = "col" style = {{position : "relative"}}>
+                                                            <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                                 <div className = "row">
                                                                     <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                                         {funcSellEnded(article.sellEnded)}
                                                                     </div>
                                                                 </div>
                                                                 <div className = "row">
-                                                                    <div className = "col" style = {{fontSize : "1.125rem"}}>
-                                                                        {article.title}
+                                                                    <div className = "col">
+                                                                        <div className = "truncateText" style = {{fontSize : "1.0625rem"}}>
+                                                                            {article.title}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 {/* <div className = "row">
