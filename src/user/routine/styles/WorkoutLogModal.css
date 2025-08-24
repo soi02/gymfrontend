@@ -4,7 +4,7 @@
   display:flex; align-items:center; justify-content:center; z-index: 1000;
 }
 .wlm-modal{
-  width: min(520px, 92vw); background:#fff; border-radius:16px; padding:16px;
+  width: min(390px, 92vw); background:#fff; border-radius:16px; padding:16px;
   box-shadow: 0 20px 60px rgba(0,0,0,.25);
 }
 .wlm-file input{ width:100%; }
@@ -55,7 +55,7 @@
   background:#1f7a8c; color:#fff;
   font-weight:800; font-size:14px;
   padding:10px 14px; border-radius:12px;
-  box-shadow:0 6px 16px rgba(31,122,140,.25);
+  /* box-shadow:0 6px 16px rgba(31,122,140,.25); */
 }
 .wlm-file-btn:active{ transform: translateY(1px); }
 .wlm-file-help{
@@ -96,7 +96,7 @@
   background:#eef2f7; color:#111827;
 }
 .wlm-btn.primary{
-  background:#5a2d1c; color:#fff;
+  background:#7b2f27; color:#fff;
   box-shadow:0 8px 18px rgba(90,45,28,.25);
 }
 .wlm-btn.primary:active{ transform: translateY(1px); }
