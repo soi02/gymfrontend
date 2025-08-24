@@ -12,8 +12,8 @@
 
 /* 헤더 */
 .cl-new-header { margin-bottom: 1rem; text-align: left; }
-.cl-new-title { font-size: 1.4rem; font-weight: bold; margin: 0; color: #2c3e50; }
-.cl-new-subtitle { font-size: 0.8rem; color: #7f8c8d; margin-top: 0.5rem; }
+.cl-new-title { font-size: 1.3rem; font-weight: bold; margin: 0; color: #333; }
+.cl-new-subtitle { font-size: 0.8rem; color: #949494; margin-top: 0.5rem; }
 
 :root {
   --cl-gap: 15px;
