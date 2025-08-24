@@ -343,15 +343,17 @@ export default function MarketUserPage() {
                                                         paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
                                                         <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                     </div>
-                                                    <div className = "col" style = {{position : "relative"}}>
+                                                    <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                                 {funcSellEnded(article.sellEnded)}
                                                             </div>
                                                         </div>
                                                         <div className = "row">
-                                                            <div className = "col" style = {{fontSize : "1.125rem"}}>
-                                                                {article.title}
+                                                            <div className = "col">
+                                                                <div className = "truncateText" style = {{fontSize : "1.0625rem"}}>
+                                                                    {article.title}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         {/* <div className = "row">
@@ -473,15 +475,17 @@ export default function MarketUserPage() {
                                                         paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
                                                         <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
                                                     </div>
-                                                    <div className = "col" style = {{position : "relative"}}>
+                                                    <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "0.75rem"}}>
                                                                 {funcSellEnded(article.sellEnded)}
                                                             </div>
                                                         </div>
                                                         <div className = "row">
-                                                            <div className = "col" style = {{fontSize : "1.125rem"}}>
-                                                                {article.title}
+                                                            <div className = "col">
+                                                                <div className = "truncateText" style = {{fontSize : "1.0625rem"}}>
+                                                                    {article.title}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         {/* <div className = "row">

@@ -363,7 +363,7 @@ export default function MarketWriteArticlePage() {
                                                         <input className = "form-control writeArticleTextDivisionDefault" 
                                                         id = "title" name = "title" value = {insertMarketArticleElement.title}
                                                         onChange = {constApplyTextContent} ref = {titleRef}
-                                                        style = {{fontSize : "0.75rem"}}/>
+                                                        style = {{fontSize : "0.875rem"}}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,7 +381,7 @@ export default function MarketWriteArticlePage() {
                                                         <input className = "form-control writeArticleTextDivisionDefault" 
                                                         id = "productCost" name = "productCost" value = {insertMarketArticleElement.productCost}
                                                         onChange = {constApplyTextContent} ref = {productCostRef}
-                                                        style = {{fontSize : "0.75rem"}}/>
+                                                        style = {{fontSize : "0.875rem"}}/>
                                                     </div>
                                                 </div>
                                                 <div className = "row">
@@ -404,7 +404,7 @@ export default function MarketWriteArticlePage() {
                                                         <textarea className = "form-control writeArticleTextDivisionDefault" rows = "4"
                                                         id = "content" name = "content" value = {insertMarketArticleElement.content}
                                                         onChange = {constApplyTextContent} ref = {contentRef}
-                                                        style = {{fontSize : "0.75rem", resize : "none"}}/>
+                                                        style = {{fontSize : "0.875rem", resize : "none"}}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -423,7 +423,7 @@ export default function MarketWriteArticlePage() {
                                                         <div className = "row">
                                                             <div className = "col-auto">
                                                                 <button className = "btn buttonDefault" onClick = {constButtonToInsertMarketArticle}
-                                                                style = {{fontSize : "0.75rem", fontWeight : "bold"}}>게시</button>
+                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>게시</button>
                                                             </div>
                                                         </div>
                                                     </div>
