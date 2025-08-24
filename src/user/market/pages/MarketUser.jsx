@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
+import { loginAction } from "../../../redux/authSlice";
 
 export default function MarketUserPage() {
     

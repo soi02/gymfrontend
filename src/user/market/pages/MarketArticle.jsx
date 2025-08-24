@@ -8,6 +8,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useMarketAPI from "../service/MarketService";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
+import { loginAction } from "../../../redux/authSlice";
 
 // 여기에서 댓글 포커스 아웃 오류 패치 (자식 쪽에서는 값만 수정하고, 모든 수정 반영을 부모 쪽에서 해야 됨)
 
