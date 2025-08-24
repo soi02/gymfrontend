@@ -131,7 +131,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                                     {/* <MarketAnonymousUserMiniProfileImage /> */}
                                                                     <i className="bi bi-person-circle"></i>
                                                                 </div>
-                                                                <div className = "col" style = {{fontSize : "0.875rem", paddingLeft : "0rem", paddingRight : "0rem"}}>
+                                                                <div className = "col" style = {{fontSize : "0.875rem", paddingLeft : "0rem", paddingRight : "0rem", lineHeight : "1"}}>
                                                                     {userInfo.name}
                                                                 </div>
                                                             </div>

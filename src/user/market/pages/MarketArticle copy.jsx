@@ -915,7 +915,7 @@ export default function MarketArticlePageTest() {
                                                                             </div>
                                                                             <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
                                                                                 <div className = "row h-100">
-                                                                                    <div className = "col-auto" style = {{fontSize : "1.1875rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                                    <div className = "col-auto" style = {{fontSize : "1.3125rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
                                                                                         {userInfo.name}
                                                                                     </div>
                                                                                 </div>
