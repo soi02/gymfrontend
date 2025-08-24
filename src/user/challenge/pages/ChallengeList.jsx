@@ -13,6 +13,8 @@ import motivationIcon from '/src/assets/img/challenge/categoryIconNew/motivation
 import selfIcon from '/src/assets/img/challenge/categoryIconNew/self.png';
 import vibeIcon from '/src/assets/img/challenge/categoryIconNew/vibe.png';
 
+import createCardImage from '/src/assets/img/challenge/create/char_all.png';
+
 export default function ChallengeList() {
   const navigate = useNavigate();
   const [keywordTree, setKeywordTree] = useState([]);
@@ -145,15 +147,26 @@ const descMap = {
           ))}
         </div>
 
-        {/* 가로 전체폭 Create 카드 */}
+        {/* ✅ 가로 전체폭 Create 카드: 레이아웃 변경 */}
         <div className="cl-new-create-card" onClick={handleCreateClick}>
-          <div className="cl-new-card-content" style={{ textAlign: 'left' }}>
-            <h2 className="cl-new-card-title">새로운 수련 만들기</h2>
-            <p className="cl-new-card-description">나만의 수련을 시작하고 공유해 보세요!</p>
+          {/* ✅ 아이콘이 텍스트보다 먼저 오도록 */}
+          <div className="cl-new-create-card-header">
+            <div className="cl-new-plus-icon-wrapper"> {/* 아이콘 wrapper 추가 */}
+              <span className="cl-new-plus-icon">+</span>
+            </div>
+            <div className="cl-new-card-content-new" style={{ textAlign: 'left' }}>
+              <h2 className="cl-new-card-title">새로운 수련 만들기</h2>
+              <p className="cl-new-card-description">나만의 수련을 시작하고 공유해 보세요!</p>
+            </div>
           </div>
-          <div className="cl-new-card-icon">
-            <span className="cl-new-plus-icon">+</span>
-          </div>
+          {/* ✅ 빈 공간에 PNG 이미지 추가 */}
+          <img
+            src={createCardImage} // import한 이미지 변수 사용
+            alt="새로운 수련 만들기"
+            className="cl-new-create-card-image"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </div>
