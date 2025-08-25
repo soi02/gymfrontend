@@ -183,7 +183,7 @@ const Information = () => {
       <div className="pic-pop-body">
         <img src={openMember.src} alt={`${openMember.name} 사진`} />
       </div>
-      <span className="pic-pop-arrow" aria-hidden="true" />
+      {/* <span className="pic-pop-arrow" aria-hidden="true" /> */}
     </div>
   </>
 )}
