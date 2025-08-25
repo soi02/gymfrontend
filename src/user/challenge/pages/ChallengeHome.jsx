@@ -309,47 +309,59 @@ function LoadingOverlay({ visible }) {
 }
 
 /* ===== 이번 주 총 수련(출석일) 카드 ===== */
-function WeeklySummaryCard({ days = 0, totalDays = 7, percent = 0 }) {
-  const pct = Math.max(0, Math.min(100, Math.round(percent)));
-  return (
-    <div className="chome-week-card">
-      <div className="chome-week-top">
-        <div className="chome-week-badge">이번 주 총 수련</div>
-        <div className="chome-week-time">이번 주 {days}일 출석했어요!</div>
-      </div>
-      <div className="chome-week-bar"><i style={{ width: `${pct}%` }} /></div>
-      <div className="chome-week-meta">
-        <span>목표 {totalDays}일</span>
-        <span>{pct}%</span>
-      </div>
-    </div>
-  );
-}
+// function WeeklySummaryCard({ days = 0, totalDays = 7, percent = 0 }) {
+//   const pct = Math.max(0, Math.min(100, Math.round(percent)));
+//   return (
+//     <div className="chome-week-card">
+//       <div className="chome-week-top">
+//         <div className="chome-week-badge">이번 주 총 수련</div>
+//         <div className="chome-week-time">이번 주 {days}일 출석했어요!</div>
+//       </div>
+//       <div className="chome-week-bar"><i style={{ width: `${pct}%` }} /></div>
+//       <div className="chome-week-meta">
+//         <span>목표 {totalDays}일</span>
+//         <span>{pct}%</span>
+//       </div>
+//     </div>
+//   );
+// }
 
 /* ===== 랭킹 스트립 ===== */
+/* ===== 랭킹 스트립 (Top3 카드 + 리스트) ===== */
 function RankingStrip({ items = [], onMore }) {
+  if (!items?.length) return null;
+
+  const rows = items.slice(0, 8); // 필요시 표시 개수 조절
+
   return (
-    <div className="chome-rank-wrap">
-      <div className="chome-rank-head">
-        <h3 className="chome-rank-title">이번 주 랭킹</h3>
-        <button type="button" className="chome-rank-more" onClick={onMore}>
+    <div className="rankv3-wrap">
+      <div className="rankv3-head">
+        <h3 className="rankv3-title">이번 주 랭킹</h3>
+        <button type="button" className="rankv3-more" onClick={onMore}>
           더보기
         </button>
       </div>
-      <div className="chome-rank-list">
-        {items.map((it) => (
-          <div key={it.id} className="chome-rank-item">
-            <span className={`chome-rank-medal rank-${it.rank}`} aria-hidden />
-            <img src={it.profile} alt={it.name} className="chome-rank-avatar" />
-            <span className="chome-rank-name">{it.name}</span>
-            <span className="chome-rank-min">{it.days}일</span>
-          </div>
+
+      <ol className="rankv3-list">
+        {rows.map((u, i) => (
+          <li key={u.id ?? i} className="rankv3-item">
+            <div className="rankv3-left">
+              <span className={`rankv3-no ${i < 3 ? "is-top" : ""}`}>{i + 1}</span>
+              <div className="rankv3-avatar">
+                <img src={u.profile} alt={u.name} />
+              </div>
+              <span className="rankv3-name">{u.name}</span>
+            </div>
+
+            <div className="rankv3-right">
+              <span className="rankv3-count">+{u.days}일</span>
+            </div>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   );
 }
-
 
 /* =========================
    메인 컴포넌트
@@ -547,6 +559,31 @@ setRanking(
 </section>
 
 
+
+
+        {/* 3) 이번 주 총 수련(출석일) */}
+        {/* <section className="chome-section">
+          {weeklyLoading ? (
+            <div className="chome-block-skel"><div className="chome-skel-line" /></div>
+          ) : (
+            <WeeklySummaryCard
+              days={weekly.days}
+              totalDays={weekly.totalDays}
+              percent={weekly.percent}
+            />
+          )}
+        </section> */}
+
+        {/* 4) 랭킹 */}
+<section className="chome-section">
+  {rankingLoading ? (
+    <div className="chome-block-skel"><div className="chome-skel-line" /></div>
+  ) : ranking.length === 0 ? null : (
+    <RankingStrip items={ranking} onMore={() => navigate("/challenge/ranking")} />
+  )}
+</section>
+
+
         {/* 2) 한 줄 버튼 3개 */}
         <section className="chome-section">
           <div className="chome-quickrow">
@@ -578,28 +615,6 @@ setRanking(
             </button>
           </div>
         </section>
-
-        {/* 3) 이번 주 총 수련(출석일) */}
-        <section className="chome-section">
-          {weeklyLoading ? (
-            <div className="chome-block-skel"><div className="chome-skel-line" /></div>
-          ) : (
-            <WeeklySummaryCard
-              days={weekly.days}
-              totalDays={weekly.totalDays}
-              percent={weekly.percent}
-            />
-          )}
-        </section>
-
-        {/* 4) 랭킹 */}
-<section className="chome-section">
-  {rankingLoading ? (
-    <div className="chome-block-skel"><div className="chome-skel-line" /></div>
-  ) : ranking.length === 0 ? null : (
-    <RankingStrip items={ranking} onMore={() => navigate("/challenge/ranking")} />
-  )}
-</section>
 
         {/* 5) AI 추천받기 CTA */}
         <section className="chome-section">
