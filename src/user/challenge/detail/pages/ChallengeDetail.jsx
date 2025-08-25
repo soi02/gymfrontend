@@ -174,22 +174,42 @@ export default function ChallengeDetail() {
   const ctaText = isJoinable ? '신청하기' : buttonText;   // ← 모집 중이면 "신청하기"
   const navigateToChat = () => navigate(`/challenge/groupchat/${challengeId}`);
   
-  const handlePaymentStart = async () => {
-    if (!userId) { alert("로그인(인증) 후 이용 가능하오."); navigate('/login'); return; }
-    try {
-      const res = await apiClient.post(`/challenge/join/payment`, null, {
-        params: { userId, challengeId, redirectUrl: `${window.location.origin}/challenge/payment/success` },
-      });
-      if (res.data?.redirectUrl) {
-        window.location.href = res.data.redirectUrl;
-      } else {
-        alert("납부를 준비하는 데 실패했소.");
-      }
-    } catch (err) {
-      console.error("결제 실패", err);
-      alert("납부 과정 중에 오류가 났소: " + (err.response?.data || err.message));
-    }
-  };
+const handlePaymentStart = async () => {
+    if (!userId) { 
+      alert("로그인(인증) 후 이용 가능하오."); 
+      navigate('/login'); 
+      return; 
+    }
+
+    try {
+      const res = await apiClient.post(`/challenge/join/payment`, null, {
+        params: { userId, challengeId }, // 백엔드에서 redirectUrl을 사용하지 않으므로 제거
+      });
+
+      if (res.data) {
+        const { redirectUrl, next_redirect_mobile_url } = res.data;
+        
+        // ⭐ 수정된 부분: 기기 판별 로직 추가
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isApp = next_redirect_mobile_url && next_redirect_mobile_url.startsWith('https://open-api.kakaopay.com/online/v1/payment/appredirect'); // 모바일 앱 URL인지 확인
+
+        // 모바일 기기이거나 모바일 앱 URL을 받은 경우
+        if (isMobile && isApp) {
+          window.location.href = next_redirect_mobile_url;
+        } else if (redirectUrl) {
+          // PC 또는 모바일이지만 QR 코드를 사용해야 하는 경우 (PC URL)
+          window.location.href = redirectUrl;
+        } else {
+          alert("납부를 준비하는 데 실패했소: 유효한 결제 URL이 없소.");
+        }
+      } else {
+        alert("납부를 준비하는 데 실패했소.");
+      }
+    } catch (err) {
+      console.error("결제 실패", err);
+      alert("납부 과정 중에 오류가 났소: " + (err.response?.data?.message || err.message));
+    }
+  };
   
   return (
     <div className="cdp-page-layout">

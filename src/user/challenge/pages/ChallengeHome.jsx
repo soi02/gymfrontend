@@ -9,6 +9,8 @@ import { BsChatDots } from "react-icons/bs";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { LuSparkles } from "react-icons/lu";
 
+
+
 import "../styles/ChallengeHome.css";
 
 const BACKEND_BASE_URL = "http://localhost:8080";
@@ -189,10 +191,10 @@ export default function ChallengeHome() {
       <header className="chome-header">
         <h1 className="chome-title">
           {userName}님, <br />
-          오늘은 어떤 수련을 도전해볼까요?
+          어떤 수련을 도전하겠소?
         </h1>
         <p className="chome-subtitle">
-          성향/이력 기반으로 딱 맞는 수련을 추천해드려요.
+          성향/이력 기반으로 딱 맞는 수련을 추천해드리오
         </p>
 
         <div className="chome-actions">
@@ -201,7 +203,7 @@ export default function ChallengeHome() {
             className="chome-btn chome-btn-primary"
             onClick={handleFetchAIRecs}
             disabled={loading || !isLoggedIn}
-            title={!isLoggedIn ? "로그인 필요" : "AI 추천 받기"}
+            title={!isLoggedIn ? "로그인 필요" : "AI 추천 받겠소"}
           >
             <LuSparkles />
             <span>{loading ? "추천 생성 중…" : "AI에게 추천 받기"}</span>
@@ -210,7 +212,7 @@ export default function ChallengeHome() {
           <button
             type="button"
             className="chome-btn chome-btn-ghost"
-            onClick={() => navigate("/challenges?tab=recommend")}
+            onClick={() => navigate("/challenge/challengeList")}
           >
             <span>전체 수련 보기</span>
             <HiOutlineChevronRight />
@@ -270,7 +272,7 @@ export default function ChallengeHome() {
             <button
               type="button"
               className="chome-action"
-              onClick={() => navigate("/challenge/create")}
+              onClick={() => navigate("/challenge/challengeCreate")}
             >
               <span className="chome-action-ico">
                 <FiPlusCircle />
