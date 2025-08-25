@@ -139,7 +139,7 @@ export default function RegisterPage() {
         await registerUser(formData);
         // alert 대신 커스텀 모달 UI 사용
         // alert("계정 생성이 완료되었습니다.");
-        navigate("/gymmadang");
+        navigate("/");
     };
 
     const handleGoBackPage = () => navigate(-1);

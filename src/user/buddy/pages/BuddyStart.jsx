@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import buddyImage from "../../../assets/img/buddy/buddy3.png";
+import buddyImage from "../../../assets/img/buddy/bintro2.png";
 import '../styles/BuddyStart.css';
 
 export default function BuddyStart() {
