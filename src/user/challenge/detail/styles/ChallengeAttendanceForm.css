@@ -58,7 +58,7 @@
 }
 .att-reset{
   position:absolute; right:12px; bottom:12px;
-  appearance:none; border:none; border-radius:999px; padding:8px 12px;
+  appearance:none; border:none; border-radius:12px; padding:8px 12px;
   background:rgba(0,0,0,.55); color:#fff; font-weight:800; font-size:12px; cursor:pointer;
 }
 
@@ -73,7 +73,6 @@
   appearance:none; border:none; border-radius:12px; padding:12px 14px;
   font-weight:900; font-size:15px; cursor:pointer;
   background:var(--att-accent); color:var(--att-ink);
-  box-shadow:0 10px 22px color-mix(in srgb, var(--att-accent) 40%, transparent);
   transition:transform .08s ease, opacity .12s ease, box-shadow .15s ease;
 }
 .att-submit:disabled{ opacity:.6; box-shadow:none; cursor:default; }

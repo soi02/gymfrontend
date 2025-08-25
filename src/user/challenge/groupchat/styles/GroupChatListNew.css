@@ -91,7 +91,7 @@
 }
 .gchat-unread-badge {
   flex: 0 0 auto; min-width: 22px; height: 18px; padding: 0 6px;
-  border-radius: 10px; background: #28c840; color: #fff;
+  border-radius: 10px; background: #7c1d0d; color: #fff;
   font-size: 11px; line-height: 18px; text-align: center; font-weight: 700;
 }
 

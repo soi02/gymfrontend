@@ -436,3 +436,69 @@
   color:#374151;
   font-weight: 600;
 }
+
+/* 클릭 영역 버튼화 */
+.hopae-btn {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+/* 클릭 영역 버튼화 */
+.hopae-btn { all: unset; cursor: pointer; display: block; width: 100%; }
+
+/* 바깥 클릭 닫기용(투명) */
+.pic-pop-overlay {
+  position: fixed; inset: 0; background: transparent;
+  z-index: 4999; border: 0;
+}
+
+/* 앵커 기준 팝오버 카드 (마패 줄 위, 중앙에 고정) */
+.pic-pop-card {
+  position: fixed; z-index: 5000;
+  width: min(92vw, 280px);
+  background: #0b1224; color: #eaf0ff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  overflow: hidden;
+
+  /* JS에서 left/top을 주고, 여기서 위로 끌어올림 */
+  transform: translate(-50%, calc(-100% - 12px)) scale(1);
+  transform-origin: center;
+  will-change: transform, opacity;
+
+  animation: pop-bounce .22s cubic-bezier(.22,.91,.3,1) both;
+}
+
+/* 헤더/닫기/본문 */
+.pic-pop-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.08);
+}
+.pic-pop-header h3{ margin:0; font-size:1.05rem; }
+.pic-pop-close{ all:unset; cursor:pointer; font-size:20px; line-height:1; opacity:.85; padding:2px 6px; }
+.pic-pop-close:hover{ opacity:1; }
+.pic-pop-body{ padding:10px; display:grid; place-items:center; }
+.pic-pop-body img{ width:100%; height:auto; border-radius:12px; object-fit:cover; }
+
+/* 앵커를 가리키는 화살표 (카드 아래쪽) */
+.pic-pop-arrow{
+  position:absolute; left:50%; transform:translateX(-50%); top:0%;
+  width:0; height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-top:10px solid #0b1224;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+
+/* 팝 애니메이션 */
+@keyframes pop-bounce{
+  0%   { opacity:0; transform:translate(-50%, calc(-50% - 12px)) scale(.86); }
+  60%  { opacity:1; transform:translate(-50%, calc(-50% - 12px)) scale(1.03); }
+  100% { opacity:1; transform:translate(-50%, calc(-50% - 12px)) scale(1); }
+}
+
+/* 모션 최소화 선호 시 */
+@media (prefers-reduced-motion: reduce){
+  .pic-pop-card { animation: none; }
+}
