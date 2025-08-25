@@ -28,9 +28,9 @@
 .chome-header{ margin-bottom: 10px; }
 .chome-title{
   font-size: 1.4rem; font-weight: bold; line-height: 1.5;
-  letter-spacing:-0.2px; margin: 0 0 .5rem 0;
+  letter-spacing:-0.2px; margin: 0 0 .5rem 0; color: #333;
 }
-.chome-subtitle{ font-size: .85rem; color: var(--ch-sub); margin: 0 0 12px 0; }
+.chome-subtitle{ font-size: .85rem; color: var(--ch-sub); margin: 0 0 12px 0; color: #949494;}
 
 .chome-actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
 .chome-btn{
@@ -57,7 +57,7 @@
 }
 .chome-section{ padding-top: 2px; }
 .chome-sec-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
-.chome-sec-title{ font-size:1rem; font-weight:800; }
+.chome-sec-title{ font-size:.9rem; font-weight:bold; line-height: 1.3rem; color: #333;}
 
 /* ===== 가로 캐러셀 ===== */
 .chome-hscroll-wrapper{
@@ -272,9 +272,359 @@
 
 
 
+/* 2) 한 줄 버튼 3개 */
+.chome-quickrow{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.chome-quick{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  height:42px; border-radius:12px;
+  background:#f3f4f6; color:#111827;
+  border:1px solid #e5e7eb;
+  font-weight:800; font-size:.92rem;
+}
+.chome-quick svg{ font-size:18px; }
+
+/* 3) AI CTA 버튼(가운데 정렬, 폭 채움 느낌) */
+.chome-ai-cta{
+  width:100%;
+  justify-content:center;
+  height:44px;
+  margin: 2px 0 8px;
+}
 
 
 
 
 
+
+
+/* ====== 섹션 블록 공통 느낌 (카드 섹션 배경 없이 라이트한 여백) ====== */
+.chome-empty-block{
+  padding:14px; border:1px dashed var(--ch-divider);
+  border-radius:14px; color:#5b6478; background:#f7f9fc;
+}
+.chome-block-skel{ display:grid; gap:8px; }
+.chome-skel-line{
+  height:64px; border-radius:14px; border:1px solid var(--ch-divider);
+  background: linear-gradient(90deg,#eef1f6 25%,#f7f9fc 37%,#eef1f6 63%);
+  background-size: 400% 100%; animation: chomeShimmer 1.2s infinite;
+}
+
+/* ====== 상단 2열 타일 ====== */
+.chome-duo{
+  display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;
+}
+.chome-duo-tile{
+  display:grid; gap:6px; text-align:left; cursor:pointer;
+  background:#fff; border:1px solid var(--ch-divider); box-shadow: var(--ch-shadow);
+  border-radius:16px; padding:8px;
+}
+.chome-duo-img{
+  width:100%; aspect-ratio: 4/3;
+  background:#e8ecf4 center/cover no-repeat; border-radius:12px;
+}
+.chome-duo-title{
+  font-size:.9rem; font-weight:800; line-height:1.3; color:var(--ch-ink);
+  overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+
+/* ====== 리스트형 슬라이스 카드 ====== */
+.chome-slice-list{ display:grid; gap:10px; }
+
+.chome-slice{
+  display:grid; grid-template-columns: 1fr 118px; align-items:center; gap:12px;
+  width:100%; text-align:left; cursor:pointer;
+  background:#fff; border:1px solid var(--ch-divider); box-shadow: var(--ch-shadow);
+  border-radius:16px; padding:12px;
+  transition: transform .2s ease;
+}
+.chome-slice:active{ transform: scale(.997); }
+
+.chome-slice-body{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+.chome-slice-t1{
+  font-size:.98rem; font-weight:800; line-height:1.35; color:var(--ch-ink);
+  overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+.chome-slice-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+
+.chome-slice-thumb{
+  width:118px; height:78px; border-radius:12px;
+  background:#e8ecf4 center/cover no-repeat;
+}
+
+/* iPhone SE 대응 */
+@media (max-width:375px){
+  .chome-slice{ grid-template-columns: 1fr 100px; }
+  .chome-slice-thumb{ width:100px; height:70px; }
+}
+
+
+
+/* ===== 이번 주 총 수련 카드 ===== */
+.chome-week-card{
+  background:#fff; border:1px solid var(--ch-divider);
+  border-radius:12px; box-shadow: var(--ch-shadow);
+  padding:14px; display:flex; flex-direction:column; gap:10px;
+}
+.chome-week-badge{
+  display:inline-block; font-weight:800; font-size:.8rem;
+  background:#fff3e8; color:#8a4a13; border:1px solid #ffe2c6;
+  padding:6px 10px; border-radius:999px;
+}
+.chome-week-top{ display:flex; align-items:center; justify-content:space-between; }
+.chome-week-time{ font-weight:900; font-size:1.05rem; color:var(--ch-ink); }
+
+.chome-week-bar{
+  position:relative; height:10px; border-radius:999px; overflow:hidden;
+  background:#fae7d4; border:1px solid #f7d7ba;
+}
+.chome-week-bar i{
+  display:block; height:100%;
+  background: linear-gradient(90deg,#ff9f43,#f97316);
+}
+
+.chome-week-meta{
+  display:flex; justify-content:space-between;
+  font-size:.82rem; color:#7b8190;
+}
+
+/* ===== 랭킹 스트립 ===== */
+.chome-rank-wrap{
+  background:#fff; border:1px solid var(--ch-divider);
+  border-radius:18px; box-shadow: var(--ch-shadow);
+  padding:12px; display:flex; flex-direction:column; gap:10px;
+}
+.chome-rank-head{
+  display:flex; align-items:center; justify-content:space-between;
+}
+.chome-rank-title{ font-size:1rem; font-weight:900; }
+.chome-rank-more{
+  background:#f3f4f6; border:1px solid #e5e7eb; color:#111827;
+  border-radius:999px; padding:6px 10px; font-weight:800; font-size:.85rem;
+}
+
+.chome-rank-list{ display:grid; gap:8px; }
+.chome-rank-item{
+  display:grid; grid-template-columns: 20px 1fr auto; gap:8px; align-items:center;
+  padding:8px 10px; border-radius:12px; background:#fafbff; border:1px solid #eef1f6;
+}
+.chome-rank-name{ font-weight:800; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.chome-rank-min{ font-size:.9rem; color:#394150; font-weight:700; }
+
+/* 메달(순위) */
+.chome-rank-medal{
+  width:18px; height:18px; border-radius:999px; display:inline-block;
+  background:#d1d5db;
+}
+.chome-rank-medal.rank-1{ background: radial-gradient(circle at 30% 30%, #ffd166, #f59e0b); }
+.chome-rank-medal.rank-2{ background: radial-gradient(circle at 30% 30%, #e5e7eb, #9ca3af); }
+.chome-rank-medal.rank-3{ background: radial-gradient(circle at 30% 30%, #fbd1a2, #d97706); }
+
+/* SE 대응 */
+@media (max-width:375px){
+  .chome-week-time{ font-size:1rem; }
+  .chome-rank-item{ grid-template-columns: 18px 1fr auto; }
+}
+
+
+
+
+
+/* 랭킹 아바타 */
+.chome-rank-item { display:flex; align-items:center; gap:8px; padding:8px 10px; }
+.chome-rank-avatar { width:28px; height:28px; border-radius:50%; object-fit:cover; }
+
+
+
+/* ===== 인기 텍스트 캐러셀 (한 장씩) ===== */
+.chome-pop-ticker{
+  position: relative;
+  display: grid;
+  justify-items: stretch;
+  gap: 10px;
+}
+
+/* 점(원) 인디케이터 */
+.ticker-dots{
+  display:flex; align-items:center; justify-content:center;
+  gap:8px; padding:4px 0;
+}
+.ticker-dot{
+  /* ✅ 완전한 원 보장 */
+  width: 5px;
+  height: 5px;
+  aspect-ratio: 1 / 1;      /* 비율 고정 */
+  border-radius: 50%;       /* 완전한 원 */
+  display: inline-block;    /* 크기 왜곡 방지 */
+  flex: 0 0 auto;           /* flex 늘어남 방지 */
+  background: #d7dbe5;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+  transform-origin: center; /* 스케일 시 중심 유지 */
+}
+.ticker-dot.is-active{
+  background: #111827;
+  transform: scale(1.25);   /* 정비례 확대 → 여전히 원 */
+}
+
+/* (선택) 키보드 포커스 표시 */
+.ticker-dot:focus-visible{
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+/* 텍스트 전용 카드: 한 번에 하나만 보임 */
+.ticker-card{
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  background: #ffffff;           /* 라이트 톤 */
+  border: 1px solid #eceff4;
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.08);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.ticker-card:active{ transform: scale(.997); }
+
+.ticker-card-title{
+  font-size: 1.02rem;
+  font-weight: 900;
+  line-height: 1.35;
+  color: #1f2937;
+  overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+.ticker-card-meta{
+  font-size: .9rem;
+  color: #5b6478;
+  font-weight: 700;
+  display: flex; gap: 6px; align-items: center;
+}
+
+.ticker-card-chips{
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.ticker-chip{
+  font-size: .78rem; font-weight: 800; color: #394150;
+  background: #eef1f6;
+  border: 1px solid #e3e7ef;
+  padding: 6px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* SE 최적화 */
+@media (max-width: 375px){
+  .ticker-card{ padding: 14px; }
+  .ticker-card-title{ font-size: .98rem; }
+}
+
+
+
+
+/* 카드 전체 (텍스트+이미지) */
+.ticker-card-with-img {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 140px;  /* 오른쪽 영역 넓게 */
+  align-items: center;
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+  padding: 16px 12px 16px 16px;      /* 오른쪽 여백 조금 줄임 */
+  text-align: left;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  overflow: hidden;                  /* 모서리 라운드 유지 */
+}
+.ticker-card-with-img:active { transform: scale(.995); }
+
+/* 왼쪽 텍스트만 */
+.ticker-card-left { display:flex; flex-direction:column; gap:8px; min-width:0; margin-left: .8rem; }
+.ticker-card-title{
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.35;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;             /* 두 줄 말줄임 */
+  -webkit-box-orient: vertical;
+}
+
+/* 오른쪽 큰 이미지 */
+.ticker-card-right{
+  position: relative;
+  width: 140px; height: 100px;       /* 가시 영역 */
+  bottom: .3rem;
+  display:flex; align-items:center; justify-content:center;
+  overflow: visible;                  /* 이미지를 더 크게 보여주기 위함 */
+}
+.ticker-card-img-lg{
+  width: 180px;                      /* 실제 이미지는 더 큼 */
+  height: 180px;
+  object-fit: contain;
+  transform: translateX(12px);       /* 카드 오른쪽으로 살짝 튀어나오게 */
+  pointer-events: none;              /* 클릭 방해 X */
+}
+
+/* 인디케이터 (완전 원) */
+.ticker-dots {
+  display:flex; align-items:center; justify-content:center;
+  gap:8x; padding:4px 0;
+}
+
+.ticker-dot {
+  width: 3px;           /* 🔽 원 크기 줄임 (기존 10px → 8px) */
+  height: 3px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: inline-block;
+  flex: 0 0 auto;
+  background: #d7dbe5;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+  transform-origin: center;
+}
+
+.ticker-dot.is-active {
+  background: #111827;
+  transform: scale(1.3);   /* ✅ 강조 효과는 그대로 유지 */
+}
+
+/* 작은 화면 최적화 (예: iPhone SE) */
+@media (max-width: 375px){
+  .ticker-card-with-img{
+    grid-template-columns: 1fr 120px;
+    padding-right: 8px;
+  }
+  .ticker-card-right{ width: 120px; height: 90px; }
+  .ticker-card-img-lg{
+    width: 160px; height: 160px; transform: translateX(10px);
+  }
+}
+
+
+.ticker-card-desc{
+  font-size: .8rem;
+  color: #757575;           /* 살짝 더 진하게 */
+  line-height: 1.45;
+  max-height: 2.9em;     /* 2줄 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
