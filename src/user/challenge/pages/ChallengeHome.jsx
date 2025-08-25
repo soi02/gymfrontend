@@ -473,7 +473,7 @@ const handleFetchAIRecs = async () => {
           {userName}님, <br />
           어떤 수련을 도전하겠소?
         </h1>
-        <p className="chome-subtitle">성향/이력 기반으로 딱 맞는 수련을 추천해드리오</p>
+        <p className="chome-subtitle">그대에게 딱 맞는 수련을 추천해드리오</p>
       </header>
 
       <main className="chome-main">

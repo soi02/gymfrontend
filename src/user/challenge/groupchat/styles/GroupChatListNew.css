@@ -70,8 +70,8 @@
 }
 .gchat-unread-dot {
   position: absolute; right: 6px; top: 6px;
-  width: 10px; height: 10px; border-radius: 999px;
-  background: #28c840; box-shadow: 0 0 0 2px #fff;
+  width: 7px; height: 7px; border-radius: 999px;
+  background: #7c1d0d; box-shadow: 0 0 0 2px #fff;
 }
 
 /* 본문 */
