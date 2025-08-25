@@ -1,0 +1,51 @@
+.register-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.register-modal {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+}
+
+.register-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.register-modal-message {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+    word-break: keep-all;
+}
+
+.register-modal-button {
+    background-color: #7c1d0d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.register-modal-button:hover {
+    background-color: #611708;
+}

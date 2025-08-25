@@ -182,6 +182,7 @@
     font-size: 14px;
     font-weight: 500;
     color: #555;
+    text-align: left;
 }
 .input-with-button {
     display: flex;
