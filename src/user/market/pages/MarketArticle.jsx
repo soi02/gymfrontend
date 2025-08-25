@@ -233,11 +233,31 @@ export default function MarketArticlePageTest() {
         
     } 
     
-    const handleUpdateComment = async (targetId, newContent) => {
+    const handleUpdateComment = async (newElement, targetId, newContent) => {
+
+        console.log("newElement");
+        console.log(newElement);
+        console.log("targetId");
+        console.log(targetId);
+        console.log("newContent");
+        console.log(newContent);
         
-        const targetElement = mergeMarketCommentEditElementListOnArticle.find(
-            element => element?.comment?.id === targetId
-        );
+        const targetElement = newElement;
+        
+        // const targetElement = newElement.find(
+        //     element => {
+                
+        //         console.log("elemtest1")
+        //         console.log(element?.comment?.id)
+        //         console.log("targetId")
+        //         console.log(targetId)
+                
+        //         element?.comment?.id === targetId
+                
+        //     }
+        // );
+        
+        
         console.log("targetElement");
         console.log(targetElement);
         
@@ -628,6 +648,15 @@ export default function MarketArticlePageTest() {
         constUseEffectWhenCommentOnArticleLoad();
         
     }, [commentOnArticleLoading])
+    
+    //
+    
+    useEffect(() => {
+        console.log("=== mergeMarketCommentEditElementListOnArticle 변경됨 ===");
+        console.log(mergeMarketCommentEditElementListOnArticle);
+    }, [mergeMarketCommentEditElementListOnArticle]);
+    
+    // ▲ Test Code For Comment Editing Process
     
     const constApplyTextContent = (element1) => {
         
@@ -1033,6 +1062,10 @@ export default function MarketArticlePageTest() {
         
         const { comment = {} , userInfo = {} } = marketCommentElem1 ?? {};
         
+        console.log("{ comment = {} , userInfo = {} }");
+        console.log(comment);
+        console.log(userInfo);
+        
         const formatDate = (dateString) => {
             
             const date = new Date(dateString);
@@ -1056,15 +1089,72 @@ export default function MarketArticlePageTest() {
         
         const [ editingContent, setEditingContent ] = useState(comment?.content);
         
+        console.log("editingContent");
+        console.log(editingContent);
+        console.log("comment?.id");
+        console.log(comment?.id);
+        
         const handleContentChange = (event) => {
             
+            console.log("event.target.value");
+            console.log(event.target.value);
             setEditingContent(event.target.value);
             
         }
         
         const handleSubmit = () => {
             
-            onUpdateConfirm(comment?.id, editingContent);
+            console.log("handleSubmit");
+            
+            console.log("marketCommentElem1?.comment?.id, editingContent");
+            console.log(marketCommentElem1?.comment?.id, editingContent);
+            
+            const updatedElement = {
+                
+                ...marketCommentElem1,
+                comment : {
+                    ...marketCommentElem1?.comment,
+                    content : editingContent
+                }
+                
+            };
+            
+            console.log("updatedElement");
+            console.log(updatedElement);
+            
+            // console.log("mergeMarketCommentEditElementListOnArticle");
+            // console.log(mergeMarketCommentEditElementListOnArticle);
+            
+            // setMergeMarketCommentEditElementListOnArticle(prevList => 
+                
+            //     prevList.map(element => {
+                    
+            //             console.log("element?.comment?.id")
+            //             console.log(element?.comment?.id)
+            //             console.log("marketCommentElem1?.comment?.id")
+            //             console.log(marketCommentElem1?.comment?.id)
+                    
+            //             if (element?.comment?.id === marketCommentElem1?.comment?.id) {
+            //                 console.log("map checking works")
+            //                 return updatedElement;
+            //             } else {
+            //                 return element;
+            //             }
+                    
+            //         }
+            //         // element?.comment?.id === marketCommentElem1?.comment?.id
+            //         // ?
+            //         // updatedElement
+            //         // :
+            //         // element
+                    
+            //     )
+                
+            // )
+            
+            setMergeMarketCommentEditElementListOnArticle(updatedElement)
+            
+            onUpdateConfirm(updatedElement, marketCommentElem1?.comment?.id, editingContent);
             
             setCommentEditModeChecked(false);
             

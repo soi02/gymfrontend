@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useUserService from "../service/userService";
+import RegisterModal from "./RegisterModal";
 import "../styles/RegisterPage.css";
 import { useEffect } from "react";
 
@@ -43,6 +44,7 @@ export default function RegisterPage() {
 
     const [isTermsOpen, setIsTermsOpen] = useState(false);
     const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const { registerUser, checkAccountNameDuplicate } = useUserService();
@@ -136,10 +138,12 @@ export default function RegisterPage() {
     const handleBack = () => setStep(prev => Math.max(prev - 1, 1));
 
     const handleSubmit = async () => {
-        await registerUser(formData);
-        // alert 대신 커스텀 모달 UI 사용
-        // alert("계정 생성이 완료되었습니다.");
-        navigate("/");
+        try {
+            await registerUser(formData);
+            setIsModalOpen(true);
+        } catch (error) {
+            alert(error.message || "회원가입에 실패했습니다.");
+        }
     };
 
     const handleGoBackPage = () => navigate(-1);
@@ -507,6 +511,13 @@ export default function RegisterPage() {
                 {step < totalSteps && <button onClick={handleNext} className="btn-primary">다음</button>}
                 {step === totalSteps && <button onClick={handleSubmit} className="btn-primary">가입 완료</button>}
             </div>
+            <RegisterModal 
+                isOpen={isModalOpen}
+                onConfirm={() => {
+                    setIsModalOpen(false);
+                    navigate("/");
+                }}
+            />
         </div>
     );
 }

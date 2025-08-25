@@ -48,19 +48,27 @@ export default function useUserService() {
             // 사용자 데이터의 각 필드를 FormData에 추가합니다.
             // profileImageFile은 File 객체이므로 별도로 처리합니다.
             // confirmPassword, agreeTerms, agreePrivacy는 백엔드로 보낼 필요 없는 프론트엔드 전용 필드입니다.
-            formData.append('name', userData.name);
-            formData.append('gender', userData.gender);
-            formData.append('accountName', userData.accountName);
+            // 필수 필드 검증
+            if (!userData.name || !userData.accountName || !userData.password) {
+                throw new Error('필수 정보가 누락되었습니다.');
+            }
+
+            // 데이터 정제 및 변환
+            const height = userData.height || '0';
+            const weight = userData.weight || '0';
+            const muscleMass = userData.muscleMass || '0';
+
+            formData.append('name', userData.name.trim());
+            formData.append('gender', userData.gender || 'M');
+            formData.append('accountName', userData.accountName.trim());
             formData.append('password', userData.password);
-            formData.append('birth', userData.birth);
-            formData.append('address', userData.address);
-            formData.append('phone', userData.phone);
-            formData.append('height', userData.height);
-            formData.append('weight', userData.weight);
-            formData.append('muscleMass', userData.muscleMass);
-            // isBuddy는 boolean 값이지만 FormData에 추가될 때 "true" 또는 "false" 문자열로 변환됩니다.
-            // Spring Boot는 이를 자동으로 boolean으로 파싱합니다.
-            formData.append('buddy', userData.isBuddy); // 백엔드 UserRequest의 isBuddy와 매칭되도록 'buddy'로 변경
+            formData.append('birth', userData.birth || '');
+            formData.append('address', userData.address || '');
+            formData.append('phone', userData.phone ? userData.phone.replace(/-/g, '') : '');
+            formData.append('height', height.toString());
+            formData.append('weight', weight.toString());
+            formData.append('muscleMass', muscleMass.toString());
+            formData.append('isBuddy', userData.isBuddy ? 'true' : 'false'); // boolean을 문자열로 변환
 
             // 프로필 이미지 파일이 존재하면 FormData에 추가합니다.
             // 'profileImageFile'은 Spring Boot 컨트롤러의 @RequestParam 이름과 일치해야 합니다.

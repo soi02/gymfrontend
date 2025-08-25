@@ -28,12 +28,12 @@ function ImageWarningModal({open, onClose, onConfirm}) {
                     <div className = "row">
                         <div className = "col" style = {{paddingTop : "0.5rem", paddingBottom : "0.5rem"}}>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.5rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                <div className = "col" style = {{fontSize : "1.375rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
                                     잠깐!
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.125rem", marginBottom : "1.25rem"}}>
+                                <div className = "col" style = {{fontSize : "1.062rem", marginBottom : "1.25rem"}}>
                                     정말 이대로 게시하겠소?
                                     <br />
                                     물건 파악의 원활함을 위해
@@ -43,28 +43,18 @@ function ImageWarningModal({open, onClose, onConfirm}) {
                             </div>
                             <div className = "row">
                                 <div className = "col">
-                                    {/* <div className = "d-flex w-100 align-items-center">
+                                    <div className = "row">
                                         <div className = "col">
-                                            
-                                        </div> */}
-                                        {/* <div className = "col d-flex justify-content-center"> */}
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <button className = "btn buttonDefault" onClick = {onConfirm}
-                                                    // onClick = {constButtonToInsertMarketArticle}
-                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>그래도 게시하기</button>
-                                                </div>
-                                            </div>
-                                        {/* </div> */}
-                                        {/* <div className = "col d-flex justify-content-end"> */}
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <button className = "btn buttonCancellationDefault" onClick={onClose}
-                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
-                                                </div>
-                                            </div>
-                                        {/* </div> */}
-                                    {/* </div> */}
+                                            <button className = "btn buttonDefault" onClick = {onConfirm}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>그래도 게시하기</button>
+                                        </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col">
+                                            <button className = "btn buttonCancellationDefault" onClick={onClose}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -423,7 +413,7 @@ export default function MarketWriteArticlePage() {
                                                                 <div className = "col">
                                                                     {insertImageLink.name}
                                                                 </div>
-                                                                <div className = "col-auto" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                                <div className = "col-auto basicDivisionOnClickStyle" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
                                                                 onClick = {constRemoveImageLink}>
                                                                     ×
                                                                 </div>
