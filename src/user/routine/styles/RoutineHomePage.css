@@ -183,7 +183,7 @@
 /* 가로 */
 .routine-bottom-buttons-2 {
   position: fixed;
-  bottom: 90px;
+  bottom: 84px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -193,13 +193,14 @@
   justify-content: space-between;
   gap: 10px;
   z-index: 99;
+  font-weight: bold;
 }
 
 .routine-free-btn-2, .routine-add-btn-2 {
   flex: 1;
   padding: 14px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: bold;
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -207,33 +208,6 @@
   transition: all 0.2s;
 }
 
-
-/* 세로 */
-/* .routine-bottom-buttons-2 {
-  position: fixed;
-  bottom: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 425px;
-  padding: 0 14px;
-  display: flex;
-  flex-direction: column; 
-  gap: 10px;
-  z-index: 99;
-}
-
-.routine-free-btn-2, .routine-add-btn-2 {
-  flex: 1;
-  padding: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: all 0.2s;
-} */
 
 
 

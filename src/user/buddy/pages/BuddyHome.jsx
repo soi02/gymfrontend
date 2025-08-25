@@ -69,9 +69,12 @@ export default function BuddyHome() {
         if (!receiverId) return;
 
         try {
+            const token = localStorage.getItem("token");
             await axios.post("http://localhost:8080/api/buddy/request", {
                 sendBuddyId: senderId,
                 receiverBuddyId: receiverId,
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
             });
             // 💖 성공 토스트: 색상 변경을 위해 theme: "colored" 대신 theme: "light" 사용 후 CSS에서 색상을 직접 지정 (CSS에서 처리할 예정)
             toast.success(`${buddies[currentIndex].name}님에게 호감을 보냈어요 💖`, {
