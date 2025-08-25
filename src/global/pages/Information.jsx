@@ -66,7 +66,7 @@ const Information = () => {
 <section className="info-section intro-clean">
   <h1 className="app-title">짐마당</h1>
   <p className="app-sub">매일의 운동을 습관으로 바꾸는 헬스 커뮤니티<br />
-    혼자가 아닌 우리라서, 오늘도 한 걸음 더.
+    혼자가 아닌 우리기에, 오늘도 한 걸음 더.
 
 
   </p>
@@ -81,12 +81,10 @@ const Information = () => {
     수련장에서 한계를 넘어보고, <br />
     벗찾기로 마음 맞는 동료를 만나며, <br />
     장터에서 장비와 마음을 나눕니다.<br />
-    {/* 혼자가 아닌 우리라서, 오늘도 한 걸음 더. */}
  
   </p>
 
 </div>
-  {/* <p className="app-cta">혼자가 아닌 우리라서, 오늘도 한 걸음 더.</p> */}
 
 </section>
 

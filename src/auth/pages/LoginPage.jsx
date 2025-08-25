@@ -9,10 +9,10 @@ import '../styles/LoginPage.css';
 
 export default function LoginPage() {
 
-    const [formData, setFormData] = useState({
-        accountName: '',
-        password: ''
-    });
+const [formData, setFormData] = useState({
+  accountName: '1',
+  password: '1',
+});
 
     const [modalMessage, setModalMessage] = useState('');
     const navigate = useNavigate();
