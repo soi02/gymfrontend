@@ -26,12 +26,12 @@ function ImageWarningModal({open, onClose, onConfirm}) {
                     <div className = "row">
                         <div className = "col" style = {{paddingTop : "0.5rem", paddingBottom : "0.5rem"}}>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.5rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                <div className = "col" style = {{fontSize : "1.375rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
                                     잠깐!
                                 </div>
                             </div>
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "1.125rem", marginBottom : "1.25rem"}}>
+                                <div className = "col" style = {{fontSize : "1.062rem", marginBottom : "1.25rem"}}>
                                     정말 이대로 게시하겠소?
                                     <br />
                                     물건 파악의 원활함을 위해
@@ -466,7 +466,7 @@ export default function MarketUpdateArticlePage() {
                                                             <div className = "col">
                                                                 {displayImageName}
                                                             </div>
-                                                            <div className = "col-auto" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                            <div className = "col-auto basicDivisionOnClickStyle" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
                                                             onClick = {constRemoveImageLink}>
                                                                 ×
                                                             </div>
