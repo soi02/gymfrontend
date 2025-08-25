@@ -288,21 +288,27 @@
 
 /* step-duration */
 .step-duration-options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* ✅ 한 줄에 2개씩 */
   gap: 12px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 435px; /* 컨테이너 중앙 정렬 */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .step-duration-button {
-  padding: 12px 18px;
+  padding: 14px 18px;
   border: 1px solid #ccc;
-  border-radius: 20px;
+  border-radius: 12px;
   background-color: white;
   font-size: 1rem;
   cursor: pointer;
   transition: 0.2s;
+  width: 100%;           /* ✅ 칸 폭 꽉 채우도록 */
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .step-duration-button.selected {
@@ -311,7 +317,6 @@
   font-weight: bold;
   border-color: #7c1d0d;
 }
-
 
 
 .step-capacity-slider {
@@ -692,4 +697,146 @@
   left: auto;
   bottom: auto;
   transform: none;
+}
+
+
+
+
+
+/* ===== Deposit money field ===== */
+.form-group {
+  width: 100%;
+  max-width: 435px;
+  margin: 28px auto 0;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #222;
+  margin-bottom: .7rem;
+  /* margin-left: 2rem; */
+  text-align: center;
+}
+
+/* 머니 입력 래퍼 */
+.field-money {
+  justify-content: center; /* input+suffix 세트 중앙 배치 */
+  gap: 6px;                /* input과 suffix 간격 */
+  position: relative;
+}
+
+/* 공통 인풋 톤 업그레이드 */
+.form-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 16px;
+  color: #111;
+  box-sizing: border-box;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-input::placeholder {
+  color: #9aa1a9;
+}
+
+/* 포커스 상태 공통 */
+.form-input:focus {
+  outline: none;
+  border-color: #7c1d0d;
+  box-shadow: 0 0 0 3px rgba(124, 29, 13, 0.08);
+}
+
+/* 머니 입력 전용 (접미사 공간 확보 + 숫자 정렬) */
+.form-input-money {
+  width: 70%;              /* ✅ 전체가 아니라 70% */
+  max-width: 260px;        /* 너무 넓어지지 않게 제한 */
+  margin: 0 auto;          /* 가운데 정렬 */
+  display: block;
+  padding-right: 48px;     /* 접미사 '원' 공간 */
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 접미사 '원' 배지 */
+.money-suffix {
+  position: static;        /* absolute 제거 */
+  transform: none;
+  height: auto;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 숫자 입력 화살표 제거 (크롬/엣지/사파리) */
+.form-input[type="number"]::-webkit-outer-spin-button,
+.form-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* 파이어폭스 */
+.form-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* 에러 메시지 */
+.error-message {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #b3261e;
+}
+
+/* 하단 안내 텍스트 톤 통일 */
+.deposit-help {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin: 3rem 0 0;
+  line-height: 1.5rem;
+}
+
+/* 다음 버튼과 어울리는 여백 (StepLayout 내 버튼이 fixed/sticky라면 생략 가능) */
+.step-page-body .next-button,
+.step-start-next-button {
+  margin-top: 24px;
+}
+
+
+
+/* input + 원 나란히 */
+.money-input-wrapper {
+  display: flex;
+  align-items: center;    /* ✅ 같은 라인에 수직 중앙 정렬 */
+  justify-content: center;
+  gap: 6px;
+  width: 70%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.form-input-money {
+  flex: 1;               /* 남은 공간 다 차지 */
+  padding-right: 12px;
+  text-align: right;
+  height: 44px;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.money-suffix {
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
+  white-space: nowrap;   /* ✅ 줄바꿈 방지 */
 }
