@@ -188,21 +188,32 @@
   color: #7c1d0d;
 }
 
+/* ▶ NEXT 버튼: 어떤 기기든 가운데, 좌우 20px 고정, 하단 20px(+노치 대응) */
 .next-button {
   position: fixed;
-  bottom: 20px;
-  left: 20px; /* 왼쪽 여백 20px */
-  width: calc(100% - 40px); /* 전체 너비에서 양 옆 여백(20px*2)을 뺌 */
-  max-width: 335px; /* 375px - 20px - 20px = 335px */
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  /* test-page-body와 동일한 폭 계산 → 좌우 20px 보장 */
+  width: min(calc(100vw - 40px), 375px);
+
   background-color: #7c1d0d;
-  color: white;
+  color: #fff;
   padding: 12px 24px;
-  border-radius: 8px;
   border: none;
+  border-radius: 8px;
   font-size: 16px;
-  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
   text-align: center;
+  box-sizing: border-box;
+  z-index: 30; /* 토스트/컨텐츠 위로 */
 }
+
+/* 비활성화 */
+.next-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 
 .toast-message {
   position: fixed;
