@@ -13,13 +13,13 @@ import { loginAction } from "../../../redux/authSlice";
 
 function MarketArticleElement({marketArticleElem1}) {
     
-    const BACKEND_BASE_URL = "http://localhost:8080";
+    const BACKEND_BASE_URL = "http://localhost:8080/";
     
-    const { article, userInfo } = marketArticleElem1;
+    const { article = {} , userInfo = {} } = marketArticleElem1 ?? {};
     
-    const imageLinkPath = article.imageLink;
+    const imageLinkPath = article?.imageLink;
     
-    const imageLinkURL = `${BACKEND_BASE_URL}${imageLinkPath}`;
+    const imageLinkURL = new URL(imageLinkPath ?? "", BACKEND_BASE_URL).toString();
     
     const formatDate = (dateString) => {
         
@@ -98,22 +98,40 @@ function MarketArticleElement({marketArticleElem1}) {
                             <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                 <div className = "row">
                                     <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem"}}>
-                                        <Link className = "linkDefault" to = {`/market/article/${article.id}`}>
+                                        <Link className = "linkDefault" to = {`/market/article/${article?.id}`}>
                                             <div className = "row">
                                                 <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
-                                                    paddingLeft : "0rem", paddingRight : "0rem", marginRight : "0.6125rem"}}>
-                                                    <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                    paddingLeft : "0rem", paddingRight : "0rem", borderRadius : "0.5rem", marginRight : "0.6125rem"}}>
+                                                    {imageLinkPath ?
+                                                    <>
+                                                        <MarketProductMainImage imageLinkURL = {imageLinkURL}/>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <div className = "row" style = {{height : "100%", border : "1px solid #cccccc"}} >
+                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to left, transparent, #6d6d6d80)"}}>
+                                                                
+                                                            </div>
+                                                            <div className = "col" style = {{flexGrow : "7"}}>
+                                                                
+                                                            </div>
+                                                            <div className = "col" style = {{flexGrow : "2", background : "linear-gradient(to right, transparent, #6d6d6d80)"}}>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                    }
                                                 </div>
                                                 <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "0.75rem"}}>
-                                                            {funcSellEnded(article.sellEnded)}
+                                                            {funcSellEnded(article?.sellEnded)}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
                                                         <div className = "col">
                                                             <div className = "truncateText" style = {{fontSize : "1.0625rem"}}>
-                                                                {article.title}
+                                                                {article?.title}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -134,7 +152,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                                     <i className="bi bi-person-circle"></i>
                                                                 </div>
                                                                 <div className = "col" style = {{fontSize : "0.875rem", paddingLeft : "0rem", paddingRight : "0rem", lineHeight : "1"}}>
-                                                                    {userInfo.name}
+                                                                    {userInfo?.name}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -142,7 +160,7 @@ function MarketArticleElement({marketArticleElem1}) {
 
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "1.125rem", fontWeight : "bold", position : "absolute", bottom : "0rem"}}>
-                                                            {funcFreeShare(article.productCost)}
+                                                            {funcFreeShare(article?.productCost)}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -283,7 +301,7 @@ export default function MarketBoardPage() {
     ])
     
     const constMarketArticleElementList = mergeMarketArticleInfo.map((mergedElement) => (
-        <MarketArticleElement key = {mergedElement.article.id} marketArticleElem1 = {mergedElement} />
+        <MarketArticleElement key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement} />
     ))
     
     const constApplySearchWord = (element) => {

@@ -1,4 +1,4 @@
-import ca_2nd_project_photo_upload_division_ver2 from '../../../assets/img/market/test/example/ca_2nd_project_photo_upload_division_ver2.png';
+import ca_2nd_project_photo_upload_division_ver3 from '../../../assets/img/market/test/example/ca_2nd_project_photo_upload_division_ver3.png';
 
 export default function MarketFetchMyPhotoOnWriteArticle() {
     
@@ -11,7 +11,7 @@ export default function MarketFetchMyPhotoOnWriteArticle() {
                 
                 <div className = "row">
                     <div className = "col">
-                        <img src = {ca_2nd_project_photo_upload_division_ver2}
+                        <img src = {ca_2nd_project_photo_upload_division_ver3}
                         style = {{
                             position: "absolute",
                             top: "50%",
