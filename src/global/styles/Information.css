@@ -436,3 +436,197 @@
   color:#374151;
   font-weight: 600;
 }
+
+/* 클릭 영역 버튼화 */
+.hopae-btn {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+/* 모달 오버레이 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 15, 30, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 5000;
+  padding: 16px;
+}
+
+/* 모달 카드 */
+.pic-modal-card {
+  width: min(220px);
+  background: #0b1224;
+  color: #eaf0ff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  overflow: hidden;
+  animation: modal-pop .16s ease-out;
+}
+
+/* 헤더 */
+.pic-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.pic-modal-header h3 { margin: 0; font-size: 1.05rem; }
+
+/* 닫기 버튼 */
+.pic-modal-close {
+  all: unset; cursor: pointer; font-size: 20px; line-height: 1;
+  opacity: .8; padding: 4px;
+}
+.pic-modal-close:hover { opacity: 1; }
+
+/* 바디 */
+.pic-modal-body { padding: 12px; display: grid; place-items: center; }
+.pic-modal-body img { width: 100%; height: auto; border-radius: 12px; object-fit: cover; }
+
+/* 팝 애니메 */
+@keyframes modal-pop {
+  from { transform: scale(.98); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+/* 투명 오버레이: 바깥 클릭 닫기용 */
+.pic-pop-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent; /* 투명이라 화면은 그대로 보임 */
+  z-index: 4999;
+  border: none;
+  padding: 0;
+}
+
+/* 팝오버 카드 (앵커 기준 고정) */
+.pic-pop-card {
+  position: fixed;
+  z-index: 5000;
+  width: min(70vw, 280px);
+  background: #0b1224; /* 네 톤 유지 */
+  color: #eaf0ff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  overflow: hidden;
+  will-change: transform;
+  /* 기본은 위쪽에 뜨는 기준값: 카드의 중앙 X, Y는 앵커의 상단 */
+  transform: translate(-90%, calc(-50% - 0px));
+  animation: pop-fade .14s ease-out;
+}
+
+/* 아래로 뒤집기 */
+.pic-pop-card[data-placement="bottom"] {
+  /* 앵커의 하단에서 약간 아래 */
+  transform: translate(-50%, 10px);
+}
+
+/* 헤더/바디/닫기 */
+.pic-pop-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.pic-pop-header h3 { margin: 0; font-size: 1rem; }
+.pic-pop-close { all: unset; cursor: pointer; font-size: 18px; line-height: 1; opacity: .85; padding: 2px 4px; }
+.pic-pop-close:hover { opacity: 1; }
+
+.pic-pop-body { padding: 10px; display: grid; place-items: center; }
+.pic-pop-body img { width: 100%; height: auto; border-radius: 10px; object-fit: cover; }
+
+.pic-pop-arrow {
+  position: absolute;
+  left: 50%;
+  width: 0; height: 0;
+  transform: translateX(-50%);
+}
+
+.pic-pop-card[data-placement="top"] .pic-pop-arrow {
+  bottom: -8px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #0b1224;
+  /* 그림자 살짝 */
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+
+.pic-pop-card[data-placement="bottom"] .pic-pop-arrow {
+  top: -8px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #0b1224;
+  filter: drop-shadow(0 -1px 2px rgba(0,0,0,.2));
+}
+
+@keyframes pop-fade {
+  from { opacity: 0; transform: translate(-50%, -110%); }
+  to   { opacity: 1; }
+}
+
+.pic-pop-overlay {
+  position: fixed; inset: 0; background: transparent; z-index: 4999; border: 0;
+}
+
+
+
+/* 헤더/닫기 */
+.pic-pop-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pic-pop-header h3{margin:0;font-size:1.05rem}
+.pic-pop-close{all:unset;cursor:pointer;font-size:20px;line-height:1;opacity:.85;padding:2px 6px}
+.pic-pop-close:hover{opacity:1}
+.pic-pop-body{padding:10px;display:grid;place-items:center}
+.pic-pop-body img{width:100%;height:auto;border-radius:12px;object-fit:cover}
+
+/* 화살표 */
+.pic-pop-arrow {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: 100%;
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #0b1224;  /* 카드색 */
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+
+
+/* 클릭 영역 버튼화 */
+.hopae-btn{all:unset;cursor:pointer;display:block;width:100%}
+
+.pic-pop-card {
+  position: fixed;
+  z-index: 5000;
+  width: min(92vw, 270px);
+  background: #0b1224;
+  color: #eaf0ff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  overflow: hidden;
+
+  transform: translate(-50%, calc(-30% - 12px)) scale(1);
+  transform-origin: center; /* ✅ 중앙을 기준으로 팝 */
+  will-change: transform, opacity;
+
+  animation: pop-bounce .22s cubic-bezier(.22,.91,.3,1) both;
+}
+
+@keyframes pop-bounce {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, calc(-30% - 12px)) scale(.86);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, calc(-30% - 12px)) scale(1.03);
+  }
+  100% {
+  }
+}
+
+/* 모션 싫어하는 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .pic-pop-card { animation: none; }
+}
