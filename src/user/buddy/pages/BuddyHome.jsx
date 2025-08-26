@@ -11,9 +11,13 @@ import "../styles/BuddyHome.css";
 export default function BuddyHome() {
     const [buddies, setBuddies] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [dailyRequests, setDailyRequests] = useState(0);
+    const [lastRequestDate, setLastRequestDate] = useState('');
 
     const auth = useSelector((state) => state.auth);
     const senderId = auth.id;
+    
+    const MAX_DAILY_REQUESTS = 3;
 
     useEffect(() => {
         const fetchBuddies = async () => {
@@ -28,7 +32,6 @@ export default function BuddyHome() {
 
                 const processed = res.data.map((user) => ({
                     ...user,
-                    // 년도만 추출했던 기존 로직을 이름/소개 아래에 나이를 표시하도록 조정 (예시)
                     birthLabel: convertBirth(user.birth), 
                     image: user.profile_image
                         ? `http://localhost:8080/uploadFiles/${user.profile_image}`
@@ -41,7 +44,25 @@ export default function BuddyHome() {
             }
         };
 
+        const loadDailyRequestCount = () => {
+            const today = new Date().toLocaleDateString();
+            const savedDate = localStorage.getItem('lastRequestDate');
+            const savedCount = localStorage.getItem('dailyRequests');
+
+            if (savedDate === today) {
+                setDailyRequests(Number(savedCount) || 0);
+                setLastRequestDate(savedDate);
+            } else {
+                // 새로운 날짜면 초기화
+                localStorage.setItem('lastRequestDate', today);
+                localStorage.setItem('dailyRequests', '0');
+                setDailyRequests(0);
+                setLastRequestDate(today);
+            }
+        };
+
         fetchBuddies();
+        loadDailyRequestCount();
     }, []);
 
     // 생년월일(YYYY-MM-DD)을 나이로 변환하는 함수 (예시: 만나이 계산 로직 추가 필요)
@@ -68,6 +89,19 @@ export default function BuddyHome() {
         const receiverId = buddies[currentIndex]?.user_id;
         if (!receiverId) return;
 
+        // 일일 요청 횟수 확인
+        if (dailyRequests >= MAX_DAILY_REQUESTS) {
+            toast.warning("오늘의 매칭 요청 횟수를 모두 사용했습니다! 내일 다시 시도해주세요.", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeButton: false,
+                theme: "light",
+                toastId: "daily-limit"
+            });
+            return;
+        }
+
         try {
             const token = localStorage.getItem("token");
             await axios.post("http://localhost:8080/api/buddy/request", {
@@ -76,28 +110,34 @@ export default function BuddyHome() {
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            // 💖 성공 토스트: 색상 변경을 위해 theme: "colored" 대신 theme: "light" 사용 후 CSS에서 색상을 직접 지정 (CSS에서 처리할 예정)
-            toast.success(`${buddies[currentIndex].name}님에게 호감을 보냈어요 💖`, {
+
+            // 성공 시 요청 횟수 증가
+            const newCount = dailyRequests + 1;
+            setDailyRequests(newCount);
+            localStorage.setItem('dailyRequests', newCount.toString());
+
+            // 성공 토스트 메시지
+            toast.success(`${buddies[currentIndex].name}님에게 호감을 보냈어요 💖 (오늘 ${newCount}/3회)`, {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
                 closeButton: false,     
-                theme: "light", // 색상 커스터마이징을 위해 light 테마 사용
-                toastId: LIKE_TOAST_ID, // 스택 방지: 좋아요 토스트 ID
-                updateId: LIKE_TOAST_ID, // 업데이트 기능 사용
+                theme: "light",
+                toastId: LIKE_TOAST_ID,
+                updateId: LIKE_TOAST_ID,
             });
+
+            moveToNextBuddy();
         } catch {
-            // 실패 토스트: 스택 방지 옵션 추가
             toast.error("호감 요청 실패 😢", {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: true,
                 theme: "colored",
-                toastId: LIKE_TOAST_ID, // 같은 ID 사용
+                toastId: LIKE_TOAST_ID,
                 updateId: LIKE_TOAST_ID,
             });
         }
-        moveToNextBuddy();
     };
 
     const handleDislike = () => {
