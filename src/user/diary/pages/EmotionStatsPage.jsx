@@ -147,7 +147,7 @@ const EmotionStatsPage = () => {
                 <button className="diaryStat-back-button" onClick={() => navigate(-1)}>
                     <i className="bi bi-chevron-left"></i>
                 </button>
-                <h2>분석보고서</h2>
+                <h2>감정 일기 리포트</h2>
                 <div className="diaryStat-date-selector">
                     <select 
                         value={currentYear}
