@@ -154,12 +154,12 @@ export default function MarketWriteArticlePage() {
     
     const navigate = useNavigate();
     
-    const [doesImageWarningModalOpened, setDoesImageWarningModalOpened] = useState(false);
+    const [isImageWarningModalOpened, setIsImageWarningModalOpened] = useState(false);
     
     const handleConfirmOfImageWarningModal = () => {
         
         console.log("Modal Process Completed!");
-        setDoesImageWarningModalOpened(false);
+        setIsImageWarningModalOpened(false);
         
     }
     
@@ -497,8 +497,8 @@ export default function MarketWriteArticlePage() {
 
                                                 <div className = "d-flex w-100 align-items-center">
                                                     
-                                                    <ImageWarningModal open = {doesImageWarningModalOpened}
-                                                    onClose = {() => setDoesImageWarningModalOpened(false)}
+                                                    <ImageWarningModal open = {isImageWarningModalOpened}
+                                                    onClose = {() => setIsImageWarningModalOpened(false)}
                                                     onConfirm = {constButtonToInsertMarketArticle} />
                                                     
                                                     {insertImageLink ? 
@@ -517,7 +517,7 @@ export default function MarketWriteArticlePage() {
                                                         <div className = "col d-flex justify-content-center">
                                                             <div className = "row">
                                                                 <div className = "col-auto">
-                                                                    <button className = "btn buttonDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
+                                                                    <button className = "btn buttonDefault" onClick = {() => setIsImageWarningModalOpened(true)}
                                                                     style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>게시</button>
                                                                 </div>
                                                             </div>
