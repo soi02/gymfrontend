@@ -1,0 +1,131 @@
+/* 밝은 톤 카드 + 가로 스냅 대응 */
+.pcard {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 12px;
+  min-width: 280px;               /* ← 가로 스크롤에서 카드 폭 */
+  max-width: 360px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f7f8fb;            /* ← 더 밝게 */
+  color: #333;                    /* ← 어두운 글자 */
+  text-align: left;
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  scroll-snap-align: start;       /* ← 가로 스냅 */
+}
+.pcard:active { transform: translateY(1px) scale(0.997); }
+.pcard:hover {
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+/* 썸네일 영역 */
+.pcard__thumb {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #e9ecf2;           /* 밝은 플레이스홀더 */
+}
+.pcard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pcard__img--placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: rgba(0,0,0,0.45);
+  background: linear-gradient(180deg, #eef1f6, #e6eaf1);
+}
+.pcard__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.25), rgba(0,0,0,0));
+  pointer-events: none;
+}
+.pcard__badge {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 4px 8px;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 999px;
+  background: rgba(255,255,255,.85); /* 밝은 배지 */
+  color: #222;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+/* 본문 */
+.pcard__body {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+.pcard__title {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 키워드 칩 */
+.pcard__chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.pcard__chips--empty {
+  opacity: .6;
+  font-size: 12px;
+}
+.pcard__chip {
+  font-size: 11px;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.08);
+  white-space: nowrap;
+  color: #222;
+}
+.pcard__chip--more {
+  opacity: .8;
+}
+
+
+
+
+
+/* ✅ 인기 수련 가로 스크롤 래퍼 */
+.chome-pop-scroll{
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 2px 10px;
+  margin: 0 -8px;           /* 양끝 여백 보정 */
+  padding-left: 8px;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+.chome-pop-scroll > *{
+  scroll-snap-align: start; /* 카드 스냅 */
+}
+/* (선택) 스크롤바 */
+.chome-pop-scroll::-webkit-scrollbar{ height:8px; }
+.chome-pop-scroll::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.15);
+  border-radius: 999px;
+}

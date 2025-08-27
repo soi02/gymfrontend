@@ -7,8 +7,14 @@
 .diaryStat-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    gap: 15px;
+    margin: 30px 0;
+    gap: 20px;
+}
+
+.diaryStat-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
 }
 
 .diaryStat-back-button {
@@ -33,11 +39,12 @@
 .diaryStat-year-dropdown,
 .diaryStat-month-dropdown {
     padding: 8px 12px;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 6px;
     font-size: 14px;
-    background-color: #fff;
+    background-color: #f5f5f5;
     cursor: pointer;
+    color: #333;
 }
 
 .diaryStat-tabs {
@@ -162,10 +169,13 @@
 }
 
 .diaryStat-emotion-distribution {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
     gap: 20px;
     margin-top: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
 }
 
 .diaryStat-emotion-item {
@@ -174,6 +184,8 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    min-width: 60px;
+    flex: 0 0 auto;
 }
 
 .diaryStat-emotion-icon {
@@ -328,7 +340,8 @@
     }
 
     .diaryStat-emotion-distribution {
-        grid-template-columns: repeat(3, 1fr);
+        justify-content: flex-start;
+        padding: 10px;
     }
 
     .diaryStat-insight-cards {
@@ -355,7 +368,9 @@
     }
 
     .diaryStat-emotion-distribution {
-        grid-template-columns: repeat(2, 1fr);
+        justify-content: flex-start;
+        gap: 15px;
+        padding: 5px;
     }
 
     .diaryStat-emotion-icon {
