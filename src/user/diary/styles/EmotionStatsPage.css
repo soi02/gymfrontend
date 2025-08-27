@@ -1,5 +1,14 @@
 .diaryStat-container {
-    background-color: #fff;
+    background-c.diaryStat-date-selector {
+    margin-left: auto;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1000;
+}
     min-height: calc(100vh - 120px);
     overflow-y: auto;
 }
@@ -7,14 +16,20 @@
 .diaryStat-header {
     display: flex;
     align-items: center;
-    margin: 30px 0;
-    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 1000;
 }
 
 .diaryStat-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 600;
     color: #333;
+    margin: 0;
+    white-space: nowrap;
 }
 
 .diaryStat-back-button {
@@ -30,21 +45,74 @@
     color: #666;
 }
 
+
+
 .diaryStat-date-selector {
     margin-left: auto;
     display: flex;
-    gap: 10px;
+    gap: 5px;
+    align-items: center;
+    /* background-color: #f8f8f8; */
+    padding: 8px 16px;
+    border-radius: 10px;
 }
 
 .diaryStat-year-dropdown,
 .diaryStat-month-dropdown {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    background-color: #f5f5f5;
+    padding: 10px 35px 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 17px;
+    background-color: white;
     cursor: pointer;
     color: #333;
+    min-width: 120px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M2.293 4.293a1 1 0 0 1 1.414 0L6 6.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* 드롭다운 옵션 스타일링 */
+.diaryStat-year-dropdown option,
+.diaryStat-month-dropdown option {
+    font-size: 16px;
+    padding: 10px;
+    background-color: white;
+}
+
+/* 드롭다운이 열렸을 때 */
+.diaryStat-year-dropdown:focus,
+.diaryStat-month-dropdown:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+}
+
+/* select 태그의 드롭다운 메뉴 스타일링 - 웹킷 기반 브라우저 */
+.diaryStat-year-dropdown::-webkit-listbox,
+.diaryStat-month-dropdown::-webkit-listbox {
+    font-size: 16px;
+    padding: 5px 0;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.diaryStat-year-dropdown:hover,
+.diaryStat-month-dropdown:hover {
+    border-color: #ccc;
+    background-color: #fafafa;
+}
+
+.diaryStat-year-dropdown:focus,
+.diaryStat-month-dropdown:focus {
+    outline: none;
+    border-color: #FFD700;
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
 }
 
 .diaryStat-tabs {
@@ -315,19 +383,19 @@
     }
 
     .diaryStat-header {
-        flex-wrap: wrap;
-        gap: 10px;
+        padding: 15px;
     }
 
     .diaryStat-date-selector {
-        width: 100%;
-        margin-top: 10px;
-        justify-content: space-between;
+        background: none;
+        padding: 0;
     }
 
     .diaryStat-year-dropdown,
     .diaryStat-month-dropdown {
-        flex: 1;
+        min-width: 90px;
+        padding: 8px 25px 8px 10px;
+        font-size: 14px;
     }
 
     .diaryStat-tabs {
