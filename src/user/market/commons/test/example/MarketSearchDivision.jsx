@@ -1,6 +1,17 @@
 import '../../../styles/MarketCommonStyles.css';
 
-export default function MarketSearchDivision({ inputSearchWord, constApplySearchWord, constButtonToSendSearchWordParam, searchWordRef }) {
+export default function MarketSearchDivision({ paramSearchWord, inputSearchWord, constApplySearchWord, constButtonToSendSearchWordParam, searchWordRef }) {
+    
+    // if (!paramSearchWord) {
+        
+    //     inputSearchWord = paramSearchWord;
+        
+    // }
+    
+    // console.log("paramSearchWord");
+    // console.log(paramSearchWord);
+    // console.log("inputSearchWord");
+    // console.log(inputSearchWord);
     
     return(
         <>

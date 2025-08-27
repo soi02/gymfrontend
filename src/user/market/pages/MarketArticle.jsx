@@ -287,8 +287,17 @@ export default function MarketArticlePageTest() {
     const constMarketArticleUpdateOrDeleteDivisionPageLayout = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleUpdateOrDeleteDivisionPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
     
+    const constMarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout = mergeMarketArticleInfo.map(mergedElement => (
+    <MarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
+    
     const constMarketArticleLikeButtonPageLayout = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleLikeButtonPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
+    
+    const [marketProductDealedLogCheckedBySeller, setMarketProductDealedLogCheckedBySeller] = useState({})
+    
+    const [marketProductDealedLogCheckedByBuyer, setMarketProductDealedLogCheckedByBuyer] = useState({})
+    
+    const [marketProductDealedLog, setMarketProductDealedLog] = useState({})
     
     const [marketProductInterestedLogOnArticle, setMarketProductInterestedLogOnArticle] = useState([
         {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
@@ -562,6 +571,8 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId");
+                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId);
                     
                 console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
                 console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
@@ -569,6 +580,34 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
+                console.log("checkUserStatus");
+                console.log(checkUserStatus);
+                
+                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0))) {
+                    
+                    console.log("marketProductDealedLogCheckedBySeller");
+                    console.log(marketProductDealedLogCheckedBySeller);
+                    console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
+                    console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
+                    setMarketProductDealedLogCheckedBySeller(constGetSelectSpecificMarketDealedLogCheckedBySeller);
+                    
+                }
+                
+                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0)));
+                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0)));
+                console.log(Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0)));
+                
+                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0))) {
+                    
+                    setMarketProductDealedLogCheckedByBuyer(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
+                    
+                }
+                
+                if (Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0))) {
+                    
+                    setMarketProductDealedLog(constGetSelectSpecificMarketDealedLog);
+                    
+                }
                 
                 if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId) {
                     
@@ -595,6 +634,7 @@ export default function MarketArticlePageTest() {
                 if (constGetSelectSpecificMarketDealedLog) {
                     
                     setDealConfirmCompleted(true);
+                    setDealerCheckDivisionActivate(false); // react 의 set 로드 문제 상 불가피한 절차 (원래는 dealconfirmcompleted 시 false 처리할 생각)
                     
                 }
                     
@@ -695,6 +735,8 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
+                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId");
+                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId);
                     
                 console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
                 console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
@@ -702,6 +744,34 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
+                console.log("checkUserStatus");
+                console.log(checkUserStatus);
+                
+                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0))) {
+                    
+                    console.log("marketProductDealedLogCheckedBySeller");
+                    console.log(marketProductDealedLogCheckedBySeller);
+                    console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
+                    console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
+                    setMarketProductDealedLogCheckedBySeller(constGetSelectSpecificMarketDealedLogCheckedBySeller);
+                    
+                }
+                
+                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0)));
+                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0)));
+                console.log(Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0)));
+                
+                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0))) {
+                    
+                    setMarketProductDealedLogCheckedByBuyer(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
+                    
+                }
+                
+                if (Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0))) {
+                    
+                    setMarketProductDealedLog(constGetSelectSpecificMarketDealedLog);
+                    
+                }
                 
                 if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId) {
                     
@@ -728,6 +798,7 @@ export default function MarketArticlePageTest() {
                 if (constGetSelectSpecificMarketDealedLog) {
                     
                     setDealConfirmCompleted(true);
+                    setDealerCheckDivisionActivate(false); // react 의 set 로드 문제 상 불가피한 절차 (원래는 dealconfirmcompleted 시 false 처리할 생각)
                     
                 }
                     
@@ -2039,6 +2110,84 @@ export default function MarketArticlePageTest() {
         
     }
     
+    function MarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout({marketArticleElem1}) {
+        
+        const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
+        
+        if (checkUserStatus == article?.marketUserId) {
+            
+            console.log("marketProductDealedLogCheckedBySeller Checking");
+            console.log(marketProductDealedLogCheckedBySeller);
+            
+            if (Boolean(marketProductDealedLog && (Object.keys(marketProductDealedLog).length > 0))) {
+        
+                return (
+                    <>
+                        <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                        구매인과 거래를 완료하였소.
+                        </span>
+                    </>
+                );
+                
+            } else {
+                
+                if (Boolean(marketProductDealedLogCheckedBySeller && (Object.keys(marketProductDealedLogCheckedBySeller).length > 0))) {
+            
+                    return (
+                        <>
+                            
+                            <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                            구매인 선택을 완료하였소.
+                            </span>
+                            
+                        </>
+                    );
+                    
+                } else {
+                    
+                    return (<></>);
+                    
+                }
+                
+            }
+            
+        } else {
+            
+            if (Boolean(marketProductDealedLog && (Object.keys(marketProductDealedLog).length > 0))) {
+        
+                return (
+                    <>
+                        <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                        판매인과 거래를 완료하였소.
+                        </span>
+                    </>
+                );
+                
+            } else {
+                
+                if (Boolean(marketProductDealedLogCheckedByBuyer && (Object.keys(marketProductDealedLogCheckedByBuyer).length > 0))) {
+            
+                    return (
+                        <>
+                            <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                            판매인 선택을 완료하였소.
+                            </span>
+                        </>
+                    );
+                    
+                } else {
+                    
+                    return (<></>);
+                    
+                }
+                
+            }
+            
+            
+        }
+        
+    }
+    
     function MarketArticleLikeButtonPageLayout({marketArticleElem1}) {
         
         const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
@@ -2136,6 +2285,17 @@ export default function MarketArticlePageTest() {
                                     {
                                         constMarketArticleUpdateOrDeleteDivisionPageLayout.length > 0 ? 
                                         constMarketArticleUpdateOrDeleteDivisionPageLayout : 
+                                        <></>
+                                    }
+                                    
+                                    <div className = "row">
+                                        <div className = "col" style = {{height : "0.0625rem", marginBottom : "1.625rem"}}>
+                                        </div>
+                                    </div>
+
+                                    {
+                                        constMarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout.length > 0 ? 
+                                        constMarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout : 
                                         <></>
                                     }
 
