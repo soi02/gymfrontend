@@ -1817,7 +1817,7 @@ export default function MarketArticlePageTest() {
                     // style = {{marginTop : "0.3125rem", marginBottom : "1.4375rem"}}
                     >
                         <div className = "col-auto" style = {{fontSize : "0.8125rem"}}>
-                            <button type="button" className="btn buttonDefault" disabled = {true}
+                            <button type="button" className="btn buttonWhenLikeDefault" disabled = {true}
                             style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingLeft : "1.25rem", paddingRight : "1.25rem"}}>
                                 
                                 {
