@@ -59,14 +59,14 @@
 
 .diaryStat-year-dropdown,
 .diaryStat-month-dropdown {
-    padding: 10px 35px 10px 15px;
+    padding: 8px 25px 8px 12px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 17px;
+    font-size: 15px;
     background-color: white;
     cursor: pointer;
     color: #333;
-    min-width: 120px;
+    min-width: 90px;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M2.293 4.293a1 1 0 0 1 1.414 0L6 6.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -288,45 +288,73 @@
 
 .diaryStat-total-distribution-section {
     background: #fff;
-    padding: 20px;
+    padding: 10px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .diaryStat-total-distribution-chart {
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .diaryStat-total-emotion-bar {
     display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.diaryStat-emotion-icon-bar {
+    display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    gap: 15px;
+    gap: 12px;
+    min-height: 40px;
+}
+
+.diaryStat-emotion-icon-bar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: contain;
+    /* padding: 4px; */
+    /* background-color: #fff; */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.05); */
+}
+
+.diaryStat-emotion-name {
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
+.diaryStat-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
 }
 
 .diaryStat-bar-container {
     flex: 1;
-    background: #f0f0f0;
-    height: 24px;
-    border-radius: 12px;
+    background: #f5f5f5;
+    height: 12px;
+    border-radius: 6px;
     overflow: hidden;
-    position: relative;
 }
 
 .diaryStat-bar {
     background: linear-gradient(to right, #FFD700, #FFC000);
     height: 100%;
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
+    border-radius: 6px;
 }
 
 .diaryStat-percentage {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    min-width: 50px;
     font-size: 14px;
-    color: #333;
+    color: #666;
     font-weight: 500;
+    text-align: right;
 }
 
 .diaryStat-monthly-insight-section {
