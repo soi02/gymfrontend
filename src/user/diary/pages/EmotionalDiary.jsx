@@ -11,6 +11,7 @@ const EmotionalDiary = () => {
   const location = useLocation();
   const { isAuthenticated, id } = useSelector(state => state.auth);
   const [showModal, setShowModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [diaryContent, setDiaryContent] = useState('');
   const [emotions, setEmotions] = useState([]);
@@ -99,7 +100,7 @@ const EmotionalDiary = () => {
 
   const handleSave = async () => {
     if (!diaryContent.trim()) {
-      alert('일기 내용을 입력해주세요.');
+      setError('일기 내용을 입력해주세요.');
       return;
     }
 
@@ -111,7 +112,7 @@ const EmotionalDiary = () => {
       };
 
       await diaryService.writeDiary(diaryData);
-      alert('일기가 저장되었습니다.');
+      setShowSaveModal(true);
       setIsSaved(true);
     } catch (error) {
       setError('일기 저장에 실패했습니다.');
@@ -291,6 +292,32 @@ const EmotionalDiary = () => {
                       <p>{emotion.name}</p>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {showSaveModal && (
+            <div className="diary-save-modal">
+              <div className="diary-save-modal-content">
+                <div className="diary-save-modal-icon">
+                  <i className="bi bi-check-circle-fill"></i>
+                </div>
+                <h3>일기가 저장되었습니다</h3>
+                <p>오늘의 감정이 기록되었어요!</p>
+                <div className="diary-save-modal-buttons">
+                  <button 
+                    className="diary-save-modal-button primary"
+                    onClick={() => navigate('/diary/calendar')}
+                  >
+                    캘린더 보기
+                  </button>
+                  <button 
+                    className="diary-save-modal-button secondary"
+                    onClick={() => setShowSaveModal(false)}
+                  >
+                    쓴 일기 보기
+                  </button>
                 </div>
               </div>
             </div>
