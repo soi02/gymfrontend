@@ -74,6 +74,13 @@ const EmotionStatsPage = () => {
                     <i className="bi bi-emoji-neutral"></i>
                     <p>이번 달엔 분석할 데이터가 없습니다.</p>
                     <p>일기를 작성하고 감정 통계를 확인해보세요!</p>
+                    {/* <button 
+                        className="diaryStat-write-diary-button"
+                        onClick={() => navigate('/diary/calendar')}
+                    >
+                        <i className="bi bi-pencil"></i>
+                        일기 쓰러가기
+                    </button> */}
                 </div>
             );
         }
@@ -234,31 +241,54 @@ const EmotionStatsPage = () => {
                 <div className="diaryStat-content">
                     <section className="diaryStat-total-distribution-section">
                         <h3>전체 기간 감정 분포</h3>
-                        <div className="diaryStat-total-distribution-chart">
-                            {overallStats.map((stat, index) => (
-                                <div className="diaryStat-total-emotion-bar" key={index}>
-                                    <div className="diaryStat-emotion-icon-bar">
-                                        <img 
-                                            src={`http://localhost:8080/uploadFiles${stat.emoji_image}`}
-                                            alt={stat.emotion_name}
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src = '/images/default_profile_img.svg';
-                                            }}
-                                        />
-                                        <span className="diaryStat-emotion-name">{stat.emotion_name}</span>
-                                    </div>
-                                    <div className="diaryStat-bar-wrapper">
-                                        <div className="diaryStat-bar-container">
-                                            <div 
-                                                className="diaryStat-bar" 
-                                                style={{width: `${stat.percentage}%`}}
+                        <div className="diaryStat-total-pie-chart">
+                            <div className="diaryStat-pie-container">
+                                <svg viewBox="0 0 100 100" className="diaryStat-pie">
+                                    {overallStats.map((stat, index, array) => {
+                                        // 파이 차트 계산
+                                        let total = 0;
+                                        array.slice(0, index).forEach(s => total += s.percentage);
+                                        const startAngle = (total * 3.6) - 90; // 백분율을 각도로 변환 (1% = 3.6도)
+                                        const endAngle = ((total + stat.percentage) * 3.6) - 90;
+                                        
+                                        // SVG path 계산
+                                        const startX = 50 + 50 * Math.cos(startAngle * Math.PI / 180);
+                                        const startY = 50 + 50 * Math.sin(startAngle * Math.PI / 180);
+                                        const endX = 50 + 50 * Math.cos(endAngle * Math.PI / 180);
+                                        const endY = 50 + 50 * Math.sin(endAngle * Math.PI / 180);
+                                        
+                                        const largeArcFlag = stat.percentage > 50 ? 1 : 0;
+                                        
+                                        return (
+                                            <path
+                                                key={index}
+                                                d={`M 50 50 L ${startX} ${startY} A 50 50 0 ${largeArcFlag} 1 ${endX} ${endY} Z`}
+                                                className={`diaryStat-pie-slice-${index}`}
+                                            />
+                                        );
+                                    })}
+                                </svg>
+                            </div>
+                            <div className="diaryStat-pie-legend">
+                                {overallStats.map((stat, index) => (
+                                    <div className="diaryStat-pie-legend-item" key={index}>
+                                        <div className="diaryStat-legend-icon">
+                                            <img 
+                                                src={`http://localhost:8080/uploadFiles${stat.emoji_image}`}
+                                                alt={stat.emotion_name}
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = '/images/default_profile_img.svg';
+                                                }}
                                             />
                                         </div>
-                                        <span className="diaryStat-percentage">{stat.percentage.toFixed(1)}%</span>
+                                        <div className="diaryStat-legend-info">
+                                            <span className="diaryStat-emotion-name">{stat.emotion_name}</span>
+                                            <span className="diaryStat-percentage">{stat.percentage.toFixed(1)}%</span>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     </section>
                 </div>

@@ -25,7 +25,7 @@
 }
 
 .diaryStat-header h2 {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #333;
     margin: 0;
@@ -35,10 +35,10 @@
 .diaryStat-back-button {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     cursor: pointer;
     padding: 0;
-    color: #333;
+    color: rgb(179, 179, 179);
 }
 
 .diaryStat-back-button:hover {
@@ -167,6 +167,30 @@
     margin: 0;
     line-height: 1.5;
 }
+/* 
+.diaryStat-write-diary-button {
+    margin-top: 15px;
+    padding: 12px 24px;
+    background-color: #FFD700;
+    border: none;
+    border-radius: 8px;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.diaryStat-write-diary-button:hover {
+    background-color: #FFC000;
+    transform: translateY(-2px);
+}
+
+.diaryStat-write-diary-button i {
+    font-size: 1.1rem;
+} */
 
 .diaryStat-trend-section {
     margin-bottom: 40px;
@@ -288,13 +312,192 @@
 
 .diaryStat-total-distribution-section {
     background: #fff;
-    padding: 10px;
+    padding: 25px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.diaryStat-total-distribution-chart {
+.diaryStat-total-pie-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
     margin-top: 25px;
+    padding: 10px;
+}
+
+.diaryStat-pie-container {
+    flex: 0 0 300px;
+    max-width: 300px;
+}
+
+.diaryStat-pie {
+    width: 100%;
+    height: auto;
+}
+
+.diaryStat-pie-slice-0 { fill: #FFD700; }
+.diaryStat-pie-slice-1 { fill: #FFC107; }
+.diaryStat-pie-slice-2 { fill: #FFB300; }
+.diaryStat-pie-slice-3 { fill: #FFA000; }
+.diaryStat-pie-slice-4 { fill: #FF8F00; }
+.diaryStat-pie-slice-5 { fill: #FF6F00; }
+
+.diaryStat-pie-legend {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
+
+.diaryStat-pie-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f8f8f8;
+    transition: all 0.2s ease;
+}
+
+.diaryStat-pie-legend-item:hover {
+    background: #f0f0f0;
+    transform: translateX(5px);
+}
+
+.diaryStat-legend-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.diaryStat-legend-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.diaryStat-legend-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.diaryStat-emotion-name {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.diaryStat-percentage {
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .diaryStat-total-pie-chart {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .diaryStat-pie-container {
+        flex: 0 0 250px;
+        max-width: 250px;
+    }
+
+    .diaryStat-pie-legend {
+        width: 100%;
+    }
+
+    .diaryStat-legend-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+.diaryStat-total-emotion-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 80px;
+}
+
+.diaryStat-column-wrapper {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.diaryStat-column {
+    width: 100%;
+    background: linear-gradient(to top, #FFD700, #FFC000);
+    border-radius: 8px;
+    transition: height 0.5s ease;
+    position: relative;
+    min-height: 20px;
+}
+
+.diaryStat-emotion-icon-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.diaryStat-emotion-icon-column img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.diaryStat-emotion-name {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+}
+
+.diaryStat-percentage {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .diaryStat-total-distribution-chart {
+        gap: 15px;
+        height: 200px;
+    }
+    
+    .diaryStat-total-emotion-column {
+        width: 60px;
+    }
+    
+    .diaryStat-column-wrapper {
+        height: 150px;
+    }
+    
+    .diaryStat-emotion-icon-column img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .diaryStat-emotion-name {
+        font-size: 12px;
+    }
 }
 
 .diaryStat-total-emotion-bar {
