@@ -2123,9 +2123,15 @@ export default function MarketArticlePageTest() {
         
                 return (
                     <>
-                        <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                        구매인과 거래를 완료하였소.
-                        </span>
+                    
+                        <div className = "row">
+                            <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
+                            marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
+                            fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                                구매인과 거래를 완료하였소.
+                            </div>
+                        </div>
+                        
                     </>
                 );
                 
@@ -2135,10 +2141,14 @@ export default function MarketArticlePageTest() {
             
                     return (
                         <>
-                            
-                            <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                            구매인 선택을 완료하였소.
-                            </span>
+                        
+                            <div className = "row">
+                                <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
+                                marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
+                                fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                                    구매인 선택을 완료하였소.
+                                </div>
+                            </div>
                             
                         </>
                     );
@@ -2157,9 +2167,15 @@ export default function MarketArticlePageTest() {
         
                 return (
                     <>
-                        <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                        판매인과 거래를 완료하였소.
-                        </span>
+                    
+                        <div className = "row">
+                            <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
+                            marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
+                            fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                                판매인과 거래를 완료하였소.
+                            </div>
+                        </div>
+                            
                     </>
                 );
                 
@@ -2169,9 +2185,15 @@ export default function MarketArticlePageTest() {
             
                     return (
                         <>
-                            <span style = {{fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                            판매인 선택을 완료하였소.
-                            </span>
+                        
+                            <div className = "row">
+                                <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
+                                marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
+                                fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
+                                    판매인 선택을 완료하였소.
+                                </div>
+                            </div>
+                        
                         </>
                     );
                     
