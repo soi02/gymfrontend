@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate as useRouterNavigate } from 'react-router-dom';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -73,6 +74,17 @@ export default function MyCategoryDonutPanel({
   navigate,
   thumbOf,
 }) {
+
+
+  // ✅ navigate prop 없으면 라우터 훅으로 대체
+  const routerNav = useRouterNavigate();
+  const nav = navigate || routerNav;
+
+  // ✅ ID 안전 추출: 백엔드/프론트 혼재 케이스 대응
+  const idOf = (ch) =>
+    ch?.challengeId ?? ch?.challenge_id ?? ch?.id ?? ch?.challengeID ?? null;
+
+
   const [active, setActive] = useState(null);
 
   // 파레트 (차분+선명 8색)
@@ -196,11 +208,16 @@ export default function MyCategoryDonutPanel({
 
                 return (
                   <li
-                    key={ch.challengeId}
+                    key={idOf(ch) ?? Math.random()}
                     className="cmrl-media"
                     role="button"
                     aria-label={`${ch.challengeTitle} 상세로 이동`}
-                    onClick={() => navigate?.(`/challenge/detail/${ch.challengeId}`)}
+                  // ✅ 리스트 클릭 시도 MyListPage와 맞춤
+                  onClick={() => {
+                    const id = idOf(ch);
+                    if (!id) return;
+                    nav(`/challenge/challengeMyRecordDetail/${id}`);
+                  }}
                   >
                     {/* 왼쪽: 사진(라운드 사각) */}
                     <div className="cmrl-media-thumb">
@@ -229,6 +246,7 @@ export default function MyCategoryDonutPanel({
 {(() => {
   const p = periodOf(ch);
   const pct = Math.round(ratioOf(ch) * 100);
+  const id = idOf(ch);
 
   if (!p) {
     return (
@@ -245,7 +263,12 @@ export default function MyCategoryDonutPanel({
           <button
             className="cmrl-pill cmrl-pill-primary"
             type="button"
-            onClick={(e) => { e.stopPropagation(); navigate?.(`/challenge/auth/${ch.challengeId}`); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!id) return;
+              // ✅ 인증하기 경로를 MyListPage와 동일하게
+              nav(`/challenge/auth/${id}`);
+            }}
           >
             인증하기
           </button>
@@ -272,7 +295,11 @@ export default function MyCategoryDonutPanel({
         <button
           className="cmrl-pill cmrl-pill-primary"
           type="button"
-          onClick={(e) => { e.stopPropagation(); navigate?.(`/challenge/auth/${ch.challengeId}`); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!id) return;
+            nav(`/challenge/challengeMyRecordDetail/${id}`);
+          }}
         >
           인증하기
         </button>

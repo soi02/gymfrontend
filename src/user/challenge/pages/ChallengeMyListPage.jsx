@@ -9,6 +9,12 @@ import '../styles/ChallengeMyListPage.css';
 
 const BACKEND_BASE_URL = 'http://localhost:8080';
 
+// ✅ 썸네일 경로 절대화 유틸 (http로 시작하면 그대로, 아니면 BASE_URL 프리픽스)
+const mediaUrl = (p) => {
+  if (!p) return '/images/default-thumbnail.png'; // 필요 시 프로젝트 내 기본 이미지 경로
+  return /^https?:\/\//i.test(p) ? p : `${BACKEND_BASE_URL}${p}`;
+};
+
 const TABS = [
   { key: 'todo', label: '인증 미완료' },
   { key: 'done', label: '인증 완료' },
@@ -145,6 +151,7 @@ export default function ChallengeMyListPage() {
             {activeList.map((ch) => {
               const p = periodOf(ch);
               const pct = Math.round(ratioOf(ch) * 100);
+              const thumb = mediaUrl(ch.challengeThumbnailPath || ch.challengeThumnailPath);
               return (
                 <li
                   key={ch.challengeId}
@@ -153,7 +160,13 @@ export default function ChallengeMyListPage() {
                   onClick={() => navigate(`/challenge/challengeMyRecordDetail/${ch.challengeId}`)}
                 >
                   <div className="cmlp-media-thumb">
-                    <img src={ch.challengeThumbnailPath} alt="" loading="lazy" decoding="async" />
++                    <img
+                      src={thumb}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => { e.currentTarget.src = '/images/default-thumbnail.png'; }}
+                    />
                   </div>
 
                   <div className="cmlp-media-card">
@@ -185,7 +198,7 @@ export default function ChallengeMyListPage() {
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/challenge/auth/${ch.challengeId}`);
+                          navigate(`/challenge/challengeMyRecordDetail/${ch.challengeId}`);
                         }}
                       >
                         인증하기
