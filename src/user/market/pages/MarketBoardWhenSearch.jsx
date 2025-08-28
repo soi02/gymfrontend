@@ -249,14 +249,15 @@ export default function MarketBoardPageWhenSearch() {
     useEffect(() => {
         
         const constUseEffect = async () => {
+                
+            if (checkSearchWord) {
+                
+                setInputSearchWord(checkSearchWord);
+                console.log("!!!checkSearchWord");
+                
+            }
             
             try {
-                
-                if (!checkSearchWord) {
-                    
-                    setInputSearchWord(checkSearchWord);
-                    
-                }
                 
                 const constGetSelectMarketArticle = await marketAPI.selectMarketArticleBySearchWord(checkSearchWord);
                 
@@ -285,16 +286,18 @@ export default function MarketBoardPageWhenSearch() {
         
         constUseEffect();
         
-    }, [loadedSearchWord]);
+    }, [checkSearchWord]);
     
     useEffect(() => {
         
         const constUseEffect = async () => {
             
-            console.log("checkSearchWord");
+            console.log("checkSearchWord??");
             console.log(checkSearchWord);
+            console.log("inputSearchWord??");
+            console.log(inputSearchWord);
                 
-            if (!checkSearchWord) {
+            if (checkSearchWord) {
                 
                 setInputSearchWord(checkSearchWord);
                 console.log("!checkSearchWord");
