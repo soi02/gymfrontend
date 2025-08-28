@@ -10,6 +10,8 @@ function MarketArticleElement({marketArticleElem1}) {
     
     const BACKEND_BASE_URL = "http://localhost:8080";
     
+    // const {searchWord : loadedSearchWord} = useParams();
+        
     const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
     
     const imageLinkPath = article?.imageLink;
@@ -193,6 +195,12 @@ export default function MarketBoardPageWhenSearch() {
     // console.log("inputSearchWord");
     // console.log(inputSearchWord);
     
+    // if (!loadedSearchWord) {
+        
+    //     setInputSearchWord(loadedSearchWord);
+        
+    // }
+    
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
         {
             
@@ -244,6 +252,12 @@ export default function MarketBoardPageWhenSearch() {
             
             try {
                 
+                if (!checkSearchWord) {
+                    
+                    setInputSearchWord(checkSearchWord);
+                    
+                }
+                
                 const constGetSelectMarketArticle = await marketAPI.selectMarketArticleBySearchWord(checkSearchWord);
                 
                 // console.log(constGetSelectMarketArticle)
@@ -276,6 +290,16 @@ export default function MarketBoardPageWhenSearch() {
     useEffect(() => {
         
         const constUseEffect = async () => {
+            
+            console.log("checkSearchWord");
+            console.log(checkSearchWord);
+                
+            if (!checkSearchWord) {
+                
+                setInputSearchWord(checkSearchWord);
+                console.log("!checkSearchWord");
+                
+            }
             
             try {
                 

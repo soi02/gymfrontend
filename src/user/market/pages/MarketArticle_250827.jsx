@@ -12,7 +12,7 @@ import { loginAction } from "../../../redux/authSlice";
 
 function SelectBuyerWarningModal({open, onClose, onConfirm}) {
     
-    if (open !== true) {
+    if (!open) {
         
         return null;
         
@@ -36,9 +36,9 @@ function SelectBuyerWarningModal({open, onClose, onConfirm}) {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.062rem", marginBottom : "1.25rem"}}>
-                                    구매인 선택을 신중히 해 주시오.
+                                    구매자 체크를 신중히 해 주시오.
                                     <br />
-                                    한번 선택한 구매인은
+                                    한번 체크한 구매자는
                                     <br />
                                     취소 및 변경이 불가능하오.
                                 </div>
@@ -47,8 +47,8 @@ function SelectBuyerWarningModal({open, onClose, onConfirm}) {
                                 <div className = "col">
                                     <div className = "row">
                                         <div className = "col">
-                                            <button className = "btn buttonDefault" onClick = {onConfirm}
-                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>선택하기</button>
+                                            <button className = "btn buttonDefault" onClick = {constButtonToConfirmBuyerBySeller1}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>그래도 게시하기</button>
                                         </div>
                                     </div>
                                     <div className = "row">
@@ -75,46 +75,45 @@ function SelectSellerWarningModal({open, onClose, onConfirm}) {
         
         return null;
         
-    } else {
+    }
     
-        return(
-            <>
-            
-                <div role = "dialog" aria-modal = "true" onClick = {onClose}
-                style = {{position: "fixed", inset: 0, background: "rgba(0, 0, 0, 0.5)", display: "flex",
-                justifyContent: "center", alignItems: "center", zIndex: 2000, padding: "16px"}}>
-                    <div onClick={(e) => e.stopPropagation()}
-                    style={{width: "100%", maxWidth: 330, background: "#fff", borderRadius: 16,
-                    boxShadow: "0 10px 30px rgba(0,0,0,.18)", padding: "25px 18px", textAlign: "center"}}>
-                        <div className = "row">
-                            <div className = "col" style = {{paddingTop : "0.5rem", paddingBottom : "0.5rem"}}>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "1.375rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
-                                        잠깐!
-                                    </div>
+    return(
+        <>
+        
+            <div role = "dialog" aria-modal = "true" onClick = {onClose}
+            style = {{position: "fixed", inset: 0, background: "rgba(0, 0, 0, 0.5)", display: "flex",
+            justifyContent: "center", alignItems: "center", zIndex: 2000, padding: "16px"}}>
+                <div onClick={(e) => e.stopPropagation()}
+                style={{width: "100%", maxWidth: 330, background: "#fff", borderRadius: 16,
+                boxShadow: "0 10px 30px rgba(0,0,0,.18)", padding: "25px 18px", textAlign: "center"}}>
+                    <div className = "row">
+                        <div className = "col" style = {{paddingTop : "0.5rem", paddingBottom : "0.5rem"}}>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.375rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                    잠깐!
                                 </div>
-                                <div className = "row">
-                                    <div className = "col" style = {{fontSize : "1.062rem", marginBottom : "1.25rem"}}>
-                                        판매인 선택을 신중히 해 주시오.
-                                        <br />
-                                        한번 선택한 판매인은
-                                        <br />
-                                        취소 및 변경이 불가능하오.
-                                    </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col" style = {{fontSize : "1.062rem", marginBottom : "1.25rem"}}>
+                                    판매자 체크를 신중히 해 주시오.
+                                    <br />
+                                    한번 체크한 판매자는
+                                    <br />
+                                    취소 및 변경이 불가능하오.
                                 </div>
-                                <div className = "row">
-                                    <div className = "col">
-                                        <div className = "row">
-                                            <div className = "col">
-                                                <button className = "btn buttonDefault" onClick = {onConfirm}
-                                                style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>선택하기</button>
-                                            </div>
+                            </div>
+                            <div className = "row">
+                                <div className = "col">
+                                    <div className = "row">
+                                        <div className = "col">
+                                            <button className = "btn buttonDefault" onClick = {constButtonToConfirmSellerByBuyer}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>그래도 게시하기</button>
                                         </div>
-                                        <div className = "row">
-                                            <div className = "col">
-                                                <button className = "btn buttonCancellationDefault" onClick={onClose}
-                                                style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
-                                            </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col">
+                                            <button className = "btn buttonCancellationDefault" onClick={onClose}
+                                            style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
                                         </div>
                                     </div>
                                 </div>
@@ -122,11 +121,10 @@ function SelectSellerWarningModal({open, onClose, onConfirm}) {
                         </div>
                     </div>
                 </div>
-            
-            </>
-        )
-    
-    }
+            </div>
+        
+        </>
+    )
     
 }
 
@@ -233,14 +231,6 @@ export default function MarketArticlePageTest() {
     
     const navigate = useNavigate();
     
-    const [isBuyerWarningModalOpened, setIsBuyerWarningModalOpened] = useState(false);
-    const [isSellerWarningModalOpened, setIsSellerWarningModalOpened] = useState(false);
-    
-    
-
-
-    
-    
     const contentRef = useRef(null);
     
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
@@ -287,17 +277,8 @@ export default function MarketArticlePageTest() {
     const constMarketArticleUpdateOrDeleteDivisionPageLayout = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleUpdateOrDeleteDivisionPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
     
-    const constMarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout = mergeMarketArticleInfo.map(mergedElement => (
-    <MarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
-    
     const constMarketArticleLikeButtonPageLayout = mergeMarketArticleInfo.map(mergedElement => (
     <MarketArticleLikeButtonPageLayout key = {mergedElement?.article?.id} marketArticleElem1 = {mergedElement}/>));
-    
-    const [marketProductDealedLogCheckedBySeller, setMarketProductDealedLogCheckedBySeller] = useState({})
-    
-    const [marketProductDealedLogCheckedByBuyer, setMarketProductDealedLogCheckedByBuyer] = useState({})
-    
-    const [marketProductDealedLog, setMarketProductDealedLog] = useState({})
     
     const [marketProductInterestedLogOnArticle, setMarketProductInterestedLogOnArticle] = useState([
         {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
@@ -571,8 +552,6 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
-                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId");
-                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId);
                     
                 console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
                 console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
@@ -580,34 +559,6 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
-                console.log("checkUserStatus");
-                console.log(checkUserStatus);
-                
-                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0))) {
-                    
-                    console.log("marketProductDealedLogCheckedBySeller");
-                    console.log(marketProductDealedLogCheckedBySeller);
-                    console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
-                    console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
-                    setMarketProductDealedLogCheckedBySeller(constGetSelectSpecificMarketDealedLogCheckedBySeller);
-                    
-                }
-                
-                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0)));
-                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0)));
-                console.log(Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0)));
-                
-                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0))) {
-                    
-                    setMarketProductDealedLogCheckedByBuyer(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
-                    
-                }
-                
-                if (Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0))) {
-                    
-                    setMarketProductDealedLog(constGetSelectSpecificMarketDealedLog);
-                    
-                }
                 
                 if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId) {
                     
@@ -634,7 +585,6 @@ export default function MarketArticlePageTest() {
                 if (constGetSelectSpecificMarketDealedLog) {
                     
                     setDealConfirmCompleted(true);
-                    setDealerCheckDivisionActivate(false); // react 의 set 로드 문제 상 불가피한 절차 (원래는 dealconfirmcompleted 시 false 처리할 생각)
                     
                 }
                     
@@ -735,8 +685,6 @@ export default function MarketArticlePageTest() {
                 setMergeMarketProductInterestedLogOnArticle([constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted]);
                 console.log("constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted");
                 console.log(constGetSelectMarketProductInterestedLogWhenUserAndArticleInfoAndDistincted);
-                console.log("constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId");
-                console.log(constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId);
                     
                 console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
                 console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
@@ -744,34 +692,6 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
-                console.log("checkUserStatus");
-                console.log(checkUserStatus);
-                
-                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0))) {
-                    
-                    console.log("marketProductDealedLogCheckedBySeller");
-                    console.log(marketProductDealedLogCheckedBySeller);
-                    console.log("constGetSelectSpecificMarketDealedLogCheckedBySeller");
-                    console.log(constGetSelectSpecificMarketDealedLogCheckedBySeller);
-                    setMarketProductDealedLogCheckedBySeller(constGetSelectSpecificMarketDealedLogCheckedBySeller);
-                    
-                }
-                
-                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0)));
-                console.log(Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0)));
-                console.log(Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0)));
-                
-                if (Boolean(constGetSelectSpecificMarketDealedLogCheckedByBuyer && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedByBuyer).length > 0))) {
-                    
-                    setMarketProductDealedLogCheckedByBuyer(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
-                    
-                }
-                
-                if (Boolean(constGetSelectSpecificMarketDealedLog && (Object.keys(constGetSelectSpecificMarketDealedLog).length > 0))) {
-                    
-                    setMarketProductDealedLog(constGetSelectSpecificMarketDealedLog);
-                    
-                }
                 
                 if (checkUserStatus === constGetSelectSpecificMarketArticleInfoAndDistincted.article?.marketUserId) {
                     
@@ -798,7 +718,6 @@ export default function MarketArticlePageTest() {
                 if (constGetSelectSpecificMarketDealedLog) {
                     
                     setDealConfirmCompleted(true);
-                    setDealerCheckDivisionActivate(false); // react 의 set 로드 문제 상 불가피한 절차 (원래는 dealconfirmcompleted 시 false 처리할 생각)
                     
                 }
                     
@@ -924,72 +843,6 @@ export default function MarketArticlePageTest() {
         } catch (error) {
             console.error("로드 실패:", error);
         }
-        
-    }
-    
-    const constButtonToConfirmBuyerBySeller = async (marketCommentElem1) => {
-            
-        console.log("code executed");
-        console.log("checkUserDealerStatus");
-        console.log(checkUserDealerStatus);
-        console.log("checkArticleId");
-        console.log(checkArticleId);
-        console.log("marketCommentElem1ConstButton");
-        console.log(marketCommentElem1);
-        
-        if (checkUserDealerStatus === 1) {
-        
-            try {
-                
-                const { userInfo } = marketCommentElem1;
-                
-                const marketDealedLogCheckedBySellerDto = {
-                    
-                    sellerId : checkUserStatus,
-                    buyerId : marketCommentElem1?.marketUserId,
-                    specificArticleId : checkArticleId
-                    
-                } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
-                
-                console.log("marketDealedLogCheckedBySellerDto");
-                console.log(marketDealedLogCheckedBySellerDto);
-                
-                const constPostInsertMarketDealedLogCheckedBySeller = await marketAPI.postInsertMarketDealedLogCheckedBySeller(marketDealedLogCheckedBySellerDto);
-                const constGetSelectSpecificMarketDealedLog = await marketAPI.getSelectSpecificMarketDealedLog(checkArticleId); // useEffect -> Reload 방식이 더 깔끔하기는 함 (이건 임시 조치용....)
-                
-                console.log("constGetSelectSpecificMarketDealedLog");
-                console.log(constGetSelectSpecificMarketDealedLog);
-                console.log(typeof constGetSelectSpecificMarketDealedLog);
-                
-                if (constGetSelectSpecificMarketDealedLog) {
-                    
-                    setMergeMarketArticleInfo(articleInfo => ([{
-                        ...articleInfo[0],
-                        article : {
-                            ...articleInfo[0].article,
-                            sellEnded : 1
-                        }
-                    }]));
-                    
-                }
-                
-            } catch (error) {
-                console.error("로드 실패:", error);
-            } finally {
-                
-                setReloadingDealerCheckDivisionActivate(true);
-                
-            }
-            
-        }
-        
-    }
-    
-    const handleBuyerConfirm = (marketCommentElement) => {
-        
-        console.log("marketCommentElement");
-        console.log(marketCommentElement);
-        constButtonToConfirmBuyerBySeller(marketCommentElement);
         
     }
     
@@ -1670,7 +1523,6 @@ export default function MarketArticlePageTest() {
                                         </div>
                                     </div> */}
                                     <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
-                                    marketCommentElem1 = {comment}
                                     constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
                                     constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer}
                                     />
@@ -1862,21 +1714,8 @@ export default function MarketArticlePageTest() {
             (
                 <>
                 
-                    {/* <div className = "row">
-                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
-                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
-                            판매인으로 선택
-                        </div>
-                    </div> */}
-        
-                    {isSellerWarningModalOpened && ((
-                        <SelectSellerWarningModal open = {isSellerWarningModalOpened}
-                        onClose = {() => setIsSellerWarningModalOpened(false)}
-                        onConfirm = {constButtonToConfirmSellerByBuyer} />
-                    ))}
-                    
                     <div className = "row">
-                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => setIsSellerWarningModalOpened(true)}
+                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
                         style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                             판매인으로 선택
                         </div>
@@ -1892,8 +1731,7 @@ export default function MarketArticlePageTest() {
             (
                 <>
                 
-
-
+                
                 
                 </>
             )
@@ -1904,10 +1742,7 @@ export default function MarketArticlePageTest() {
         
     }
     
-    function MarketDealerCheckDivisionActivateOnCommentOnArticleLayout({marketCommentElem1, constButtonToConfirmBuyerBySeller1, constButtonToConfirmSellerByBuyer1}) {
-        
-        console.log("marketCommentElem1Activate")
-        console.log(marketCommentElem1)
+    function MarketDealerCheckDivisionActivateOnCommentOnArticleLayout({constButtonToConfirmBuyerBySeller1, constButtonToConfirmSellerByBuyer1}) {
         
         // let letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout;
         
@@ -1920,21 +1755,8 @@ export default function MarketArticlePageTest() {
                 return (
                     <>
 
-                        {/* <div className = "row">
-                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller1}
-                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
-                                구매인으로 선택
-                            </div>
-                        </div> */}
-                        
-                        {isBuyerWarningModalOpened && ((
-                            <SelectBuyerWarningModal open = {isBuyerWarningModalOpened}
-                            onClose = {() => setIsBuyerWarningModalOpened(false)}
-                            onConfirm = {() => handleBuyerConfirm(marketCommentElem1)} />
-                        ))}
-                        
                         <div className = "row">
-                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => setIsBuyerWarningModalOpened(true)}
+                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller1}
                             style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                 구매인으로 선택
                             </div>
@@ -1968,21 +1790,8 @@ export default function MarketArticlePageTest() {
                 return (
                     <>
 
-                        {/* <div className = "row">
-                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer1}
-                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
-                                판매인으로 선택
-                            </div>
-                        </div> */}
-                        
-                        {/* <SelectSellerWarningModal open = {isSellerWarningModalOpened}
-                        onClose = {() => setIsSellerWarningModalOpened(false)}
-                        onConfirm = {constButtonToConfirmSellerByBuyer1} /> */}
-                        
-                        {/* 되나??? */}
-                        
                         <div className = "row">
-                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => setIsSellerWarningModalOpened(true)}
+                            <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer1}
                             style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                 판매인으로 선택
                             </div>
@@ -2110,106 +1919,6 @@ export default function MarketArticlePageTest() {
         
     }
     
-    function MarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout({marketArticleElem1}) {
-        
-        const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
-        
-        if (checkUserStatus == article?.marketUserId) {
-            
-            console.log("marketProductDealedLogCheckedBySeller Checking");
-            console.log(marketProductDealedLogCheckedBySeller);
-            
-            if (Boolean(marketProductDealedLog && (Object.keys(marketProductDealedLog).length > 0))) {
-        
-                return (
-                    <>
-                    
-                        <div className = "row">
-                            <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
-                            marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
-                            fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                                구매인과 거래를 완료하였소.
-                            </div>
-                        </div>
-                        
-                    </>
-                );
-                
-            } else {
-                
-                if (Boolean(marketProductDealedLogCheckedBySeller && (Object.keys(marketProductDealedLogCheckedBySeller).length > 0))) {
-            
-                    return (
-                        <>
-                        
-                            <div className = "row">
-                                <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
-                                marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
-                                fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                                    구매인 선택을 완료하였소.
-                                </div>
-                            </div>
-                            
-                        </>
-                    );
-                    
-                } else {
-                    
-                    return (<></>);
-                    
-                }
-                
-            }
-            
-        } else {
-            
-            if (Boolean(marketProductDealedLog && (Object.keys(marketProductDealedLog).length > 0))) {
-        
-                return (
-                    <>
-                    
-                        <div className = "row">
-                            <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
-                            marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
-                            fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                                판매인과 거래를 완료하였소.
-                            </div>
-                        </div>
-                            
-                    </>
-                );
-                
-            } else {
-                
-                if (Boolean(marketProductDealedLogCheckedByBuyer && (Object.keys(marketProductDealedLogCheckedByBuyer).length > 0))) {
-            
-                    return (
-                        <>
-                        
-                            <div className = "row">
-                                <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
-                                marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
-                                fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                                    판매인 선택을 완료하였소.
-                                </div>
-                            </div>
-                        
-                        </>
-                    );
-                    
-                } else {
-                    
-                    return (<></>);
-                    
-                }
-                
-            }
-            
-            
-        }
-        
-    }
-    
     function MarketArticleLikeButtonPageLayout({marketArticleElem1}) {
         
         const { article = {} , userInfo = {} } = marketArticleElem1 ?? "";
@@ -2307,17 +2016,6 @@ export default function MarketArticlePageTest() {
                                     {
                                         constMarketArticleUpdateOrDeleteDivisionPageLayout.length > 0 ? 
                                         constMarketArticleUpdateOrDeleteDivisionPageLayout : 
-                                        <></>
-                                    }
-                                    
-                                    <div className = "row">
-                                        <div className = "col" style = {{height : "0.0625rem", marginBottom : "1.625rem"}}>
-                                        </div>
-                                    </div>
-
-                                    {
-                                        constMarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout.length > 0 ? 
-                                        constMarketBuyerOrSellerCheckedInformationOnArticleDivisionPageLayout : 
                                         <></>
                                     }
 

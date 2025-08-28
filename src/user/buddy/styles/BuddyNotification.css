@@ -113,8 +113,7 @@
   background-color: #E74C3C;
 }
 
-.buddy-no-btn-cancel, 
-.buddy-no-btn-chat {
+.buddy-no-btn-cancel {
   background-color: transparent;
   color: #888;
   border: 1px solid #ccc;
@@ -129,10 +128,30 @@
   text-align: center;
 }
 
-.buddy-no-btn-cancel:hover, 
+.buddy-no-btn-cancel:hover {
+  color: #666;
+  border-color: #666;
+}
+
+.buddy-no-btn-chat {
+  background-color: transparent;
+  color: #001439;
+  border: 1px solid #001439;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 120px;
+  text-align: center;
+}
+
 .buddy-no-btn-chat:hover {
-  color: #228F4F;
-  border-color: #228F4F;
+  color: #002766;
+  border-color: #002766;
 }
 
 /* 토스트 전체 스타일 */

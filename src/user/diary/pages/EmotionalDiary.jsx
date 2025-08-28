@@ -11,6 +11,7 @@ const EmotionalDiary = () => {
   const location = useLocation();
   const { isAuthenticated, id } = useSelector(state => state.auth);
   const [showModal, setShowModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [diaryContent, setDiaryContent] = useState('');
   const [emotions, setEmotions] = useState([]);
@@ -46,6 +47,12 @@ const EmotionalDiary = () => {
       
       const diary = await diaryService.getDiaryByDate(id, targetDate);
       
+      // 선택한 날짜와 현재 날짜 비교
+      const selectedDate = targetDate ? new Date(targetDate) : new Date();
+      const today = new Date();
+      selectedDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
       if (diary) {
         // 일기가 있는 경우
         const emotion = emotions.find(e => e.id === diary.emoji_id);
@@ -54,11 +61,20 @@ const EmotionalDiary = () => {
         setShowModal(false);
         setIsSaved(true);
       } else {
-        // 일기가 없는 경우 (정상적인 상황)
-        setShowModal(true);
-        setSelectedEmotion(null);
-        setDiaryContent('');
-        setIsSaved(false);
+        // 과거 날짜이고 일기가 없는 경우
+        if (selectedDate < today) {
+          // 빈 감정을 설정하여 컨테이너가 표시되도록 함
+          setSelectedEmotion({ id: 'empty', emoji_image: '/empty.png', name: '기록 없음' });
+          setDiaryContent('일기를 작성하지 않으셨어요.');
+          setShowModal(false);
+          setIsSaved(true);
+        } else {
+          // 오늘이나 미래 날짜의 경우 모달 표시
+          setShowModal(true);
+          setSelectedEmotion(null);
+          setDiaryContent('');
+          setIsSaved(false);
+        }
       }
     } catch (error) {
       // 실제 에러 상황만 에러 메시지 표시
@@ -84,7 +100,7 @@ const EmotionalDiary = () => {
 
   const handleSave = async () => {
     if (!diaryContent.trim()) {
-      alert('일기 내용을 입력해주세요.');
+      setError('일기 내용을 입력해주세요.');
       return;
     }
 
@@ -96,7 +112,7 @@ const EmotionalDiary = () => {
       };
 
       await diaryService.writeDiary(diaryData);
-      alert('일기가 저장되었습니다.');
+      setShowSaveModal(true);
       setIsSaved(true);
     } catch (error) {
       setError('일기 저장에 실패했습니다.');
@@ -261,6 +277,9 @@ const EmotionalDiary = () => {
           {showModal && (
             <div className="diary-emotion-modal">
               <div className="diary-modal-content">
+                <button className="diary-modal-close" onClick={() => setShowModal(false)}>
+                  <i className="bi bi-x"></i>
+                </button>
                 <h2 className="diary-modal-title">오늘의 기분은 어떠셨나요?</h2>
                 <div className="diary-emotions-grid">
                   {emotions.map((emotion) => (
@@ -278,6 +297,32 @@ const EmotionalDiary = () => {
             </div>
           )}
 
+          {showSaveModal && (
+            <div className="diary-save-modal">
+              <div className="diary-save-modal-content">
+                <div className="diary-save-modal-icon">
+                  <i className="bi bi-check-circle-fill"></i>
+                </div>
+                <h3>일기가 저장되었습니다</h3>
+                <p>오늘의 감정이 기록되었어요!</p>
+                <div className="diary-save-modal-buttons">
+                  <button 
+                    className="diary-save-modal-button primary"
+                    onClick={() => navigate('/diary/calendar')}
+                  >
+                    캘린더 보기
+                  </button>
+                  <button 
+                    className="diary-save-modal-button secondary"
+                    onClick={() => setShowSaveModal(false)}
+                  >
+                    쓴 일기 보기
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {selectedEmotion && (
             <div className="diary-content-wrapper">
                 <div className="diary-header-buttons">
@@ -286,11 +331,16 @@ const EmotionalDiary = () => {
                         <h5 className="diary-content-title">
                             {isSaved ? "오늘의 일기" : "나의 기분"}
                         </h5>
-                        <img className="diary-title-icon" 
-                             src={`http://localhost:8080/uploadFiles${selectedEmotion.emoji_image}`} 
-                             alt={selectedEmotion.name} 
-                             title={isSaved ? selectedEmotion.name : "감정 선택하기"}
-                        />
+                        {selectedEmotion.id === 'empty' ? (
+                          <i className="bi bi-journal-x diary-title-icon empty-diary"></i>
+                        ) : (
+                          <img 
+                            className="diary-title-icon" 
+                            src={`http://localhost:8080/uploadFiles${selectedEmotion.emoji_image}`} 
+                            alt={selectedEmotion.name} 
+                            title={isSaved ? selectedEmotion.name : "감정 선택하기"}
+                          />
+                        )}
                     </div>
                     {!isSaved && (
                         <button 
