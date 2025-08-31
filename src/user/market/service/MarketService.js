@@ -306,6 +306,12 @@ export default function useMarketAPI() {
         });
         return response.data;
     }
+    const getSelectMarketArticleWhenSeller = async(marketUserId) =>{
+        const response = await axios.get(`${constMarketAPIBasedURL}/selectMarketArticleWhenSeller`, {
+            params : {marketUserId}
+        });
+        return response.data;
+    }
     const getSelectCountMarketTotalLogWhenSeller = async(marketUserId) =>{
         const response = await axios.get(`${constMarketAPIBasedURL}/selectCountMarketTotalLogWhenSeller`, {
             params : {marketUserId}
@@ -389,7 +395,7 @@ export default function useMarketAPI() {
         postInsertMarketDealedLogCheckedBySeller, getSelectSpecificMarketDealedLogCheckedBySeller, postDeleteMarketDealedLogCheckedBySeller,
         postInsertMarketDealedLogCheckedByBuyer, getSelectSpecificMarketDealedLogCheckedByBuyer, postDeleteMarketDealedLogCheckedByBuyer,
         getSelectMarketDealedLogWhenBuyer, getSelectCountMarketDealedLogWhenBuyer,
-        getSelectMarketDealedLogWhenSeller, getSelectCountMarketTotalLogWhenSeller,
+        getSelectMarketDealedLogWhenSeller, getSelectMarketArticleWhenSeller, getSelectCountMarketTotalLogWhenSeller,
         getSelectCountMarketUndealedLogWhenSeller, getSelectCountMarketDealedLogWhenSeller,
         postInsertMarketReviewToUser, getSelectMarketReviewToUser, postUpdateMarketReviewToUser, postDeleteMarketReviewToUser,
         selectMarketArticleBySearchWord

@@ -223,11 +223,11 @@ export default function MarketUserPage() {
             
             try {
                 
-                const [ constGetSelectMarketUserInfo, constGetSelectMarketDealedLogWhenSeller, 
+                const [ constGetSelectMarketUserInfo, constGetSelectMarketArticleWhenSeller, 
                     constGetSelectCountMarketTotalLogWhenSeller, constGetSelectCountMarketUndealedLogWhenSeller, constGetSelectCountMarketDealedLogWhenSeller, 
                     constGetSelectMarketDealedLogWhenBuyer, constGetSelectCountMarketDealedLogWhenBuyer ] = await Promise.all ([
                     marketAPI.getSelectMarketUserInfo(checkUserId),
-                    marketAPI.getSelectMarketDealedLogWhenSeller(checkUserId),
+                    marketAPI.getSelectMarketArticleWhenSeller(checkUserId),
                     marketAPI.getSelectCountMarketTotalLogWhenSeller(checkUserId),
                     marketAPI.getSelectCountMarketUndealedLogWhenSeller(checkUserId),
                     marketAPI.getSelectCountMarketDealedLogWhenSeller(checkUserId),
@@ -235,7 +235,7 @@ export default function MarketUserPage() {
                     marketAPI.getSelectCountMarketDealedLogWhenBuyer(checkUserId)
                 ])
                 setMarketUserInfo([constGetSelectMarketUserInfo]);
-                const constSoldProductElementsFromAPI = constGetSelectMarketDealedLogWhenSeller.map(APIElem1 => ({
+                const constSoldProductElementsFromAPI = constGetSelectMarketArticleWhenSeller.map(APIElem1 => ({
                     article : APIElem1.marketArticleDto,
                     userInfo : APIElem1.marketUserInfoDto,
                     soldLog : APIElem1.marketDealedLogDto
