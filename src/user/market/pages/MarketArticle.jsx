@@ -388,7 +388,8 @@ export default function MarketArticlePageTest() {
     const [mergeMarketCommentListOnArticle, setMergeMarketCommentListOnArticle] = useState([
         {
             
-            comment : {id : 0, articleId : 0, marketUserId : 0, content : "ERROR", createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null},
+            comment : {id : 0, articleId : 0, marketUserId : 0, commentOfComment : 0, targetCommentId : 0,
+            content : "ERROR", createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }
@@ -421,9 +422,59 @@ export default function MarketArticlePageTest() {
     
     // ▲ 안 쓰는 방식의 코드
     
-    const handleEditMode = (targetId) => {
+    const handleWriteCommentOfComment = async (newElement, targetId, newContent) => { // 코드 수정 중...
         
+        const insertElement = newElement;
+        const { id, createdAt, updatedAt, ...restOfInsertElement } = insertElement.comment;
         
+        const submitInsertCommentOfCommentData = {
+            ...restOfInsertElement,
+            marketUserId : checkUserStatus,
+            commentOfComment : 1,
+            targetCommentId : targetId,
+            content : newContent
+        };
+
+            
+        console.log("newElement");
+        console.log(newElement);
+        console.log("targetId");
+        console.log(targetId);
+        console.log("newContent");
+        console.log(newContent);
+        console.log("submitInsertCommentOfCommentData");
+        console.log(submitInsertCommentOfCommentData);
+        
+        try {
+            
+            const constPostInsertMarketCommentOnArticle = await marketAPI.postInsertMarketCommentOnArticle(submitInsertCommentOfCommentData);
+            
+            
+            // const constGetSelectSpecificMarketCommentOnArticle = await marketAPI.getSelectSpecificMarketCommentOnArticle(submitInsertCommentOfCommentData.id);
+            
+            // const constGetSelectSpecificMarketCommentElementOnArticle = {
+            //     comment : constGetSelectSpecificMarketCommentOnArticle.marketCommentOnArticleDto,
+            //     userInfo : constGetSelectSpecificMarketCommentOnArticle.marketUserInfoDto
+            // }
+            
+            // setMergeMarketCommentListOnArticle(currentList =>
+            //     currentList.map(element => {
+                    
+            //         if (element?.comment?.id === submitUpdateCommentData.id) {
+                        
+            //             return constGetSelectSpecificMarketCommentElementOnArticle; 
+            //         }
+                    
+            //         return element;
+            //     })
+            // );
+            
+            setCommentOnArticleReloading(true);
+            setCommentOnArticleLoading(true);
+            
+        } catch (error) {
+            console.error("로드 실패:", error);
+        }
         
     } 
     
@@ -502,7 +553,8 @@ export default function MarketArticlePageTest() {
     .map(mergedElement => {
         
         return(
-        <MarketCommentElementOnArticle key = {mergedElement?.comment?.id} marketCommentElem1 = {mergedElement} onUpdateConfirm = {handleUpdateComment}/>
+        <MarketCommentElementOnArticle key = {mergedElement?.comment?.id} marketCommentElem1 = {mergedElement} 
+        onWriteConfirm = {handleWriteCommentOfComment} onUpdateConfirm = {handleUpdateComment}/>
         )
         
     });
@@ -516,10 +568,21 @@ export default function MarketArticlePageTest() {
         createdAt : new Date("1970-01-01T00:00:03"), updatedAt : null}
     );
     
+    const [mergeMarketCommentWriteCommentOfCommentElementListOnArticle, setMergeMarketCommentWriteCommentOfCommentElementListOnArticle] = useState([
+        {
+            
+            comment : {id : 0, articleId : 0, marketUserId : 0, commentOfComment : 0, targetCommentId : 0,
+            content : "ERROR", createdAt : new Date("1970-01-01T00:00:03"),  updatedAt : new Date("1970-01-01T00:00:04")},
+            userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
+            
+        }
+    ]);
+    
     const [mergeMarketCommentEditElementListOnArticle, setMergeMarketCommentEditElementListOnArticle] = useState([
         {
             
-            comment : {id : 0, articleId : 0, marketUserId : 0, content : "ERROR", createdAt : new Date("1970-01-01T00:00:03"),  updatedAt : new Date("1970-01-01T00:00:04")},
+            comment : {id : 0, articleId : 0, marketUserId : 0, commentOfComment : 0, targetCommentId : 0,
+            content : "ERROR", createdAt : new Date("1970-01-01T00:00:03"),  updatedAt : new Date("1970-01-01T00:00:04")},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }
@@ -901,7 +964,8 @@ export default function MarketArticlePageTest() {
                 .map(mergedElement => {
                     
                     return(
-                    <MarketCommentElementOnArticle key = {mergedElement?.comment?.id} marketCommentElem1 = {mergedElement} onUpdateConfirm = {handleUpdateComment}/>
+                    <MarketCommentElementOnArticle key = {mergedElement?.comment?.id} marketCommentElem1 = {mergedElement} 
+                    onWriteConfirm = {handleWriteCommentOfComment} onUpdateConfirm = {handleUpdateComment}/>
                     )});
                 
             }
@@ -1451,7 +1515,7 @@ export default function MarketArticlePageTest() {
         
     }
 
-    function MarketCommentElementOnArticle({marketCommentElem1, onUpdateConfirm}) {
+    function MarketCommentElementOnArticle({marketCommentElem1, onWriteConfirm, onUpdateConfirm}) {
         
         const { comment = {} , userInfo = {} } = marketCommentElem1 ?? {};
         
@@ -1473,14 +1537,19 @@ export default function MarketArticlePageTest() {
             return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
         };
         
+        const insertCommentOfCommentRef = useRef(null);
         const updateCommentRef = useRef(null); // ok
         
+        const constCommentOfComment = (comment.commentOfComment > 0) ? true : false;
+        
+        const [ commentWriteCommentOfCommentModeChecked, setCommentWriteCommentOfCommentModeChecked ] = useState(false);
         const [ commentEditModeChecked, setCommentEditModeChecked ] = useState(false); 
         // 이런 느낌으로 답글 기능도 구현 예정
         
         const [ commentSellerCheckedByBuyer, setCommentSellerCheckedByBuyer ] = useState(false);
         const [ commentBuyerCheckedBySeller, setCommentBuyerCheckedBySeller ] = useState(false);
         
+        const [ writingCommentOfCommentContent, setWritingCommentOfCommentContent ] = useState("");
         const [ editingContent, setEditingContent ] = useState(comment?.content);
         
         console.log("editingContent");
@@ -1488,11 +1557,41 @@ export default function MarketArticlePageTest() {
         console.log("comment?.id");
         console.log(comment?.id);
         
+        const handleWritingContentChange = (event) => {
+            
+            console.log("event.target.value");
+            console.log(event.target.value);
+            setWritingCommentOfCommentContent(event.target.value);
+            
+        }
+        
         const handleContentChange = (event) => {
             
             console.log("event.target.value");
             console.log(event.target.value);
             setEditingContent(event.target.value);
+            
+        }
+        
+        const handleWritingContentSubmit = () => {
+            
+            const writtenElement = {
+                
+                ...marketCommentElem1,
+                comment : {
+                    ...marketCommentElem1?.comment,
+                    content : writingCommentOfCommentContent
+                }
+                
+            };
+            
+            console.log(writtenElement);
+            
+            setMergeMarketCommentWriteCommentOfCommentElementListOnArticle(writtenElement)
+            
+            onWriteConfirm(writtenElement, marketCommentElem1?.comment?.id, writingCommentOfCommentContent); // 이거 어떻게 쓰는 건지 모르겠....
+            
+            setCommentWriteCommentOfCommentModeChecked(false);
             
         }
         
@@ -1666,6 +1765,18 @@ export default function MarketArticlePageTest() {
             
         }
             
+        function clickPossibleWhenCommentOfCommentWriteModeChecked() {
+            
+            setCommentWriteCommentOfCommentModeChecked(false);
+            
+        }
+        
+        function clickPossibleWhenCommentOfCommentWriteModeUnchecked() {
+            
+            setCommentWriteCommentOfCommentModeChecked(true);
+            
+        }
+            
         function clickPossibleWhenCommentEditModeChecked() {
             
             setCommentEditModeChecked(false);
@@ -1693,6 +1804,42 @@ export default function MarketArticlePageTest() {
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "0.8125rem"}}>
                                     <div className = "row">
+                                        
+                                        {!constCommentOfComment && (
+                                            <>
+                                            {commentWriteCommentOfCommentModeChecked ?
+                                                (
+                                                    <>
+                                                    
+                                                        <div className = "col-auto divisionOnclickStyleDefault" 
+                                                        onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
+                                                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                            취소
+                                                        </div>
+                                                    
+                                                    </>
+                                                ) :
+                                                (
+                                                    <>
+
+                                                        <div className = "col-auto divisionOnclickStyleDefault" 
+                                                        onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
+                                                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                            답글
+                                                        </div>
+                                                        
+                                                    </>
+                                                )
+                                            }
+                                            
+                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                ｜
+                                            </div>
+                                            
+                                            </>
+                                        )}
+
+
                                         
                                         {
                                             commentEditModeChecked ?
@@ -1742,6 +1889,36 @@ export default function MarketArticlePageTest() {
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "0.8125rem"}}>
                                     <div className = "row">
+                                        
+                                        {
+                                            commentWriteCommentOfCommentModeChecked ?
+                                            (
+                                                <>
+                                                
+                                                    <div className = "col-auto divisionOnclickStyleDefault" 
+                                                    onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
+                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                        취소
+                                                    </div>
+                                                
+                                                </>
+                                            ) :
+                                            (
+                                                <>
+
+                                                    <div className = "col-auto divisionOnclickStyleDefault" 
+                                                    onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
+                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                        답글
+                                                    </div>
+                                                    
+                                                </>
+                                            )
+                                        }
+                                        
+                                        <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                            ｜
+                                        </div>
                                         
                                         {
                                             commentEditModeChecked ?
@@ -1874,9 +2051,25 @@ export default function MarketArticlePageTest() {
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem", marginBottom : "0.1875rem"}}>
                                             <div className = "row">
-                                                <div className = "col-auto" style = {{paddingTop : "0.75rem", paddingLeft : "0rem", paddingRight : "0.75rem"}}>
-                                                    <i className = "bi bi-reply-fill" style = {{display : "inline-block", transform : "rotate(180deg)", cursor : "pointer", userSelect : "none"}}></i>
-                                                </div>
+
+                                                {constCommentOfComment ? 
+                                                (
+                                                    <>
+                                                
+                                                        <div className = "col-auto" style = {{paddingTop : "0.75rem", paddingLeft : "0rem", paddingRight : "0.75rem"}}>
+                                                            <i className = "bi bi-reply-fill" style = {{display : "inline-block", transform : "rotate(180deg)", cursor : "pointer", userSelect : "none"}}></i>
+                                                        </div>
+                                                
+                                                    </>
+                                                ) :
+                                                (
+                                                    <>
+                                                    
+                                                    </>
+                                                )
+                                                }
+
+
                                             
                                             {/* <div style={{
                                                 bottom : "0", left : "0", width : "100%", height : "1px", backgroundColor : "#cccccc80"
@@ -1975,6 +2168,48 @@ export default function MarketArticlePageTest() {
                                                     <MarketCommentUpdateOrDeleteDivisionOnArticlePageLayout />
                                                     
                                                     {/* ## */}
+                                                    
+                                                    {commentWriteCommentOfCommentModeChecked ? 
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "row">
+                                                                <div className = "col-auto" style = {{marginTop : "0.5rem", paddingTop : "0.75rem", paddingLeft : "0.375rem", paddingRight : "0.375rem"}}>
+                                                                    <i className = "bi bi-reply" style = {{display : "inline-block", transform : "rotate(180deg)", cursor : "pointer", userSelect : "none"}}></i>
+                                                                </div>
+                                                                <div className = "col" style = {{marginTop : "0.75rem", marginBottom : "0.4375rem"}}>
+                                                                    <div className = "row h-100">
+                                                                        <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
+                                                                            paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.8125rem"}}>
+                                                                            <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
+                                                                            id = "content" name = "content" 
+                                                                            value = {writingCommentOfCommentContent} 
+                                                                            onChange = {handleWritingContentChange} 
+                                                                            ref = {insertCommentOfCommentRef}
+                                                                            placeholder = "답글을 작성해 보겠소?"
+                                                                            style = {{resize : "none", fontSize : "0.875rem"}}/>
+                                                                        </div>
+                                                                        <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.4375rem"}}>
+                                                                            <div className = "row h-100 gx-0">
+                                                                                <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
+                                                                                    <button className = "btn buttonDefault" 
+                                                                                    onClick = {handleWritingContentSubmit} 
+                                                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>쓰기</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </>
+                                                    ) :
+                                                    (
+                                                        <>
+                                                        
+                                                        </>
+                                                    )
+                                                    }
 
                                                 </div>
                                             </div>
