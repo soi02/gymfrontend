@@ -167,8 +167,8 @@ export default function MarketTopTabs() {
 
       { constHeaderType1 && (
         <>
-          <div className = "row" style = {{height : "36px"}}>
-            <div className = "col d-flex justify-content-start" style = {{backgroundColor: '#fff'}}>
+          <div className = "row" style = {{height : "38px"}}>
+            <div className = "col d-flex justify-content-start" style = {{backgroundColor: '#fff', borderBottom : "1px solid #f2f2f2ff"}}>
               {/* <div className = "row"> */}
                 <div className = "col-auto basicDivisionOnClickStyle" onClick = {() => navigate(-1)}
                 style = {{backgroundColor: '#fff', paddingLeft : "1.5rem", paddingRight : "1.5rem", display: "flex", justifyContent: "center", alignItems: "center"}}>

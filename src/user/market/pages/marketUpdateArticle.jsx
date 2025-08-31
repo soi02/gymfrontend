@@ -360,247 +360,251 @@ export default function MarketUpdateArticlePage() {
                     
                             <div className = "row" style = {{height : "100%"}}>
                                 <div className = "col primaryDivisionDefault h-100" style = {{position : "relative", overflowX : "hidden", overflowY : "auto"}}>
-                                
+                                    
                                     <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "1rem"}}>
+                                        <div className = "col" style = {{paddingTop : "0.5rem"}}>
                                             <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
-                                                    사진
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <div className = "row">
-                                                <div className = "col" style = {{marginBottom : "0.8125rem"}}>
+                                                <div className = "col" style = {{marginBottom : "1rem"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                                            사진
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{marginBottom : "0.8125rem"}}>
+                                                            <div className = "row gx-0">
+                                                                <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
+                                                                paddingLeft : "0rem", paddingRight : "0rem", border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
+                                                                    <input type = "file" style = {{display : "none"}} accept = "image*" onChange = {constApplyImageLink} ref = {imageLinkRef} />
+                                                                        <div className = "row">
+                                                                            <div className = "col basicDivisionOnClickStyle" onClick = {handleDivisionClick}>
+                                                                                <MarketFetchMyPhotoOnWriteArticle />
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                                
+                                                                {/* <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
+                                                                border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden", alignItems : "center",
+                                                                paddingLeft : "2rem", paddingRight : "2rem"}}>  */}
+                                                                {/* ui 추후 보완 (어차피 갈아엎어야 되고 기능 구현이 우선. ui 정렬 어떻게 하는지 방법 알고 있음) */}
+                                                                    {/* <div className = "row">
+                                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                                                            이 사진이 대표로 표시되오.
+                                                                        </div>
+                                                                    </div> */}
+                                                                    {/* <div className = "row h-100 gx-0 flex-nowrap align-items-center"> */}
+                                                                    
+                                                                    {
+                                                                        (updateImageLink || displayImageName) ?
+                                                                        <div className = "col-auto" style = {{width : "6rem", height : "6rem", position : "relative", overflow : "hidden",
+                                                                            display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "0rem", 
+                                                                            marginLeft : "1rem", marginRight : "1rem",
+                                                                            border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
+                                                                            <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                                        </div>
+                                                                        :
+                                                                        <></>
+                                                                    }
+                                                                    
+                                                                        {/* <div className = "col h-100" style = {{fontSize : "0.75rem", textAlign : "center",
+                                                                        display : "flex", justifyContent : "center", alignItems : "center"}}>
+                                                                            이 사진이
+                                                                            <br />
+                                                                            대표로 표시되오.
+                                                                        </div> */}
+                                                                    {/* </div> */}
+                                                                {/* </div> */}
+                                                                
+                                                                {/* <div className = "col" style = {{padding : "0rem", marginLeft : "0.8125rem",
+                                                                border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden"}}> 
+                                                                    <div className = "row gx-0 flex-nowrap">
+                                                                        <div className = "col-auto" style = {{width : "5rem", height : "5rem", position : "relative", overflow : "hidden",
+                                                                            display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "1rem", 
+                                                                            border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
+                                                                            <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                                        </div>
+                                                                        <div className = "col" style = {{fontSize : "0.75rem"}}>
+                                                                            <div className = "row">
+                                                                                <div className = "col" style = {{flexGrow : "3", padding : "0rem"}}>
+                                                                                </div>
+                                                                                <div className = "col" style = {{flexGrow : "8", padding : "0rem"}}>
+                                                                                    이 사진이
+                                                                                    <br />
+                                                                                    대표로 표시되오.
+                                                                                </div>
+                                                                                <div className = "col" style = {{flexGrow : "3", padding : "0rem"}}>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div className = "row gx-0">
-                                                        <div className = "col-auto" style = {{width : "6rem", height : "6rem", overflow : "hidden", position : "relative",
-                                                        paddingLeft : "0rem", paddingRight : "0rem", border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
-                                                            <input type = "file" style = {{display : "none"}} accept = "image*" onChange = {constApplyImageLink} ref = {imageLinkRef} />
+                                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "0.75rem", paddingTop : "0.3125rem", 
+                                                        paddingBottom : "0.3125rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#f9f9f9",
+                                                        marginBottom : "0.4375rem", height : "3.8125rem", overflowY : "auto"}}>
+                                                            {/* {
+                                                                updateImageLink ?
                                                                 <div className = "row">
-                                                                    <div className = "col basicDivisionOnClickStyle" onClick = {handleDivisionClick}>
-                                                                        <MarketFetchMyPhotoOnWriteArticle />
+                                                                    <div className = "col">
+                                                                        {updateImageLink.name}
+                                                                    </div>
+                                                                    <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                                    onClick = {constRemoveImageLink}>
+                                                                        ×
                                                                     </div>
                                                                 </div>
-                                                        </div>
-                                                        
-                                                        {/* <div className = "col-auto" style = {{marginLeft : "0.8125rem", display : "flex", flexDirection : "column",
-                                                        border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden", alignItems : "center",
-                                                        paddingLeft : "2rem", paddingRight : "2rem"}}>  */}
-                                                        {/* ui 추후 보완 (어차피 갈아엎어야 되고 기능 구현이 우선. ui 정렬 어떻게 하는지 방법 알고 있음) */}
-                                                            {/* <div className = "row">
-                                                                <div className = "col" style = {{fontSize : "0.75rem"}}>
-                                                                    이 사진이 대표로 표시되오.
-                                                                </div>
-                                                            </div> */}
-                                                            {/* <div className = "row h-100 gx-0 flex-nowrap align-items-center"> */}
-                                                            
+                                                                :
+                                                                <></>
+                                                            } */}
                                                             {
-                                                                (updateImageLink || displayImageName) ?
-                                                                <div className = "col-auto" style = {{width : "6rem", height : "6rem", position : "relative", overflow : "hidden",
-                                                                    display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "0rem", 
-                                                                    marginLeft : "1rem", marginRight : "1rem",
-                                                                    border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
-                                                                    <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                                displayImageName ?
+                                                                <div className = "row">
+                                                                    <div className = "col">
+                                                                        {displayImageName}
+                                                                    </div>
+                                                                    <div className = "col-auto basicDivisionOnClickStyle" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
+                                                                    onClick = {constRemoveImageLink}>
+                                                                        ×
+                                                                    </div>
                                                                 </div>
                                                                 :
                                                                 <></>
                                                             }
-                                                            
-                                                                {/* <div className = "col h-100" style = {{fontSize : "0.75rem", textAlign : "center",
-                                                                display : "flex", justifyContent : "center", alignItems : "center"}}>
-                                                                    이 사진이
-                                                                    <br />
-                                                                    대표로 표시되오.
-                                                                </div> */}
-                                                            {/* </div> */}
-                                                        {/* </div> */}
-                                                        
-                                                        {/* <div className = "col" style = {{padding : "0rem", marginLeft : "0.8125rem",
-                                                        border : "1px solid #cccccc", borderRadius : "0.5rem", overflow : "hidden"}}> 
-                                                            <div className = "row gx-0 flex-nowrap">
-                                                                <div className = "col-auto" style = {{width : "5rem", height : "5rem", position : "relative", overflow : "hidden",
-                                                                    display: "flex", justifyContent: "center", padding : "0rem", alignItems: "center", marginBottom : "1rem", 
-                                                                    border : "1px solid #cccccc", borderRadius : "0.5rem"}}>
-                                                                    <img src = {previewURL} style = {{width : "100%", height : "100%", objectFit : "cover"}}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
+                                                            {/* <i className="ri-information-line"></i> 여기에 대표로 표시되는 사진의 이름이 보여지오. */}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    {/* <div className = "row">
+                                                        <div className = "col" style = {{marginBottom : "2vh"}}>
+                                                            <div className = "row gx-0">
+                                                                <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
+                                                                paddingLeft : "0vh", paddingRight : "0vh", border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
+                                                                    <MarketFetchMyPhotoOnWriteArticle />
                                                                 </div>
-                                                                <div className = "col" style = {{fontSize : "0.75rem"}}>
-                                                                    <div className = "row">
-                                                                        <div className = "col" style = {{flexGrow : "3", padding : "0rem"}}>
-                                                                        </div>
-                                                                        <div className = "col" style = {{flexGrow : "8", padding : "0rem"}}>
-                                                                            이 사진이
-                                                                            <br />
-                                                                            대표로 표시되오.
-                                                                        </div>
-                                                                        <div className = "col" style = {{flexGrow : "3", padding : "0rem"}}>
-                                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row gx-0">
+                                                        <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", 
+                                                        marginBottom : "1vh", height : "9.5vh", overflowY : "auto"}}>
+                                                            가져온 사진 목록 1 <br />
+                                                            가져온 사진 목록 2 <br />
+                                                            가져온 사진 목록 3 <br />
+                                                            가져온 사진 목록 4 <br />
+                                                        </div>
+                                                    </div> */}
+                                                </div>
+                                            </div>
+                                            
+                                            <div className = "row">
+                                                <div className = "col" style = {{marginBottom : "1rem"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                                            제목
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col">
+                                                            <input className = "form-control writeArticleTextDivisionDefault" 
+                                                            id = "title" name = "title" value = {updateMarketArticleElement.title}
+                                                            onChange = {constApplyTextContent} ref = {titleRef}
+                                                            style = {{fontSize : "0.875rem"}}/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className = "row">
+                                                <div className = "col" style = {{marginBottom : "1rem"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                                            가격 ( 단위 : ￦ )
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col">
+                                                            <input className = "form-control writeArticleTextDivisionDefault" 
+                                                            id = "productCost" name = "productCost" value = {updateMarketArticleElement.productCost}
+                                                            onChange = {constApplyTextContent} ref = {productCostRef}
+                                                            style = {{fontSize : "0.875rem"}}/>
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "0.75rem", marginTop : "0.3125rem"}}>
+                                                            <i className="ri-information-line"></i> 0원을 입력하면 나눔 물품으로 게시되오.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className = "row">
+                                                <div className = "col" style = {{marginBottom : "1rem"}}>
+                                                    <div className = "row">
+                                                        <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                                            내용
+                                                        </div>
+                                                    </div>
+                                                    <div className = "row">
+                                                        <div className = "col">
+                                                            <textarea className = "form-control writeArticleTextDivisionDefault" rows = "4"
+                                                            id = "content" name = "content" value = {updateMarketArticleElement.content}
+                                                            onChange = {constApplyTextContent} ref = {contentRef}
+                                                            style = {{fontSize : "0.875rem", resize : "none"}}/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className = "row">
+                                                <div className = "col" style = {{marginBottom : "1rem"}}>
+
+                                                    <div className = "d-flex w-100 align-items-center">
+                                                        
+                                                        <ImageWarningModal open = {doesImageWarningModalOpened}
+                                                        onClose = {() => setDoesImageWarningModalOpened(false)}
+                                                        onConfirm = {constButtonToUpdateMarketArticle} />
+                                                        
+                                                        {(updateImageLink || displayImageName) ?
+
+                                                            <div className = "col d-flex justify-content-center">
+                                                                <div className = "row">
+                                                                    <div className = "col-auto">
+                                                                        <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle}
+                                                                        style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div> */}
+                                                            
+                                                            :
+                                                            
+                                                            <div className = "col d-flex justify-content-center">
+                                                                <div className = "row">
+                                                                    <div className = "col-auto">
+                                                                        <button className = "btn buttonDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
+                                                                        style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        }
+                                                        
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className = "row gx-0">
-                                                <div className = "col secondaryDivisionDefault" style = {{fontSize : "0.75rem", paddingTop : "0.3125rem", 
-                                                paddingBottom : "0.3125rem", paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#f9f9f9",
-                                                marginBottom : "0.4375rem", height : "3.8125rem", overflowY : "auto"}}>
-                                                    {/* {
-                                                        updateImageLink ?
-                                                        <div className = "row">
-                                                            <div className = "col">
-                                                                {updateImageLink.name}
-                                                            </div>
-                                                            <div className = "col-auto" style = {{fontSize : "1.75vh", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
-                                                            onClick = {constRemoveImageLink}>
-                                                                ×
-                                                            </div>
-                                                        </div>
-                                                        :
-                                                        <></>
-                                                    } */}
-                                                    {
-                                                        displayImageName ?
-                                                        <div className = "row">
-                                                            <div className = "col">
-                                                                {displayImageName}
-                                                            </div>
-                                                            <div className = "col-auto basicDivisionOnClickStyle" style = {{fontSize : "0.75rem", fontWeight : "bold", color : "rgb(94, 63, 17)"}}
-                                                            onClick = {constRemoveImageLink}>
-                                                                ×
-                                                            </div>
-                                                        </div>
-                                                        :
-                                                        <></>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "0.6125rem", marginTop : "0.3125rem"}}>
-                                                    {/* <i className="ri-information-line"></i> 여기에 대표로 표시되는 사진의 이름이 보여지오. */}
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            
-                                            
-                                            {/* <div className = "row">
-                                                <div className = "col" style = {{marginBottom : "2vh"}}>
-                                                    <div className = "row gx-0">
-                                                        <div className = "col-auto" style = {{width : "12.5vh", height : "12.5vh", overflow : "hidden", position : "relative",
-                                                        paddingLeft : "0vh", paddingRight : "0vh", border : "0.25vh solid rgb(192, 192, 192)", borderRadius : "1.25vh"}}>
-                                                            <MarketFetchMyPhotoOnWriteArticle />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className = "row gx-0">
-                                                <div className = "col secondaryDivisionDefault" style = {{fontSize : "1.75vh", paddingTop : "0.75vh", paddingBottom : "0.75vh", paddingLeft : "2vh", paddingRight : "2vh", 
-                                                marginBottom : "1vh", height : "9.5vh", overflowY : "auto"}}>
-                                                    가져온 사진 목록 1 <br />
-                                                    가져온 사진 목록 2 <br />
-                                                    가져온 사진 목록 3 <br />
-                                                    가져온 사진 목록 4 <br />
-                                                </div>
-                                            </div> */}
-                                        </div>
-                                    </div>
-                                    
-                                    <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "1rem"}}>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
-                                                    제목
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <input className = "form-control writeArticleTextDivisionDefault" 
-                                                    id = "title" name = "title" value = {updateMarketArticleElement.title}
-                                                    onChange = {constApplyTextContent} ref = {titleRef}
-                                                    style = {{fontSize : "0.875rem"}}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "1rem"}}>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
-                                                    가격 ( 단위 : ￦ )
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <input className = "form-control writeArticleTextDivisionDefault" 
-                                                    id = "productCost" name = "productCost" value = {updateMarketArticleElement.productCost}
-                                                    onChange = {constApplyTextContent} ref = {productCostRef}
-                                                    style = {{fontSize : "0.875rem"}}/>
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "0.75rem", marginTop : "0.3125rem"}}>
-                                                    <i className="ri-information-line"></i> 0원을 입력하면 나눔 물품으로 게시되오.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "1rem"}}>
-                                            <div className = "row">
-                                                <div className = "col" style = {{fontSize : "1rem", fontWeight : "bold", marginBottom : "0.5rem"}}>
-                                                    내용
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <textarea className = "form-control writeArticleTextDivisionDefault" rows = "4"
-                                                    id = "content" name = "content" value = {updateMarketArticleElement.content}
-                                                    onChange = {constApplyTextContent} ref = {contentRef}
-                                                    style = {{fontSize : "0.875rem", resize : "none"}}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className = "row">
-                                        <div className = "col" style = {{marginBottom : "1rem"}}>
 
-                                            <div className = "d-flex w-100 align-items-center">
-                                                
-                                                <ImageWarningModal open = {doesImageWarningModalOpened}
-                                                onClose = {() => setDoesImageWarningModalOpened(false)}
-                                                onConfirm = {constButtonToUpdateMarketArticle} />
-                                                
-                                                {(updateImageLink || displayImageName) ?
-
-                                                    <div className = "col d-flex justify-content-center">
-                                                        <div className = "row">
-                                                            <div className = "col-auto">
-                                                                <button className = "btn buttonDefault" onClick = {constButtonToUpdateMarketArticle}
-                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    :
-                                                    
-                                                    <div className = "col d-flex justify-content-center">
-                                                        <div className = "row">
-                                                            <div className = "col-auto">
-                                                                <button className = "btn buttonDefault" onClick = {() => setDoesImageWarningModalOpened(true)}
-                                                                style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>수정</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                
-                                                }
-                                                
+                                                </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 

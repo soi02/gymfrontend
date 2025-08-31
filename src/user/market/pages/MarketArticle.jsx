@@ -2348,7 +2348,7 @@ export default function MarketArticlePageTest() {
                             <div className = "col buyerOrSellerCheckedInformationOnArticleDivisionPageLayoutDefalut" style = {{
                             marginLeft : "0.25rem", marginRight : "0.25rem", display : "flex", justifyContent : "center", alignitems : "center",
                             fontSize : "1rem", fontWeight : "bold", color : "#001439"}}>
-                                판매인과 거래를 완료하였소.
+                                <i className="ri-checkbox-circle-line"></i>&nbsp;판매인과 거래를 완료하였소.
                             </div>
                         </div>
                             
