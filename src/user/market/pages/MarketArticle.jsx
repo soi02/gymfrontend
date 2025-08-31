@@ -298,11 +298,6 @@ export default function MarketArticlePageTest() {
     const [isSellerWarningModalOpened, setIsSellerWarningModalOpened] = useState(false);
     const [isDealerVerificationWarningModalOpened, setIsDealerVerificationWarningModalOpened] = useState(false);
     
-    
-
-
-    
-    
     const contentRef = useRef(null);
     
     const [mergeMarketArticleInfo, setMergeMarketArticleInfo] = useState([
@@ -1203,7 +1198,7 @@ export default function MarketArticlePageTest() {
                 return (
                     <>
                         <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.75rem"}}>
-                        {dealerVerified ?
+                        {(dealerVerified === 1) ?
                         (
                             <>
                                 <i className="ri-checkbox-circle-line"></i>&nbsp;

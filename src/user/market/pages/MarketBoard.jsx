@@ -39,16 +39,28 @@ function MarketArticleElement({marketArticleElem1}) {
         return productCost.toLocaleString('Ko-KR');
     };
     
-    function funcSellEnded(sellEnded) {
+    function funcSellEnded({dealerVerified, sellEnded}) {
         
         if (sellEnded == 1) {
             
-            return (
-                <>
-                    <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>
-                    <i className="ri-checkbox-circle-line"></i> 거래 마감</span>
-                </>
-            );
+                return (
+                    <>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>
+                        {(dealerVerified === 1) ?
+                        (
+                            <>
+                                <i className="ri-checkbox-circle-line"></i>&nbsp;
+                            </>
+                        )
+                            :
+                        (
+                            <>
+                            </>
+                        )
+                        }
+                        거래 마감</span>
+                    </>
+                );
             
         } else {
             
@@ -126,7 +138,7 @@ function MarketArticleElement({marketArticleElem1}) {
                                                 <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                     <div className = "row">
                                                         <div className = "col" style = {{fontSize : "0.75rem"}}>
-                                                            {funcSellEnded(article?.sellEnded)}
+                                                            {funcSellEnded({dealerVerified : article?.dealerVerified, sellEnded : article?.sellEnded})}
                                                         </div>
                                                     </div>
                                                     <div className = "row">
@@ -295,7 +307,7 @@ export default function MarketBoardPage() {
             
             article : {id : 0, marketUserId : 0, imageLink : "ERROR", mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            viewedCount : -1, dealerVerified : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }

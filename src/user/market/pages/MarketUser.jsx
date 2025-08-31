@@ -99,7 +99,10 @@ export default function MarketUserPage() {
     
     const navigate = useNavigate();
     
-    const [countOfSoldLogsOnUser, setCountOfSoldLogsOnUser] = useState(-1);
+    const [countOfTotalSoldLogsOnUser, setCountOfTotalSoldLogsOnUser] = useState(-1);
+    const [countOfUndealedSoldLogsOnUser, setCountOfUndealedSoldLogsOnUser] = useState(-1);
+    const [countOfDealedSoldLogsOnUser, setCountOfDealedSoldLogsOnUser] = useState(-1);
+    
     const [countOfBoughtLogsOnUser, setCountOfBoughtLogsOnUser] = useState(-1);
     
     const [checkLoadEnded, setCheckLoadEnded] = useState(true);
@@ -167,7 +170,7 @@ export default function MarketUserPage() {
         
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            viewedCount : -1, dealerVerified : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
             soldLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
@@ -179,7 +182,7 @@ export default function MarketUserPage() {
         
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            viewedCount : -1, dealerVerified : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
             boughtLog : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
@@ -220,10 +223,13 @@ export default function MarketUserPage() {
             
             try {
                 
-                const [ constGetSelectMarketUserInfo, constGetSelectMarketDealedLogWhenSeller, constGetSelectCountMarketDealedLogWhenSeller, 
+                const [ constGetSelectMarketUserInfo, constGetSelectMarketDealedLogWhenSeller, 
+                    constGetSelectCountMarketTotalLogWhenSeller, constGetSelectCountMarketUndealedLogWhenSeller, constGetSelectCountMarketDealedLogWhenSeller, 
                     constGetSelectMarketDealedLogWhenBuyer, constGetSelectCountMarketDealedLogWhenBuyer ] = await Promise.all ([
                     marketAPI.getSelectMarketUserInfo(checkUserId),
                     marketAPI.getSelectMarketDealedLogWhenSeller(checkUserId),
+                    marketAPI.getSelectCountMarketTotalLogWhenSeller(checkUserId),
+                    marketAPI.getSelectCountMarketUndealedLogWhenSeller(checkUserId),
                     marketAPI.getSelectCountMarketDealedLogWhenSeller(checkUserId),
                     marketAPI.getSelectMarketDealedLogWhenBuyer(checkUserId),
                     marketAPI.getSelectCountMarketDealedLogWhenBuyer(checkUserId)
@@ -235,7 +241,9 @@ export default function MarketUserPage() {
                     soldLog : APIElem1.marketDealedLogDto
                 }))
                 setMergeMarketUserSoldProduct(constSoldProductElementsFromAPI);
-                setCountOfSoldLogsOnUser(constGetSelectCountMarketDealedLogWhenSeller);
+                setCountOfTotalSoldLogsOnUser(constGetSelectCountMarketTotalLogWhenSeller);
+                setCountOfUndealedSoldLogsOnUser(constGetSelectCountMarketUndealedLogWhenSeller);
+                setCountOfDealedSoldLogsOnUser(constGetSelectCountMarketDealedLogWhenSeller);
                 const constBoughtProductElementsFromAPI = constGetSelectMarketDealedLogWhenBuyer.map(APIElem1 => ({
                     article : APIElem1.marketArticleDto,
                     userInfo : APIElem1.marketUserInfoDto,
@@ -300,14 +308,26 @@ export default function MarketUserPage() {
             return productCost.toLocaleString('Ko-KR');
         };
         
-        function funcSellEnded(sellEnded) {
+        function funcSellEnded({dealerVerified, sellEnded}) {
             
             if (sellEnded == 1) {
                 
                 return (
                     <>
                         <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>
-                        <i className="ri-checkbox-circle-line"></i> 거래 마감</span>
+                        {(dealerVerified === 1) ?
+                        (
+                            <>
+                                <i className="ri-checkbox-circle-line"></i>&nbsp;
+                            </>
+                        )
+                            :
+                        (
+                            <>
+                            </>
+                        )
+                        }
+                        거래 마감</span>
                     </>
                 );
                 
@@ -365,7 +385,7 @@ export default function MarketUserPage() {
                                                     <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "0.75rem"}}>
-                                                                {funcSellEnded(article?.sellEnded)}
+                                                                {funcSellEnded({dealerVerified : article?.dealerVerified, sellEnded : article?.sellEnded})}
                                                             </div>
                                                         </div>
                                                         <div className = "row">
@@ -451,7 +471,7 @@ export default function MarketUserPage() {
             return productCost.toLocaleString('Ko-KR');
         };
         
-        function funcSellEnded(sellEnded) {
+        function funcSellEnded({dealerVerified, sellEnded}) {
             
             if (sellEnded == 1) {
                 
@@ -516,7 +536,7 @@ export default function MarketUserPage() {
                                                     <div className = "col" style = {{position : "relative", minWidth: "0"}}>
                                                         <div className = "row">
                                                             <div className = "col" style = {{fontSize : "0.75rem"}}>
-                                                                {funcSellEnded(article?.sellEnded)}
+                                                                {funcSellEnded({dealerVerified : article?.dealerVerified, sellEnded : article?.sellEnded})}
                                                             </div>
                                                         </div>
                                                         <div className = "row">
@@ -646,7 +666,7 @@ export default function MarketUserPage() {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.3125rem", fontWeight : "bold"}}>
-                                    {countOfSoldLogsOnUser} 개
+                                    {countOfTotalSoldLogsOnUser} 개
                                 </div>
                             </div>
                             
@@ -657,14 +677,14 @@ export default function MarketUserPage() {
                                     <div className = "row">
                                         <div className = "col" style = {{fontSize : "0.875rem"}}>
                                             <span>거래 가능 물품 개수 </span>
-                                            <span style = {{fontWeight : "bold"}}>{countOfSoldLogsOnUser} </span>
+                                            <span style = {{fontWeight : "bold"}}>{countOfUndealedSoldLogsOnUser} </span>
                                             <span>개</span>
                                         </div>
                                     </div>
                                     <div className = "row">
                                         <div className = "col" style = {{fontSize : "0.875rem"}}>
                                             <span>거래 마감 물품 개수 </span>
-                                            <span style = {{fontWeight : "bold"}}>{countOfSoldLogsOnUser} </span>
+                                            <span style = {{fontWeight : "bold"}}>{countOfDealedSoldLogsOnUser} </span>
                                             <span>개</span>
                                         </div>
                                     </div>
@@ -717,7 +737,7 @@ export default function MarketUserPage() {
                             </div>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "1.3125rem", fontWeight : "bold"}}>
-                                    {countOfSoldLogsOnUser} 개
+                                    {countOfTotalSoldLogsOnUser} 개
                                 </div>
                             </div>
                             <div className = "row">
