@@ -740,6 +740,27 @@ export default function MarketUserPage() {
                                     {countOfTotalSoldLogsOnUser} 개
                                 </div>
                             </div>
+                            
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5rem", marginBottom : "0.5rem", paddingTop : "0.625rem", paddingBottom : "0.625rem", 
+                                paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#ffffff"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{fontSize : "0.875rem"}}>
+                                            <span>거래 가능 물품 개수 </span>
+                                            <span style = {{fontWeight : "bold"}}>{countOfUndealedSoldLogsOnUser} </span>
+                                            <span>개</span>
+                                        </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col" style = {{fontSize : "0.875rem"}}>
+                                            <span>거래 마감 물품 개수 </span>
+                                            <span style = {{fontWeight : "bold"}}>{countOfDealedSoldLogsOnUser} </span>
+                                            <span>개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div className = "row">
                                 <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "1.25rem", paddingBottom : "0.4375rem", 
                                     paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#ffffff"}}>
@@ -824,7 +845,7 @@ export default function MarketUserPage() {
             return(
                 <>
                 
-                    <div className = "row">
+                    {/* <div className = "row">
                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "0.875rem"}}>
@@ -859,7 +880,9 @@ export default function MarketUserPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
+                
+                    {/* ▲ 원래 의도가 본인만 볼 수 있도록 하기 위함 */}
                 
                 </>
             )
