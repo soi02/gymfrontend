@@ -172,7 +172,7 @@ export default function MarketTopTabs() {
               {/* <div className = "row"> */}
                 <div className = "col-auto basicDivisionOnClickStyle" onClick = {() => navigate(-1)}
                 style = {{backgroundColor: '#fff', paddingLeft : "1.5rem", paddingRight : "1.5rem", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                    <span style = {{fontSize : "1.5rem", color : "#aaa"}}>&lt;</span>
+                    <span style = {{fontSize : "1.5rem", color : "#aaa"}}><i className="ri-arrow-left-s-line"></i></span>
                 </div>
               {/* </div> */}
             </div>

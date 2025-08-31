@@ -306,7 +306,8 @@ export default function MarketUserPage() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 완료</span>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>
+                        <i className="ri-checkbox-circle-line"></i> 거래 마감</span>
                     </>
                 );
                 
@@ -314,7 +315,7 @@ export default function MarketUserPage() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 미완료</span>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 가능</span>
                     </>
                 );
                 
@@ -456,7 +457,8 @@ export default function MarketUserPage() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 완료</span>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>
+                        <i className="ri-checkbox-circle-line"></i> 거래 마감</span>
                     </>
                 );
                 
@@ -464,7 +466,7 @@ export default function MarketUserPage() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 미완료</span>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 가능</span>
                     </>
                 );
                 
@@ -647,6 +649,32 @@ export default function MarketUserPage() {
                                     {countOfSoldLogsOnUser} 개
                                 </div>
                             </div>
+                            
+                            
+                            <div className = "row">
+                                <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.5rem", marginBottom : "0.5rem", paddingTop : "0.625rem", paddingBottom : "0.625rem", 
+                                paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#ffffff"}}>
+                                    <div className = "row">
+                                        <div className = "col" style = {{fontSize : "0.875rem"}}>
+                                            <span>거래 가능 물품 개수 </span>
+                                            <span style = {{fontWeight : "bold"}}>{countOfSoldLogsOnUser} </span>
+                                            <span>개</span>
+                                        </div>
+                                    </div>
+                                    <div className = "row">
+                                        <div className = "col" style = {{fontSize : "0.875rem"}}>
+                                            <span>거래 마감 물품 개수 </span>
+                                            <span style = {{fontWeight : "bold"}}>{countOfSoldLogsOnUser} </span>
+                                            <span>개</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+
+                            
+                            
                             <div className = "row">
                                 <div className = "col secondaryDivisionDefault" style = {{marginTop : "0.25rem", paddingTop : "1.25rem", paddingBottom : "0.4375rem", 
                                     paddingLeft : "0.8125rem", paddingRight : "0.8125rem", backgroundColor : "#ffffff"}}>
@@ -735,7 +763,7 @@ export default function MarketUserPage() {
                         <div className = "col" style = {{paddingLeft : "1.25rem", paddingRight : "1.25rem", marginBottom : "1.8125rem"}}>
                             <div className = "row">
                                 <div className = "col" style = {{fontSize : "0.875rem"}}>
-                                    내 구매 물품 개수
+                                    내 구매 인증 물품 개수
                                 </div>
                             </div>
                             <div className = "row">

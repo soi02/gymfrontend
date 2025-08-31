@@ -586,7 +586,8 @@ export default function MarketMyLikedProductsPage() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 완료</span>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.625rem"}}>
+                        <i className="ri-checkbox-circle-line"></i> 거래 마감</span>
                     </>
                 );
                 
@@ -594,7 +595,7 @@ export default function MarketMyLikedProductsPage() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 미완료</span>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.625rem"}}>거래 가능</span>
                     </>
                 );
                 

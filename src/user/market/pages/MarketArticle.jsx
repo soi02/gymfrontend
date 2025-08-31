@@ -130,6 +130,67 @@ function SelectSellerWarningModal({open, onClose, onConfirm}) {
     
 }
 
+function SelectDealerVerificationWarningModal({open, onClose, onConfirm}) {
+    
+    if (!open) {
+        
+        return null;
+        
+    } else {
+    
+        return(
+            <>
+            
+                <div role = "dialog" aria-modal = "true" onClick = {onClose}
+                style = {{position: "fixed", inset: 0, background: "rgba(0, 0, 0, 0.5)", display: "flex",
+                justifyContent: "center", alignItems: "center", zIndex: 2000, padding: "16px"}}>
+                    <div onClick={(e) => e.stopPropagation()}
+                    style={{width: "100%", maxWidth: 330, background: "#fff", borderRadius: 16,
+                    boxShadow: "0 10px 30px rgba(0,0,0,.18)", padding: "25px 18px", textAlign: "center"}}>
+                        <div className = "row">
+                            <div className = "col" style = {{paddingTop : "0.5rem", paddingBottom : "0.5rem"}}>
+                                <div className = "row">
+                                    <div className = "col" style = {{fontSize : "1.375rem", color : "#c0392b", fontWeight : "bold", marginBottom : "0.5rem"}}>
+                                        잠깐!
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col" style = {{fontSize : "1.062rem", marginBottom : "1.25rem"}}>
+                                        정말 거래를 마감하시겠소?
+                                        <br />
+                                        거래를 마감할 시
+                                        <br />
+                                        향후 취소 및 변경이 불가능하오.
+                                    </div>
+                                </div>
+                                <div className = "row">
+                                    <div className = "col">
+                                        <div className = "row">
+                                            <div className = "col">
+                                                <button className = "btn buttonDefault" onClick = {onConfirm}
+                                                style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem", marginBottom : "0.5rem"}}>마감하기</button>
+                                            </div>
+                                        </div>
+                                        <div className = "row">
+                                            <div className = "col">
+                                                <button className = "btn buttonCancellationDefault" onClick = {onClose}
+                                                style = {{fontSize : "0.9375rem", fontWeight : "bold", paddingTop : "0.75rem", paddingBottom : "0.75rem"}}>돌아가기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </>
+        )
+    
+    }
+    
+}
+
 export default function MarketArticlePageTest() {
     
     const BACKEND_BASE_URL = "http://localhost:8080";
@@ -235,6 +296,7 @@ export default function MarketArticlePageTest() {
     
     const [isBuyerWarningModalOpened, setIsBuyerWarningModalOpened] = useState(false);
     const [isSellerWarningModalOpened, setIsSellerWarningModalOpened] = useState(false);
+    const [isDealerVerificationWarningModalOpened, setIsDealerVerificationWarningModalOpened] = useState(false);
     
     
 
@@ -248,7 +310,7 @@ export default function MarketArticlePageTest() {
             
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            viewedCount : -1, dealerVerified : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")}
             
         }
@@ -308,7 +370,7 @@ export default function MarketArticlePageTest() {
             
             article : {id : 0, marketUserId : 0, imageLink : null, imageOriginalFilename : null, mainImageId : 0,
             title : "ERROR", content : "ERROR", productCostOption : 0, productCost : -1, 
-            viewedCount : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
+            viewedCount : -1, dealerVerified : -1, sellEnded : -1, createdAt : new Date("1970-01-01T00:00:01"), updatedAt : new Date("1970-01-01T00:00:02")},
             userInfo : {id : 0, userId : 0, name : "ERROR", createdAt : new Date("1970-01-01T00:00:00")},
             interestInfo : {id : 0, marketUserId : 0, specificArticleId : 0, createdAt : new Date("1970-01-01T00:00:03")}
             
@@ -686,6 +748,9 @@ export default function MarketArticlePageTest() {
     useEffect(() => {
         
         const constUseEffect = async () => {
+                    
+                console.log("Reloading Test Start!!") // Reload 안의 코드는 load 시의 코드와 같음
+                console.log(reloadingDealerCheckDivisionActivate) // Reload 안의 코드는 load 시의 코드와 같음
             
             if (commentOnArticleReloading || reloadingProductInterestedLogWhenUserAndArticleInfo ||
                 reloadingDealerCheckDivisionActivate
@@ -801,6 +866,10 @@ export default function MarketArticlePageTest() {
                     setDealerCheckDivisionActivate(false); // react 의 set 로드 문제 상 불가피한 절차 (원래는 dealconfirmcompleted 시 false 처리할 생각)
                     
                 }
+                
+                setDealerCheckDivisionActivate(false);
+                
+                // 여기에 팝업이 바뀌도록 false 로 만들어 줘야 됨 (거래 마감하기 선택 시) --- dealercheckdivisionactivate(false) 하듯이
                     
                 } catch (error) {
                     
@@ -967,6 +1036,7 @@ export default function MarketArticlePageTest() {
                         ...articleInfo[0],
                         article : {
                             ...articleInfo[0].article,
+                            dealerVerified : 1,
                             sellEnded : 1
                         }
                     }]));
@@ -1022,6 +1092,7 @@ export default function MarketArticlePageTest() {
                         ...articleInfo[0],
                         article : {
                             ...articleInfo[0].article,
+                            dealerVerified : 1,
                             sellEnded : 1
                         }
                     }]));
@@ -1032,6 +1103,55 @@ export default function MarketArticlePageTest() {
                 console.error("로드 실패:", error);
             } finally {
                     
+                setReloadingDealerCheckDivisionActivate(true);
+                
+            }
+            
+        }
+        
+    }
+    
+    const constButtonToConfirmToEndSell = async() => {
+        
+        if (checkUserDealerStatus === 1) {
+            
+            try {
+                
+                const { userInfo } = mergeMarketArticleInfo[0];
+                
+                const marketDealedLogCheckedByBuyerDto = {
+                    
+                    sellerId : userInfo?.id,
+                    buyerId : checkUserStatus,
+                    specificArticleId : checkArticleId
+                    
+                } // 판매자가 구매자를 건드리는 경우 (댓글 작성자들이 구매자, 즉 판매자가 접속 상태인 것으로 가정)
+                
+                const constPostUpdateMarketArticleToSellEnded = await marketAPI.postUpdateMarketArticleToSellEnded(checkArticleId);
+                const constGetSelectSpecificMarketDealedLog = await marketAPI.getSelectSpecificMarketDealedLog(checkArticleId); // useEffect -> Reload 방식이 더 깔끔하기는 함 (이건 임시 조치용....)
+                
+                console.log("constGetSelectSpecificMarketDealedLog");
+                console.log(constGetSelectSpecificMarketDealedLog);
+                console.log(typeof constGetSelectSpecificMarketDealedLog);
+                
+                if (constGetSelectSpecificMarketDealedLog) {
+                    
+                    setMergeMarketArticleInfo(articleInfo => ([{
+                        ...articleInfo[0],
+                        article : {
+                            ...articleInfo[0].article,
+                            sellEnded : 1
+                        }
+                    }]));
+                    
+                }
+                
+            } catch (error) {
+                console.error("로드 실패:", error);
+            } finally {
+                    
+                console.log("FinalReloadTest");
+                console.log(reloadingDealerCheckDivisionActivate);
                 setReloadingDealerCheckDivisionActivate(true);
                 
             }
@@ -1076,13 +1196,26 @@ export default function MarketArticlePageTest() {
             return productCost.toLocaleString('Ko-KR');
         };
         
-        function funcSellEnded(sellEnded) {
+        function funcSellEnded({dealerVerified, sellEnded}) {
             
             if (sellEnded == 1) {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.75rem"}}>거래 완료</span>
+                        <span className = "badge badgeStyleAboutConfirmedDeal" style = {{fontSize : "0.75rem"}}>
+                        {dealerVerified ?
+                        (
+                            <>
+                                <i className="ri-checkbox-circle-line"></i>&nbsp;
+                            </>
+                        )
+                            :
+                        (
+                            <>
+                            </>
+                        )
+                        }
+                        거래 마감</span>
                     </>
                 );
                 
@@ -1090,7 +1223,7 @@ export default function MarketArticlePageTest() {
                 
                 return (
                     <>
-                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.75rem"}}>거래 미완료</span>
+                        <span className = "badge badgeStyleAboutUnconfirmedDeal" style = {{fontSize : "0.75rem"}}>거래 가능</span>
                     </>
                 );
                 
@@ -1167,7 +1300,7 @@ export default function MarketArticlePageTest() {
                                     </div>
                                     <div className = "row">
                                         <div className = "col" style = {{fontSize : "0.75rem", marginBottom : "0.25rem"}}>
-                                            {funcSellEnded(article?.sellEnded)}
+                                            {funcSellEnded({dealerVerified : article?.dealerVerified, sellEnded : article?.sellEnded})}
                                         </div>
                                     </div>
                                     <div className = "row">
@@ -1347,7 +1480,8 @@ export default function MarketArticlePageTest() {
         
         const updateCommentRef = useRef(null); // ok
         
-        const [ commentEditModeChecked, setCommentEditModeChecked ] = useState(false);
+        const [ commentEditModeChecked, setCommentEditModeChecked ] = useState(false); 
+        // 이런 느낌으로 답글 기능도 구현 예정
         
         const [ commentSellerCheckedByBuyer, setCommentSellerCheckedByBuyer ] = useState(false);
         const [ commentBuyerCheckedBySeller, setCommentBuyerCheckedBySeller ] = useState(false);
@@ -1463,6 +1597,7 @@ export default function MarketArticlePageTest() {
                             ...articleInfo[0],
                             article : {
                                 ...articleInfo[0].article,
+                                dealerVerified : 1,
                                 sellEnded : 1
                             }
                         }]));
@@ -1517,6 +1652,7 @@ export default function MarketArticlePageTest() {
                             ...articleInfo[0],
                             article : {
                                 ...articleInfo[0].article,
+                                dealerVerified : 1,
                                 sellEnded : 1
                             }
                         }]));
@@ -1742,100 +1878,113 @@ export default function MarketArticlePageTest() {
                                 <div className = "col" style = {{paddingLeft : "0.8125rem", paddingRight : "0.8125rem"}}>
                                     <div className = "row">
                                         <div className = "col" style = {{marginLeft : "0.8125rem", marginRight : "0.8125rem", marginBottom : "0.1875rem"}}>
+                                            <div className = "row">
+                                                <div className = "col-auto" style = {{paddingTop : "0.75rem", paddingLeft : "0rem", paddingRight : "0.75rem"}}>
+                                                    <i className = "bi bi-reply-fill" style = {{display : "inline-block", transform : "rotate(180deg)", cursor : "pointer", userSelect : "none"}}></i>
+                                                </div>
                                             
                                             {/* <div style={{
                                                 bottom : "0", left : "0", width : "100%", height : "1px", backgroundColor : "#cccccc80"
                                             }} /> */}
                                             
-                                            <div className = "row">
-                                                <div className = "col" style = {{height : "2rem", marginTop : "0.375rem", marginBottom : "0.375rem"}}>
-
-                                                <Link className = "linkDefault" to = {`/market/user/${userInfo?.id}`} style = {{display : "inline-block"}}>
-                                                
+                                                <div className = "col">
+                                                    
                                                     <div className = "row">
-                                                        <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.5rem"}}>
-                                                            <div className = "row h-100">
-                                                                <div className = "col-auto" style = {{height : "1.8125rem", overflow : "hidden", position : "relative",
-                                                                    paddingLeft : "0.125rem", paddingRight : "0.125rem"}}>
-                                                                    <div className = "row h-100">
-                                                                        <div className = "col-auto" style = {{fontSize : "1.1875rem", fontWeight : "bold", display : "flex", 
-                                                                        alignItems : "center", justifyContent : "center"}}>
-                                                                            <i className="bi bi-person-circle"></i>
+                                                        <div className = "col" style = {{height : "2rem", marginTop : "0.375rem", marginBottom : "0.375rem"}}>
+
+                                                            <Link className = "linkDefault" to = {`/market/user/${userInfo?.id}`} style = {{display : "inline-block"}}>
+                                                            
+                                                                <div className = "row">
+                                                                    <div className = "col" style = {{display : "flex", flexDirection : "column", justifyContent : "center", marginBottom : "0.5rem"}}>
+                                                                        <div className = "row h-100">
+                                                                            <div className = "col-auto" style = {{height : "1.8125rem", overflow : "hidden", position : "relative",
+                                                                                paddingLeft : "0.125rem", paddingRight : "0.125rem"}}>
+                                                                                <div className = "row h-100">
+                                                                                    <div className = "col-auto" style = {{fontSize : "1.1875rem", fontWeight : "bold", display : "flex", 
+                                                                                    alignItems : "center", justifyContent : "center"}}>
+                                                                                        <i className="bi bi-person-circle"></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
+                                                                                <div className = "row h-100">
+                                                                                    <div className = "col-auto" style = {{fontSize : "1.0625rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
+                                                                                        {userInfo?.name}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center"}}>
-                                                                    <div className = "row h-100">
-                                                                        <div className = "col-auto" style = {{fontSize : "1.0625rem", fontWeight : "bold", display : "flex", alignItems : "center"}}>
-                                                                            {userInfo?.name}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                                
+                                                            </Link>
+                                                            
                                                         </div>
                                                     </div>
                                                     
-                                                </Link>
-
-                                                </div>
-                                            </div>
-                                            
-
-                                            
-                                            {/* <div style={{
-                                                bottom : "0", left : "0", width : "100%", height : "1px", backgroundColor : "#cccccc80"
-                                            }} /> */}
-                                            
-                                            {commentEditModeChecked ? 
-                                            (
-                                                <>
-                                                
-                                                    <div className = "row">
-                                                        <div className = "col" style = {{marginBottom : "0.4375rem"}}>
-                                                            <div className = "row h-100">
-                                                                <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
-                                                                    paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.8125rem"}}>
-                                                                    <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
-                                                                    id = "content" name = "content" 
-                                                                    value = {editingContent} onChange = {handleContentChange} ref = {updateCommentRef}
-                                                                    placeholder = "수정할 댓글을 입력해 주시오."
-                                                                    style = {{resize : "none", fontSize : "0.875rem"}}/>
-                                                                </div>
-                                                                <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.4375rem"}}>
-                                                                    <div className = "row h-100 gx-0">
-                                                                        <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
-                                                                            <button className = "btn buttonDefault" 
-                                                                            onClick = {handleSubmit} 
-                                                                            style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>쓰기</button>
+                                                    {/* ## */}
+                                                    
+                                                    {/* <div style={{
+                                                        bottom : "0", left : "0", width : "100%", height : "1px", backgroundColor : "#cccccc80"
+                                                    }} /> */}
+                                                    
+                                                    {commentEditModeChecked ? 
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{marginBottom : "0.4375rem"}}>
+                                                                    <div className = "row h-100">
+                                                                        <div className = "col" style = {{display : "flex", alignItems : "center", verticalAlign : "middle",
+                                                                            paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.8125rem"}}>
+                                                                            <textarea rows = "3" className = "form-control writeArticleTextDivisionDefault" 
+                                                                            id = "content" name = "content" 
+                                                                            value = {editingContent} onChange = {handleContentChange} ref = {updateCommentRef}
+                                                                            placeholder = "수정할 댓글을 입력해 주시오."
+                                                                            style = {{resize : "none", fontSize : "0.875rem"}}/>
+                                                                        </div>
+                                                                        <div className = "col-auto" style = {{position : "relative", display : "flex", justifyContent : "center", paddingLeft : "0rem", paddingRight : "0rem", marginLeft : "0.4375rem"}}>
+                                                                            <div className = "row h-100 gx-0">
+                                                                                <div className = "col-auto" style = {{display : "flex", alignItems : "center"}}>
+                                                                                    <button className = "btn buttonDefault" 
+                                                                                    onClick = {handleSubmit} 
+                                                                                    style = {{fontSize : "0.9375rem", fontWeight : "bold"}}>쓰기</button>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                
-                                                </>
-                                            ) :
-                                            (
-                                                <>
-                                                
+                                                        
+                                                        </>
+                                                    ) :
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "row">
+                                                                <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.875rem", marginBottom : "0.4375rem", whiteSpace : "pre-wrap"}}>
+                                                                    {comment?.content}
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </>
+                                                    )
+                                                    }
+                                                    
                                                     <div className = "row">
-                                                        <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.875rem", marginBottom : "0.4375rem", whiteSpace : "pre-wrap"}}>
-                                                            {comment?.content}
+                                                        <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.6875rem", marginBottom : "0.125rem", color : "#6d6d6d"}}>
+                                                            {formatDate(comment?.createdAt)}
                                                         </div>
                                                     </div>
-                                                
-                                                </>
-                                            )
-                                            }
-                                            
-                                            <div className = "row">
-                                                <div className = "col" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", fontSize : "0.6875rem", marginBottom : "0.125rem", color : "#6d6d6d"}}>
-                                                    {formatDate(comment?.createdAt)}
+                                                    
+                                                    <MarketCommentUpdateOrDeleteDivisionOnArticlePageLayout />
+                                                    
+                                                    {/* ## */}
+
                                                 </div>
                                             </div>
                                             
-                                            <MarketCommentUpdateOrDeleteDivisionOnArticlePageLayout />
+
                                             
                                         </div>
                                     </div>  
@@ -2059,9 +2208,41 @@ export default function MarketArticlePageTest() {
             (
                 <>
                 
+                    {dealerCheckDivisionActivate && (
+                        <>
+                            {isDealerVerificationWarningModalOpened && (
+                                <SelectDealerVerificationWarningModal open = {isDealerVerificationWarningModalOpened}
+                                onClose = {() => setIsDealerVerificationWarningModalOpened(false)}
+                                onConfirm = {constButtonToConfirmToEndSell} />
+                            )}
+                        </>
+                    )}
+                
                     <div className = "row">
                         <div className = "col" style = {{marginLeft : "0.6125rem", marginRight : "0.6125rem", fontSize : "1rem"}}>
                             <div className = "row">
+                                
+                                {article?.sellEnded ?
+                                (
+                                    <>
+                                    
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                
+                                        <div className = "col-auto divisionOnclickStyleDefault" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}} 
+                                        onClick = {() => setIsDealerVerificationWarningModalOpened(true)}>
+                                            거래 마감하기
+                                        </div>
+                                        <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                            ｜
+                                        </div>
+                                        
+                                    </>
+                                )
+                                }
                                 <div className = "col-auto" style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem"}}>
                                     <Link className = "linkDefault divisionOnclickStyleDefault" to = {`/market/updateArticle/${article?.id}`}
                                     style = {{color : "#6d6d6d"}}>
