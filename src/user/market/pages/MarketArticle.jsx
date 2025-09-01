@@ -1923,9 +1923,9 @@ export default function MarketArticlePageTest() {
                                                     (
                                                         <>
                                                         
-                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                            {/* <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
                                                                 ｜
-                                                            </div>
+                                                            </div> */}
 
                                                             <div className = "col-auto divisionOnclickStyleDefault" 
                                                             onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
@@ -1939,14 +1939,20 @@ export default function MarketArticlePageTest() {
                                             </>
                                         )}
                                         
-                                        <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
-                                            ｜
-                                        </div>
-                                        
                                         {
                                             commentEditModeChecked ?
                                             (
                                                 <>
+                                                
+                                                    {!constCommentOfComment && (
+                                                        <>
+                                                        
+                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                ｜
+                                                            </div>
+                                                        
+                                                        </>
+                                                    )}
                                                 
                                                     <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeChecked()} 
                                                     style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem"}}>
@@ -1957,6 +1963,16 @@ export default function MarketArticlePageTest() {
                                             ) :
                                             (
                                                 <>
+                                                
+                                                    {!constCommentOfComment && (
+                                                        <>
+                                                        
+                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                ｜
+                                                            </div>
+                                                        
+                                                        </>
+                                                    )}
                                                 
                                                     <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => clickPossibleWhenCommentEditModeUnchecked()} 
                                                     style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
@@ -2057,7 +2073,7 @@ export default function MarketArticlePageTest() {
                     
                 } else {
                     
-                    if (comment?.marketUserId == checkArticleWriteUser) {
+                    // if (comment?.marketUserId == checkArticleWriteUser) {
                         
                         // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
                         
@@ -2074,12 +2090,21 @@ export default function MarketArticlePageTest() {
                                         </div> */}
                                         
                                         <div className = "row">
+                                            
+                                            {
+                                                (comment?.marketUserId === checkArticleWriteUser) && (
+                                                    <>
                                         
-                                            <div className = "col-auto">
-                                                <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
-                                                constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
-                                                constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer} />
-                                            </div>
+                                                        <div className = "col-auto">
+                                                            <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
+                                                            marketCommentElem1 = {comment}
+                                                            constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
+                                                            constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer} />
+                                                        </div>
+                                                        
+                                                    </>
+                                                )
+                                            }
                                             
                                             {!constCommentOfComment && (
                                                 
@@ -2088,9 +2113,19 @@ export default function MarketArticlePageTest() {
                                                         (
                                                             <>
                                                             
-                                                                <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
-                                                                    ｜
-                                                                </div>
+                                                                {
+                                                                    
+                                                                    (comment?.marketUserId === checkArticleWriteUser) && (
+                                                                        <>
+                                                            
+                                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                                ｜
+                                                                            </div>
+                                                                        
+                                                                        </>
+                                                                    )
+                                                                    
+                                                                }
                                                             
                                                                 <div className = "col-auto divisionOnclickStyleDefault" 
                                                                 onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
@@ -2103,9 +2138,19 @@ export default function MarketArticlePageTest() {
                                                         (
                                                             <>
                                                             
-                                                                <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
-                                                                    ｜
-                                                                </div>
+                                                                {
+                                                                    
+                                                                    (comment?.marketUserId === checkArticleWriteUser) && (
+                                                                        <>
+                                                            
+                                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                                ｜
+                                                                            </div>
+                                                                        
+                                                                        </>
+                                                                    )
+                                                                    
+                                                                }
 
                                                                 <div className = "col-auto divisionOnclickStyleDefault" 
                                                                 onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
@@ -2127,19 +2172,23 @@ export default function MarketArticlePageTest() {
                             </>
                         );
                         
-                    } else {
+                    // } 
+                    
+                    // else 
                         
-                        // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
+                    //     {
                         
-                        (
-                            <>
+                    //     // letFuncMarketCommentUpdateOrDeleteDivisionOnArticlePageLayout =
+                        
+                    //     (
+                    //         <>
                             
                             
                             
-                            </>
-                        );
+                    //         </>
+                    //     );
                         
-                    }
+                    // }
                     
                 }
                 
@@ -2459,6 +2508,9 @@ export default function MarketArticlePageTest() {
             
             if (dealerCheckDivisionActivate) {
                 
+                console.log("marketCommentElem1?.marketUserId");
+                console.log(marketCommentElem1?.marketUserId);
+                
                 // letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout = 
                 
                 return (
@@ -2477,12 +2529,25 @@ export default function MarketArticlePageTest() {
                         
                         {/* 되나??? */}
                         
-                        <div className = "row">
+                        {
+                            (marketCommentElem1?.marketUserId === checkArticleWriteUser) && (
+                                <>
+                                    <div className = "row">
+                                        <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => setIsSellerWarningModalOpened(true)}
+                                        style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                            판매인으로 선택
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        }
+                        
+                        {/* <div className = "row">
                             <div className = "col-auto divisionOnclickStyleDefault" onClick = {() => setIsSellerWarningModalOpened(true)}
                             style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
                                 판매인으로 선택
                             </div>
-                        </div>
+                        </div> */}
                     
                     </>
                 )
