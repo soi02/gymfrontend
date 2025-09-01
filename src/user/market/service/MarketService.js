@@ -324,9 +324,9 @@ export default function useMarketAPI() {
         });
         return response.data;
     }
-    const getSelectCountMarketDealedLogWhenSeller = async(sellerId) =>{
+    const getSelectCountMarketDealedLogWhenSeller = async(marketUserId) =>{
         const response = await axios.get(`${constMarketAPIBasedURL}/selectCountMarketDealedLogWhenSeller`, {
-            params : {sellerId}
+            params : {marketUserId}
         });
         return response.data;
     }
