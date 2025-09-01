@@ -472,6 +472,9 @@ export default function MarketArticlePageTest() {
             setCommentOnArticleReloading(true);
             setCommentOnArticleLoading(true);
             
+            console.log("checkUserDealerStatus + 2 // 0");
+            console.log(checkUserDealerStatus);
+            
         } catch (error) {
             console.error("로드 실패:", error);
         }
@@ -757,6 +760,10 @@ export default function MarketArticlePageTest() {
                     setDealerCheckDivisionActivate(false); // react 의 set 로드 문제 상 불가피한 절차 (원래는 dealconfirmcompleted 시 false 처리할 생각)
                     
                 }
+                
+                if (reloadingDealerCheckDivisionActivate) {
+                    setDealerCheckDivisionActivate(false);
+                }
                     
                 } catch (error) {
                     
@@ -867,8 +874,8 @@ export default function MarketArticlePageTest() {
                 console.log(constGetSelectSpecificMarketDealedLogCheckedByBuyer);
                 console.log("constGetSelectSpecificMarketDealedLog");
                 console.log(constGetSelectSpecificMarketDealedLog);
-                console.log("checkUserStatus");
-                console.log(checkUserStatus);
+                console.log("checkUserDealerStatus + 1");
+                console.log(checkUserDealerStatus);
                 
                 if (Boolean(constGetSelectSpecificMarketDealedLogCheckedBySeller && (Object.keys(constGetSelectSpecificMarketDealedLogCheckedBySeller).length > 0))) {
                     
@@ -925,7 +932,9 @@ export default function MarketArticlePageTest() {
                     
                 }
                 
-                setDealerCheckDivisionActivate(false);
+                if (reloadingDealerCheckDivisionActivate) {
+                    setDealerCheckDivisionActivate(false);
+                }
                 
                 // 여기에 팝업이 바뀌도록 false 로 만들어 줘야 됨 (거래 마감하기 선택 시) --- dealercheckdivisionactivate(false) 하듯이
                     
@@ -954,6 +963,9 @@ export default function MarketArticlePageTest() {
     useEffect(() => {
             
         const constUseEffectWhenCommentOnArticleLoad = async () => {
+            
+            console.log("checkUserDealerStatus + 2");
+            console.log(checkUserDealerStatus);
             
             if (commentOnArticleLoading) {
                 
@@ -1011,6 +1023,9 @@ export default function MarketArticlePageTest() {
             setInsertMarketCommentOnArticleElement(insertMarketCommentOnArticleElementDefaultValue);
             setCommentOnArticleReloading(true);
             setCommentOnArticleLoading(true);
+            
+            console.log("checkUserDealerStatus + 2 // 0");
+            console.log(checkUserDealerStatus);
             
         } catch (error) {
             console.error("로드 실패:", error);
@@ -1890,31 +1905,39 @@ export default function MarketArticlePageTest() {
                                 <div className = "col" style = {{fontSize : "0.8125rem"}}>
                                     <div className = "row">
                                         
-                                        {
-                                            commentWriteCommentOfCommentModeChecked ?
-                                            (
-                                                <>
-                                                
-                                                    <div className = "col-auto divisionOnclickStyleDefault" 
-                                                    onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
-                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
-                                                        취소
-                                                    </div>
-                                                
-                                                </>
-                                            ) :
-                                            (
-                                                <>
+                                        {!constCommentOfComment && (
+                                            
+                                            <>
+                                                {commentWriteCommentOfCommentModeChecked ?
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "col-auto divisionOnclickStyleDefault" 
+                                                            onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
+                                                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                                취소
+                                                            </div>
+                                                        
+                                                        </>
+                                                    ) :
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                ｜
+                                                            </div>
 
-                                                    <div className = "col-auto divisionOnclickStyleDefault" 
-                                                    onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
-                                                    style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
-                                                        답글
-                                                    </div>
-                                                    
-                                                </>
-                                            )
-                                        }
+                                                            <div className = "col-auto divisionOnclickStyleDefault" 
+                                                            onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
+                                                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                                답글
+                                                            </div>
+                                                            
+                                                        </>
+                                                    )
+                                                }
+                                            </>
+                                        )}
                                         
                                         <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
                                             ｜
@@ -1970,18 +1993,62 @@ export default function MarketArticlePageTest() {
                         <>
                         
                             <div className = "row">
-                                <div className = "col" style = {{fontSize : "0.875rem"}}>
+                                <div className = "col" style = {{fontSize : "0.8125rem"}}>
                                     {/* <div className = "row">
                                         <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmBuyerBySeller}
                                         style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                             구매인으로 선택
                                         </div>
                                     </div> */}
-                                    <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
-                                    marketCommentElem1 = {comment}
-                                    constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
-                                    constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer}
-                                    />
+                                    <div className = "row">
+                                        
+                                        <div className = "col-auto">
+                                            <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
+                                            marketCommentElem1 = {comment}
+                                            constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
+                                            constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer} />
+                                        </div>
+                                        
+                                        {!constCommentOfComment && (
+                                            
+                                            <>
+                                                {commentWriteCommentOfCommentModeChecked ?
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                ｜
+                                                            </div>
+                                                        
+                                                            <div className = "col-auto divisionOnclickStyleDefault" 
+                                                            onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
+                                                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                                취소
+                                                            </div>
+                                                        
+                                                        </>
+                                                    ) :
+                                                    (
+                                                        <>
+                                                        
+                                                            <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                ｜
+                                                            </div>
+
+                                                            <div className = "col-auto divisionOnclickStyleDefault" 
+                                                            onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
+                                                            style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                                답글
+                                                            </div>
+                                                            
+                                                        </>
+                                                    )
+                                                }
+                                            </>
+                                        )}
+                                    
+                                    </div>
+                                    
                                 </div>
                             </div>
                         
@@ -1998,16 +2065,62 @@ export default function MarketArticlePageTest() {
                             <>
                             
                                 <div className = "row">
-                                    <div className = "col" style = {{fontSize : "0.875rem"}}>
+                                    <div className = "col" style = {{fontSize : "0.8125rem"}}>
                                         {/* <div className = "row">
                                             <div className = "col-auto divisionOnclickStyleDefault" onClick = {constButtonToConfirmSellerByBuyer}
                                             style = {{paddingLeft : "0.5vh", paddingRight : "0.5vh"}}>
                                                 판매인으로 선택
                                             </div>
                                         </div> */}
-                                        <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
-                                        constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
-                                        constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer}/>
+                                        
+                                        <div className = "row">
+                                        
+                                            <div className = "col-auto">
+                                                <MarketDealerCheckDivisionActivateOnCommentOnArticleLayout 
+                                                constButtonToConfirmBuyerBySeller1 = {constButtonToConfirmBuyerBySeller}
+                                                constButtonToConfirmSellerByBuyer1 = {constButtonToConfirmSellerByBuyer} />
+                                            </div>
+                                            
+                                            {!constCommentOfComment && (
+                                                
+                                                <>
+                                                    {commentWriteCommentOfCommentModeChecked ?
+                                                        (
+                                                            <>
+                                                            
+                                                                <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                    ｜
+                                                                </div>
+                                                            
+                                                                <div className = "col-auto divisionOnclickStyleDefault" 
+                                                                onClick = {() => clickPossibleWhenCommentOfCommentWriteModeChecked()}
+                                                                style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                                    취소
+                                                                </div>
+                                                            
+                                                            </>
+                                                        ) :
+                                                        (
+                                                            <>
+                                                            
+                                                                <div className = "col-auto px-0" style = {{color : "#6d6d6d"}}>
+                                                                    ｜
+                                                                </div>
+
+                                                                <div className = "col-auto divisionOnclickStyleDefault" 
+                                                                onClick = {() => clickPossibleWhenCommentOfCommentWriteModeUnchecked()}
+                                                                style = {{paddingLeft : "0.25rem", paddingRight : "0.25rem", color : "#6d6d6d"}}>
+                                                                    답글
+                                                                </div>
+                                                                
+                                                            </>
+                                                        )
+                                                    }
+                                                </>
+                                            )}
+                                        
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             
@@ -2287,6 +2400,10 @@ export default function MarketArticlePageTest() {
         
         console.log("marketCommentElem1Activate")
         console.log(marketCommentElem1)
+        console.log("checkUserDealerStatus")
+        console.log(checkUserDealerStatus)
+        console.log("dealerCheckDivisionActivate")
+        console.log(dealerCheckDivisionActivate)
         
         // let letMarketDealerCheckDivisionActivateOnCommentOnArticleLayout;
         
