@@ -100,7 +100,8 @@ export default function GroupChatRoom() {
         
         const socket = new WebSocket('ws://localhost:8080/ws/group-chat');
         stompClient.current = Stomp.over(socket);
-        stompClient.current.debug = null;
+        // stompClient.current.debug = null;
+        stompClient.current.debug = (s) => console.log('[STOMP]', s);
 
         const headers = { 'Authorization': `Bearer ${token}` };
 
@@ -159,7 +160,13 @@ export default function GroupChatRoom() {
             groupChatMessageContent: newMessage,
             challengeId: challengeId
         };
-        stompClient.current.send(`/app/sendGroupMessage/${challengeId}`, {}, JSON.stringify(chatMessage));
+        // stompClient.current.send(`/app/sendGroupMessage/${challengeId}`, {}, JSON.stringify(chatMessage));
+        stompClient.current.send(
+        `/app/sendGroupMessage/${challengeId}`,
+        { 'content-type': 'application/json' },
+        JSON.stringify(chatMessage)
+        );
+
         setNewMessage('');
     };
 
