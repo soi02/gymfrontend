@@ -156,7 +156,7 @@ const descMap = {
             </div>
             <div className="cl-new-card-content-new" style={{ textAlign: 'left' }}>
               <h2 className="cl-new-card-title">새로운 수련 만들기</h2>
-              <p className="cl-new-card-description">나만의 수련을 시작하고 공유해 보세요!</p>
+              <p className="cl-new-card-description">나만의 수련을 시작하고 공유해 보시오!</p>
             </div>
           </div>
           {/* ✅ 빈 공간에 PNG 이미지 추가 */}
