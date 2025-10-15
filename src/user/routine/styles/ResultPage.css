@@ -489,11 +489,11 @@
 
 .pf-actions.pf-actions--triple{
   width: 100%;
-  height: 70px;
+  height: 60px;
   max-width: 470px;
   display: grid;                            /* ✅ 그리드 ON */
   grid-template-columns: 2fr 2fr 4fr;       /* ✅ 비율: 2 : 2 : 3 */
-  gap: 8px;
+  gap: 5px;
   margin-top: 12px;
 }
 .pf-btn{ width: 100%; border-radius: 14px; border: none; }
@@ -513,7 +513,7 @@
 
 
 /* 변형(컬러) */
-.pf-btn.is-teal   { background: var(--han-teal);   color: #fff; }
+.pf-btn.is-teal   { background: var(--han-teal);  border-radius: 999; color: #fff; }
 .pf-btn.is-yellow { background: #5d5d6e; color: #fff; }
 .pf-btn.is-wine   { background: var(--han-wine);   color: #fff; }
 

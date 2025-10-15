@@ -147,7 +147,7 @@ export default function MyPage() {
                     </div>
                 </section>
                 <div className="mp-quick-links">
-                    <div className="mp-quick-link-item" onClick={() => navigate("/errorPage")}>
+                    <div className="mp-quick-link-item" onClick={() => navigate("/challenge/challengeMy")}>
                         <span role="img" aria-label="출석체크" className="mp-link-icon">✍️</span>
                         <span className="mp-link-text">수련장 출첵</span>
                     </div>

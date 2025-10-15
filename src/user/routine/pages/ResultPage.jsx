@@ -257,7 +257,7 @@ export default function ResultPage() {
 
         <div className="pf-actions pf-actions--triple">
           <button className="pf-btn is-teal" onClick={() => setShowModal(true)}>
-            <span className="pf-btn-top">사진<br></br>추가</span>
+            <span className="pf-btn-top">사진 추가</span>
             {/* <span className="pf-btn-bottom">추가</span> */}
           </button>
 
@@ -265,14 +265,14 @@ export default function ResultPage() {
             className="pf-btn is-wine"
             onClick={() => setShowModal(true)}
           >
-            <span className="pf-btn-top">일지<br></br>작성</span>
+            <span className="pf-btn-top">일지 작성</span>
           </button>
 
           <button
             className="pf-btn is-yellow"
             onClick={() => navigate("/mypage/routineCalendar")}
           >
-            <span className="pf-btn-top">모든 기록<br></br> 보러가기</span>
+            <span className="pf-btn-top">모든 기록 보러가기</span>
             {/* <span className="pf-btn-bottom">보러 가기</span> */}
           </button>
         </div>
