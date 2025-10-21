@@ -283,42 +283,102 @@ function LoadingOverlay({ visible }) {
 }
 
 
-/* ===== 랭킹 스트립 (Top3 카드 + 리스트) ===== */
-function RankingStrip({ items = [], onMore }) {
-  if (!items?.length) return null;
-  const rows = items.slice(0, 8);
+// /* ===== 랭킹 스트립 (Top3 카드 + 리스트 - 기존) ===== */
+// function RankingStrip({ items = [], onMore }) {
+//   if (!items?.length) return null;
+//   const rows = items.slice(0, 8);
 
-  return (
-    <div className="rankv3-wrap">
-      <div className="rankv3-head">
-        <h3 className="rankv3-title">금주의 수련 순위</h3>
-      </div>
+//   return (
+//     <div className="rankv3-wrap">
+//       <div className="rankv3-head">
+//         <h3 className="rankv3-title">금주의 수련 순위</h3>
+//       </div>
 
-      <ol className="rankv3-list">
-        {rows.map((u, i) => (
-          <li key={u.id ?? i} className="rankv3-row">
-            {/* ← 카드 바깥의 순위 숫자 */}
-            <span className={`rankv3-no ${i < 3 ? "is-top" : ""}`}>{i + 1}</span>
+//       <ol className="rankv3-list">
+//         {rows.map((u, i) => (
+//           <li key={u.id ?? i} className="rankv3-row">
+//             {/* ← 카드 바깥의 순위 숫자 */}
+//             <span className={`rankv3-no ${i < 3 ? "is-top" : ""}`}>{i + 1}</span>
 
-            {/* ← 카드 본문 */}
-            <div className="rankv3-item">
-              <div className="rankv3-left">
-                <div className="rankv3-avatar">
-                  <img src={u.profile} alt={u.name} />
-                </div>
-                <span className="rankv3-name">{u.name}</span>
-              </div>
-              <div className="rankv3-right">
-                <span className="rankv3-count">{u.days}회</span>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
+//             {/* ← 카드 본문 */}
+//             <div className="rankv3-item">
+//               <div className="rankv3-left">
+//                 <div className="rankv3-avatar">
+//                   <img src={u.profile} alt={u.name} />
+//                 </div>
+//                 <span className="rankv3-name">{u.name}</span>
+//               </div>
+//               <div className="rankv3-right">
+//                 <span className="rankv3-count">{u.days}회</span>
+//               </div>
+//             </div>
+//           </li>
+//         ))}
+//       </ol>
+//     </div>
+//   );
+// }
 
+
+/* ===== 랭킹 스트립 (Top3 카드 + 리스트 - 수정) ===== */
+// 통일: 개발/배포 모두 여기만 바꾸면 됨
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || BACKEND_BASE_URL;
+// const PLACEHOLDER = "https://placehold.co/100x100?text=No+Image";
+
+// function toAbsUrl(path) {
+//   if (!path) return PLACEHOLDER;
+//   if (/^https?:\/\//i.test(path) || /^data:image\//i.test(path)) return path;
+//   if (path.startsWith("/")) return `${API_BASE_URL}${path}`;
+//   return `${API_BASE_URL}/uploadFiles/${path}`;
+// }
+
+// function RankingStrip({ items = [], onMore }) {
+//   if (!items?.length) return null;
+//   const rows = items.slice(0, 8);
+
+//   return (
+//     <div className="rankv3-wrap">
+//       <div className="rankv3-head">
+//         <h3 className="rankv3-title">금주의 수련 순위</h3>
+//       </div>
+
+//       <ol className="rankv3-list">
+//         {rows.map((u, i) => {
+//           const raw = u.profile ?? u.profileImage ?? u.profileImagePath ?? null;
+//           const src = toAbsUrl(raw);
+
+//           return (
+//             <li key={u.id ?? i} className="rankv3-row">
+//               <span className={`rankv3-no ${i < 3 ? "is-top" : ""}`}>{i + 1}</span>
+
+//               <div className="rankv3-item">
+//                 <div className="rankv3-left">
+//                   <div className="rankv3-avatar">
+//                     <img
+//                       src={src}
+//                       alt={u.name ?? "user"}
+//                       onError={(e) => (e.currentTarget.src = PLACEHOLDER)}
+//                     />
+//                   </div>
+//                   <span className="rankv3-name">{u.name}</span>
+//                 </div>
+//                 <div className="rankv3-right">
+//                   <span className="rankv3-count">{u.days}회</span>
+//                 </div>
+//               </div>
+//             </li>
+//           );
+//         })}
+//       </ol>
+
+//       {/* {onMore && (
+//         <button type="button" className="rankv3-more" onClick={onMore}>
+//           더 보기
+//         </button>
+//       )} */}
+//     </div>
+//   );
+// }
 
 
 
@@ -345,10 +405,10 @@ export default function ChallengeHome() {
   const [errMsg, setErrMsg] = useState("");
 
   /* 주간 요약/랭킹 */
-  const [weekly, setWeekly] = useState({ days: 0, totalDays: 7, percent: 0 });
-  const [weeklyLoading, setWeeklyLoading] = useState(true);
-  const [ranking, setRanking] = useState([]);
-  const [rankingLoading, setRankingLoading] = useState(true);
+//   const [weekly, setWeekly] = useState({ days: 0, totalDays: 7, percent: 0 });
+//   const [weeklyLoading, setWeeklyLoading] = useState(true);
+//   const [ranking, setRanking] = useState([]);
+//   const [rankingLoading, setRankingLoading] = useState(true);
 
   /* 인기 수련 로드 (서버 → 실패 시 프론트 정렬) */
 useEffect(() => {
@@ -395,16 +455,15 @@ useEffect(() => {
           percent: sum.progressPercent ?? 0,
         });
 setRanking(
-  (Array.isArray(ranks) ? ranks : []).map((r) => ({
-    id: r.userId,
-    name: r.userName,
-    profile: r.profileImagePath
-      ? `${BACKEND_BASE_URL}${r.profileImagePath}`
-      : "/images/default-profile.png",
-    days: r.distinctDaysThisWeek,
-    percent: r.progressPercent,
-    rank: r.rank,
-  }))
+  (Array.isArray(ranks) ? ranks : []).map((r) => ({
+    id: r.userId,
+    name: r.userName,
+   // 원본만 넘기고, 절대경로 조립은 RankingStrip에서 일원화
+   profile: r.profileImagePath ?? r.profileImage ?? r.profile ?? null,
+    days: r.distinctDaysThisWeek,
+    percent: r.progressPercent,
+    rank: r.rank,
+  }))
 );
       } finally {
         setWeeklyLoading(false);
@@ -506,7 +565,7 @@ const handleFetchAIRecs = async () => {
   ) : (
     <PopularTicker
       items={popular}
-      onClick={(it) => navigate(`/challenge/${it.id}`)}
+      onClick={(it) => navigate(`/challenge/detail/${it.id}`)}
       intervalMs={4000}
       idx={idx}
       setIdx={setIdx}
@@ -594,7 +653,7 @@ const handleFetchAIRecs = async () => {
   ) : (
     <AiRecCardScroll
       items={recs}
-      onClick={(it) => navigate(`/challenge/${it.id}`)}
+      onClick={(it) => navigate(`/challenge/detail/${it.id}`)}
     />
   )}
 </section>
@@ -603,21 +662,14 @@ const handleFetchAIRecs = async () => {
 
 
         {/* 4) 랭킹 */}
-<section className="chome-section">
-  {rankingLoading ? (
-    <div className="chome-block-skel"><div className="chome-skel-line" /></div>
-  ) : ranking.length === 0 ? null : (
-    <RankingStrip items={ranking} onMore={() => navigate("/challenge/ranking")} />
-  )}
-</section>
-
-
-
-
-
-
-
-        <div className="chome-bottom-space" />
+          {/* <section className="chome-section">
+            {rankingLoading ? (
+              <div className="chome-block-skel"><div className="chome-skel-line" /></div>
+            ) : ranking.length === 0 ? null : (
+              <RankingStrip items={ranking} onMore={() => navigate("/challenge/ranking")} />
+            )}
+          </section>
+        <div className="chome-bottom-space" /> */}
       </main>
 
       {/* AI 로딩 오버레이 */}

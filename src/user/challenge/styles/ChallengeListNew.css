@@ -111,22 +111,6 @@
   line-height: 1.4;
 }
 
-/* ── 카드 버튼 ( > 만 표시) ── */
-/* .cl-new-card-button {
-  font-size: 1rem;        
-  color: #3498db;      
-  margin-top: 0.6rem;
-  display: inline-block;
-  cursor: pointer;
-  line-height: 1;
-  padding: 2px 6px;       
-  border-radius: 4px;   
-  background: none; 
-} */
-/* 
-.cl-new-card-button:hover {
-  color: #2176bd;        
-} */
 
 
 
@@ -140,11 +124,17 @@
   padding: 1.6rem;
   padding-bottom: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-  display: flex; /* ✅ flexbox로 변경 */
-  flex-direction: column; /* ✅ 세로 방향으로 정렬 */
-  align-items: flex-start; /* ✅ 왼쪽 정렬 (텍스트 맞춤) */
+  display: flex; /* flexbox로 변경 */
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  align-items: flex-start; /* 왼쪽 정렬 (텍스트 맞춤) */
   justify-content: space-between; /* 상하 여백 분배 */
   min-height: 148px; /* 적절한 최소 높이 설정 */
+  cursor: pointer;
+}
+
+.cl-new-create-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.12);
 }
 
 /* ✅ Create 카드 헤더: 아이콘 + 텍스트 */
