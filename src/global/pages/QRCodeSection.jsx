@@ -2,14 +2,12 @@
 import React from 'react';
 import '../styles/QRCodeSection.css';
 import qrImage from "../../assets/img/gymQR.png";
-import erd from "../../assets/img/routine/RT55.png";
-import erd2 from "../../assets/img/routine/RT44.png";
-import erd3 from "../../assets/img/routine/RT66.png";
+import erdImage from "../../assets/img/gymmadang_erd.png";
 
 const defaultLinks = {
-  erd: '/erd.png',                 // public/erd.png (원하는 경로로 바꿔도 됨)
-  backend: 'https://github.com/your-org/your-backend',
-  frontend: 'https://github.com/your-org/your-frontend',
+  erd: erdImage,
+  backend: 'https://github.com/soi02/gymbackend',
+  frontend: 'https://github.com/soi02/gymfrontend',
 };
 
 const QRCodeSection = ({ links = defaultLinks }) => {
